@@ -1,4 +1,4 @@
-import { ServiceRow, Admin, Chat, Message } from "./types";
+import { ServiceRow, Admin, Chat, Message, CategoryRow } from "./types";
 
 const API_BASE = import.meta.env.VITE_API_URL || "http://localhost:3001/api";
 
@@ -16,21 +16,30 @@ async function request<T>(path: string, options?: RequestInit): Promise<T> {
 }
 
 // Services
-export const fetchServices = (category?: string, lang = "pl") => {
-  const params = new URLSearchParams();
-  if (category && category !== "all") params.set("category", category);
-  params.set("lang", lang);
-  return request<ServiceRow[]>(`/services?${params}`);
-};
+export const fetchServices = () =>
+  request<ServiceRow[]>("/services");
 
-export const createService = (data: Omit<ServiceRow, "id" | "created_at">) =>
+export const createService = (data: Record<string, unknown>) =>
   request<ServiceRow>("/services", { method: "POST", body: JSON.stringify(data) });
 
-export const updateService = (id: string, data: Omit<ServiceRow, "id" | "created_at">) =>
+export const updateService = (id: string, data: Record<string, unknown>) =>
   request<ServiceRow>(`/services/${id}`, { method: "PUT", body: JSON.stringify(data) });
 
 export const deleteService = (id: string) =>
   request<{ message: string }>(`/services/${id}`, { method: "DELETE" });
+
+// Categories
+export const fetchCategories = () =>
+  request<CategoryRow[]>("/categories");
+
+export const createCategory = (data: Record<string, unknown>) =>
+  request<CategoryRow>("/categories", { method: "POST", body: JSON.stringify(data) });
+
+export const updateCategory = (id: string, data: Record<string, unknown>) =>
+  request<CategoryRow>(`/categories/${id}`, { method: "PUT", body: JSON.stringify(data) });
+
+export const deleteCategory = (id: string) =>
+  request<{ message: string }>(`/categories/${id}`, { method: "DELETE" });
 
 // Auth
 export const adminLogin = (username: string, password: string) =>
@@ -43,8 +52,8 @@ export const adminMe = () =>
   request<Admin>("/auth/me");
 
 // Chat
-export const createChat = (service_id?: string | null) =>
-  request<Chat>("/chats", { method: "POST", body: JSON.stringify({ service_id }) });
+export const createChat = (user_name: string, service_ref?: string | null) =>
+  request<Chat>("/chats", { method: "POST", body: JSON.stringify({ user_name, service_ref }) });
 
 export const fetchChats = () =>
   request<Chat[]>("/chats");
@@ -61,5 +70,26 @@ export const sendMessage = (chatId: string, sender_type: "user" | "admin", conte
 export const deleteChat = (chatId: string) =>
   request<{ message: string }>(`/chats/${chatId}`, { method: "DELETE" });
 
+export const updateChat = (chatId: string, data: { title?: string; service_ref?: string | null }) =>
+  request<Chat>(`/chats/${chatId}`, { method: "PUT", body: JSON.stringify(data) });
+
 export const assignChat = (chatId: string) =>
   request<Chat>(`/chats/${chatId}/assign`, { method: "PUT" });
+
+// Contact
+export const submitContact = (data: { name: string; email: string; message: string }) =>
+  request<{ message: string }>("/contact", { method: "POST", body: JSON.stringify(data) });
+
+// Upload
+export async function uploadImage(file: File): Promise<string> {
+  const formData = new FormData();
+  formData.append("image", file);
+  const res = await fetch(`${API_BASE}/upload`, {
+    method: "POST",
+    credentials: "include",
+    body: formData,
+  });
+  if (!res.ok) throw new Error("Upload failed");
+  const data = await res.json();
+  return data.url;
+}
