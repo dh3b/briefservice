@@ -1,15 +1,28 @@
 import { useLanguage } from "@/i18n/LanguageContext";
-import { Mail, MapPin, Phone } from "lucide-react";
+import { Mail, MapPin, Phone, CheckCircle } from "lucide-react";
 import { useState } from "react";
+import { submitContact } from "@/api";
 
 const ContactSection = () => {
   const { t } = useLanguage();
   const [form, setForm] = useState({ name: "", email: "", message: "" });
+  const [sent, setSent] = useState(false);
+  const [sending, setSending] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // Will connect to API later
-    console.log("Contact form:", form);
+    if (!form.name || !form.email || !form.message) return;
+    setSending(true);
+    try {
+      await submitContact(form);
+      setSent(true);
+      setForm({ name: "", email: "", message: "" });
+      setTimeout(() => setSent(false), 4000);
+    } catch (err) {
+      console.error("Contact form error:", err);
+    } finally {
+      setSending(false);
+    }
   };
 
   return (
@@ -21,7 +34,6 @@ const ContactSection = () => {
         </div>
 
         <div className="grid md:grid-cols-2 gap-12 max-w-4xl mx-auto">
-          {/* Info */}
           <div className="space-y-8">
             <div className="flex items-start gap-4">
               <div className="w-10 h-10 rounded-lg bg-primary flex items-center justify-center flex-shrink-0">
@@ -52,33 +64,20 @@ const ContactSection = () => {
             </div>
           </div>
 
-          {/* Form */}
           <form onSubmit={handleSubmit} className="space-y-5">
-            <input
-              type="text"
-              placeholder={t.contact.name}
-              value={form.name}
-              onChange={(e) => setForm({ ...form, name: e.target.value })}
-              className="w-full px-4 py-3 rounded-lg bg-card border border-border text-foreground placeholder:text-muted-foreground text-sm focus:ring-2 focus:ring-ring focus:border-transparent outline-none transition-all"
-            />
-            <input
-              type="email"
-              placeholder={t.contact.email}
-              value={form.email}
-              onChange={(e) => setForm({ ...form, email: e.target.value })}
-              className="w-full px-4 py-3 rounded-lg bg-card border border-border text-foreground placeholder:text-muted-foreground text-sm focus:ring-2 focus:ring-ring focus:border-transparent outline-none transition-all"
-            />
-            <textarea
-              placeholder={t.contact.message}
-              rows={4}
-              value={form.message}
-              onChange={(e) => setForm({ ...form, message: e.target.value })}
-              className="w-full px-4 py-3 rounded-lg bg-card border border-border text-foreground placeholder:text-muted-foreground text-sm focus:ring-2 focus:ring-ring focus:border-transparent outline-none transition-all resize-none"
-            />
-            <button
-              type="submit"
-              className="w-full py-3.5 rounded-lg bg-gold-gradient text-accent-foreground font-semibold text-sm hover:shadow-lg transition-all hover:-translate-y-0.5"
-            >
+            {sent && (
+              <div className="flex items-center gap-2 px-4 py-3 rounded-lg bg-accent/20 text-accent-foreground text-sm">
+                <CheckCircle className="w-4 h-4" /> {t.contact.sent}
+              </div>
+            )}
+            <input type="text" placeholder={t.contact.name} value={form.name} onChange={(e) => setForm({ ...form, name: e.target.value })}
+              className="w-full px-4 py-3 rounded-lg bg-card border border-border text-foreground placeholder:text-muted-foreground text-sm focus:ring-2 focus:ring-ring focus:border-transparent outline-none transition-all" />
+            <input type="email" placeholder={t.contact.email} value={form.email} onChange={(e) => setForm({ ...form, email: e.target.value })}
+              className="w-full px-4 py-3 rounded-lg bg-card border border-border text-foreground placeholder:text-muted-foreground text-sm focus:ring-2 focus:ring-ring focus:border-transparent outline-none transition-all" />
+            <textarea placeholder={t.contact.message} rows={4} value={form.message} onChange={(e) => setForm({ ...form, message: e.target.value })}
+              className="w-full px-4 py-3 rounded-lg bg-card border border-border text-foreground placeholder:text-muted-foreground text-sm focus:ring-2 focus:ring-ring focus:border-transparent outline-none transition-all resize-none" />
+            <button type="submit" disabled={sending}
+              className="w-full py-3.5 rounded-lg bg-gold-gradient text-accent-foreground font-semibold text-sm hover:shadow-lg transition-all hover:-translate-y-0.5 disabled:opacity-50">
               {t.contact.send}
             </button>
           </form>

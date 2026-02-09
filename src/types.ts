@@ -1,35 +1,66 @@
+export const SUPPORTED_LANGUAGES = ["pl", "en", "de", "fr", "es", "it", "pt", "nl", "cs", "ro", "hu", "sv"] as const;
+
+export type Language = (typeof SUPPORTED_LANGUAGES)[number];
+
+export const LANGUAGE_LABELS: Record<Language, string> = {
+  pl: "Polski",
+  en: "English",
+  de: "Deutsch",
+  fr: "Français",
+  es: "Español",
+  it: "Italiano",
+  pt: "Português",
+  nl: "Nederlands",
+  cs: "Čeština",
+  ro: "Română",
+  hu: "Magyar",
+  sv: "Svenska",
+};
+
+export const LANGUAGE_FLAGS: Record<Language, string> = {
+  pl: "🇵🇱", en: "🇬🇧", de: "🇩🇪", fr: "🇫🇷", es: "🇪🇸", it: "🇮🇹",
+  pt: "🇵🇹", nl: "🇳🇱", cs: "🇨🇿", ro: "🇷🇴", hu: "🇭🇺", sv: "🇸🇪",
+};
+
+/** Raw DB row — has title/description columns per language */
 export interface ServiceRow {
   id: string;
-  title_pl: string;
-  title_en: string;
-  description_pl: string;
-  description_en: string;
+  category_id: string | null;
   price_range: string;
   image_url: string;
-  category_pl: string;
-  category_en: string;
   created_at: string;
+  [key: string]: string | null | undefined; // title_xx, description_xx
 }
 
-/** Localized service — resolved by the frontend based on current language */
+/** Localized service for display */
 export interface Service {
   id: string;
   title: string;
   description: string;
   price_range: string;
   image_url: string;
-  category: string;
+  category_id: string | null;
 }
 
 export function localizeService(row: ServiceRow, lang: Language): Service {
   return {
     id: row.id,
-    title: lang === "en" ? row.title_en : row.title_pl,
-    description: lang === "en" ? row.description_en : row.description_pl,
+    title: (row[`title_${lang}`] as string) || (row.title_en as string) || "",
+    description: (row[`description_${lang}`] as string) || (row.description_en as string) || "",
     price_range: row.price_range,
     image_url: row.image_url,
-    category: lang === "en" ? row.category_en : row.category_pl,
+    category_id: row.category_id ?? null,
   };
+}
+
+export interface CategoryRow {
+  id: string;
+  created_at: string;
+  [key: string]: string | null | undefined; // name_xx
+}
+
+export function localizeCategory(row: CategoryRow, lang: Language): string {
+  return (row[`name_${lang}`] as string) || (row.name_en as string) || "";
 }
 
 export interface User {
@@ -49,6 +80,9 @@ export interface Chat {
   user_id: string | null;
   admin_id: string | null;
   service_id: string | null;
+  service_ref: string | null;
+  user_name: string | null;
+  title: string | null;
   created_at: string;
   last_message?: string;
   message_count?: number;
@@ -61,5 +95,3 @@ export interface Message {
   content: string;
   timestamp: string;
 }
-
-export type Language = "pl" | "en";

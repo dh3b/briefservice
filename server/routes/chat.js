@@ -7,16 +7,15 @@ const router = Router();
 // POST /api/chats — create a new chat session
 router.post("/", async (req, res) => {
   try {
-    const { user_id, service_id } = req.body;
+    const { user_name, service_ref } = req.body;
     const { rows } = await pool.query(
-      "INSERT INTO chats (user_id, service_id) VALUES ($1, $2) RETURNING *",
-      [user_id || null, service_id || null]
+      "INSERT INTO chats (user_name, service_ref) VALUES ($1, $2) RETURNING *",
+      [user_name || null, service_ref || null]
     );
 
-    // Set cookie so guest can resume chat
     res.cookie("chat_id", rows[0].id, {
       httpOnly: false,
-      maxAge: 30 * 24 * 60 * 60 * 1000, // 30 days
+      maxAge: 30 * 24 * 60 * 60 * 1000,
       sameSite: "lax",
     });
 
@@ -31,7 +30,7 @@ router.post("/", async (req, res) => {
 router.get("/", requireAdmin, async (_req, res) => {
   try {
     const { rows } = await pool.query(
-      `SELECT c.*, 
+      `SELECT c.*,
         (SELECT content FROM messages WHERE chat_id = c.id ORDER BY timestamp DESC LIMIT 1) AS last_message,
         (SELECT COUNT(*) FROM messages WHERE chat_id = c.id)::int AS message_count
        FROM chats c ORDER BY c.created_at DESC`
@@ -72,6 +71,38 @@ router.post("/:id/messages", async (req, res) => {
     res.status(201).json(rows[0]);
   } catch (err) {
     console.error("Error sending message:", err);
+    res.status(500).json({ error: "Internal server error" });
+  }
+});
+
+// PUT /api/chats/:id — update chat title/service_ref (admin or user for service_ref)
+router.put("/:id", async (req, res) => {
+  try {
+    const { title, service_ref } = req.body;
+    const sets = [];
+    const vals = [];
+    let idx = 1;
+
+    if (title !== undefined) {
+      sets.push(`title = $${idx++}`);
+      vals.push(title);
+    }
+    if (service_ref !== undefined) {
+      sets.push(`service_ref = $${idx++}`);
+      vals.push(service_ref);
+    }
+
+    if (sets.length === 0) return res.status(400).json({ error: "Nothing to update" });
+
+    vals.push(req.params.id);
+    const { rows } = await pool.query(
+      `UPDATE chats SET ${sets.join(", ")} WHERE id = $${idx} RETURNING *`,
+      vals
+    );
+    if (rows.length === 0) return res.status(404).json({ error: "Chat not found" });
+    res.json(rows[0]);
+  } catch (err) {
+    console.error("Error updating chat:", err);
     res.status(500).json({ error: "Internal server error" });
   }
 });
