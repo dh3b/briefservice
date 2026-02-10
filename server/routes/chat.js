@@ -45,6 +45,11 @@ router.get("/", requireAdmin, async (_req, res) => {
 // GET /api/chats/:id/messages
 router.get("/:id/messages", async (req, res) => {
   try {
+    // First verify the chat exists
+    const chatCheck = await pool.query("SELECT id FROM chats WHERE id = $1", [req.params.id]);
+    if (chatCheck.rows.length === 0) {
+      return res.status(404).json({ error: "Chat not found" });
+    }
     const { rows } = await pool.query(
       "SELECT * FROM messages WHERE chat_id = $1 ORDER BY timestamp ASC",
       [req.params.id]
