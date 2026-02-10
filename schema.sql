@@ -91,10 +91,18 @@ CREATE TABLE contact_submissions (
   created_at TIMESTAMPTZ DEFAULT NOW()
 );
 
+CREATE TABLE page_visits (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  country VARCHAR(100) NOT NULL DEFAULT 'Unknown',
+  visited_at TIMESTAMPTZ DEFAULT NOW()
+);
+
 -- Indexes
 CREATE INDEX idx_messages_chat_id ON messages(chat_id);
 CREATE INDEX idx_chats_user_id ON chats(user_id);
 CREATE INDEX idx_services_category_id ON services(category_id);
+CREATE INDEX idx_page_visits_date ON page_visits(visited_at);
+CREATE INDEX idx_chats_created_at ON chats(created_at);
 
 -- Seed default admin (password: admin123)
 INSERT INTO admins (username, password_hash) VALUES

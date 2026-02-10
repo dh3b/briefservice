@@ -1,11 +1,12 @@
 import { useState, useEffect, useCallback } from "react";
 import { useLanguage } from "@/i18n/LanguageContext";
-import { LogIn, ArrowLeft, LogOut, MessageSquare, Package } from "lucide-react";
+import { LogIn, ArrowLeft, LogOut, MessageSquare, Package, BarChart3 } from "lucide-react";
 import { Link } from "react-router-dom";
 import { Admin } from "@/types";
 import * as api from "@/api";
 import ChatPanel from "@/components/admin/ChatPanel";
 import ServicesPanel from "@/components/admin/ServicesPanel";
+import StatsPanel from "@/components/admin/StatsPanel";
 
 const AdminPage = () => {
   const { t } = useLanguage();
@@ -13,7 +14,7 @@ const AdminPage = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [loginError, setLoginError] = useState("");
-  const [activeTab, setActiveTab] = useState<"chats" | "services">("chats");
+  const [activeTab, setActiveTab] = useState<"chats" | "services" | "stats">("chats");
 
   useEffect(() => { api.adminMe().then(setAdmin).catch(() => {}); }, []);
 
@@ -70,8 +71,12 @@ const AdminPage = () => {
             className={`flex items-center gap-2 px-5 py-2.5 rounded-lg text-sm font-medium transition-all ${activeTab === "services" ? "bg-primary text-primary-foreground" : "bg-secondary text-secondary-foreground hover:bg-muted"}`}>
             <Package className="w-4 h-4" /> {t.admin.servicesManage}
           </button>
+          <button onClick={() => setActiveTab("stats")}
+            className={`flex items-center gap-2 px-5 py-2.5 rounded-lg text-sm font-medium transition-all ${activeTab === "stats" ? "bg-primary text-primary-foreground" : "bg-secondary text-secondary-foreground hover:bg-muted"}`}>
+            <BarChart3 className="w-4 h-4" /> {t.admin.statistics}
+          </button>
         </div>
-        {activeTab === "chats" ? <ChatPanel /> : <ServicesPanel />}
+        {activeTab === "chats" ? <ChatPanel /> : activeTab === "services" ? <ServicesPanel /> : <StatsPanel />}
       </div>
     </div>
   );

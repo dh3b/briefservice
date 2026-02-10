@@ -9,6 +9,7 @@ import chatRouter from "./routes/chat.js";
 import categoriesRouter from "./routes/categories.js";
 import contactRouter from "./routes/contact.js";
 import uploadRouter from "./routes/upload.js";
+import statsRouter from "./routes/stats.js";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
@@ -29,6 +30,7 @@ app.use("/api/chats", chatRouter);
 app.use("/api/categories", categoriesRouter);
 app.use("/api/contact", contactRouter);
 app.use("/api/upload", uploadRouter);
+app.use("/api/stats", statsRouter);
 
 app.get("/api/health", (_req, res) => res.json({ status: "ok" }));
 

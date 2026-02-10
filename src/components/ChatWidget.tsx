@@ -52,6 +52,10 @@ const ChatWidget = ({ serviceId, serviceName, onOpenTriggered }: ChatWidgetProps
     }
   }, [serviceName, chatId, onOpenTriggered]);
 
+  const clearChatCookie = () => {
+    document.cookie = "chat_id=; max-age=0; path=/; SameSite=Lax";
+  };
+
   const ensureChat = useCallback(async () => {
     let id = chatId;
     if (!id) {
@@ -64,7 +68,23 @@ const ChatWidget = ({ serviceId, serviceName, onOpenTriggered }: ChatWidgetProps
         return null;
       }
     } else if (!connected) {
-      setConnected(true);
+      // Validate that the chat still exists by trying to fetch messages
+      try {
+        await fetchMessages(id);
+        setConnected(true);
+      } catch {
+        // Chat no longer exists — clear cookie and create a new one
+        clearChatCookie();
+        setChatId(null);
+        try {
+          const chat = await createChat(userName || "Guest", serviceName || undefined);
+          id = chat.id;
+          setChatId(id);
+          setConnected(true);
+        } catch {
+          return null;
+        }
+      }
     }
     return id;
   }, [chatId, serviceName, connected, userName]);
@@ -190,17 +210,18 @@ const ChatWidget = ({ serviceId, serviceName, onOpenTriggered }: ChatWidgetProps
                 )}
                 {messages.map((msg) => (
                   <div key={msg.id} className={`flex ${msg.sender_type === "user" ? "justify-end" : "justify-start"}`}>
-                    <div className="flex flex-col gap-0.5">
+                    <div className={`flex flex-col gap-0.5 max-w-[80%] ${msg.sender_type === "user" ? "items-end" : "items-start"}`}>
                       <div
-                        className={`max-w-[80%] px-4 py-2.5 rounded-2xl text-sm ${
+                        className={`w-fit px-4 py-2.5 rounded-2xl text-sm break-words overflow-wrap-anywhere ${
                           msg.sender_type === "user"
                             ? "bg-primary text-primary-foreground rounded-br-md"
                             : "bg-secondary text-secondary-foreground rounded-bl-md"
                         }`}
+                        style={{ overflowWrap: "anywhere", wordBreak: "break-word" }}
                       >
                         {msg.content}
                       </div>
-                      <span className={`text-[10px] text-muted-foreground ${msg.sender_type === "user" ? "text-right" : "text-left"}`}>
+                      <span className={`text-[10px] text-muted-foreground px-1 ${msg.sender_type === "user" ? "text-right" : "text-left"}`}>
                         {formatTime(msg.timestamp)}
                       </span>
                     </div>

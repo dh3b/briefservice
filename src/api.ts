@@ -93,3 +93,16 @@ export async function uploadImage(file: File): Promise<string> {
   const data = await res.json();
   return data.url;
 }
+
+// Stats
+export interface VisitStat { country: string; date: string; count: number; }
+export interface ChatStat { service_ref: string; date: string; count: number; }
+
+export const fetchVisitStats = (range: string) =>
+  request<VisitStat[]>(`/stats/visits?range=${range}`);
+
+export const fetchChatStats = (range: string) =>
+  request<ChatStat[]>(`/stats/chats?range=${range}`);
+
+export const recordVisit = (country: string) =>
+  request<{ ok: boolean }>("/stats/visit", { method: "POST", body: JSON.stringify({ country }) });
