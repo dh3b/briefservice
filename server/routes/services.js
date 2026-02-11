@@ -1,8 +1,10 @@
 import { Router } from "express";
 import pool from "../db.js";
 import { requireAdmin } from "./auth.js";
+import v from "../validate.js";
 
 const router = Router();
+const LANGS = ["pl", "en", "de", "fr", "es", "it", "pt", "nl", "cs", "ro", "hu", "sv"];
 
 // GET /api/services
 router.get("/", async (_req, res) => {
@@ -31,13 +33,12 @@ router.get("/:id", async (req, res) => {
 router.post("/", requireAdmin, async (req, res) => {
   try {
     const { category_id, price_range, image_url, ...langFields } = req.body;
-    const langs = ["pl", "en", "de", "fr", "es", "it", "pt", "nl", "cs", "ro", "hu", "sv"];
     const cols = ["category_id", "price_range", "image_url"];
-    const vals = [category_id || null, price_range || "", image_url || ""];
+    const vals = [category_id || null, v.text(price_range, 100) || "", v.url(image_url) || v.text(image_url, 2048) || ""];
 
-    for (const l of langs) {
+    for (const l of LANGS) {
       cols.push(`title_${l}`, `description_${l}`);
-      vals.push(langFields[`title_${l}`] || null, langFields[`description_${l}`] || null);
+      vals.push(v.text(langFields[`title_${l}`], 255) || null, v.text(langFields[`description_${l}`], 500) || null);
     }
 
     const placeholders = vals.map((_, i) => `$${i + 1}`).join(", ");
@@ -56,14 +57,13 @@ router.post("/", requireAdmin, async (req, res) => {
 router.put("/:id", requireAdmin, async (req, res) => {
   try {
     const { category_id, price_range, image_url, ...langFields } = req.body;
-    const langs = ["pl", "en", "de", "fr", "es", "it", "pt", "nl", "cs", "ro", "hu", "sv"];
     const sets = ["category_id = $1", "price_range = $2", "image_url = $3"];
-    const vals = [category_id || null, price_range || "", image_url || ""];
+    const vals = [category_id || null, v.text(price_range, 100) || "", v.url(image_url) || v.text(image_url, 2048) || ""];
 
     let idx = 4;
-    for (const l of langs) {
+    for (const l of LANGS) {
       sets.push(`title_${l} = $${idx}`, `description_${l} = $${idx + 1}`);
-      vals.push(langFields[`title_${l}`] || null, langFields[`description_${l}`] || null);
+      vals.push(v.text(langFields[`title_${l}`], 255) || null, v.text(langFields[`description_${l}`], 500) || null);
       idx += 2;
     }
     vals.push(req.params.id);

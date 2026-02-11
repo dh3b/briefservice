@@ -82,6 +82,7 @@ export interface Chat {
   service_id: string | null;
   service_ref: string | null;
   user_name: string | null;
+  user_email: string | null;
   title: string | null;
   created_at: string;
   last_message?: string;

@@ -1,16 +1,17 @@
 import { Router } from "express";
 import pool from "../db.js";
 import { requireAdmin } from "./auth.js";
+import v from "../validate.js";
 
 const router = Router();
 
 // POST /api/stats/visit — record a page visit (called from frontend)
 router.post("/visit", async (req, res) => {
   try {
-    const { country } = req.body;
+    const country = v.text(req.body.country, 100) || "Unknown";
     await pool.query(
       "INSERT INTO page_visits (country) VALUES ($1)",
-      [country || "Unknown"]
+      [country]
     );
     res.status(201).json({ ok: true });
   } catch (err) {
@@ -22,8 +23,7 @@ router.post("/visit", async (req, res) => {
 // GET /api/stats/visits — aggregated visits by country (admin)
 router.get("/visits", requireAdmin, async (req, res) => {
   try {
-    const { range } = req.query; // "1w", "1m", "6m", "1y"
-    const interval = getInterval(range);
+    const interval = getInterval(v.timeRange(req.query.range));
     const { rows } = await pool.query(
       `SELECT country, DATE(visited_at) AS date, COUNT(*)::int AS count
        FROM page_visits
@@ -42,8 +42,7 @@ router.get("/visits", requireAdmin, async (req, res) => {
 // GET /api/stats/chats — aggregated chats by service type (admin)
 router.get("/chats", requireAdmin, async (req, res) => {
   try {
-    const { range } = req.query;
-    const interval = getInterval(range);
+    const interval = getInterval(v.timeRange(req.query.range));
     const { rows } = await pool.query(
       `SELECT COALESCE(service_ref, 'None') AS service_ref, DATE(created_at) AS date, COUNT(*)::int AS count
        FROM chats

@@ -52,8 +52,8 @@ export const adminMe = () =>
   request<Admin>("/auth/me");
 
 // Chat
-export const createChat = (user_name: string, service_ref?: string | null) =>
-  request<Chat>("/chats", { method: "POST", body: JSON.stringify({ user_name, service_ref }) });
+export const createChat = (user_name: string, user_email: string, service_ref?: string | null) =>
+  request<Chat>("/chats", { method: "POST", body: JSON.stringify({ user_name, user_email, service_ref }) });
 
 export const fetchChats = () =>
   request<Chat[]>("/chats");

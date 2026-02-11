@@ -1,16 +1,28 @@
 import { Router } from "express";
 import pool from "../db.js";
 import { requireAdmin } from "./auth.js";
+import v from "../validate.js";
 
 const router = Router();
+
+function generateChatTitle() {
+  const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+  let suffix = "";
+  for (let i = 0; i < 5; i++) suffix += chars[Math.floor(Math.random() * chars.length)];
+  return `Chat_${suffix}`;
+}
 
 // POST /api/chats — create a new chat session
 router.post("/", async (req, res) => {
   try {
-    const { user_name, service_ref } = req.body;
+    const user_name = v.text(req.body.user_name, 100);
+    const user_email = v.email(req.body.user_email);
+    const service_ref = v.text(req.body.service_ref, 255);
+    const title = generateChatTitle();
+
     const { rows } = await pool.query(
-      "INSERT INTO chats (user_name, service_ref) VALUES ($1, $2) RETURNING *",
-      [user_name || null, service_ref || null]
+      "INSERT INTO chats (user_name, user_email, service_ref, title) VALUES ($1, $2, $3, $4) RETURNING *",
+      [user_name || null, user_email || null, service_ref || null, title]
     );
 
     res.cookie("chat_id", rows[0].id, {
@@ -45,7 +57,6 @@ router.get("/", requireAdmin, async (_req, res) => {
 // GET /api/chats/:id/messages
 router.get("/:id/messages", async (req, res) => {
   try {
-    // First verify the chat exists
     const chatCheck = await pool.query("SELECT id FROM chats WHERE id = $1", [req.params.id]);
     if (chatCheck.rows.length === 0) {
       return res.status(404).json({ error: "Chat not found" });
@@ -64,14 +75,15 @@ router.get("/:id/messages", async (req, res) => {
 // POST /api/chats/:id/messages
 router.post("/:id/messages", async (req, res) => {
   try {
-    const { sender_type, content } = req.body;
-    if (!sender_type || !content) {
-      return res.status(400).json({ error: "sender_type and content required" });
+    const sender = v.senderType(req.body.sender_type);
+    const content = v.text(req.body.content, 500);
+    if (!sender || !content) {
+      return res.status(400).json({ error: "Valid sender_type and content required" });
     }
 
     const { rows } = await pool.query(
       "INSERT INTO messages (chat_id, sender_type, content) VALUES ($1, $2, $3) RETURNING *",
-      [req.params.id, sender_type, content]
+      [req.params.id, sender, content]
     );
     res.status(201).json(rows[0]);
   } catch (err) {
@@ -90,11 +102,11 @@ router.put("/:id", async (req, res) => {
 
     if (title !== undefined) {
       sets.push(`title = $${idx++}`);
-      vals.push(title);
+      vals.push(v.text(title, 255));
     }
     if (service_ref !== undefined) {
       sets.push(`service_ref = $${idx++}`);
-      vals.push(service_ref);
+      vals.push(v.text(service_ref, 255));
     }
 
     if (sets.length === 0) return res.status(400).json({ error: "Nothing to update" });
