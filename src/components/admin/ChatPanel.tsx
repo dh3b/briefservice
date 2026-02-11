@@ -4,7 +4,7 @@ import { MessageSquare, Trash2, Send, Pencil, Check, X, Languages } from "lucide
 import { Chat, Message } from "@/types";
 import * as api from "@/api";
 
-const LIBRETRANSLATE_URL = "https://libretranslate.com/translate";
+const LIBRETRANSLATE_URL = "http://localhost:5000/translate";
 
 const LANG_TO_LT: Record<string, string> = {
   pl: "pl", en: "en", de: "de", fr: "fr", es: "es", it: "it",
