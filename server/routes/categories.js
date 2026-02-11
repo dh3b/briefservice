@@ -1,6 +1,7 @@
 import { Router } from "express";
 import pool from "../db.js";
 import { requireAdmin } from "./auth.js";
+import v from "../validate.js";
 
 const router = Router();
 const LANGS = ["pl", "en", "de", "fr", "es", "it", "pt", "nl", "cs", "ro", "hu", "sv"];
@@ -23,7 +24,7 @@ router.post("/", requireAdmin, async (req, res) => {
     const vals = [];
     for (const l of LANGS) {
       cols.push(`name_${l}`);
-      vals.push(req.body[`name_${l}`] || null);
+      vals.push(v.text(req.body[`name_${l}`], 255) || null);
     }
     const placeholders = vals.map((_, i) => `$${i + 1}`).join(", ");
     const { rows } = await pool.query(
@@ -45,7 +46,7 @@ router.put("/:id", requireAdmin, async (req, res) => {
     let idx = 1;
     for (const l of LANGS) {
       sets.push(`name_${l} = $${idx++}`);
-      vals.push(req.body[`name_${l}`] || null);
+      vals.push(v.text(req.body[`name_${l}`], 255) || null);
     }
     vals.push(req.params.id);
     const { rows } = await pool.query(

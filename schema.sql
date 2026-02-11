@@ -71,6 +71,7 @@ CREATE TABLE chats (
   service_id UUID REFERENCES services(id) ON DELETE SET NULL,
   service_ref TEXT,
   user_name TEXT,
+  user_email VARCHAR(255),
   title TEXT,
   created_at TIMESTAMPTZ DEFAULT NOW()
 );

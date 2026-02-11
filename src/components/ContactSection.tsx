@@ -70,11 +70,11 @@ const ContactSection = () => {
                 <CheckCircle className="w-4 h-4" /> {t.contact.sent}
               </div>
             )}
-            <input type="text" placeholder={t.contact.name} value={form.name} onChange={(e) => setForm({ ...form, name: e.target.value })}
+            <input type="text" placeholder={t.contact.name} value={form.name} maxLength={255} onChange={(e) => setForm({ ...form, name: e.target.value })}
               className="w-full px-4 py-3 rounded-lg bg-card border border-border text-foreground placeholder:text-muted-foreground text-sm focus:ring-2 focus:ring-ring focus:border-transparent outline-none transition-all" />
-            <input type="email" placeholder={t.contact.email} value={form.email} onChange={(e) => setForm({ ...form, email: e.target.value })}
+            <input type="email" placeholder={t.contact.email} value={form.email} maxLength={255} onChange={(e) => setForm({ ...form, email: e.target.value })}
               className="w-full px-4 py-3 rounded-lg bg-card border border-border text-foreground placeholder:text-muted-foreground text-sm focus:ring-2 focus:ring-ring focus:border-transparent outline-none transition-all" />
-            <textarea placeholder={t.contact.message} rows={4} value={form.message} onChange={(e) => setForm({ ...form, message: e.target.value })}
+            <textarea placeholder={t.contact.message} rows={4} value={form.message} maxLength={500} onChange={(e) => setForm({ ...form, message: e.target.value })}
               className="w-full px-4 py-3 rounded-lg bg-card border border-border text-foreground placeholder:text-muted-foreground text-sm focus:ring-2 focus:ring-ring focus:border-transparent outline-none transition-all resize-none" />
             <button type="submit" disabled={sending}
               className="w-full py-3.5 rounded-lg bg-gold-gradient text-accent-foreground font-semibold text-sm hover:shadow-lg transition-all hover:-translate-y-0.5 disabled:opacity-50">

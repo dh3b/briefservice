@@ -1,5 +1,5 @@
 import { useLanguage } from "@/i18n/LanguageContext";
-import { MessageCircle, Send, X, Minimize2 } from "lucide-react";
+import { MessageCircle, Send, X, Minimize2, Languages } from "lucide-react";
 import { useState, useRef, useEffect, useCallback } from "react";
 import { Message } from "@/types";
 import { createChat, fetchMessages, sendMessage as apiSendMessage, updateChat } from "@/api";
@@ -15,37 +15,64 @@ function getChatIdFromCookie(): string | null {
   return match ? decodeURIComponent(match[1]) : null;
 }
 
-function getUserNameFromStorage(): string | null {
-  return localStorage.getItem("chat_user_name");
+function getUserDataFromStorage(): { name: string; email: string } | null {
+  const name = localStorage.getItem("chat_user_name");
+  const email = localStorage.getItem("chat_user_email");
+  return name && email ? { name, email } : null;
 }
 
 const POLL_INTERVAL = 3000;
 
+const LIBRETRANSLATE_URL = "https://libretranslate.com/translate";
+
+const LANG_TO_LT: Record<string, string> = {
+  pl: "pl", en: "en", de: "de", fr: "fr", es: "es", it: "it",
+  pt: "pt", nl: "nl", cs: "cs", ro: "ro", hu: "hu", sv: "sv",
+};
+
+async function translateText(text: string, targetLang: string): Promise<string> {
+  try {
+    const res = await fetch(LIBRETRANSLATE_URL, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ q: text, source: "auto", target: LANG_TO_LT[targetLang] || "en", format: "text" }),
+    });
+    if (!res.ok) return text;
+    const data = await res.json();
+    return data.translatedText || text;
+  } catch {
+    return text;
+  }
+}
+
 const ChatWidget = ({ serviceId, serviceName, onOpenTriggered }: ChatWidgetProps) => {
-  const { t } = useLanguage();
+  const { t, language } = useLanguage();
   const [open, setOpen] = useState(false);
   const [input, setInput] = useState("");
   const [chatId, setChatId] = useState<string | null>(getChatIdFromCookie);
   const [messages, setMessages] = useState<Message[]>([]);
   const [connected, setConnected] = useState(false);
-  const [userName, setUserName] = useState<string | null>(getUserNameFromStorage);
+  const [userData, setUserData] = useState<{ name: string; email: string } | null>(getUserDataFromStorage);
   const [nameInput, setNameInput] = useState("");
+  const [emailInput, setEmailInput] = useState("");
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const pollRef = useRef<ReturnType<typeof setInterval>>();
   const prevServiceRef = useRef<string | null>(null);
 
+  // Translation state
+  const [translated, setTranslated] = useState(false);
+  const [translatedMessages, setTranslatedMessages] = useState<Record<string, string>>({});
+  const [translating, setTranslating] = useState(false);
+
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
-  }, [messages]);
+  }, [messages, translatedMessages]);
 
-  // Handle "chat about this" service change
   useEffect(() => {
     if (serviceName && serviceName !== prevServiceRef.current) {
       prevServiceRef.current = serviceName;
       setOpen(true);
       onOpenTriggered?.();
-
-      // Update service_ref on existing chat
       if (chatId) {
         updateChat(chatId, { service_ref: serviceName }).catch(() => {});
       }
@@ -60,7 +87,7 @@ const ChatWidget = ({ serviceId, serviceName, onOpenTriggered }: ChatWidgetProps
     let id = chatId;
     if (!id) {
       try {
-        const chat = await createChat(userName || "Guest", serviceName || undefined);
+        const chat = await createChat(userData?.name || "Guest", userData?.email || "", serviceName || undefined);
         id = chat.id;
         setChatId(id);
         setConnected(true);
@@ -68,16 +95,14 @@ const ChatWidget = ({ serviceId, serviceName, onOpenTriggered }: ChatWidgetProps
         return null;
       }
     } else if (!connected) {
-      // Validate that the chat still exists by trying to fetch messages
       try {
         await fetchMessages(id);
         setConnected(true);
       } catch {
-        // Chat no longer exists — clear cookie and create a new one
         clearChatCookie();
         setChatId(null);
         try {
-          const chat = await createChat(userName || "Guest", serviceName || undefined);
+          const chat = await createChat(userData?.name || "Guest", userData?.email || "", serviceName || undefined);
           id = chat.id;
           setChatId(id);
           setConnected(true);
@@ -87,10 +112,10 @@ const ChatWidget = ({ serviceId, serviceName, onOpenTriggered }: ChatWidgetProps
       }
     }
     return id;
-  }, [chatId, serviceName, connected, userName]);
+  }, [chatId, serviceName, connected, userData]);
 
   useEffect(() => {
-    if (!open || !userName) return;
+    if (!open || !userData) return;
     const load = async () => {
       const id = await ensureChat();
       if (!id) return;
@@ -99,7 +124,7 @@ const ChatWidget = ({ serviceId, serviceName, onOpenTriggered }: ChatWidgetProps
       } catch {}
     };
     load();
-  }, [open, ensureChat, userName]);
+  }, [open, ensureChat, userData]);
 
   useEffect(() => {
     if (!open || !chatId) return;
@@ -113,16 +138,19 @@ const ChatWidget = ({ serviceId, serviceName, onOpenTriggered }: ChatWidgetProps
 
   const handleNameSubmit = () => {
     const name = nameInput.trim();
-    if (!name) return;
-    setUserName(name);
+    const email = emailInput.trim();
+    if (!name || !email) return;
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) return;
+    setUserData({ name, email });
     localStorage.setItem("chat_user_name", name);
+    localStorage.setItem("chat_user_email", email);
   };
 
   const handleSend = async () => {
     if (!input.trim()) return;
     const id = await ensureChat();
     if (!id) return;
-    const content = input.trim();
+    const content = input.trim().slice(0, 500);
     setInput("");
     const optimistic: Message = {
       id: `temp-${Date.now()}`,
@@ -135,6 +163,21 @@ const ChatWidget = ({ serviceId, serviceName, onOpenTriggered }: ChatWidgetProps
     try {
       await apiSendMessage(id, "user", content);
     } catch {}
+  };
+
+  const handleTranslate = async () => {
+    if (translated) {
+      setTranslated(false);
+      return;
+    }
+    setTranslating(true);
+    const map: Record<string, string> = {};
+    for (const msg of messages) {
+      map[msg.id] = await translateText(msg.content, language);
+    }
+    setTranslatedMessages(map);
+    setTranslated(true);
+    setTranslating(false);
   };
 
   const formatTime = (ts: string) => {
@@ -172,16 +215,22 @@ const ChatWidget = ({ serviceId, serviceName, onOpenTriggered }: ChatWidgetProps
             </div>
           </div>
 
-          {!userName ? (
-            /* Name prompt */
+          {!userData ? (
             <div className="flex-1 flex flex-col items-center justify-center p-6 gap-4">
               <p className="text-sm text-muted-foreground text-center">{t.chat.namePrompt}</p>
               <input
                 type="text"
                 value={nameInput}
-                onChange={(e) => setNameInput(e.target.value)}
-                onKeyDown={(e) => e.key === "Enter" && handleNameSubmit()}
+                onChange={(e) => setNameInput(e.target.value.slice(0, 100))}
                 placeholder={t.chat.namePlaceholder}
+                className="w-full px-4 py-2.5 rounded-xl bg-secondary text-foreground placeholder:text-muted-foreground text-sm outline-none focus:ring-2 focus:ring-ring"
+              />
+              <input
+                type="email"
+                value={emailInput}
+                onChange={(e) => setEmailInput(e.target.value.slice(0, 255))}
+                onKeyDown={(e) => e.key === "Enter" && handleNameSubmit()}
+                placeholder={t.chat.emailPlaceholder}
                 className="w-full px-4 py-2.5 rounded-xl bg-secondary text-foreground placeholder:text-muted-foreground text-sm outline-none focus:ring-2 focus:ring-ring"
               />
               <button
@@ -208,33 +257,53 @@ const ChatWidget = ({ serviceId, serviceName, onOpenTriggered }: ChatWidgetProps
                     </span>
                   </div>
                 )}
-                {messages.map((msg) => (
-                  <div key={msg.id} className={`flex ${msg.sender_type === "user" ? "justify-end" : "justify-start"}`}>
-                    <div className={`flex flex-col gap-0.5 max-w-[80%] ${msg.sender_type === "user" ? "items-end" : "items-start"}`}>
-                      <div
-                        className={`w-fit px-4 py-2.5 rounded-2xl text-sm break-words overflow-wrap-anywhere ${
-                          msg.sender_type === "user"
-                            ? "bg-primary text-primary-foreground rounded-br-md"
-                            : "bg-secondary text-secondary-foreground rounded-bl-md"
-                        }`}
-                        style={{ overflowWrap: "anywhere", wordBreak: "break-word" }}
-                      >
-                        {msg.content}
+                {messages.map((msg) => {
+                  const displayContent = translated && translatedMessages[msg.id] ? translatedMessages[msg.id] : msg.content;
+                  return (
+                    <div key={msg.id} className={`flex ${msg.sender_type === "user" ? "justify-end" : "justify-start"}`}>
+                      <div className={`max-w-[80%] flex flex-col gap-0.5 ${msg.sender_type === "user" ? "items-end" : "items-start"}`}>
+                        <div
+                          className={`px-4 py-2.5 rounded-2xl text-sm ${
+                            msg.sender_type === "user"
+                              ? "bg-primary text-primary-foreground rounded-br-md"
+                              : "bg-secondary text-secondary-foreground rounded-bl-md"
+                          }`}
+                          style={{ overflowWrap: "anywhere", wordBreak: "break-word" }}
+                        >
+                          {translated && translatedMessages[msg.id] ? (
+                            <span className="font-semibold">{displayContent}</span>
+                          ) : (
+                            displayContent
+                          )}
+                        </div>
+                        <span className={`text-[10px] text-muted-foreground px-1 ${msg.sender_type === "user" ? "text-right" : "text-left"}`}>
+                          {formatTime(msg.timestamp)}
+                        </span>
                       </div>
-                      <span className={`text-[10px] text-muted-foreground px-1 ${msg.sender_type === "user" ? "text-right" : "text-left"}`}>
-                        {formatTime(msg.timestamp)}
-                      </span>
                     </div>
-                  </div>
-                ))}
+                  );
+                })}
                 <div ref={messagesEndRef} />
               </div>
+
+              {messages.length > 0 && (
+                <div className="px-4 pb-2 flex-shrink-0">
+                  <button
+                    onClick={handleTranslate}
+                    disabled={translating}
+                    className="w-full flex items-center justify-center gap-2 py-2 text-xs font-bold text-accent-foreground hover:underline disabled:opacity-50 transition-opacity"
+                  >
+                    <Languages className="w-3.5 h-3.5" />
+                    {translating ? "..." : translated ? t.chat.showOriginal : t.chat.translateAll}
+                  </button>
+                </div>
+              )}
 
               <div className="border-t border-border p-3 flex gap-2 flex-shrink-0">
                 <input
                   type="text"
                   value={input}
-                  onChange={(e) => setInput(e.target.value)}
+                  onChange={(e) => setInput(e.target.value.slice(0, 500))}
                   onKeyDown={(e) => e.key === "Enter" && handleSend()}
                   placeholder={t.chat.placeholder}
                   className="flex-1 px-4 py-2.5 rounded-xl bg-secondary text-foreground placeholder:text-muted-foreground text-sm outline-none focus:ring-2 focus:ring-ring"
