@@ -10,13 +10,14 @@ import categoriesRouter from "./routes/categories.js";
 import contactRouter from "./routes/contact.js";
 import uploadRouter from "./routes/upload.js";
 import statsRouter from "./routes/stats.js";
+import { PORT, CORS_ORIGINS } from "./config.js";
+import { errorMiddleware } from "./middleware/errorHandler.js";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 const app = express();
-const PORT = process.env.PORT || 3001;
 
-app.use(cors({ origin: process.env.CORS_ORIGIN || ["http://localhost:8080", "http://localhost:5173"], credentials: true }));
+app.use(cors({ origin: CORS_ORIGINS, credentials: true }));
 app.use(express.json());
 app.use(cookieParser());
 
@@ -33,6 +34,9 @@ app.use("/api/upload", uploadRouter);
 app.use("/api/stats", statsRouter);
 
 app.get("/api/health", (_req, res) => res.json({ status: "ok" }));
+
+// Centralized error handling — replaces per-route try/catch
+app.use(errorMiddleware);
 
 app.listen(PORT, () => {
   console.log(`Server running on http://localhost:${PORT}`);

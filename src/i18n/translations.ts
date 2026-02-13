@@ -14,6 +14,7 @@ const base = {
     filterAll: "", noData: "",
   },
   footer: { rights: "", description: "" },
+  notFound: { title: "", goHome: "" },
 };
 
 type TranslationShape = typeof base;
@@ -39,6 +40,7 @@ const pl: TranslationShape = {
     week: "Tydzień", month: "Miesiąc", halfYear: "Pół roku", year: "Rok", filterAll: "Wszystkie", noData: "Brak danych",
   },
   footer: { rights: "Wszelkie prawa zastrzeżone.", description: "Profesjonalne usługi dla Twojego biznesu." },
+  notFound: { title: "Ups! Strona nie znaleziona", goHome: "Wróć na stronę główną" },
 };
 
 const en: TranslationShape = {
@@ -62,6 +64,7 @@ const en: TranslationShape = {
     week: "Week", month: "Month", halfYear: "Half Year", year: "Year", filterAll: "All", noData: "No data",
   },
   footer: { rights: "All rights reserved.", description: "Professional services for your business." },
+  notFound: { title: "Oops! Page not found", goHome: "Return to Home" },
 };
 
 const de: TranslationShape = {
@@ -72,6 +75,7 @@ const de: TranslationShape = {
   chat: { title: "Live-Chat", placeholder: "Nachricht eingeben...", send: "Senden", greeting: "Hallo! Wie können wir Ihnen helfen?", serviceContext: "Frage zum Service:", namePrompt: "Geben Sie Ihre Daten ein:", namePlaceholder: "Ihr Name...", emailPlaceholder: "Ihre E-Mail...", nameSubmit: "Chat starten", translateAll: "Nachrichten übersetzen", showOriginal: "Original anzeigen" },
   admin: { login: "Anmelden", username: "Benutzername", password: "Passwort", signIn: "Einloggen", dashboard: "Admin-Dashboard", chats: "Chats", servicesManage: "Leistungen verwalten", noChats: "Keine aktiven Chats", deleteChat: "Chat löschen", addService: "Leistung hinzufügen", editService: "Bearbeiten", deleteService: "Löschen", logout: "Abmelden", addCategory: "Kategorie hinzufügen", editCategory: "Kategorie bearbeiten", deleteCategory: "Löschen", categories: "Kategorien", saveService: "Leistung speichern", saveCategory: "Kategorie speichern", renameChat: "Umbenennen", chatTitle: "Chat-Titel", chatUser: "Benutzer", chatEmail: "E-Mail", imageUrl: "Bild-URL", uploadImage: "Bild hochladen", priceRange: "Preisbereich", category: "Kategorie", titleField: "Titel", descriptionField: "Beschreibung", languageTab: "Sprache", cancel: "Abbrechen", save: "Speichern", noServices: "Keine Leistungen", noCategories: "Keine Kategorien", statistics: "Statistiken", visits: "Website-Besuche", chatsByService: "Chats nach Service", timeRange: "Zeitraum", week: "Woche", month: "Monat", halfYear: "Halbjahr", year: "Jahr", filterAll: "Alle", noData: "Keine Daten" },
   footer: { rights: "Alle Rechte vorbehalten.", description: "Professionelle Dienstleistungen für Ihr Unternehmen." },
+  notFound: { title: "Hoppla! Seite nicht gefunden", goHome: "Zurück zur Startseite" },
 };
 
 const fr: TranslationShape = {
@@ -82,6 +86,7 @@ const fr: TranslationShape = {
   chat: { title: "Chat en direct", placeholder: "Écrire un message...", send: "Envoyer", greeting: "Bonjour ! Comment pouvons-nous vous aider ?", serviceContext: "Question sur le service :", namePrompt: "Entrez vos coordonnées :", namePlaceholder: "Votre nom...", emailPlaceholder: "Votre e-mail...", nameSubmit: "Démarrer le chat", translateAll: "Traduire les messages", showOriginal: "Afficher les originaux" },
   admin: { login: "Connexion", username: "Utilisateur", password: "Mot de passe", signIn: "Se connecter", dashboard: "Tableau de bord", chats: "Chats", servicesManage: "Gérer les services", noChats: "Aucun chat actif", deleteChat: "Supprimer", addService: "Ajouter un service", editService: "Modifier", deleteService: "Supprimer", logout: "Déconnexion", addCategory: "Ajouter une catégorie", editCategory: "Modifier la catégorie", deleteCategory: "Supprimer", categories: "Catégories", saveService: "Enregistrer", saveCategory: "Enregistrer", renameChat: "Renommer", chatTitle: "Titre du chat", chatUser: "Utilisateur", chatEmail: "E-mail", imageUrl: "URL de l'image", uploadImage: "Télécharger", priceRange: "Fourchette de prix", category: "Catégorie", titleField: "Titre", descriptionField: "Description", languageTab: "Langue", cancel: "Annuler", save: "Enregistrer", noServices: "Aucun service", noCategories: "Aucune catégorie", statistics: "Statistiques", visits: "Visites du site", chatsByService: "Chats par service", timeRange: "Période", week: "Semaine", month: "Mois", halfYear: "Semestre", year: "Année", filterAll: "Tous", noData: "Aucune donnée" },
   footer: { rights: "Tous droits réservés.", description: "Services professionnels pour votre entreprise." },
+  notFound: { title: "Oups ! Page non trouvée", goHome: "Retour à l'accueil" },
 };
 
 const es: TranslationShape = {
@@ -92,6 +97,7 @@ const es: TranslationShape = {
   chat: { title: "Chat en vivo", placeholder: "Escribir mensaje...", send: "Enviar", greeting: "¡Hola! ¿Cómo podemos ayudarle?", serviceContext: "Pregunta sobre el servicio:", namePrompt: "Ingrese sus datos para comenzar:", namePlaceholder: "Su nombre...", emailPlaceholder: "Su correo...", nameSubmit: "Iniciar chat", translateAll: "Traducir mensajes", showOriginal: "Mostrar originales" },
   admin: { login: "Iniciar sesión", username: "Usuario", password: "Contraseña", signIn: "Entrar", dashboard: "Panel de control", chats: "Chats", servicesManage: "Gestionar servicios", noChats: "Sin chats activos", deleteChat: "Eliminar", addService: "Añadir servicio", editService: "Editar", deleteService: "Eliminar", logout: "Cerrar sesión", addCategory: "Añadir categoría", editCategory: "Editar categoría", deleteCategory: "Eliminar", categories: "Categorías", saveService: "Guardar", saveCategory: "Guardar", renameChat: "Renombrar", chatTitle: "Título del chat", chatUser: "Usuario", chatEmail: "E-mail", imageUrl: "URL de imagen", uploadImage: "Subir imagen", priceRange: "Rango de precios", category: "Categoría", titleField: "Título", descriptionField: "Descripción", languageTab: "Idioma", cancel: "Cancelar", save: "Guardar", noServices: "Sin servicios", noCategories: "Sin categorías", statistics: "Estadísticas", visits: "Visitas al sitio", chatsByService: "Chats por servicio", timeRange: "Período", week: "Semana", month: "Mes", halfYear: "Semestre", year: "Año", filterAll: "Todos", noData: "Sin datos" },
   footer: { rights: "Todos los derechos reservados.", description: "Servicios profesionales para su negocio." },
+  notFound: { title: "¡Ups! Página no encontrada", goHome: "Volver al inicio" },
 };
 
 const it: TranslationShape = {
@@ -102,6 +108,7 @@ const it: TranslationShape = {
   chat: { title: "Chat dal vivo", placeholder: "Scrivi un messaggio...", send: "Invia", greeting: "Ciao! Come possiamo aiutarti?", serviceContext: "Domanda sul servizio:", namePrompt: "Inserisci i tuoi dati per iniziare:", namePlaceholder: "Il tuo nome...", emailPlaceholder: "La tua email...", nameSubmit: "Inizia chat", translateAll: "Traduci messaggi", showOriginal: "Mostra originali" },
   admin: { login: "Accesso", username: "Utente", password: "Password", signIn: "Accedi", dashboard: "Dashboard", chats: "Chat", servicesManage: "Gestisci servizi", noChats: "Nessuna chat attiva", deleteChat: "Elimina", addService: "Aggiungi servizio", editService: "Modifica", deleteService: "Elimina", logout: "Esci", addCategory: "Aggiungi categoria", editCategory: "Modifica categoria", deleteCategory: "Elimina", categories: "Categorie", saveService: "Salva", saveCategory: "Salva", renameChat: "Rinomina", chatTitle: "Titolo chat", chatUser: "Utente", chatEmail: "E-mail", imageUrl: "URL immagine", uploadImage: "Carica immagine", priceRange: "Fascia di prezzo", category: "Categoria", titleField: "Titolo", descriptionField: "Descrizione", languageTab: "Lingua", cancel: "Annulla", save: "Salva", noServices: "Nessun servizio", noCategories: "Nessuna categoria", statistics: "Statistiche", visits: "Visite al sito", chatsByService: "Chat per servizio", timeRange: "Periodo", week: "Settimana", month: "Mese", halfYear: "Semestre", year: "Anno", filterAll: "Tutti", noData: "Nessun dato" },
   footer: { rights: "Tutti i diritti riservati.", description: "Servizi professionali per la tua azienda." },
+  notFound: { title: "Ops! Pagina non trovata", goHome: "Torna alla home" },
 };
 
 const pt: TranslationShape = {
@@ -112,6 +119,7 @@ const pt: TranslationShape = {
   chat: { title: "Chat ao vivo", placeholder: "Escrever mensagem...", send: "Enviar", greeting: "Olá! Como podemos ajudar?", serviceContext: "Pergunta sobre o serviço:", namePrompt: "Insira os seus dados para começar:", namePlaceholder: "O seu nome...", emailPlaceholder: "O seu e-mail...", nameSubmit: "Iniciar chat", translateAll: "Traduzir mensagens", showOriginal: "Mostrar originais" },
   admin: { login: "Entrar", username: "Utilizador", password: "Senha", signIn: "Entrar", dashboard: "Painel de controlo", chats: "Chats", servicesManage: "Gerir serviços", noChats: "Sem chats ativos", deleteChat: "Eliminar", addService: "Adicionar serviço", editService: "Editar", deleteService: "Eliminar", logout: "Sair", addCategory: "Adicionar categoria", editCategory: "Editar categoria", deleteCategory: "Eliminar", categories: "Categorias", saveService: "Guardar", saveCategory: "Guardar", renameChat: "Renomear", chatTitle: "Título do chat", chatUser: "Utilizador", chatEmail: "E-mail", imageUrl: "URL da imagem", uploadImage: "Carregar imagem", priceRange: "Faixa de preço", category: "Categoria", titleField: "Título", descriptionField: "Descrição", languageTab: "Idioma", cancel: "Cancelar", save: "Guardar", noServices: "Sem serviços", noCategories: "Sem categorias", statistics: "Estatísticas", visits: "Visitas ao site", chatsByService: "Chats por serviço", timeRange: "Período", week: "Semana", month: "Mês", halfYear: "Semestre", year: "Ano", filterAll: "Todos", noData: "Sem dados" },
   footer: { rights: "Todos os direitos reservados.", description: "Serviços profissionais para o seu negócio." },
+  notFound: { title: "Ops! Página não encontrada", goHome: "Voltar ao início" },
 };
 
 const nl: TranslationShape = {
@@ -122,6 +130,7 @@ const nl: TranslationShape = {
   chat: { title: "Live Chat", placeholder: "Typ een bericht...", send: "Versturen", greeting: "Hallo! Hoe kunnen we u helpen?", serviceContext: "Vraag over dienst:", namePrompt: "Vul uw gegevens in om te beginnen:", namePlaceholder: "Uw naam...", emailPlaceholder: "Uw e-mail...", nameSubmit: "Start chat", translateAll: "Vertaal berichten", showOriginal: "Toon originelen" },
   admin: { login: "Inloggen", username: "Gebruikersnaam", password: "Wachtwoord", signIn: "Inloggen", dashboard: "Dashboard", chats: "Chats", servicesManage: "Diensten beheren", noChats: "Geen actieve chats", deleteChat: "Verwijderen", addService: "Dienst toevoegen", editService: "Bewerken", deleteService: "Verwijderen", logout: "Uitloggen", addCategory: "Categorie toevoegen", editCategory: "Categorie bewerken", deleteCategory: "Verwijderen", categories: "Categorieën", saveService: "Opslaan", saveCategory: "Opslaan", renameChat: "Hernoemen", chatTitle: "Chattitel", chatUser: "Gebruiker", chatEmail: "E-mail", imageUrl: "Afbeelding URL", uploadImage: "Afbeelding uploaden", priceRange: "Prijsklasse", category: "Categorie", titleField: "Titel", descriptionField: "Beschrijving", languageTab: "Taal", cancel: "Annuleren", save: "Opslaan", noServices: "Geen diensten", noCategories: "Geen categorieën", statistics: "Statistieken", visits: "Websitebezoeken", chatsByService: "Chats per dienst", timeRange: "Periode", week: "Week", month: "Maand", halfYear: "Halfjaar", year: "Jaar", filterAll: "Alle", noData: "Geen gegevens" },
   footer: { rights: "Alle rechten voorbehouden.", description: "Professionele diensten voor uw bedrijf." },
+  notFound: { title: "Oeps! Pagina niet gevonden", goHome: "Terug naar home" },
 };
 
 const cs: TranslationShape = {
@@ -132,6 +141,7 @@ const cs: TranslationShape = {
   chat: { title: "Živý chat", placeholder: "Napište zprávu...", send: "Odeslat", greeting: "Ahoj! Jak vám můžeme pomoci?", serviceContext: "Dotaz ke službě:", namePrompt: "Zadejte své údaje pro zahájení:", namePlaceholder: "Vaše jméno...", emailPlaceholder: "Váš e-mail...", nameSubmit: "Zahájit chat", translateAll: "Přeložit zprávy", showOriginal: "Zobrazit originály" },
   admin: { login: "Přihlášení", username: "Uživatel", password: "Heslo", signIn: "Přihlásit", dashboard: "Administrace", chats: "Chaty", servicesManage: "Správa služeb", noChats: "Žádné aktivní chaty", deleteChat: "Smazat", addService: "Přidat službu", editService: "Upravit", deleteService: "Smazat", logout: "Odhlásit", addCategory: "Přidat kategorii", editCategory: "Upravit kategorii", deleteCategory: "Smazat", categories: "Kategorie", saveService: "Uložit", saveCategory: "Uložit", renameChat: "Přejmenovat", chatTitle: "Název chatu", chatUser: "Uživatel", chatEmail: "E-mail", imageUrl: "URL obrázku", uploadImage: "Nahrát obrázek", priceRange: "Cenové rozpětí", category: "Kategorie", titleField: "Název", descriptionField: "Popis", languageTab: "Jazyk", cancel: "Zrušit", save: "Uložit", noServices: "Žádné služby", noCategories: "Žádné kategorie", statistics: "Statistiky", visits: "Návštěvy webu", chatsByService: "Chaty dle služby", timeRange: "Období", week: "Týden", month: "Měsíc", halfYear: "Půl roku", year: "Rok", filterAll: "Vše", noData: "Žádná data" },
   footer: { rights: "Všechna práva vyhrazena.", description: "Profesionální služby pro vaše podnikání." },
+  notFound: { title: "Jejda! Stránka nenalezena", goHome: "Zpět na úvodní stránku" },
 };
 
 const ro: TranslationShape = {
@@ -142,6 +152,7 @@ const ro: TranslationShape = {
   chat: { title: "Chat live", placeholder: "Scrieți un mesaj...", send: "Trimite", greeting: "Bună! Cum vă putem ajuta?", serviceContext: "Întrebare despre serviciu:", namePrompt: "Introduceți datele pentru a începe:", namePlaceholder: "Numele dvs...", emailPlaceholder: "Email-ul dvs...", nameSubmit: "Începe chat", translateAll: "Traduce mesajele", showOriginal: "Arată originalele" },
   admin: { login: "Autentificare", username: "Utilizator", password: "Parolă", signIn: "Conectare", dashboard: "Panou de control", chats: "Chaturi", servicesManage: "Gestionare servicii", noChats: "Niciun chat activ", deleteChat: "Șterge", addService: "Adaugă serviciu", editService: "Editează", deleteService: "Șterge", logout: "Deconectare", addCategory: "Adaugă categorie", editCategory: "Editează categoria", deleteCategory: "Șterge", categories: "Categorii", saveService: "Salvează", saveCategory: "Salvează", renameChat: "Redenumește", chatTitle: "Titlul chatului", chatUser: "Utilizator", chatEmail: "E-mail", imageUrl: "URL imagine", uploadImage: "Încarcă imagine", priceRange: "Interval preț", category: "Categorie", titleField: "Titlu", descriptionField: "Descriere", languageTab: "Limbă", cancel: "Anulează", save: "Salvează", noServices: "Niciun serviciu", noCategories: "Nicio categorie", statistics: "Statistici", visits: "Vizite pe site", chatsByService: "Chaturi pe serviciu", timeRange: "Perioadă", week: "Săptămână", month: "Lună", halfYear: "Semestru", year: "An", filterAll: "Toate", noData: "Fără date" },
   footer: { rights: "Toate drepturile rezervate.", description: "Servicii profesionale pentru afacerea ta." },
+  notFound: { title: "Ups! Pagina nu a fost găsită", goHome: "Înapoi la pagina principală" },
 };
 
 const hu: TranslationShape = {
@@ -152,6 +163,7 @@ const hu: TranslationShape = {
   chat: { title: "Élő chat", placeholder: "Írjon üzenetet...", send: "Küldés", greeting: "Szia! Miben segíthetünk?", serviceContext: "Kérdés a szolgáltatásról:", namePrompt: "Adja meg adatait a kezdéshez:", namePlaceholder: "Az Ön neve...", emailPlaceholder: "Az Ön e-mailje...", nameSubmit: "Chat indítása", translateAll: "Üzenetek fordítása", showOriginal: "Eredetiek megjelenítése" },
   admin: { login: "Bejelentkezés", username: "Felhasználó", password: "Jelszó", signIn: "Belépés", dashboard: "Vezérlőpult", chats: "Csevegések", servicesManage: "Szolgáltatások kezelése", noChats: "Nincs aktív csevegés", deleteChat: "Törlés", addService: "Szolgáltatás hozzáadása", editService: "Szerkesztés", deleteService: "Törlés", logout: "Kijelentkezés", addCategory: "Kategória hozzáadása", editCategory: "Kategória szerkesztése", deleteCategory: "Törlés", categories: "Kategóriák", saveService: "Mentés", saveCategory: "Mentés", renameChat: "Átnevezés", chatTitle: "Chat címe", chatUser: "Felhasználó", chatEmail: "E-mail", imageUrl: "Kép URL", uploadImage: "Kép feltöltése", priceRange: "Árkategória", category: "Kategória", titleField: "Cím", descriptionField: "Leírás", languageTab: "Nyelv", cancel: "Mégse", save: "Mentés", noServices: "Nincs szolgáltatás", noCategories: "Nincs kategória", statistics: "Statisztikák", visits: "Weboldal látogatások", chatsByService: "Csevegések szolgáltatás szerint", timeRange: "Időszak", week: "Hét", month: "Hónap", halfYear: "Félév", year: "Év", filterAll: "Összes", noData: "Nincs adat" },
   footer: { rights: "Minden jog fenntartva.", description: "Professzionális szolgáltatások vállalkozása számára." },
+  notFound: { title: "Hoppá! Az oldal nem található", goHome: "Vissza a főoldalra" },
 };
 
 const sv: TranslationShape = {
@@ -162,6 +174,7 @@ const sv: TranslationShape = {
   chat: { title: "Livechatt", placeholder: "Skriv ett meddelande...", send: "Skicka", greeting: "Hej! Hur kan vi hjälpa dig?", serviceContext: "Fråga om tjänst:", namePrompt: "Ange dina uppgifter för att börja:", namePlaceholder: "Ditt namn...", emailPlaceholder: "Din e-post...", nameSubmit: "Starta chatt", translateAll: "Översätt meddelanden", showOriginal: "Visa original" },
   admin: { login: "Logga in", username: "Användarnamn", password: "Lösenord", signIn: "Logga in", dashboard: "Kontrollpanel", chats: "Chattar", servicesManage: "Hantera tjänster", noChats: "Inga aktiva chattar", deleteChat: "Ta bort", addService: "Lägg till tjänst", editService: "Redigera", deleteService: "Ta bort", logout: "Logga ut", addCategory: "Lägg till kategori", editCategory: "Redigera kategori", deleteCategory: "Ta bort", categories: "Kategorier", saveService: "Spara", saveCategory: "Spara", renameChat: "Byt namn", chatTitle: "Chattitel", chatUser: "Användare", chatEmail: "E-post", imageUrl: "Bild-URL", uploadImage: "Ladda upp bild", priceRange: "Prisklass", category: "Kategori", titleField: "Titel", descriptionField: "Beskrivning", languageTab: "Språk", cancel: "Avbryt", save: "Spara", noServices: "Inga tjänster", noCategories: "Inga kategorier", statistics: "Statistik", visits: "Webbplatsbesök", chatsByService: "Chattar per tjänst", timeRange: "Tidsperiod", week: "Vecka", month: "Månad", halfYear: "Halvår", year: "År", filterAll: "Alla", noData: "Ingen data" },
   footer: { rights: "Alla rättigheter förbehållna.", description: "Professionella tjänster för ditt företag." },
+  notFound: { title: "Hoppsan! Sidan hittades inte", goHome: "Tillbaka till startsidan" },
 };
 
 export const translations = { pl, en, de, fr, es, it, pt, nl, cs, ro, hu, sv } as const;

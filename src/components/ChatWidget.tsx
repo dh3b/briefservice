@@ -3,6 +3,9 @@ import { MessageCircle, Send, X, Minimize2, Languages } from "lucide-react";
 import { useState, useRef, useEffect, useCallback } from "react";
 import { Message } from "@/types";
 import { createChat, fetchMessages, sendMessage as apiSendMessage, updateChat } from "@/api";
+import { translateText } from "@/lib/translate";
+import { POLL_INTERVAL_MESSAGES, MAX_MESSAGE_LEN, MAX_NAME_LEN, MAX_EMAIL_LEN, EMAIL_REGEX } from "@/config";
+import ChatBubble from "./ChatBubble";
 
 interface ChatWidgetProps {
   serviceId?: string | null;
@@ -21,29 +24,7 @@ function getUserDataFromStorage(): { name: string; email: string } | null {
   return name && email ? { name, email } : null;
 }
 
-const POLL_INTERVAL = 3000;
 
-const LIBRETRANSLATE_URL = "http://localhost:5000/translate";
-
-const LANG_TO_LT: Record<string, string> = {
-  pl: "pl", en: "en", de: "de", fr: "fr", es: "es", it: "it",
-  pt: "pt", nl: "nl", cs: "cs", ro: "ro", hu: "hu", sv: "sv",
-};
-
-async function translateText(text: string, targetLang: string): Promise<string> {
-  try {
-    const res = await fetch(LIBRETRANSLATE_URL, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ q: text, source: "auto", target: LANG_TO_LT[targetLang] || "en", format: "text" }),
-    });
-    if (!res.ok) return text;
-    const data = await res.json();
-    return data.translatedText || text;
-  } catch {
-    return text;
-  }
-}
 
 const ChatWidget = ({ serviceId, serviceName, onOpenTriggered }: ChatWidgetProps) => {
   const { t, language } = useLanguage();
@@ -132,7 +113,7 @@ const ChatWidget = ({ serviceId, serviceName, onOpenTriggered }: ChatWidgetProps
       try {
         setMessages(await fetchMessages(chatId));
       } catch {}
-    }, POLL_INTERVAL);
+    }, POLL_INTERVAL_MESSAGES);
     return () => clearInterval(pollRef.current);
   }, [open, chatId]);
 
@@ -140,7 +121,7 @@ const ChatWidget = ({ serviceId, serviceName, onOpenTriggered }: ChatWidgetProps
     const name = nameInput.trim();
     const email = emailInput.trim();
     if (!name || !email) return;
-    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) return;
+    if (!EMAIL_REGEX.test(email)) return;
     setUserData({ name, email });
     localStorage.setItem("chat_user_name", name);
     localStorage.setItem("chat_user_email", email);
@@ -150,7 +131,7 @@ const ChatWidget = ({ serviceId, serviceName, onOpenTriggered }: ChatWidgetProps
     if (!input.trim()) return;
     const id = await ensureChat();
     if (!id) return;
-    const content = input.trim().slice(0, 500);
+    const content = input.trim().slice(0, MAX_MESSAGE_LEN);
     setInput("");
     const optimistic: Message = {
       id: `temp-${Date.now()}`,
@@ -178,11 +159,6 @@ const ChatWidget = ({ serviceId, serviceName, onOpenTriggered }: ChatWidgetProps
     setTranslatedMessages(map);
     setTranslated(true);
     setTranslating(false);
-  };
-
-  const formatTime = (ts: string) => {
-    const d = new Date(ts);
-    return d.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
   };
 
   return (
@@ -221,14 +197,14 @@ const ChatWidget = ({ serviceId, serviceName, onOpenTriggered }: ChatWidgetProps
               <input
                 type="text"
                 value={nameInput}
-                onChange={(e) => setNameInput(e.target.value.slice(0, 100))}
+                onChange={(e) => setNameInput(e.target.value.slice(0, MAX_NAME_LEN))}
                 placeholder={t.chat.namePlaceholder}
                 className="w-full px-4 py-2.5 rounded-xl bg-secondary text-foreground placeholder:text-muted-foreground text-sm outline-none focus:ring-2 focus:ring-ring"
               />
               <input
                 type="email"
                 value={emailInput}
-                onChange={(e) => setEmailInput(e.target.value.slice(0, 255))}
+                onChange={(e) => setEmailInput(e.target.value.slice(0, MAX_EMAIL_LEN))}
                 onKeyDown={(e) => e.key === "Enter" && handleNameSubmit()}
                 placeholder={t.chat.emailPlaceholder}
                 className="w-full px-4 py-2.5 rounded-xl bg-secondary text-foreground placeholder:text-muted-foreground text-sm outline-none focus:ring-2 focus:ring-ring"
@@ -257,32 +233,16 @@ const ChatWidget = ({ serviceId, serviceName, onOpenTriggered }: ChatWidgetProps
                     </span>
                   </div>
                 )}
-                {messages.map((msg) => {
-                  const displayContent = translated && translatedMessages[msg.id] ? translatedMessages[msg.id] : msg.content;
-                  return (
-                    <div key={msg.id} className={`flex ${msg.sender_type === "user" ? "justify-end" : "justify-start"}`}>
-                      <div className={`max-w-[80%] flex flex-col gap-0.5 ${msg.sender_type === "user" ? "items-end" : "items-start"}`}>
-                        <div
-                          className={`px-4 py-2.5 rounded-2xl text-sm ${
-                            msg.sender_type === "user"
-                              ? "bg-primary text-primary-foreground rounded-br-md"
-                              : "bg-secondary text-secondary-foreground rounded-bl-md"
-                          }`}
-                          style={{ overflowWrap: "anywhere", wordBreak: "break-word" }}
-                        >
-                          {translated && translatedMessages[msg.id] ? (
-                            <span className="font-semibold">{displayContent}</span>
-                          ) : (
-                            displayContent
-                          )}
-                        </div>
-                        <span className={`text-[10px] text-muted-foreground px-1 ${msg.sender_type === "user" ? "text-right" : "text-left"}`}>
-                          {formatTime(msg.timestamp)}
-                        </span>
-                      </div>
-                    </div>
-                  );
-                })}
+                {messages.map((msg) => (
+                  <ChatBubble
+                    key={msg.id}
+                    content={msg.content}
+                    translatedContent={translatedMessages[msg.id]}
+                    isTranslated={translated}
+                    isOwnMessage={msg.sender_type === "user"}
+                    timestamp={msg.timestamp}
+                  />
+                ))}
                 <div ref={messagesEndRef} />
               </div>
 
@@ -303,7 +263,7 @@ const ChatWidget = ({ serviceId, serviceName, onOpenTriggered }: ChatWidgetProps
                 <input
                   type="text"
                   value={input}
-                  onChange={(e) => setInput(e.target.value.slice(0, 500))}
+                  onChange={(e) => setInput(e.target.value.slice(0, MAX_MESSAGE_LEN))}
                   onKeyDown={(e) => e.key === "Enter" && handleSend()}
                   placeholder={t.chat.placeholder}
                   className="flex-1 px-4 py-2.5 rounded-xl bg-secondary text-foreground placeholder:text-muted-foreground text-sm outline-none focus:ring-2 focus:ring-ring"

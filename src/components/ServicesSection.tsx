@@ -4,6 +4,7 @@ import { ServiceRow, Service, CategoryRow, localizeService, localizeCategory } f
 import { fetchServices, fetchCategories } from "@/api";
 import ServiceCard from "./ServiceCard";
 import { X } from "lucide-react";
+import { getCategoryName } from "@/lib/localize";
 
 interface ServicesSectionProps {
   onChatAbout: (serviceId: string, serviceName: string) => void;
@@ -33,12 +34,6 @@ const ServicesSection = ({ onChatAbout }: ServicesSectionProps) => {
   const filtered = activeCategory === "all"
     ? localized
     : localized.filter((s) => s.category_id === activeCategory);
-
-  const getCategoryName = (catId: string | null) => {
-    if (!catId) return "";
-    const cat = categories.find((c) => c.id === catId);
-    return cat ? localizeCategory(cat, language) : "";
-  };
 
   const expandedService = expandedId ? localized.find((s) => s.id === expandedId) : null;
   const expandedRow = expandedId ? allRows.find((r) => r.id === expandedId) : null;
@@ -94,7 +89,7 @@ const ServicesSection = ({ onChatAbout }: ServicesSectionProps) => {
                 </div>
                 <div className="p-8 md:p-12 flex flex-col justify-center">
                   <span className="inline-block px-3 py-1 text-xs font-medium rounded-full bg-accent/20 text-accent-foreground mb-4 self-start">
-                    {getCategoryName(expandedService.category_id)}
+                    {getCategoryName(categories, expandedService.category_id, language)}
                   </span>
                   <h3 className="font-display text-3xl md:text-4xl font-bold text-card-foreground mb-4">{expandedService.title}</h3>
                   <p className="text-muted-foreground leading-relaxed mb-6">{expandedService.description}</p>
@@ -117,7 +112,7 @@ const ServicesSection = ({ onChatAbout }: ServicesSectionProps) => {
               <ServiceCard
                 key={service.id}
                 service={service}
-                categoryName={getCategoryName(service.category_id)}
+                categoryName={getCategoryName(categories, service.category_id, language)}
                 onChatAbout={onChatAbout}
                 onDetails={setExpandedId}
               />

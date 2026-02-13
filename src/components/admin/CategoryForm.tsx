@@ -1,8 +1,9 @@
 import { useState } from "react";
 import { useLanguage } from "@/i18n/LanguageContext";
 import { X } from "lucide-react";
-import { CategoryRow, SUPPORTED_LANGUAGES, LANGUAGE_LABELS, Language } from "@/types";
+import { CategoryRow, SUPPORTED_LANGUAGES, Language } from "@/types";
 import * as api from "@/api";
+import LanguageTabs from "../LanguageTabs";
 
 interface Props {
   category: CategoryRow | null;
@@ -56,17 +57,12 @@ const CategoryForm = ({ category, onClose, onSaved }: Props) => {
         </div>
 
         <div className="p-6 space-y-5">
-          <div>
-            <label className="text-xs font-medium text-muted-foreground mb-1.5 block">{t.admin.languageTab}</label>
-            <div className="flex flex-wrap gap-1">
-              {SUPPORTED_LANGUAGES.map((l) => (
-                <button key={l} onClick={() => setActiveLang(l as Language)}
-                  className={`px-3 py-1.5 text-xs rounded-md font-medium transition-colors ${activeLang === l ? "bg-primary text-primary-foreground" : "bg-secondary text-secondary-foreground hover:bg-muted"}`}>
-                  {LANGUAGE_LABELS[l as Language]} {names[l] ? "✓" : ""}
-                </button>
-              ))}
-            </div>
-          </div>
+          <LanguageTabs
+            activeLang={activeLang}
+            onSelect={setActiveLang}
+            hasContent={(l) => !!names[l]}
+            label={t.admin.languageTab}
+          />
 
           <div>
             <label className="text-xs font-medium text-muted-foreground mb-1.5 block">{t.admin.titleField} ({activeLang.toUpperCase()})</label>

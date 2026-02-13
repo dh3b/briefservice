@@ -2,9 +2,9 @@ import { Router } from "express";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import pool from "../db.js";
+import { JWT_SECRET, JWT_EXPIRY, ADMIN_COOKIE_MAX_AGE } from "../config.js";
 
 const router = Router();
-const JWT_SECRET = process.env.JWT_SECRET || "change-me-in-production";
 
 // POST /api/auth/login
 router.post("/login", async (req, res) => {
@@ -25,13 +25,13 @@ router.post("/login", async (req, res) => {
       return res.status(401).json({ error: "Invalid credentials" });
     }
 
-    const token = jwt.sign({ id: admin.id, username: admin.username }, JWT_SECRET, { expiresIn: "8h" });
+    const token = jwt.sign({ id: admin.id, username: admin.username }, JWT_SECRET, { expiresIn: JWT_EXPIRY });
 
     res.cookie("admin_token", token, {
       httpOnly: true,
       secure: process.env.NODE_ENV === "production",
       sameSite: "lax",
-      maxAge: 8 * 60 * 60 * 1000,
+      maxAge: ADMIN_COOKIE_MAX_AGE,
     });
 
     res.json({ id: admin.id, username: admin.username });

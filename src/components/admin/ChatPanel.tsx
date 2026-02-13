@@ -3,28 +3,9 @@ import { useLanguage } from "@/i18n/LanguageContext";
 import { MessageSquare, Trash2, Send, Pencil, Check, X, Languages } from "lucide-react";
 import { Chat, Message } from "@/types";
 import * as api from "@/api";
-
-const LIBRETRANSLATE_URL = "http://localhost:5000/translate";
-
-const LANG_TO_LT: Record<string, string> = {
-  pl: "pl", en: "en", de: "de", fr: "fr", es: "es", it: "it",
-  pt: "pt", nl: "nl", cs: "cs", ro: "ro", hu: "hu", sv: "sv",
-};
-
-async function translateText(text: string, targetLang: string): Promise<string> {
-  try {
-    const res = await fetch(LIBRETRANSLATE_URL, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ q: text, source: "auto", target: LANG_TO_LT[targetLang] || "en", format: "text" }),
-    });
-    if (!res.ok) return text;
-    const data = await res.json();
-    return data.translatedText || text;
-  } catch {
-    return text;
-  }
-}
+import { translateText } from "@/lib/translate";
+import { POLL_INTERVAL_MESSAGES, POLL_INTERVAL_CHAT_LIST, MAX_MESSAGE_LEN } from "@/config";
+import ChatBubble from "../ChatBubble";
 
 const ChatPanel = () => {
   const { t, language } = useLanguage();
@@ -46,7 +27,7 @@ const ChatPanel = () => {
 
   useEffect(() => {
     loadChats();
-    const interval = setInterval(loadChats, 5000);
+    const interval = setInterval(loadChats, POLL_INTERVAL_CHAT_LIST);
     return () => clearInterval(interval);
   }, [loadChats]);
 
@@ -56,14 +37,14 @@ const ChatPanel = () => {
     setTranslatedMessages({});
     const load = async () => { try { setChatMessages(await api.fetchMessages(selectedChat)); } catch {} };
     load();
-    const interval = setInterval(load, 3000);
+    const interval = setInterval(load, POLL_INTERVAL_MESSAGES);
     return () => clearInterval(interval);
   }, [selectedChat]);
 
   const handleReply = async () => {
     if (!replyInput.trim() || !selectedChat) return;
     try {
-      await api.sendMessage(selectedChat, "admin", replyInput.trim().slice(0, 500));
+      await api.sendMessage(selectedChat, "admin", replyInput.trim().slice(0, MAX_MESSAGE_LEN));
       setReplyInput("");
       setChatMessages(await api.fetchMessages(selectedChat));
     } catch {}
@@ -105,8 +86,6 @@ const ChatPanel = () => {
     setTranslated(true);
     setTranslating(false);
   };
-
-  const formatTime = (ts: string) => new Date(ts).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
 
   const selectedChatObj = chats.find((c) => c.id === selectedChat);
 
@@ -165,28 +144,16 @@ const ChatPanel = () => {
             </div>
 
             <div className="flex-1 overflow-y-auto p-4 space-y-3">
-              {chatMessages.map((msg) => {
-                const displayContent = translated && translatedMessages[msg.id] ? translatedMessages[msg.id] : msg.content;
-                return (
-                  <div key={msg.id} className={`flex ${msg.sender_type === "admin" ? "justify-end" : "justify-start"}`}>
-                    <div className={`max-w-[70%] flex flex-col gap-0.5 ${msg.sender_type === "admin" ? "items-end" : "items-start"}`}>
-                      <div
-                        className={`px-4 py-2.5 rounded-2xl text-sm ${msg.sender_type === "admin" ? "bg-primary text-primary-foreground rounded-br-md" : "bg-secondary text-secondary-foreground rounded-bl-md"}`}
-                        style={{ overflowWrap: "anywhere", wordBreak: "break-word" }}
-                      >
-                        {translated && translatedMessages[msg.id] ? (
-                          <span className="font-semibold">{displayContent}</span>
-                        ) : (
-                          displayContent
-                        )}
-                      </div>
-                      <span className={`text-[10px] text-muted-foreground px-1 ${msg.sender_type === "admin" ? "text-right" : "text-left"}`}>
-                        {formatTime(msg.timestamp)}
-                      </span>
-                    </div>
-                  </div>
-                );
-              })}
+              {chatMessages.map((msg) => (
+                <ChatBubble
+                  key={msg.id}
+                  content={msg.content}
+                  translatedContent={translatedMessages[msg.id]}
+                  isTranslated={translated}
+                  isOwnMessage={msg.sender_type === "admin"}
+                  timestamp={msg.timestamp}
+                />
+              ))}
             </div>
 
             {chatMessages.length > 0 && (
@@ -203,7 +170,7 @@ const ChatPanel = () => {
             )}
 
             <div className="border-t border-border p-3 flex gap-2">
-              <input type="text" value={replyInput} onChange={(e) => setReplyInput(e.target.value.slice(0, 500))}
+              <input type="text" value={replyInput} onChange={(e) => setReplyInput(e.target.value.slice(0, MAX_MESSAGE_LEN))}
                 onKeyDown={(e) => e.key === "Enter" && handleReply()}
                 placeholder="Reply..." className="flex-1 px-4 py-2.5 rounded-xl bg-secondary text-foreground placeholder:text-muted-foreground text-sm outline-none focus:ring-2 focus:ring-ring" />
               <button onClick={handleReply} className="w-10 h-10 rounded-xl bg-primary flex items-center justify-center text-primary-foreground">

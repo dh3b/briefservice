@@ -1,8 +1,9 @@
 import { useState } from "react";
 import { useLanguage } from "@/i18n/LanguageContext";
 import { X, Upload } from "lucide-react";
-import { ServiceRow, CategoryRow, SUPPORTED_LANGUAGES, LANGUAGE_LABELS, Language, localizeCategory } from "@/types";
+import { ServiceRow, CategoryRow, SUPPORTED_LANGUAGES, Language, localizeCategory } from "@/types";
 import * as api from "@/api";
+import LanguageTabs from "../LanguageTabs";
 
 interface Props {
   service: ServiceRow | null;
@@ -75,17 +76,12 @@ const ServiceForm = ({ service, categories, onClose, onSaved }: Props) => {
 
         <div className="p-6 space-y-5">
           {/* Language tabs */}
-          <div>
-            <label className="text-xs font-medium text-muted-foreground mb-1.5 block">{t.admin.languageTab}</label>
-            <div className="flex flex-wrap gap-1">
-              {SUPPORTED_LANGUAGES.map((l) => (
-                <button key={l} onClick={() => setActiveLang(l as Language)}
-                  className={`px-3 py-1.5 text-xs rounded-md font-medium transition-colors ${activeLang === l ? "bg-primary text-primary-foreground" : "bg-secondary text-secondary-foreground hover:bg-muted"}`}>
-                  {LANGUAGE_LABELS[l as Language]} {(titles[l] || descriptions[l]) ? "✓" : ""}
-                </button>
-              ))}
-            </div>
-          </div>
+          <LanguageTabs
+            activeLang={activeLang}
+            onSelect={setActiveLang}
+            hasContent={(l) => !!(titles[l] || descriptions[l])}
+            label={t.admin.languageTab}
+          />
 
           {/* Title */}
           <div>

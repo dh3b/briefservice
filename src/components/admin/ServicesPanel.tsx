@@ -5,6 +5,7 @@ import { ServiceRow, CategoryRow, localizeService, localizeCategory } from "@/ty
 import * as api from "@/api";
 import ServiceForm from "./ServiceForm";
 import CategoryForm from "./CategoryForm";
+import { getCategoryName } from "@/lib/localize";
 
 const ServicesPanel = () => {
   const { t, language } = useLanguage();
@@ -24,12 +25,6 @@ const ServicesPanel = () => {
   }, []);
 
   useEffect(() => { load(); }, [load]);
-
-  const getCatName = (catId: string | null) => {
-    if (!catId) return "—";
-    const cat = categories.find((c) => c.id === catId);
-    return cat ? localizeCategory(cat, language) : "—";
-  };
 
   return (
     <div className="space-y-8">
@@ -96,7 +91,7 @@ const ServicesPanel = () => {
                 return (
                   <tr key={s.id} className="border-b border-border last:border-0">
                     <td className="px-6 py-4 text-foreground">{loc.title}</td>
-                    <td className="px-6 py-4 text-foreground">{getCatName(s.category_id)}</td>
+                    <td className="px-6 py-4 text-foreground">{getCategoryName(categories, s.category_id, language, "\u2014")}</td>
                     <td className="px-6 py-4 text-foreground">{s.price_range}</td>
                     <td className="px-6 py-4 text-right">
                       <div className="flex justify-end gap-2">

@@ -2,61 +2,44 @@ import { Router } from "express";
 import pool from "../db.js";
 import { requireAdmin } from "./auth.js";
 import v from "../validate.js";
+import { asyncHandler } from "../middleware/errorHandler.js";
 
 const router = Router();
 
-// POST /api/stats/visit — record a page visit (called from frontend)
-router.post("/visit", async (req, res) => {
-  try {
-    const country = v.text(req.body.country, 100) || "Unknown";
-    await pool.query(
-      "INSERT INTO page_visits (country) VALUES ($1)",
-      [country]
-    );
-    res.status(201).json({ ok: true });
-  } catch (err) {
-    console.error("Error recording visit:", err);
-    res.status(500).json({ error: "Internal server error" });
-  }
-});
+// POST /api/stats/visit — record a page visit
+router.post("/visit", asyncHandler(async (req, res) => {
+  const country = v.text(req.body.country, 100) || "Unknown";
+  await pool.query("INSERT INTO page_visits (country) VALUES ($1)", [country]);
+  res.status(201).json({ ok: true });
+}));
 
 // GET /api/stats/visits — aggregated visits by country (admin)
-router.get("/visits", requireAdmin, async (req, res) => {
-  try {
-    const interval = getInterval(v.timeRange(req.query.range));
-    const { rows } = await pool.query(
-      `SELECT country, DATE(visited_at) AS date, COUNT(*)::int AS count
-       FROM page_visits
-       WHERE visited_at >= NOW() - $1::interval
-       GROUP BY country, DATE(visited_at)
-       ORDER BY date ASC`,
-      [interval]
-    );
-    res.json(rows);
-  } catch (err) {
-    console.error("Error fetching visit stats:", err);
-    res.status(500).json({ error: "Internal server error" });
-  }
-});
+router.get("/visits", requireAdmin, asyncHandler(async (req, res) => {
+  const interval = getInterval(v.timeRange(req.query.range));
+  const { rows } = await pool.query(
+    `SELECT country, DATE(visited_at) AS date, COUNT(*)::int AS count
+     FROM page_visits
+     WHERE visited_at >= NOW() - $1::interval
+     GROUP BY country, DATE(visited_at)
+     ORDER BY date ASC`,
+    [interval]
+  );
+  res.json(rows);
+}));
 
 // GET /api/stats/chats — aggregated chats by service type (admin)
-router.get("/chats", requireAdmin, async (req, res) => {
-  try {
-    const interval = getInterval(v.timeRange(req.query.range));
-    const { rows } = await pool.query(
-      `SELECT COALESCE(service_ref, 'None') AS service_ref, DATE(created_at) AS date, COUNT(*)::int AS count
-       FROM chats
-       WHERE created_at >= NOW() - $1::interval
-       GROUP BY COALESCE(service_ref, 'None'), DATE(created_at)
-       ORDER BY date ASC`,
-      [interval]
-    );
-    res.json(rows);
-  } catch (err) {
-    console.error("Error fetching chat stats:", err);
-    res.status(500).json({ error: "Internal server error" });
-  }
-});
+router.get("/chats", requireAdmin, asyncHandler(async (req, res) => {
+  const interval = getInterval(v.timeRange(req.query.range));
+  const { rows } = await pool.query(
+    `SELECT COALESCE(service_ref, 'None') AS service_ref, DATE(created_at) AS date, COUNT(*)::int AS count
+     FROM chats
+     WHERE created_at >= NOW() - $1::interval
+     GROUP BY COALESCE(service_ref, 'None'), DATE(created_at)
+     ORDER BY date ASC`,
+    [interval]
+  );
+  res.json(rows);
+}));
 
 function getInterval(range) {
   switch (range) {

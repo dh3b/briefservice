@@ -1,3 +1,5 @@
+import { FALLBACK_LANGUAGE } from "@/config";
+
 export const SUPPORTED_LANGUAGES = ["pl", "en", "de", "fr", "es", "it", "pt", "nl", "cs", "ro", "hu", "sv"] as const;
 
 export type Language = (typeof SUPPORTED_LANGUAGES)[number];
@@ -43,10 +45,11 @@ export interface Service {
 }
 
 export function localizeService(row: ServiceRow, lang: Language): Service {
+  const fb = FALLBACK_LANGUAGE;
   return {
     id: row.id,
-    title: (row[`title_${lang}`] as string) || (row.title_en as string) || "",
-    description: (row[`description_${lang}`] as string) || (row.description_en as string) || "",
+    title: (row[`title_${lang}`] as string) || (row[`title_${fb}`] as string) || "",
+    description: (row[`description_${lang}`] as string) || (row[`description_${fb}`] as string) || "",
     price_range: row.price_range,
     image_url: row.image_url,
     category_id: row.category_id ?? null,
@@ -60,7 +63,8 @@ export interface CategoryRow {
 }
 
 export function localizeCategory(row: CategoryRow, lang: Language): string {
-  return (row[`name_${lang}`] as string) || (row.name_en as string) || "";
+  const fb = FALLBACK_LANGUAGE;
+  return (row[`name_${lang}`] as string) || (row[`name_${fb}`] as string) || "";
 }
 
 export interface User {
