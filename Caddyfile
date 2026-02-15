@@ -1,0 +1,17 @@
+en.dheb.site, pl.dheb.site, www.dheb.site, dheb.site {
+	encode
+
+	handle /api/* {
+		reverse_proxy localhost:3001
+	}
+    
+    handle /uploads/* {
+        reverse_proxy localhost:3001
+    }
+
+	handle {
+		root * C:/Users/user/Documents/Projects/html/briefservice/dist
+		try_files {path} /index.html
+		file_server
+	}
+}

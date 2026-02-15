@@ -8,7 +8,7 @@ export const PORT = process.env.PORT || 3001;
 
 export const CORS_ORIGINS = process.env.CORS_ORIGIN
   ? process.env.CORS_ORIGIN.split(",")
-  : ["http://localhost:8080", "http://localhost:5173"];
+  : ["http://localhost:8080", "http://localhost:5173", "https://dheb.site", "https://www.dheb.site", "https://pl.dheb.site", "https://en.dheb.site"];
 
 export const JWT_SECRET = process.env.JWT_SECRET || "change-me-in-production";
 
