@@ -2,7 +2,7 @@ import { Router } from "express";
 import pool from "../db.js";
 import { requireAdmin } from "./auth.js";
 import v from "../validate.js";
-import { LANGS } from "../config.js";
+import { LANGS, MAX_TITLE_LEN, MAX_DESC_LEN } from "../config.js";
 import { asyncHandler } from "../middleware/errorHandler.js";
 
 const router = Router();
@@ -28,7 +28,7 @@ router.post("/", requireAdmin, asyncHandler(async (req, res) => {
 
   for (const l of LANGS) {
     cols.push(`title_${l}`, `description_${l}`);
-    vals.push(v.text(langFields[`title_${l}`], 255) || null, v.text(langFields[`description_${l}`], 500) || null);
+    vals.push(v.text(langFields[`title_${l}`], MAX_TITLE_LEN) || null, v.text(langFields[`description_${l}`], MAX_DESC_LEN) || null);
   }
 
   const placeholders = vals.map((_, i) => `$${i + 1}`).join(", ");
@@ -48,7 +48,7 @@ router.put("/:id", requireAdmin, asyncHandler(async (req, res) => {
   let idx = 4;
   for (const l of LANGS) {
     sets.push(`title_${l} = $${idx}`, `description_${l} = $${idx + 1}`);
-    vals.push(v.text(langFields[`title_${l}`], 255) || null, v.text(langFields[`description_${l}`], 500) || null);
+    vals.push(v.text(langFields[`title_${l}`], MAX_TITLE_LEN) || null, v.text(langFields[`description_${l}`], MAX_DESC_LEN) || null);
     idx += 2;
   }
   vals.push(req.params.id);

@@ -41,7 +41,7 @@ const ContactSection = () => {
               </div>
               <div>
                 <h4 className="font-semibold text-foreground mb-1">{t.contact.phone}</h4>
-                <p className="text-muted-foreground text-sm">+48 123 456 789</p>
+                <p className="text-muted-foreground text-sm">+48 696 513 109</p>
               </div>
             </div>
             <div className="flex items-start gap-4">
@@ -50,7 +50,7 @@ const ContactSection = () => {
               </div>
               <div>
                 <h4 className="font-semibold text-foreground mb-1">Email</h4>
-                <p className="text-muted-foreground text-sm">kontakt@proservices.pl</p>
+                <p className="text-muted-foreground text-sm"><a href="mailto:audicarforme@op.pl" className="hover:text-primary/20 hover:underline">audicarforme@op.pl</a></p>
               </div>
             </div>
             <div className="flex items-start gap-4">
@@ -59,7 +59,7 @@ const ContactSection = () => {
               </div>
               <div>
                 <h4 className="font-semibold text-foreground mb-1">{t.contact.address}</h4>
-                <p className="text-muted-foreground text-sm">ul. Przykładowa 10, 00-001 Warszawa</p>
+                <p className="text-muted-foreground text-sm">ul. Sosnowa 10/7, 68-100, Żagań</p>
               </div>
             </div>
           </div>

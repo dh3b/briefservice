@@ -1,27 +1,16 @@
 import { FALLBACK_LANGUAGE } from "@/config";
 
-export const SUPPORTED_LANGUAGES = ["pl", "en", "de", "fr", "es", "it", "pt", "nl", "cs", "ro", "hu", "sv"] as const;
+export const SUPPORTED_LANGUAGES = ["pl", "en"] as const;
 
 export type Language = (typeof SUPPORTED_LANGUAGES)[number];
 
 export const LANGUAGE_LABELS: Record<Language, string> = {
   pl: "Polski",
   en: "English",
-  de: "Deutsch",
-  fr: "Français",
-  es: "Español",
-  it: "Italiano",
-  pt: "Português",
-  nl: "Nederlands",
-  cs: "Čeština",
-  ro: "Română",
-  hu: "Magyar",
-  sv: "Svenska",
 };
 
 export const LANGUAGE_FLAGS: Record<Language, string> = {
-  pl: "🇵🇱", en: "🇬🇧", de: "🇩🇪", fr: "🇫🇷", es: "🇪🇸", it: "🇮🇹",
-  pt: "🇵🇹", nl: "🇳🇱", cs: "🇨🇿", ro: "🇷🇴", hu: "🇭🇺", sv: "🇸🇪",
+  pl: "🇵🇱", en: "🇬🇧",
 };
 
 /** Raw DB row — has title/description columns per language */

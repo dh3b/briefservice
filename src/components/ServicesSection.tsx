@@ -13,7 +13,6 @@ interface ServicesSectionProps {
 const ServicesSection = ({ onChatAbout }: ServicesSectionProps) => {
   const { t, language } = useLanguage();
   const [activeCategory, setActiveCategory] = useState("all");
-  const [services, setServices] = useState<Service[]>([]);
   const [allRows, setAllRows] = useState<ServiceRow[]>([]);
   const [categories, setCategories] = useState<CategoryRow[]>([]);
   const [loading, setLoading] = useState(true);
@@ -39,7 +38,7 @@ const ServicesSection = ({ onChatAbout }: ServicesSectionProps) => {
   const expandedRow = expandedId ? allRows.find((r) => r.id === expandedId) : null;
 
   return (
-    <section id="services" className="py-24 bg-background">
+    <section id="services" className="pt-[7.5rem] pb-24 bg-background">
       <div className="container mx-auto px-6">
         <div className="text-center mb-14">
           <h2 className="font-display text-4xl md:text-5xl font-bold text-foreground mb-4">{t.services.title}</h2>
@@ -92,7 +91,7 @@ const ServicesSection = ({ onChatAbout }: ServicesSectionProps) => {
                     {getCategoryName(categories, expandedService.category_id, language)}
                   </span>
                   <h3 className="font-display text-3xl md:text-4xl font-bold text-card-foreground mb-4">{expandedService.title}</h3>
-                  <p className="text-muted-foreground leading-relaxed mb-6">{expandedService.description}</p>
+                  <p className="text-muted-foreground leading-relaxed mb-6 whitespace-pre-line">{expandedService.description}</p>
                   <p className="text-lg font-semibold text-foreground mb-6">
                     {t.services.priceFrom} {expandedService.price_range}
                   </p>

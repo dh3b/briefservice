@@ -1,6 +1,6 @@
 /** Shared server configuration — single source of truth */
 
-export const LANGS = ["pl", "en", "de", "fr", "es", "it", "pt", "nl", "cs", "ro", "hu", "sv"];
+export const LANGS = ["pl", "en"];
 
 export const DEFAULT_LANG = "en";
 
@@ -22,5 +22,6 @@ export const MAX_UPLOAD_SIZE = 5 * 1024 * 1024; // 5 MB
 export const MAX_TEXT_LEN = 500;
 export const MAX_NAME_LEN = 255;
 export const MAX_TITLE_LEN = 255;
+export const MAX_DESC_LEN = 4096;
 export const MAX_URL_LEN = 2048;
 export const MAX_SHORT_TEXT_LEN = 100;

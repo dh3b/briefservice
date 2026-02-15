@@ -27,7 +27,7 @@ const Navbar = () => {
     <nav className="fixed top-0 left-0 right-0 z-50 bg-card/80 backdrop-blur-lg border-b border-border">
       <div className="container mx-auto px-6 h-16 flex items-center justify-between">
         <Link to="/" className="font-display text-xl font-bold text-foreground tracking-tight">
-          <span className="text-gradient-gold">Pro</span>Services
+          <span className="text-gradient-gold">Brief</span>Service
         </Link>
 
         {/* Desktop */}

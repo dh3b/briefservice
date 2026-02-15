@@ -19,6 +19,5 @@ export const FALLBACK_LANGUAGE = "en" as const;
  * Currently 1:1 but abstracted for future divergence.
  */
 export const LANG_TO_LT: Record<string, string> = {
-  pl: "pl", en: "en", de: "de", fr: "fr", es: "es", it: "it",
-  pt: "pt", nl: "nl", cs: "cs", ro: "ro", hu: "hu", sv: "sv",
+  pl: "pl", en: "en",
 };

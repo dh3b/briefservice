@@ -9,12 +9,12 @@ const Footer = () => {
         <div className="flex flex-col md:flex-row items-center justify-between gap-4">
           <div>
             <span className="font-display text-xl font-bold text-primary-foreground">
-              <span className="text-gradient-gold">Pro</span>Services
+              <span className="text-gradient-gold">Brief</span>Service
             </span>
             <p className="text-primary-foreground/60 text-sm mt-1">{t.footer.description}</p>
           </div>
           <p className="text-primary-foreground/40 text-sm">
-            © {new Date().getFullYear()} ProServices. {t.footer.rights}
+            © {new Date().getFullYear()} BriefService. {t.footer.rights}
           </p>
         </div>
       </div>

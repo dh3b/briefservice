@@ -93,7 +93,7 @@ const ServiceForm = ({ service, categories, onClose, onSaved }: Props) => {
           {/* Description */}
           <div>
             <label className="text-xs font-medium text-muted-foreground mb-1.5 block">{t.admin.descriptionField} ({activeLang.toUpperCase()})</label>
-            <textarea value={descriptions[activeLang] || ""} onChange={(e) => setDescriptions({ ...descriptions, [activeLang]: e.target.value })} rows={3}
+            <textarea value={descriptions[activeLang] || ""} onChange={(e) => setDescriptions({ ...descriptions, [activeLang]: e.target.value })} rows={6}
               className="w-full px-4 py-2.5 rounded-lg bg-secondary border border-border text-foreground text-sm outline-none focus:ring-2 focus:ring-ring resize-none" />
           </div>
 
