@@ -1,6 +1,5 @@
 import { ServiceRow, Admin, Chat, Message, CategoryRow } from "./types";
-
-const API_BASE = import.meta.env.VITE_API_URL || "/api";
+import { API_BASE } from "./config";
 
 async function request<T>(path: string, options?: RequestInit): Promise<T> {
   const res = await fetch(`${API_BASE}${path}`, {

@@ -2,6 +2,8 @@
 
 export const LIBRETRANSLATE_URL =
   import.meta.env.VITE_LIBRETRANSLATE_URL || "http://localhost:5000/translate";
+export const API_BASE =
+  import.meta.env.VITE_API_URL || "/api";
 
 export const POLL_INTERVAL_MESSAGES = 3000;
 export const POLL_INTERVAL_CHAT_LIST = 5000;

@@ -25,3 +25,11 @@ export const MAX_TITLE_LEN = 255;
 export const MAX_DESC_LEN = 4096;
 export const MAX_URL_LEN = 2048;
 export const MAX_SHORT_TEXT_LEN = 100;
+
+export const DB_CONFIG = {
+  host: process.env.DB_HOST || "localhost",
+  port: parseInt(process.env.DB_PORT || "5432"),
+  database: process.env.DB_NAME || "briefservice",
+  user: process.env.DB_USER || "postgres",
+  password: process.env.DB_PASSWORD || "postgres",
+};  
