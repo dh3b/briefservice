@@ -1,4 +1,5 @@
 const base = {
+  seo: { title: "", description: "", keywords: "" },
   nav: { home: "", services: "", contact: "", admin: "" },
   hero: { title: "", titleAccent: "", subtitle: "", cta: "", chatCta: "" },
   services: { title: "", subtitle: "", chatAbout: "", details: "", priceFrom: "", close: "", allCategories: "" },
@@ -20,6 +21,11 @@ const base = {
 type TranslationShape = typeof base;
 
 const pl: TranslationShape = {
+  seo: {
+    title: "BriefService – Rejestracja i przerejestrowanie pojazdów w Niemczech",
+    description: "Obsługa rejestracji i przerejestrowania pojazdów w Niemczech. Wyrabianie duplikatów niemieckich Briefów, zmiana DMC, rodzaju pojazdu, liczby miejsc siedzących i legalizacja modyfikacji konstrukcyjnych.",
+    keywords: "niemiecki brief, duplikat briefu, mały brief, duży brief, wtórnik dowodu rejestracyjnego Niemcy, rejestracja auta w Niemczech, przerejestrowanie auta z Niemiec, zmiana DMC, obniżenie DMC do 3500 kg, DMC 3,5t kat. B, zmiana rodzaju pojazdu, samochód specjalny zimowego utrzymania dróg, legalizacja zmian konstrukcyjnych, zmiana liczby miejsc siedzących, rejestracja anglika na niemiecki brief, rejestracja auta z UK w Niemczech, rejestracja auta z USA w Niemczech, wyrejestrowanie pojazdu z Niemiec, przegląd techniczny Niemcy, dokumentacja do rejestracji auta, rejestracja samochodu sprowadzonego, zmiana ciężarowy na osobowy, zmiana osobowy na ciężarowy, homologacja pojazdu Niemcy, tabliczka znamionowa DMC",
+  },
   nav: { home: "Strona główna", services: "Usługi", contact: "Kontakt", admin: "Panel admina" },
   hero: { title: "Zagubiony Brief?", titleAccent: "Sprawy w niemieckich urzędach?", subtitle: "Oferujemy kompleksową obsługę rejestracji i przerejestrowania pojazdów w Niemczech oraz ich dalszą rejestrację w Polsce i UE. Zajmujemy się wyrabianiem duplikatów niemieckich Briefów, zmianą DMC, rodzaju pojazdu, liczby miejsc siedzących i legalizacją modyfikacji konstrukcyjnych oraz organizujemy przeglądy techniczne. A sam klient otrzymuje komplet dokumentów potrzebnych do dalszej rejestracji.", cta: "Zobacz usługi", chatCta: "Porozmawiaj z nami" },
   services: { title: "Nasze Usługi", subtitle: "Sprawdź naszą ofertę i wybierz usługę która jest Ci potrzebna. Oferty są elastyczne.", chatAbout: "Zapytaj o to", details: "Szczegóły", priceFrom: "Od", close: "Zamknij", allCategories: "Wszystkie" },
@@ -44,6 +50,11 @@ const pl: TranslationShape = {
 };
 
 const en: TranslationShape = {
+  seo: {
+    title: "BriefService – Vehicle Registration & Re-registration in Germany",
+    description: "Comprehensive registration and re-registration services for vehicles in Germany. We handle duplicate German Briefs, GVW changes, vehicle type changes, seat count modifications, and legalization of structural modifications.",
+    keywords: "German brief, duplicate brief, small brief, large brief, duplicate registration document Germany, car registration in Germany, re-registration from Germany, GVW change, GVW reduction to 3500 kg, GVW 3.5t category B, vehicle type change, special winter road maintenance vehicle, legalization of structural changes, seat count change, UK car German registration, US car registration in Germany, vehicle deregistration Germany, technical inspection Germany, vehicle registration documents, imported car registration, truck to passenger conversion, passenger to truck conversion, vehicle homologation Germany, GVW nameplate",
+  },
   nav: { home: "Home", services: "Services", contact: "Contact", admin: "Admin Panel" },
   hero: { title: "Lost Brief?", titleAccent: "Matters at German offices?", subtitle: "We offer comprehensive registration and re-registration services for vehicles in Germany, as well as their subsequent registration in Poland and the EU. We handle obtaining duplicate German Briefs, changing GVW, vehicle type, number of seats, and legalizing structural modifications, as well as organizing technical inspections. The client receives a complete set of documents needed for further registration.", cta: "View Services", chatCta: "Chat With Us" },
   services: { title: "Our Services", subtitle: "Check our offer and choose the service you need. Offers are flexible.", chatAbout: "Ask about this", details: "Details", priceFrom: "From", close: "Close", allCategories: "All" },

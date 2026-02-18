@@ -5,8 +5,10 @@ import ServicesSection from "@/components/ServicesSection";
 import ContactSection from "@/components/ContactSection";
 import ChatWidget from "@/components/ChatWidget";
 import Footer from "@/components/Footer";
+import { useSEO } from "@/hooks/useSEO";
 
 const Index = () => {
+  useSEO();
   const [chatServiceId, setChatServiceId] = useState<string | null>(null);
   const [chatServiceName, setChatServiceName] = useState<string | null>(null);
 
