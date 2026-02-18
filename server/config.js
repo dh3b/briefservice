@@ -1,7 +1,6 @@
 /** Shared server configuration — single source of truth */
 
 export const LANGS = ["pl", "en"];
-
 export const DEFAULT_LANG = "en";
 
 export const PORT = process.env.PORT || 3001;
@@ -11,6 +10,7 @@ export const CORS_ORIGINS = process.env.CORS_ORIGIN
   : ["http://localhost:8080", "http://localhost:5173"];
 
 export const JWT_SECRET = process.env.JWT_SECRET || "change-me-in-production";
+export const SMTP_TOKEN = process.env.SMTP_TOKEN;
 
 export const JWT_EXPIRY = "8h";
 
