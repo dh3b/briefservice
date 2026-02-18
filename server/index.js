@@ -12,6 +12,7 @@ import uploadRouter from "./routes/upload.js";
 import statsRouter from "./routes/stats.js";
 import { PORT, CORS_ORIGINS } from "./config.js";
 import { errorMiddleware } from "./middleware/errorHandler.js";
+import "dotenv/config";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
