@@ -14,7 +14,7 @@ const base = {
     statistics: "", visits: "", chatsByService: "", timeRange: "", week: "", month: "", halfYear: "", year: "",
     filterAll: "", noData: "",
   },
-  footer: { rights: "", description: "" },
+  footer: { rights: "", description: "", cookieNotice: { before: "", linkText: "", after: "" } },
   notFound: { title: "", goHome: "" },
 };
 
@@ -45,7 +45,7 @@ const pl: TranslationShape = {
     statistics: "Statystyki", visits: "Wizyty na stronie", chatsByService: "Czaty wg usługi", timeRange: "Zakres czasu",
     week: "Tydzień", month: "Miesiąc", halfYear: "Pół roku", year: "Rok", filterAll: "Wszystkie", noData: "Brak danych",
   },
-  footer: { rights: "Wszelkie prawa zastrzeżone.", description: "Oferta dotyczy wyrobienia nowych dokumentów rejestracyjnych niemieckich Briefów (w przypadku zagubienia, utraty, kradzieży)!" },
+  footer: { rights: "Wszelkie prawa zastrzeżone.", description: "Oferta dotyczy wyrobienia nowych dokumentów rejestracyjnych niemieckich Briefów (w przypadku zagubienia, utraty, kradzieży)!", cookieNotice: { before: "Strona korzysta z plików cookie. Więcej informacji w ", linkText: "Polityce Prywatności", after: "." } },
   notFound: { title: "Ups! Strona nie znaleziona", goHome: "Wróć na stronę główną" },
 };
 
@@ -74,7 +74,7 @@ const en: TranslationShape = {
     statistics: "Statistics", visits: "Website Visits", chatsByService: "Chats by Service", timeRange: "Time Range",
     week: "Week", month: "Month", halfYear: "Half Year", year: "Year", filterAll: "All", noData: "No data",
   },
-  footer: { rights: "All rights reserved.", description: "The offer applies to obtaining new German Brief registration documents (in case of loss, misplacement, or theft)!" },
+  footer: { rights: "All rights reserved.", description: "The offer applies to obtaining new German Brief registration documents (in case of loss, misplacement, or theft)!", cookieNotice: { before: "This site uses cookies. More information in the ", linkText: "Privacy Policy", after: "." } },
   notFound: { title: "Oops! Page not found", goHome: "Return to Home" },
 };
 
