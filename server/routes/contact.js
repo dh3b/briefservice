@@ -3,7 +3,8 @@ import pool from "../db.js";
 import v from "../validate.js";
 import { asyncHandler } from "../middleware/errorHandler.js";
 import { SMTP_TOKEN } from "../config.js";
-import { MailtrapTransport } from "mailtrap";
+import { MailtrapClient } from "mailtrap";
+import { contactEmailHtml } from "../templates/contactEmail.js";
 
 const router = Router();
 
@@ -23,8 +24,8 @@ router.post("/", asyncHandler(async (req, res) => {
     from: { name: "Brief Service", email: "contact@dheb.site" },
     to: [{ email: "ozootly@gmail.com" }],
     reply_to: { name, email: emailVal },
-    subject: `${name} messaged you`,
-    text: message,
+    subject: `BriefService Kontakt | ${name} napisał(a) wiadomość`,
+    html: contactEmailHtml({ name, email: emailVal, message }),
     category: "Contact Form",
   });
 
