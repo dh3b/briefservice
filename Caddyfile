@@ -1,4 +1,4 @@
-en.dheb.site, pl.dheb.site, www.dheb.site, dheb.site {
+dheb.site, www.dheb.site, localhost {
 	encode
 
 	handle /api/* {

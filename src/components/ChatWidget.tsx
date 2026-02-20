@@ -40,6 +40,7 @@ const ChatWidget = ({ serviceId, serviceName, onOpenTriggered }: ChatWidgetProps
   const pollRef = useRef<ReturnType<typeof setInterval>>();
   const prevServiceRef = useRef<string | null>(null);
   const lastSentRef = useRef<number>(0);
+  const creatingRef = useRef(false);
   const [sending, setSending] = useState(false);
 
   const SEND_COOLDOWN_MS = 800;
@@ -71,6 +72,8 @@ const ChatWidget = ({ serviceId, serviceName, onOpenTriggered }: ChatWidgetProps
   const ensureChat = useCallback(async () => {
     let id = chatId;
     if (!id) {
+      if (creatingRef.current) return null;
+      creatingRef.current = true;
       try {
         const chat = await createChat(userData?.name || "Guest", userData?.email || "", serviceName || undefined);
         id = chat.id;
@@ -78,6 +81,8 @@ const ChatWidget = ({ serviceId, serviceName, onOpenTriggered }: ChatWidgetProps
         setConnected(true);
       } catch {
         return null;
+      } finally {
+        creatingRef.current = false;
       }
     } else if (!connected) {
       try {
@@ -151,6 +156,7 @@ const ChatWidget = ({ serviceId, serviceName, onOpenTriggered }: ChatWidgetProps
     setSending(true);
     try {
       await apiSendMessage(id, "user", content);
+      setMessages(await fetchMessages(id));
     } catch {}
     finally { setSending(false); }
   };

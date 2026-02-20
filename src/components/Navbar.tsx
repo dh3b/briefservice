@@ -26,7 +26,7 @@ const Navbar = () => {
   return (
     <nav className="fixed top-0 left-0 right-0 z-50 bg-card/80 backdrop-blur-lg border-b border-border">
       <div className="container mx-auto px-6 h-16 flex items-center justify-between">
-        <Link to="/" className="font-display text-xl font-bold text-foreground tracking-tight">
+        <Link to={`/${language}`} className="font-display text-xl font-bold text-foreground tracking-tight">
           <span className="text-gradient-gold">Brief</span>Service
         </Link>
 
@@ -35,7 +35,7 @@ const Navbar = () => {
           <button onClick={() => scrollTo("hero")} className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">{t.nav.home}</button>
           <button onClick={() => scrollTo("services")} className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">{t.nav.services}</button>
           <button onClick={() => scrollTo("contact")} className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">{t.nav.contact}</button>
-          <Link to="/admin" className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">{t.nav.admin}</Link>
+          <Link to={`/${language}/admin`} className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">{t.nav.admin}</Link>
 
           {/* Language dropdown */}
           <div ref={langRef} className="relative">
@@ -76,7 +76,7 @@ const Navbar = () => {
           <button onClick={() => scrollTo("hero")} className="block text-sm font-medium text-muted-foreground">{t.nav.home}</button>
           <button onClick={() => scrollTo("services")} className="block text-sm font-medium text-muted-foreground">{t.nav.services}</button>
           <button onClick={() => scrollTo("contact")} className="block text-sm font-medium text-muted-foreground">{t.nav.contact}</button>
-          <Link to="/admin" className="block text-sm font-medium text-muted-foreground">{t.nav.admin}</Link>
+          <Link to={`/${language}/admin`} className="block text-sm font-medium text-muted-foreground">{t.nav.admin}</Link>
           <div className="border-t border-border pt-3 grid grid-cols-3 gap-1">
             {SUPPORTED_LANGUAGES.map((code) => (
               <button

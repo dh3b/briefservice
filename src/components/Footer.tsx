@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import { useLanguage } from "@/i18n/LanguageContext";
 
 const Footer = () => {
-  const { t } = useLanguage();
+  const { t, language } = useLanguage();
 
   return (
     <footer className="bg-primary py-12">
@@ -15,7 +15,7 @@ const Footer = () => {
             <p className="text-primary-foreground/60 text-sm mt-1">{t.footer.description}</p>
             <p className="text-primary-foreground/60 text-sm mt-1">
               {t.footer.cookieNotice.before}
-              <Link to="/privacy-policy" className="underline hover:text-primary-foreground/80 transition-colors">
+              <Link to={`/${language}/privacy-policy`} className="underline hover:text-primary-foreground/80 transition-colors">
                 {t.footer.cookieNotice.linkText}
               </Link>
               {t.footer.cookieNotice.after}
