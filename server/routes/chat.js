@@ -17,6 +17,19 @@ function generateChatTitle() {
 
 // POST /api/chats — create a new chat session
 router.post("/", chatCreateLimiter, asyncHandler(async (req, res) => {
+  const existingId = req.cookies?.chat_id;
+  if (existingId) {
+    const existing = await pool.query("SELECT * FROM chats WHERE id = $1", [existingId]);
+    if (existing.rows.length > 0) {
+      res.cookie("chat_id", existing.rows[0].id, {
+        httpOnly: false,
+        maxAge: CHAT_COOKIE_MAX_AGE,
+        sameSite: "lax",
+      });
+      return res.status(200).json(existing.rows[0]);
+    }
+  }
+
   const user_name = v.text(req.body.user_name, MAX_NAME_LEN);
   const user_email = v.email(req.body.user_email);
   const service_ref = v.text(req.body.service_ref, MAX_SHORT_TEXT_LEN);

@@ -105,16 +105,9 @@ const ChatWidget = ({ serviceId, serviceName, onOpenTriggered }: ChatWidgetProps
   }, [chatId, serviceName, connected, userData]);
 
   useEffect(() => {
-    if (!open || !userData) return;
-    const load = async () => {
-      const id = await ensureChat();
-      if (!id) return;
-      try {
-        setMessages(await fetchMessages(id));
-      } catch {}
-    };
-    load();
-  }, [open, ensureChat, userData]);
+    if (!open || !chatId) return;
+    fetchMessages(chatId).then(setMessages).catch(() => {});
+  }, [open, chatId]);
 
   useEffect(() => {
     if (!open || !chatId) return;
