@@ -5,11 +5,12 @@ import { asyncHandler } from "../middleware/errorHandler.js";
 import { SMTP_TOKEN } from "../config.js";
 import { MailtrapClient } from "mailtrap";
 import { contactEmailHtml } from "../templates/contactEmail.js";
+import { contactLimiter } from "../middleware/rateLimiter.js";
 
 const router = Router();
 
 // POST /api/contact
-router.post("/", asyncHandler(async (req, res) => {
+router.post("/", contactLimiter, asyncHandler(async (req, res) => {
   const name = v.text(req.body.name, 255);
   const emailVal = v.email(req.body.email);
   const message = v.text(req.body.message, 500);

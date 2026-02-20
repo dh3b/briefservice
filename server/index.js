@@ -13,6 +13,7 @@ import statsRouter from "./routes/stats.js";
 import translateRouter from "./routes/translate.js";
 import { PORT, CORS_ORIGINS } from "./config.js";
 import { errorMiddleware } from "./middleware/errorHandler.js";
+import { generalLimiter } from "./middleware/rateLimiter.js";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
@@ -21,6 +22,7 @@ const app = express();
 app.use(cors({ origin: CORS_ORIGINS, credentials: true }));
 app.use(express.json());
 app.use(cookieParser());
+app.use(generalLimiter);
 
 // Serve uploaded files
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));

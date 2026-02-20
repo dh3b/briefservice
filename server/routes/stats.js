@@ -3,11 +3,12 @@ import pool from "../db.js";
 import { requireAdmin } from "./auth.js";
 import v from "../validate.js";
 import { asyncHandler } from "../middleware/errorHandler.js";
+import { statsVisitLimiter } from "../middleware/rateLimiter.js";
 
 const router = Router();
 
 // POST /api/stats/visit — record a page visit
-router.post("/visit", asyncHandler(async (req, res) => {
+router.post("/visit", statsVisitLimiter, asyncHandler(async (req, res) => {
   const country = v.text(req.body.country, 100) || "Unknown";
   await pool.query("INSERT INTO page_visits (country) VALUES ($1)", [country]);
   res.status(201).json({ ok: true });

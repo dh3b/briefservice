@@ -2,6 +2,7 @@ import { Router } from "express";
 import { asyncHandler } from "../middleware/errorHandler.js";
 import { LT_API_URL, LANGS } from "../config.js";
 import v from "../validate.js";
+import { translateLimiter } from "../middleware/rateLimiter.js";
 
 const router = Router();
 
@@ -11,7 +12,7 @@ const ALLOWED_TARGET_LANGS = new Set(LANGS);
 const ALLOWED_FORMATS = new Set(["text", "html"]);
 
 // POST /api/translate — proxies to LibreTranslate, injecting the server-side API key
-router.post("/", asyncHandler(async (req, res) => {
+router.post("/", translateLimiter, asyncHandler(async (req, res) => {
   const apiKey = process.env.LT_TRANSLATE_API_KEY;
   if (!apiKey) {
     return res.status(503).json({ error: "Translation service not configured" });

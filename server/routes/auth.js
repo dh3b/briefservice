@@ -3,11 +3,12 @@ import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import pool from "../db.js";
 import { JWT_SECRET, JWT_EXPIRY, ADMIN_COOKIE_MAX_AGE } from "../config.js";
+import { loginLimiter } from "../middleware/rateLimiter.js";
 
 const router = Router();
 
 // POST /api/auth/login
-router.post("/login", async (req, res) => {
+router.post("/login", loginLimiter, async (req, res) => {
   try {
     const { username, password } = req.body;
     if (!username || !password) {

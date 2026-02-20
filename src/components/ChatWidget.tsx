@@ -39,6 +39,10 @@ const ChatWidget = ({ serviceId, serviceName, onOpenTriggered }: ChatWidgetProps
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const pollRef = useRef<ReturnType<typeof setInterval>>();
   const prevServiceRef = useRef<string | null>(null);
+  const lastSentRef = useRef<number>(0);
+  const [sending, setSending] = useState(false);
+
+  const SEND_COOLDOWN_MS = 800;
 
   // Translation state
   const [translated, setTranslated] = useState(false);
@@ -128,7 +132,10 @@ const ChatWidget = ({ serviceId, serviceName, onOpenTriggered }: ChatWidgetProps
   };
 
   const handleSend = async () => {
-    if (!input.trim()) return;
+    if (!input.trim() || sending) return;
+    const now = Date.now();
+    if (now - lastSentRef.current < SEND_COOLDOWN_MS) return;
+    lastSentRef.current = now;
     const id = await ensureChat();
     if (!id) return;
     const content = input.trim().slice(0, MAX_MESSAGE_LEN);
@@ -141,9 +148,11 @@ const ChatWidget = ({ serviceId, serviceName, onOpenTriggered }: ChatWidgetProps
       timestamp: new Date().toISOString(),
     };
     setMessages((prev) => [...prev, optimistic]);
+    setSending(true);
     try {
       await apiSendMessage(id, "user", content);
     } catch {}
+    finally { setSending(false); }
   };
 
   const handleTranslate = async () => {
@@ -152,11 +161,10 @@ const ChatWidget = ({ serviceId, serviceName, onOpenTriggered }: ChatWidgetProps
       return;
     }
     setTranslating(true);
-    const map: Record<string, string> = {};
-    for (const msg of messages) {
-      map[msg.id] = await translateText(msg.content, language);
-    }
-    setTranslatedMessages(map);
+    const entries = await Promise.all(
+      messages.map(async (msg) => [msg.id, await translateText(msg.content, language)] as const)
+    );
+    setTranslatedMessages(Object.fromEntries(entries));
     setTranslated(true);
     setTranslating(false);
   };
@@ -264,13 +272,14 @@ const ChatWidget = ({ serviceId, serviceName, onOpenTriggered }: ChatWidgetProps
                   type="text"
                   value={input}
                   onChange={(e) => setInput(e.target.value.slice(0, MAX_MESSAGE_LEN))}
-                  onKeyDown={(e) => e.key === "Enter" && handleSend()}
+                  onKeyDown={(e) => e.key === "Enter" && !sending && handleSend()}
                   placeholder={t.chat.placeholder}
                   className="flex-1 px-4 py-2.5 rounded-xl bg-secondary text-foreground placeholder:text-muted-foreground text-sm outline-none focus:ring-2 focus:ring-ring"
                 />
                 <button
                   onClick={handleSend}
-                  className="w-10 h-10 rounded-xl bg-gold-gradient flex items-center justify-center hover:shadow-md transition-all flex-shrink-0"
+                  disabled={sending}
+                  className="w-10 h-10 rounded-xl bg-gold-gradient flex items-center justify-center hover:shadow-md transition-all flex-shrink-0 disabled:opacity-50"
                 >
                   <Send className="w-4 h-4 text-accent-foreground" />
                 </button>

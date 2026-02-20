@@ -4,6 +4,7 @@ import { requireAdmin } from "./auth.js";
 import v from "../validate.js";
 import { CHAT_COOKIE_MAX_AGE, MAX_NAME_LEN, MAX_TEXT_LEN, MAX_SHORT_TEXT_LEN, MAX_TITLE_LEN } from "../config.js";
 import { asyncHandler } from "../middleware/errorHandler.js";
+import { chatCreateLimiter, chatMessageLimiter } from "../middleware/rateLimiter.js";
 
 const router = Router();
 
@@ -15,7 +16,7 @@ function generateChatTitle() {
 }
 
 // POST /api/chats — create a new chat session
-router.post("/", asyncHandler(async (req, res) => {
+router.post("/", chatCreateLimiter, asyncHandler(async (req, res) => {
   const user_name = v.text(req.body.user_name, MAX_NAME_LEN);
   const user_email = v.email(req.body.user_email);
   const service_ref = v.text(req.body.service_ref, MAX_SHORT_TEXT_LEN);
@@ -60,11 +61,16 @@ router.get("/:id/messages", asyncHandler(async (req, res) => {
 }));
 
 // POST /api/chats/:id/messages
-router.post("/:id/messages", asyncHandler(async (req, res) => {
+router.post("/:id/messages", chatMessageLimiter, asyncHandler(async (req, res) => {
   const sender = v.senderType(req.body.sender_type);
   const content = v.text(req.body.content, MAX_TEXT_LEN);
   if (!sender || !content) {
     return res.status(400).json({ error: "Valid sender_type and content required" });
+  }
+
+  // Prevent unauthenticated callers from impersonating admin
+  if (sender === "admin" && !req.admin) {
+    return res.status(403).json({ error: "Forbidden" });
   }
 
   const { rows } = await pool.query(

@@ -1,6 +1,6 @@
 import { useLanguage } from "@/i18n/LanguageContext";
 import { Mail, MapPin, Phone, CheckCircle } from "lucide-react";
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { submitContact } from "@/api";
 
 const ContactSection = () => {
@@ -8,14 +8,19 @@ const ContactSection = () => {
   const [form, setForm] = useState({ name: "", email: "", message: "" });
   const [sent, setSent] = useState(false);
   const [sending, setSending] = useState(false);
+  const cooldownUntilRef = useRef<number>(0);
+
+  const isCoolingDown = () => Date.now() < cooldownUntilRef.current;
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!form.name || !form.email || !form.message) return;
+    if (isCoolingDown()) return;
     setSending(true);
     try {
       await submitContact(form);
       setSent(true);
+      cooldownUntilRef.current = Date.now() + 60_000;
       setForm({ name: "", email: "", message: "" });
       setTimeout(() => setSent(false), 4000);
     } catch (err) {
@@ -76,7 +81,7 @@ const ContactSection = () => {
               className="w-full px-4 py-3 rounded-lg bg-card border border-border text-foreground placeholder:text-muted-foreground text-sm focus:ring-2 focus:ring-ring focus:border-transparent outline-none transition-all" />
             <textarea placeholder={t.contact.message} rows={4} value={form.message} maxLength={500} onChange={(e) => setForm({ ...form, message: e.target.value })}
               className="w-full px-4 py-3 rounded-lg bg-card border border-border text-foreground placeholder:text-muted-foreground text-sm focus:ring-2 focus:ring-ring focus:border-transparent outline-none transition-all resize-none" />
-            <button type="submit" disabled={sending}
+            <button type="submit" disabled={sending || isCoolingDown()}
               className="w-full py-3.5 rounded-lg bg-gold-gradient text-accent-foreground font-semibold text-sm hover:shadow-lg transition-all hover:-translate-y-0.5 disabled:opacity-50">
               {t.contact.send}
             </button>
