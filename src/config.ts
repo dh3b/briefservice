@@ -14,7 +14,7 @@ export const MAX_EMAIL_LEN = 255;
 
 export const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-export const FALLBACK_LANGUAGE = "en" as const;
+export const FALLBACK_LANGUAGE = "pl" as const;
 export const BASE_DOMAIN = "dheb.site";
 
 /**

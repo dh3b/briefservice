@@ -1,7 +1,7 @@
 /** Shared server configuration — single source of truth */
 
 export const LANGS = ["pl", "en"];
-export const DEFAULT_LANG = "en";
+export const DEFAULT_LANG = "pl";
 export const LT_API_URL = "http://libretranslate:5000/translate";
 
 export const PORT = process.env.PORT || 3001;

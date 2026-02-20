@@ -7,7 +7,7 @@
     <loc>https://dheb.site/pl/</loc>
     <xhtml:link rel="alternate" hreflang="pl" href="https://dheb.site/pl/" />
     <xhtml:link rel="alternate" hreflang="en" href="https://dheb.site/en/" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://dheb.site/en/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://dheb.site/pl/" />
   </url>
 
   <!-- English version -->
@@ -15,7 +15,7 @@
     <loc>https://dheb.site/en/</loc>
     <xhtml:link rel="alternate" hreflang="pl" href="https://dheb.site/pl/" />
     <xhtml:link rel="alternate" hreflang="en" href="https://dheb.site/en/" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://dheb.site/en/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://dheb.site/pl/" />
   </url>
 
 </urlset>
