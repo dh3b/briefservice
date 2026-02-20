@@ -10,6 +10,7 @@ import categoriesRouter from "./routes/categories.js";
 import contactRouter from "./routes/contact.js";
 import uploadRouter from "./routes/upload.js";
 import statsRouter from "./routes/stats.js";
+import translateRouter from "./routes/translate.js";
 import { PORT, CORS_ORIGINS } from "./config.js";
 import { errorMiddleware } from "./middleware/errorHandler.js";
 
@@ -32,6 +33,7 @@ app.use("/api/categories", categoriesRouter);
 app.use("/api/contact", contactRouter);
 app.use("/api/upload", uploadRouter);
 app.use("/api/stats", statsRouter);
+app.use("/api/translate", translateRouter);
 
 app.get("/api/health", (_req, res) => res.json({ status: "ok" }));
 

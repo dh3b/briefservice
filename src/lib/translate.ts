@@ -1,7 +1,7 @@
 import { LIBRETRANSLATE_URL, LANG_TO_LT } from "@/config";
 
 /**
- * Translate text via LibreTranslate.
+ * Translate text via LibreTranslate (via backend proxy).
  * Returns original text on failure (graceful fallback).
  */
 export async function translateText(text: string, targetLang: string): Promise<string> {

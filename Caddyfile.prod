@@ -9,10 +9,6 @@
 		reverse_proxy api:3001
 	}
 
-    handle /translate {
-        reverse_proxy libretranslate:5000
-    }
-
 	handle {
 		root * /srv/dist
 		try_files {path} /index.html

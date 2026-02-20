@@ -33,6 +33,7 @@ services:
       JWT_SECRET: ${JWT_SECRET:?Set JWT_SECRET in .env}
       CORS_ORIGIN: ${CORS_ORIGIN:-}
       SMTP_TOKEN: ${SMTP_TOKEN:-}
+      LT_TRANSLATE_API_KEY: ${LT_TRANSLATE_API_KEY:-}
     volumes:
       - uploads:/app/uploads
       - frontend:/app/dist:ro   # built frontend, shared with Caddy
@@ -61,6 +62,7 @@ services:
     restart: unless-stopped
     environment:
       LT_LOAD_ONLY: "en,pl"
+      LT_API_KEYS: "true"
     volumes:
       - lt_data:/home/libretranslate/.local
 
