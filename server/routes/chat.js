@@ -2,9 +2,10 @@ import { Router } from "express";
 import pool from "../db.js";
 import { requireAdmin } from "./auth.js";
 import v from "../validate.js";
-import { CHAT_COOKIE_MAX_AGE, MAX_NAME_LEN, MAX_TEXT_LEN, MAX_SHORT_TEXT_LEN, MAX_TITLE_LEN } from "../config.js";
+import { CHAT_COOKIE_MAX_AGE, MAX_NAME_LEN, MAX_TEXT_LEN, MAX_SHORT_TEXT_LEN, MAX_TITLE_LEN, JWT_SECRET } from "../config.js";
 import { asyncHandler } from "../middleware/errorHandler.js";
 import { chatCreateLimiter, chatMessageLimiter } from "../middleware/rateLimiter.js";
+import jwt from "jsonwebtoken";
 
 const router = Router();
 
@@ -81,9 +82,16 @@ router.post("/:id/messages", chatMessageLimiter, asyncHandler(async (req, res) =
     return res.status(400).json({ error: "Valid sender_type and content required" });
   }
 
-  // Prevent unauthenticated callers from impersonating admin
-  if (sender === "admin" && !req.admin) {
-    return res.status(403).json({ error: "Forbidden" });
+  if (sender === "admin") {
+    const token = req.cookies.admin_token;
+    if (!token) {
+      return res.status(401).json({ error: "Not authenticated" });
+    }
+    try {
+      req.admin = jwt.verify(token, JWT_SECRET);
+    } catch {
+      return res.status(401).json({ error: "Invalid token" });
+    }
   }
 
   const { rows } = await pool.query(

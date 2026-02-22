@@ -7,6 +7,9 @@ const pool = new pg.Pool({
   database: DB_CONFIG.database,
   user: DB_CONFIG.user,
   password: DB_CONFIG.password,
+  max: 50,
+  idleTimeoutMillis: 30000,
+  connectionTimeoutMillis: 5000,
 });
 
 pool.on("error", (err) => {

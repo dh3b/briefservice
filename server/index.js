@@ -42,6 +42,20 @@ app.get("/api/health", (_req, res) => res.json({ status: "ok" }));
 // Centralized error handling — replaces per-route try/catch
 app.use(errorMiddleware);
 
-app.listen(PORT, () => {
+process.on('unhandledRejection', (reason, promise) => {
+  console.error('Unhandled Rejection:', reason);
+});
+
+process.on('uncaughtException', (err) => {
+  console.error('Uncaught Exception:', err);
+  process.exit(1);
+});
+
+process.on('SIGTERM', () => {
+  console.log('SIGTERM received, closing server...');
+  server.close(() => process.exit(0));
+});
+
+const server = app.listen(PORT, () => {
   console.log(`Server running on http://localhost:${PORT}`);
 });
