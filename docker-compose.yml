@@ -27,13 +27,15 @@ services:
       NODE_ENV: production
       PORT: 3001
       DB_HOST: db
-      DB_PORT: 5432
+      DB_PORT: 5432   
       DB_NAME: ${DB_NAME:-briefservice}
       DB_USER: ${DB_USER:-postgres}
       DB_PASSWORD: ${DB_PASSWORD:?Set DB_PASSWORD in .env}
       JWT_SECRET: ${JWT_SECRET:?Set JWT_SECRET in .env}
       CORS_ORIGIN: ${CORS_ORIGIN:-}
       SMTP_TOKEN: ${SMTP_TOKEN:-}
+      CONTACT_EMAIL: ${CONTACT_EMAIL:-}
+      API_SENDER_EMAIL: ${API_SENDER_EMAIL:-}
       LT_TRANSLATE_API_KEY: ${LT_TRANSLATE_API_KEY:-}
     volumes:
       - uploads:/app/uploads
