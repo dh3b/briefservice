@@ -23,7 +23,7 @@ router.post("/", chatCreateLimiter, asyncHandler(async (req, res) => {
     const existing = await pool.query("SELECT * FROM chats WHERE id = $1", [existingId]);
     if (existing.rows.length > 0) {
       res.cookie("chat_id", existing.rows[0].id, {
-        httpOnly: false,
+        httpOnly: true,
         maxAge: CHAT_COOKIE_MAX_AGE,
         sameSite: "lax",
       });
@@ -42,7 +42,7 @@ router.post("/", chatCreateLimiter, asyncHandler(async (req, res) => {
   );
 
   res.cookie("chat_id", rows[0].id, {
-    httpOnly: false,
+    httpOnly: true,
     maxAge: CHAT_COOKIE_MAX_AGE,
     sameSite: "lax",
   });

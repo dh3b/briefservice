@@ -2,7 +2,7 @@ import { Router } from "express";
 import pool from "../db.js";
 import v from "../validate.js";
 import { asyncHandler } from "../middleware/errorHandler.js";
-import { SMTP_TOKEN } from "../config.js";
+import { SMTP_TOKEN, CONTACT_EMAIL, API_SENDER_EMAIL } from "../config.js";
 import { MailtrapClient } from "mailtrap";
 import { contactEmailHtml } from "../templates/contactEmail.js";
 import { contactLimiter } from "../middleware/rateLimiter.js";
@@ -22,8 +22,8 @@ router.post("/", contactLimiter, asyncHandler(async (req, res) => {
   const mailtrap = new MailtrapClient({ token: SMTP_TOKEN });
 
   await mailtrap.send({
-    from: { name: "Brief Service", email: "contact@dheb.site" },
-    to: [{ email: "ozootly@gmail.com" }],
+    from: { name: "BriefService", email: API_SENDER_EMAIL },
+    to: [{ email: CONTACT_EMAIL }],
     reply_to: { name, email: emailVal },
     subject: `BriefService Kontakt | ${name} napisał(a) wiadomość`,
     html: contactEmailHtml({ name, email: emailVal, message }),

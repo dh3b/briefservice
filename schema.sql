@@ -1,6 +1,3 @@
--- ProServices Database Schema
--- Supported languages: pl, en
-
 CREATE TABLE categories (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   name_pl VARCHAR(255),

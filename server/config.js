@@ -3,15 +3,37 @@
 export const LANGS = ["pl", "en"];
 export const DEFAULT_LANG = "pl";
 export const LT_API_URL = "http://libretranslate:5000/translate";
+export const BASE_DOMAIN = "dheb.site";
+
+export const API_SENDER_EMAIL = process.env.API_SENDER_EMAIL || `contact@${BASE_DOMAIN}`;
+export const CONTACT_EMAIL = process.env.CONTACT_EMAIL 
+  ? process.env.CONTACT_EMAIL
+  : (() => {
+      console.error("CONTACT_EMAIL not configured.");
+      throw new Error("CONTACT_EMAIL not configured");
+    })();
 
 export const PORT = process.env.PORT || 3001;
 
 export const CORS_ORIGINS = process.env.CORS_ORIGIN
   ? process.env.CORS_ORIGIN.split(",")
-  : ["http://localhost:8080", "http://localhost:5173"];
+  : (() => {
+      console.error("CORS_ORIGIN not configured.");
+      throw new Error("CORS_ORIGIN not configured");
+    })();
 
-export const JWT_SECRET = process.env.JWT_SECRET || "change-me-in-production";
-export const SMTP_TOKEN = process.env.SMTP_TOKEN;
+export const JWT_SECRET = process.env.JWT_SECRET
+  ? process.env.JWT_SECRET
+  : (() => {
+      console.error("JWT_SECRET not configured.");
+      throw new Error("JWT_SECRET not configured");
+    })();
+export const SMTP_TOKEN = process.env.SMTP_TOKEN
+  ? process.env.SMTP_TOKEN
+  : (() => {
+      console.error("SMTP_TOKEN not configured.");
+      throw new Error("SMTP_TOKEN not configured");
+    })();
 
 export const JWT_EXPIRY = "8h";
 

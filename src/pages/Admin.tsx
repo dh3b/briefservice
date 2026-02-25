@@ -29,7 +29,7 @@ const AdminPage = () => {
       <div className="min-h-screen bg-background flex items-center justify-center px-6">
         <div className="w-full max-w-sm">
           <div className="text-center mb-8">
-            <Link to={`/${language}`} className="font-display text-2xl font-bold text-foreground"><span className="text-gradient-gold">Pro</span>Services</Link>
+            <Link to={`/${language}`} className="font-display text-2xl font-bold text-foreground"><span className="text-gradient-gold">Brief</span>Service</Link>
             <h2 className="font-display text-2xl font-bold text-foreground mt-6">{t.admin.login}</h2>
           </div>
           <form onSubmit={handleLogin} className="space-y-4">
@@ -54,7 +54,7 @@ const AdminPage = () => {
     <div className="min-h-screen bg-background">
       <header className="bg-card border-b border-border px-6 py-4 flex items-center justify-between">
         <div className="flex items-center gap-4">
-          <Link to={`/${language}`} className="font-display text-lg font-bold text-foreground"><span className="text-gradient-gold">Pro</span>Services</Link>
+          <Link to={`/${language}`} className="font-display text-lg font-bold text-foreground"><span className="text-gradient-gold">Brief</span>Service</Link>
           <span className="text-muted-foreground text-sm">/ {t.admin.dashboard}</span>
         </div>
         <button onClick={async () => { await api.adminLogout(); setAdmin(null); }} className="flex items-center gap-1.5 text-sm text-muted-foreground hover:text-foreground transition-colors">
