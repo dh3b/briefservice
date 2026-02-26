@@ -3,7 +3,8 @@ import multer from "multer";
 import path from "path";
 import fs from "fs";
 import { fileURLToPath } from "url";
-import { fileTypeFromFile } from "file-type";
+import fileTypePkg from "file-type";
+const { fileTypeFromFile } = fileTypePkg;
 import { requireAdmin } from "./auth.js";
 import { MAX_UPLOAD_SIZE } from "../config.js";
 
@@ -15,7 +16,6 @@ const storage = multer.diskStorage({
   destination: path.join(__dirname, "..", "uploads"),
   filename: (_req, file, cb) => {
     const ext = path.extname(file.originalname);
-    cb(null, `${Date.now()}-${Math.random().toString(36).slice(2, 8)}${ext}`);
   },
 });
 
