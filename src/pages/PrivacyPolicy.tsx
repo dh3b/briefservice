@@ -66,7 +66,7 @@ const PrivacyPolicy = () => {
               3. Hosting
             </h2>
             <div className="space-y-3 text-sm">
-              <p>Serwis jest hostowany (technicznie utrzymywany) na serwerach operatora: <strong>inna firma</strong>.</p>
+              <p>Serwis jest hostowany (technicznie utrzymywany) na serwerach operatora: <strong>OVH</strong>.</p>
               <p>Firma hostingowa w celu zapewnienia niezawodno&#347;ci technicznej prowadzi logi na poziomie serwera. Zapisowi mog&#261; podlega&#263;:</p>
               <ul className="list-disc list-inside ml-4 space-y-1">
                 <li>zasoby okre&#347;lone identyfikatorem URL (adresy &#380;&#261;danych zasob&oacute;w &#8211; stron, plik&oacute;w),</li>
