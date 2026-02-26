@@ -1,6 +1,6 @@
 /** Shared server configuration — single source of truth */
 
-export const LANGS = ["pl", "en"];
+export const LANGS = ["pl", "en", "uk", "ru", "cs", "es", "it", "hu"];
 export const DEFAULT_LANG = "pl";
 export const LT_API_URL = "http://libretranslate:5000/translate";
 export const BASE_DOMAIN = "dheb.site";

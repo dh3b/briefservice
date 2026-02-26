@@ -2,6 +2,12 @@ CREATE TABLE categories (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   name_pl VARCHAR(255),
   name_en VARCHAR(255),
+  name_uk VARCHAR(255),
+  name_ru VARCHAR(255),
+  name_cs VARCHAR(255),
+  name_es VARCHAR(255),
+  name_it VARCHAR(255),
+  name_hu VARCHAR(255),
   created_at TIMESTAMPTZ DEFAULT NOW()
 );
 
@@ -11,8 +17,20 @@ CREATE TABLE services (
   image_url TEXT,
   title_pl VARCHAR(255),
   title_en VARCHAR(255),
+  title_uk VARCHAR(255),
+  title_ru VARCHAR(255),
+  title_cs VARCHAR(255),
+  title_es VARCHAR(255),
+  title_it VARCHAR(255),
+  title_hu VARCHAR(255),
   description_pl TEXT,
   description_en TEXT,
+  description_uk TEXT,
+  description_ru TEXT,
+  description_cs TEXT,
+  description_es TEXT,
+  description_it TEXT,
+  description_hu TEXT,
   created_at TIMESTAMPTZ DEFAULT NOW()
 );
 
@@ -71,6 +89,25 @@ CREATE INDEX idx_services_category_id ON services(category_id);
 CREATE INDEX idx_page_visits_date ON page_visits(visited_at);
 CREATE INDEX idx_chats_created_at ON chats(created_at);
 
--- Seed default admin (password: admin123)
-INSERT INTO admins (username, password_hash) VALUES
-  ('admin', '$2a$10$gVJth.2jFu8reJU6hpQ5tO5CLA3QPunIwnnR98eIvklWGKaBrVOki');
+-- Migration: Add language columns for uk, ru, cs, es, it, hu
+ALTER TABLE categories
+  ADD COLUMN IF NOT EXISTS name_uk VARCHAR(255),
+  ADD COLUMN IF NOT EXISTS name_ru VARCHAR(255),
+  ADD COLUMN IF NOT EXISTS name_cs VARCHAR(255),
+  ADD COLUMN IF NOT EXISTS name_es VARCHAR(255),
+  ADD COLUMN IF NOT EXISTS name_it VARCHAR(255),
+  ADD COLUMN IF NOT EXISTS name_hu VARCHAR(255);
+
+ALTER TABLE services
+  ADD COLUMN IF NOT EXISTS title_uk VARCHAR(255),
+  ADD COLUMN IF NOT EXISTS title_ru VARCHAR(255),
+  ADD COLUMN IF NOT EXISTS title_cs VARCHAR(255),
+  ADD COLUMN IF NOT EXISTS title_es VARCHAR(255),
+  ADD COLUMN IF NOT EXISTS title_it VARCHAR(255),
+  ADD COLUMN IF NOT EXISTS title_hu VARCHAR(255),
+  ADD COLUMN IF NOT EXISTS description_uk TEXT,
+  ADD COLUMN IF NOT EXISTS description_ru TEXT,
+  ADD COLUMN IF NOT EXISTS description_cs TEXT,
+  ADD COLUMN IF NOT EXISTS description_es TEXT,
+  ADD COLUMN IF NOT EXISTS description_it TEXT,
+  ADD COLUMN IF NOT EXISTS description_hu TEXT;

@@ -7,10 +7,11 @@ import { SUPPORTED_LANGUAGES } from "@/types";
  * Updates <head> meta tags (description, keywords, canonical, og:url, hreflang)
  * based on the current language.  Call once per page component.
  */
-export function useSEO(overrides?: { description?: string; keywords?: string }) {
+export function useSEO(overrides?: { title?: string; description?: string; keywords?: string }) {
   const { language, t } = useLanguage();
 
   useEffect(() => {
+    const title = overrides?.title ?? t.seo.title;
     const description = overrides?.description ?? t.seo.description;
     const keywords = overrides?.keywords ?? t.seo.keywords;
 
@@ -21,6 +22,7 @@ export function useSEO(overrides?: { description?: string; keywords?: string }) 
     setMeta("description", description);
     setMeta("keywords", keywords);
     setCanonical(`https://${BASE_DOMAIN}/${language}${canonicalPath}`);
+    setMeta("og:title", title, "property");
     setMeta("og:description", description, "property");
     setMeta("og:url", `https://${BASE_DOMAIN}/${language}${canonicalPath}`, "property");
     setHreflangAlternates(canonicalPath);

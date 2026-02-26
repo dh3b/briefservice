@@ -22,5 +22,5 @@ export const BASE_DOMAIN = "dheb.site";
  * Currently 1:1 but abstracted for future divergence.
  */
 export const LANG_TO_LT: Record<string, string> = {
-  pl: "pl", en: "en",
+  pl: "pl", en: "en", uk: "uk", ru: "ru", cs: "cs", es: "es", it: "it", hu: "hu",
 };

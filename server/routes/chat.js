@@ -24,6 +24,7 @@ router.post("/", chatCreateLimiter, asyncHandler(async (req, res) => {
     if (existing.rows.length > 0) {
       res.cookie("chat_id", existing.rows[0].id, {
         httpOnly: true,
+        secure: process.env.NODE_ENV === "production",
         maxAge: CHAT_COOKIE_MAX_AGE,
         sameSite: "lax",
       });
@@ -43,6 +44,7 @@ router.post("/", chatCreateLimiter, asyncHandler(async (req, res) => {
 
   res.cookie("chat_id", rows[0].id, {
     httpOnly: true,
+    secure: process.env.NODE_ENV === "production",
     maxAge: CHAT_COOKIE_MAX_AGE,
     sameSite: "lax",
   });

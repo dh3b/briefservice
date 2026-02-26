@@ -77,7 +77,7 @@ const Navbar = () => {
           <button onClick={() => scrollTo("services")} className="block text-sm font-medium text-muted-foreground">{t.nav.services}</button>
           <button onClick={() => scrollTo("contact")} className="block text-sm font-medium text-muted-foreground">{t.nav.contact}</button>
           <Link to={`/${language}/admin`} className="block text-sm font-medium text-muted-foreground">{t.nav.admin}</Link>
-          <div className="border-t border-border pt-3 grid grid-cols-3 gap-1">
+          <div className="border-t border-border pt-3 grid grid-cols-4 gap-1">
             {SUPPORTED_LANGUAGES.map((code) => (
               <button
                 key={code}

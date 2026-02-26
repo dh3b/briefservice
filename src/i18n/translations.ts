@@ -78,5 +78,179 @@ const en: TranslationShape = {
   notFound: { title: "Oops! Page not found", goHome: "Return to Home" },
 };
 
-export const translations = { pl, en } as const;
+const uk: TranslationShape = {
+  seo: {
+    title: "BriefService – Реєстрація та перереєстрація транспортних засобів у Німеччині",
+    description: "Комплексне обслуговування реєстрації та перереєстрації транспортних засобів у Німеччині. Виготовлення дублікатів німецьких Briefів, зміна повної маси, типу транспортного засобу, кількості місць та легалізація конструкційних змін.",
+    keywords: "німецький brief, дублікат brief, малий brief, великий brief, дублікат реєстраційного документа Німеччина, реєстрація авто в Німеччині, перереєстрація авто з Німеччини, зміна повної маси, зниження повної маси до 3500 кг, повна маса 3,5т кат. B, зміна типу транспортного засобу, спеціальний автомобіль зимового утримання доріг, легалізація конструкційних змін, зміна кількості місць, реєстрація авто з Великобританії в Німеччині, реєстрація авто зі США в Німеччині, зняття з обліку транспортного засобу Німеччина, технічний огляд Німеччина, документи для реєстрації авто, реєстрація імпортованого авто, переобладнання вантажного на легковий, переобладнання легкового на вантажний, омологація транспортного засобу Німеччина, табличка повної маси",
+  },
+  nav: { home: "Головна", services: "Послуги", contact: "Контакти", admin: "Панель адміна" },
+  hero: { title: "Загублений Brief?", titleAccent: "Справи в німецьких установах?", subtitle: "Ми пропонуємо комплексне обслуговування реєстрації та перереєстрації транспортних засобів у Німеччині, а також їх подальшу реєстрацію в Польщі та ЄС. Займаємося виготовленням дублікатів німецьких Briefів, зміною повної маси, типу транспортного засобу, кількості місць та легалізацією конструкційних змін, а також організовуємо технічні огляди. Клієнт отримує повний комплект документів для подальшої реєстрації.", cta: "Переглянути послуги", chatCta: "Зв'яжіться з нами" },
+  services: { title: "Наші послуги", subtitle: "Ознайомтесь з нашою пропозицією та оберіть потрібну послугу. Пропозиції гнучкі.", chatAbout: "Запитати про це", details: "Деталі", close: "Закрити", allCategories: "Усі" },
+  contact: { title: "Зв'яжіться з нами", subtitle: "Маєте запитання? Напишіть нам або скористайтесь онлайн-чатом.", name: "Ім'я та прізвище", email: "Електронна пошта", message: "Повідомлення", send: "Надіслати повідомлення", sent: "Повідомлення надіслано!", phone: "Телефон", address: "Адреса" },
+  chat: { title: "Онлайн-чат", placeholder: "Напишіть повідомлення...", send: "Надіслати", greeting: "Привіт! Чим можемо допомогти?", serviceContext: "Запитання стосується послуги:", namePrompt: "Введіть свої дані, щоб розпочати чат:", namePlaceholder: "Ваше ім'я...", emailPlaceholder: "Ваш e-mail...", nameSubmit: "Розпочати чат", translateAll: "Перекласти повідомлення", showOriginal: "Показати оригінальні повідомлення" },
+  admin: {
+    login: "Login", username: "Username", password: "Password", signIn: "Sign In",
+    dashboard: "Admin Dashboard", chats: "Chats", servicesManage: "Manage Services",
+    noChats: "No active chats", deleteChat: "Delete Chat", addService: "Add Service",
+    editService: "Edit", deleteService: "Delete", logout: "Log Out",
+    addCategory: "Add Category", editCategory: "Edit Category", deleteCategory: "Delete",
+    categories: "Categories", saveService: "Save Service", saveCategory: "Save Category",
+    renameChat: "Rename", chatTitle: "Chat Title", chatUser: "User", chatEmail: "E-Mail",
+    imageUrl: "Image URL", uploadImage: "Upload Image", category: "Category",
+    titleField: "Title", descriptionField: "Description", languageTab: "Language", cancel: "Cancel", save: "Save",
+    noServices: "No services found", noCategories: "No categories found",
+    statistics: "Statistics", visits: "Website Visits", chatsByService: "Chats by Service", timeRange: "Time Range",
+    week: "Week", month: "Month", halfYear: "Half Year", year: "Year", filterAll: "All", noData: "No data",
+  },
+  footer: { rights: "Усі права захищені.", description: "Пропозиція стосується виготовлення нових реєстраційних документів німецьких Briefів (у разі втрати, загублення або крадіжки)!", cookieNotice: { before: "Сайт використовує файли cookie. Більше інформації в ", linkText: "Політиці конфіденційності", after: "." } },
+  notFound: { title: "Ой! Сторінку не знайдено", goHome: "Повернутися на головну" },
+};
+
+const ru: TranslationShape = {
+  seo: {
+    title: "BriefService – Регистрация и перерегистрация транспортных средств в Германии",
+    description: "Комплексное обслуживание регистрации и перерегистрации транспортных средств в Германии. Изготовление дубликатов немецких Briefов, изменение полной массы, типа транспортного средства, количества мест и легализация конструкционных изменений.",
+    keywords: "немецкий brief, дубликат brief, малый brief, большой brief, дубликат регистрационного документа Германия, регистрация авто в Германии, перерегистрация авто из Германии, изменение полной массы, снижение полной массы до 3500 кг, полная масса 3,5т кат. B, изменение типа транспортного средства, специальный автомобиль зимнего содержания дорог, легализация конструкционных изменений, изменение количества мест, регистрация авто из Великобритании в Германии, регистрация авто из США в Германии, снятие с учёта транспортного средства Германия, технический осмотр Германия, документы для регистрации авто, регистрация импортированного авто, переоборудование грузового в легковой, переоборудование легкового в грузовой, омологация транспортного средства Германия, табличка полной массы",
+  },
+  nav: { home: "Главная", services: "Услуги", contact: "Контакты", admin: "Панель админа" },
+  hero: { title: "Потерян Brief?", titleAccent: "Дела в немецких учреждениях?", subtitle: "Мы предлагаем комплексное обслуживание регистрации и перерегистрации транспортных средств в Германии, а также их дальнейшую регистрацию в Польше и ЕС. Занимаемся изготовлением дубликатов немецких Briefов, изменением полной массы, типа транспортного средства, количества мест и легализацией конструкционных изменений, а также организуем технические осмотры. Клиент получает полный комплект документов для дальнейшей регистрации.", cta: "Смотреть услуги", chatCta: "Свяжитесь с нами" },
+  services: { title: "Наши услуги", subtitle: "Ознакомьтесь с нашим предложением и выберите нужную услугу. Предложения гибкие.", chatAbout: "Спросить об этом", details: "Подробности", close: "Закрыть", allCategories: "Все" },
+  contact: { title: "Свяжитесь с нами", subtitle: "Есть вопросы? Напишите нам или воспользуйтесь онлайн-чатом.", name: "Имя и фамилия", email: "Электронная почта", message: "Сообщение", send: "Отправить сообщение", sent: "Сообщение отправлено!", phone: "Телефон", address: "Адрес" },
+  chat: { title: "Онлайн-чат", placeholder: "Напишите сообщение...", send: "Отправить", greeting: "Здравствуйте! Чем можем помочь?", serviceContext: "Вопрос касается услуги:", namePrompt: "Введите свои данные, чтобы начать чат:", namePlaceholder: "Ваше имя...", emailPlaceholder: "Ваш e-mail...", nameSubmit: "Начать чат", translateAll: "Перевести сообщения", showOriginal: "Показать оригинальные сообщения" },
+  admin: {
+    login: "Login", username: "Username", password: "Password", signIn: "Sign In",
+    dashboard: "Admin Dashboard", chats: "Chats", servicesManage: "Manage Services",
+    noChats: "No active chats", deleteChat: "Delete Chat", addService: "Add Service",
+    editService: "Edit", deleteService: "Delete", logout: "Log Out",
+    addCategory: "Add Category", editCategory: "Edit Category", deleteCategory: "Delete",
+    categories: "Categories", saveService: "Save Service", saveCategory: "Save Category",
+    renameChat: "Rename", chatTitle: "Chat Title", chatUser: "User", chatEmail: "E-Mail",
+    imageUrl: "Image URL", uploadImage: "Upload Image", category: "Category",
+    titleField: "Title", descriptionField: "Description", languageTab: "Language", cancel: "Cancel", save: "Save",
+    noServices: "No services found", noCategories: "No categories found",
+    statistics: "Statistics", visits: "Website Visits", chatsByService: "Chats by Service", timeRange: "Time Range",
+    week: "Week", month: "Month", halfYear: "Half Year", year: "Year", filterAll: "All", noData: "No data",
+  },
+  footer: { rights: "Все права защищены.", description: "Предложение касается изготовления новых регистрационных документов немецких Briefов (в случае утери, потери или кражи)!", cookieNotice: { before: "Сайт использует файлы cookie. Подробнее в ", linkText: "Политике конфиденциальности", after: "." } },
+  notFound: { title: "Упс! Страница не найдена", goHome: "Вернуться на главную" },
+};
+
+const cs: TranslationShape = {
+  seo: {
+    title: "BriefService – Registrace a přeregistrace vozidel v Německu",
+    description: "Komplexní služby registrace a přeregistrace vozidel v Německu. Vyřizujeme duplikáty německých Briefů, změny celkové hmotnosti, typu vozidla, počtu míst a legalizaci konstrukčních změn.",
+    keywords: "německý brief, duplikát briefu, malý brief, velký brief, duplikát registračního dokumentu Německo, registrace auta v Německu, přeregistrace auta z Německa, změna celkové hmotnosti, snížení celkové hmotnosti na 3500 kg, celková hmotnost 3,5t kat. B, změna typu vozidla, speciální vozidlo zimní údržby silnic, legalizace konstrukčních změn, změna počtu míst, registrace auta z UK v Německu, registrace auta z USA v Německu, odhlášení vozidla z Německa, technická kontrola Německo, dokumentace k registraci auta, registrace dovezeného auta, změna nákladní na osobní, změna osobní na nákladní, homologace vozidla Německo, štítek celkové hmotnosti",
+  },
+  nav: { home: "Domů", services: "Služby", contact: "Kontakt", admin: "Admin panel" },
+  hero: { title: "Ztracený Brief?", titleAccent: "Záležitosti na německých úřadech?", subtitle: "Nabízíme komplexní služby registrace a přeregistrace vozidel v Německu a jejich následnou registraci v Polsku a EU. Zajišťujeme vyřízení duplikátů německých Briefů, změnu celkové hmotnosti, typu vozidla, počtu míst a legalizaci konstrukčních změn a organizujeme technické kontroly. Klient obdrží kompletní sadu dokumentů potřebných k další registraci.", cta: "Zobrazit služby", chatCta: "Napište nám" },
+  services: { title: "Naše služby", subtitle: "Prohlédněte si naši nabídku a vyberte si službu, kterou potřebujete. Nabídky jsou flexibilní.", chatAbout: "Zeptat se na toto", details: "Podrobnosti", close: "Zavřít", allCategories: "Všechny" },
+  contact: { title: "Kontaktujte nás", subtitle: "Máte otázky? Napište nám nebo využijte živý chat.", name: "Jméno a příjmení", email: "E-mailová adresa", message: "Zpráva", send: "Odeslat zprávu", sent: "Zpráva odeslána!", phone: "Telefon", address: "Adresa" },
+  chat: { title: "Živý chat", placeholder: "Napište zprávu...", send: "Odeslat", greeting: "Dobrý den! Jak vám můžeme pomoci?", serviceContext: "Dotaz se týká služby:", namePrompt: "Zadejte své údaje pro zahájení chatu:", namePlaceholder: "Vaše jméno...", emailPlaceholder: "Váš e-mail...", nameSubmit: "Zahájit chat", translateAll: "Přeložit zprávy", showOriginal: "Zobrazit původní zprávy" },
+  admin: {
+    login: "Login", username: "Username", password: "Password", signIn: "Sign In",
+    dashboard: "Admin Dashboard", chats: "Chats", servicesManage: "Manage Services",
+    noChats: "No active chats", deleteChat: "Delete Chat", addService: "Add Service",
+    editService: "Edit", deleteService: "Delete", logout: "Log Out",
+    addCategory: "Add Category", editCategory: "Edit Category", deleteCategory: "Delete",
+    categories: "Categories", saveService: "Save Service", saveCategory: "Save Category",
+    renameChat: "Rename", chatTitle: "Chat Title", chatUser: "User", chatEmail: "E-Mail",
+    imageUrl: "Image URL", uploadImage: "Upload Image", category: "Category",
+    titleField: "Title", descriptionField: "Description", languageTab: "Language", cancel: "Cancel", save: "Save",
+    noServices: "No services found", noCategories: "No categories found",
+    statistics: "Statistics", visits: "Website Visits", chatsByService: "Chats by Service", timeRange: "Time Range",
+    week: "Week", month: "Month", halfYear: "Half Year", year: "Year", filterAll: "All", noData: "No data",
+  },
+  footer: { rights: "Všechna práva vyhrazena.", description: "Nabídka se týká vyřízení nových registračních dokumentů německých Briefů (v případě ztráty, ztrátě nebo krádeži)!", cookieNotice: { before: "Tento web používá soubory cookie. Více informací v ", linkText: "Zásadách ochrany osobních údajů", after: "." } },
+  notFound: { title: "Jejda! Stránka nenalezena", goHome: "Zpět na hlavní stránku" },
+};
+
+const es: TranslationShape = {
+  seo: {
+    title: "BriefService – Registro y re-registro de vehículos en Alemania",
+    description: "Servicios integrales de registro y re-registro de vehículos en Alemania. Gestionamos duplicados de Briefs alemanes, cambios de PMA, tipo de vehículo, número de asientos y legalización de modificaciones estructurales.",
+    keywords: "brief alemán, duplicado de brief, brief pequeño, brief grande, duplicado de documento de registro Alemania, registro de coche en Alemania, re-registro desde Alemania, cambio de PMA, reducción de PMA a 3500 kg, PMA 3,5t categoría B, cambio de tipo de vehículo, vehículo especial de mantenimiento invernal, legalización de cambios estructurales, cambio de número de asientos, registro de coche del Reino Unido en Alemania, registro de coche de EEUU en Alemania, baja de vehículo en Alemania, inspección técnica Alemania, documentos de registro de vehículo, registro de coche importado, conversión de camión a turismo, conversión de turismo a camión, homologación de vehículo Alemania, placa de PMA",
+  },
+  nav: { home: "Inicio", services: "Servicios", contact: "Contacto", admin: "Panel admin" },
+  hero: { title: "¿Brief perdido?", titleAccent: "¿Trámites en oficinas alemanas?", subtitle: "Ofrecemos servicios integrales de registro y re-registro de vehículos en Alemania, así como su posterior registro en Polonia y la UE. Nos encargamos de obtener duplicados de Briefs alemanes, cambiar el PMA, tipo de vehículo, número de asientos y legalizar modificaciones estructurales, además de organizar inspecciones técnicas. El cliente recibe un conjunto completo de documentos necesarios para el registro posterior.", cta: "Ver servicios", chatCta: "Chatea con nosotros" },
+  services: { title: "Nuestros servicios", subtitle: "Consulta nuestra oferta y elige el servicio que necesitas. Las ofertas son flexibles.", chatAbout: "Preguntar sobre esto", details: "Detalles", close: "Cerrar", allCategories: "Todos" },
+  contact: { title: "Contáctenos", subtitle: "¿Tiene preguntas? Envíenos un mensaje o utilice nuestro chat en vivo.", name: "Nombre completo", email: "Correo electrónico", message: "Mensaje", send: "Enviar mensaje", sent: "¡Mensaje enviado!", phone: "Teléfono", address: "Dirección" },
+  chat: { title: "Chat en vivo", placeholder: "Escriba un mensaje...", send: "Enviar", greeting: "¡Hola! ¿Cómo podemos ayudarle?", serviceContext: "Pregunta sobre el servicio:", namePrompt: "Ingrese sus datos para iniciar el chat:", namePlaceholder: "Su nombre...", emailPlaceholder: "Su correo electrónico...", nameSubmit: "Iniciar chat", translateAll: "Traducir mensajes", showOriginal: "Mostrar mensajes originales" },
+  admin: {
+    login: "Login", username: "Username", password: "Password", signIn: "Sign In",
+    dashboard: "Admin Dashboard", chats: "Chats", servicesManage: "Manage Services",
+    noChats: "No active chats", deleteChat: "Delete Chat", addService: "Add Service",
+    editService: "Edit", deleteService: "Delete", logout: "Log Out",
+    addCategory: "Add Category", editCategory: "Edit Category", deleteCategory: "Delete",
+    categories: "Categories", saveService: "Save Service", saveCategory: "Save Category",
+    renameChat: "Rename", chatTitle: "Chat Title", chatUser: "User", chatEmail: "E-Mail",
+    imageUrl: "Image URL", uploadImage: "Upload Image", category: "Category",
+    titleField: "Title", descriptionField: "Description", languageTab: "Language", cancel: "Cancel", save: "Save",
+    noServices: "No services found", noCategories: "No categories found",
+    statistics: "Statistics", visits: "Website Visits", chatsByService: "Chats by Service", timeRange: "Time Range",
+    week: "Week", month: "Month", halfYear: "Half Year", year: "Year", filterAll: "All", noData: "No data",
+  },
+  footer: { rights: "Todos los derechos reservados.", description: "La oferta se aplica a la obtención de nuevos documentos de registro de Briefs alemanes (en caso de pérdida, extravío o robo).", cookieNotice: { before: "Este sitio utiliza cookies. Más información en la ", linkText: "Política de Privacidad", after: "." } },
+  notFound: { title: "¡Ups! Página no encontrada", goHome: "Volver a la página principal" },
+};
+
+const it: TranslationShape = {
+  seo: {
+    title: "BriefService – Immatricolazione e re-immatricolazione di veicoli in Germania",
+    description: "Servizi completi di immatricolazione e re-immatricolazione di veicoli in Germania. Gestiamo duplicati di Brief tedeschi, modifiche della massa complessiva, del tipo di veicolo, del numero di posti e legalizzazione di modifiche strutturali.",
+    keywords: "brief tedesco, duplicato brief, brief piccolo, brief grande, duplicato documento di immatricolazione Germania, immatricolazione auto in Germania, re-immatricolazione dalla Germania, modifica massa complessiva, riduzione massa complessiva a 3500 kg, massa complessiva 3,5t categoria B, cambio tipo veicolo, veicolo speciale manutenzione invernale, legalizzazione modifiche strutturali, modifica numero posti, immatricolazione auto UK in Germania, immatricolazione auto USA in Germania, cancellazione veicolo Germania, revisione tecnica Germania, documenti immatricolazione veicolo, immatricolazione auto importata, conversione autocarro in autovettura, conversione autovettura in autocarro, omologazione veicolo Germania, targhetta massa complessiva",
+  },
+  nav: { home: "Home", services: "Servizi", contact: "Contatti", admin: "Pannello admin" },
+  hero: { title: "Brief smarrito?", titleAccent: "Pratiche negli uffici tedeschi?", subtitle: "Offriamo servizi completi di immatricolazione e re-immatricolazione di veicoli in Germania, nonché la loro successiva immatricolazione in Polonia e nell'UE. Ci occupiamo dell'ottenimento di duplicati di Brief tedeschi, della modifica della massa complessiva, del tipo di veicolo, del numero di posti e della legalizzazione di modifiche strutturali, oltre a organizzare revisioni tecniche. Il cliente riceve un set completo di documenti necessari per la successiva immatricolazione.", cta: "Vedi servizi", chatCta: "Chatta con noi" },
+  services: { title: "I nostri servizi", subtitle: "Consulta la nostra offerta e scegli il servizio di cui hai bisogno. Le offerte sono flessibili.", chatAbout: "Chiedi informazioni", details: "Dettagli", close: "Chiudi", allCategories: "Tutti" },
+  contact: { title: "Contattaci", subtitle: "Hai domande? Inviaci un messaggio o utilizza la chat dal vivo.", name: "Nome e cognome", email: "Indirizzo e-mail", message: "Messaggio", send: "Invia messaggio", sent: "Messaggio inviato!", phone: "Telefono", address: "Indirizzo" },
+  chat: { title: "Chat dal vivo", placeholder: "Scrivi un messaggio...", send: "Invia", greeting: "Ciao! Come possiamo aiutarti?", serviceContext: "Domanda relativa al servizio:", namePrompt: "Inserisci i tuoi dati per avviare la chat:", namePlaceholder: "Il tuo nome...", emailPlaceholder: "La tua e-mail...", nameSubmit: "Avvia chat", translateAll: "Traduci messaggi", showOriginal: "Mostra messaggi originali" },
+  admin: {
+    login: "Login", username: "Username", password: "Password", signIn: "Sign In",
+    dashboard: "Admin Dashboard", chats: "Chats", servicesManage: "Manage Services",
+    noChats: "No active chats", deleteChat: "Delete Chat", addService: "Add Service",
+    editService: "Edit", deleteService: "Delete", logout: "Log Out",
+    addCategory: "Add Category", editCategory: "Edit Category", deleteCategory: "Delete",
+    categories: "Categories", saveService: "Save Service", saveCategory: "Save Category",
+    renameChat: "Rename", chatTitle: "Chat Title", chatUser: "User", chatEmail: "E-Mail",
+    imageUrl: "Image URL", uploadImage: "Upload Image", category: "Category",
+    titleField: "Title", descriptionField: "Description", languageTab: "Language", cancel: "Cancel", save: "Save",
+    noServices: "No services found", noCategories: "No categories found",
+    statistics: "Statistics", visits: "Website Visits", chatsByService: "Chats by Service", timeRange: "Time Range",
+    week: "Week", month: "Month", halfYear: "Half Year", year: "Year", filterAll: "All", noData: "No data",
+  },
+  footer: { rights: "Tutti i diritti riservati.", description: "L'offerta riguarda l'ottenimento di nuovi documenti di immatricolazione dei Brief tedeschi (in caso di smarrimento, perdita o furto)!", cookieNotice: { before: "Questo sito utilizza cookie. Maggiori informazioni nella ", linkText: "Informativa sulla Privacy", after: "." } },
+  notFound: { title: "Ops! Pagina non trovata", goHome: "Torna alla pagina principale" },
+};
+
+const hu: TranslationShape = {
+  seo: {
+    title: "BriefService – Járműregisztráció és átírás Németországban",
+    description: "Átfogó járműregisztrációs és átírási szolgáltatások Németországban. Német Brief másodpéldányok elkészítése, össztömeg-változtatás, járműtípus-változtatás, ülésszám-módosítás és szerkezeti módosítások legalizálása.",
+    keywords: "német brief, brief másolat, kis brief, nagy brief, regisztrációs dokumentum másolat Németország, autó regisztráció Németországban, átírás Németországból, össztömeg változtatás, össztömeg csökkentés 3500 kg-ra, össztömeg 3,5t B kategória, járműtípus változtatás, speciális téli útkarbantartó jármű, szerkezeti változtatások legalizálása, ülésszám változtatás, UK autó regisztráció Németországban, USA autó regisztráció Németországban, jármű kijelentkeztetés Németország, műszaki vizsga Németország, jármű regisztrációs dokumentumok, importált autó regisztráció, teherautó személyautóvá alakítás, személyautó teherautóvá alakítás, jármű homoligáció Németország, össztömeg adattábla",
+  },
+  nav: { home: "Kezdőlap", services: "Szolgáltatások", contact: "Kapcsolat", admin: "Admin panel" },
+  hero: { title: "Elveszett Brief?", titleAccent: "Ügyek a német hatóságoknál?", subtitle: "Átfogó járműregisztrációs és átírási szolgáltatásokat kínálunk Németországban, valamint azok további regisztrációját Lengyelországban és az EU-ban. Foglalkozunk német Brief másodpéldányok elkészítésével, össztömeg-változtatással, járműtípus-változtatással, ülésszám-módosítással és szerkezeti módosítások legalizálásával, valamint műszaki vizsgákat szervezünk. Az ügyfél megkapja a további regisztrációhoz szükséges teljes dokumentumcsomagot.", cta: "Szolgáltatások megtekintése", chatCta: "Írjon nekünk" },
+  services: { title: "Szolgáltatásaink", subtitle: "Tekintse meg kínálatunkat és válassza ki a szükséges szolgáltatást. Az ajánlatok rugalmasak.", chatAbout: "Kérdezzen erről", details: "Részletek", close: "Bezárás", allCategories: "Összes" },
+  contact: { title: "Lépjen kapcsolatba velünk", subtitle: "Kérdése van? Írjon nekünk vagy használja az élő chatet.", name: "Teljes név", email: "E-mail cím", message: "Üzenet", send: "Üzenet küldése", sent: "Üzenet elküldve!", phone: "Telefon", address: "Cím" },
+  chat: { title: "Élő chat", placeholder: "Írjon üzenetet...", send: "Küldés", greeting: "Üdvözöljük! Miben segíthetünk?", serviceContext: "Kérdés a szolgáltatásról:", namePrompt: "Adja meg adatait a chat indításához:", namePlaceholder: "Az Ön neve...", emailPlaceholder: "Az Ön e-mail címe...", nameSubmit: "Chat indítása", translateAll: "Üzenetek fordítása", showOriginal: "Eredeti üzenetek megjelenítése" },
+  admin: {
+    login: "Login", username: "Username", password: "Password", signIn: "Sign In",
+    dashboard: "Admin Dashboard", chats: "Chats", servicesManage: "Manage Services",
+    noChats: "No active chats", deleteChat: "Delete Chat", addService: "Add Service",
+    editService: "Edit", deleteService: "Delete", logout: "Log Out",
+    addCategory: "Add Category", editCategory: "Edit Category", deleteCategory: "Delete",
+    categories: "Categories", saveService: "Save Service", saveCategory: "Save Category",
+    renameChat: "Rename", chatTitle: "Chat Title", chatUser: "User", chatEmail: "E-Mail",
+    imageUrl: "Image URL", uploadImage: "Upload Image", category: "Category",
+    titleField: "Title", descriptionField: "Description", languageTab: "Language", cancel: "Cancel", save: "Save",
+    noServices: "No services found", noCategories: "No categories found",
+    statistics: "Statistics", visits: "Website Visits", chatsByService: "Chats by Service", timeRange: "Time Range",
+    week: "Week", month: "Month", halfYear: "Half Year", year: "Year", filterAll: "All", noData: "No data",
+  },
+  footer: { rights: "Minden jog fenntartva.", description: "Az ajánlat az új német Brief regisztrációs dokumentumok elkészítésére vonatkozik (elvesztés, elhagyás vagy lopás esetén)!", cookieNotice: { before: "Ez az oldal sütiket használ. További információ az ", linkText: "Adatvédelmi szabályzatban", after: "." } },
+  notFound: { title: "Hoppá! Az oldal nem található", goHome: "Vissza a kezdőlapra" },
+};
+
+export const translations = { pl, en, uk, ru, cs, es, it, hu } as const;
 export type Translations = TranslationShape;

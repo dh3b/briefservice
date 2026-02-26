@@ -7,6 +7,12 @@
     <loc>https://dheb.site/pl/</loc>
     <xhtml:link rel="alternate" hreflang="pl" href="https://dheb.site/pl/" />
     <xhtml:link rel="alternate" hreflang="en" href="https://dheb.site/en/" />
+    <xhtml:link rel="alternate" hreflang="uk" href="https://dheb.site/uk/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://dheb.site/ru/" />
+    <xhtml:link rel="alternate" hreflang="cs" href="https://dheb.site/cs/" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://dheb.site/es/" />
+    <xhtml:link rel="alternate" hreflang="it" href="https://dheb.site/it/" />
+    <xhtml:link rel="alternate" hreflang="hu" href="https://dheb.site/hu/" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://dheb.site/pl/" />
   </url>
 
@@ -15,6 +21,96 @@
     <loc>https://dheb.site/en/</loc>
     <xhtml:link rel="alternate" hreflang="pl" href="https://dheb.site/pl/" />
     <xhtml:link rel="alternate" hreflang="en" href="https://dheb.site/en/" />
+    <xhtml:link rel="alternate" hreflang="uk" href="https://dheb.site/uk/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://dheb.site/ru/" />
+    <xhtml:link rel="alternate" hreflang="cs" href="https://dheb.site/cs/" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://dheb.site/es/" />
+    <xhtml:link rel="alternate" hreflang="it" href="https://dheb.site/it/" />
+    <xhtml:link rel="alternate" hreflang="hu" href="https://dheb.site/hu/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://dheb.site/pl/" />
+  </url>
+
+  <!-- Ukrainian version -->
+  <url>
+    <loc>https://dheb.site/uk/</loc>
+    <xhtml:link rel="alternate" hreflang="pl" href="https://dheb.site/pl/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://dheb.site/en/" />
+    <xhtml:link rel="alternate" hreflang="uk" href="https://dheb.site/uk/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://dheb.site/ru/" />
+    <xhtml:link rel="alternate" hreflang="cs" href="https://dheb.site/cs/" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://dheb.site/es/" />
+    <xhtml:link rel="alternate" hreflang="it" href="https://dheb.site/it/" />
+    <xhtml:link rel="alternate" hreflang="hu" href="https://dheb.site/hu/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://dheb.site/pl/" />
+  </url>
+
+  <!-- Russian version -->
+  <url>
+    <loc>https://dheb.site/ru/</loc>
+    <xhtml:link rel="alternate" hreflang="pl" href="https://dheb.site/pl/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://dheb.site/en/" />
+    <xhtml:link rel="alternate" hreflang="uk" href="https://dheb.site/uk/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://dheb.site/ru/" />
+    <xhtml:link rel="alternate" hreflang="cs" href="https://dheb.site/cs/" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://dheb.site/es/" />
+    <xhtml:link rel="alternate" hreflang="it" href="https://dheb.site/it/" />
+    <xhtml:link rel="alternate" hreflang="hu" href="https://dheb.site/hu/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://dheb.site/pl/" />
+  </url>
+
+  <!-- Czech version -->
+  <url>
+    <loc>https://dheb.site/cs/</loc>
+    <xhtml:link rel="alternate" hreflang="pl" href="https://dheb.site/pl/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://dheb.site/en/" />
+    <xhtml:link rel="alternate" hreflang="uk" href="https://dheb.site/uk/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://dheb.site/ru/" />
+    <xhtml:link rel="alternate" hreflang="cs" href="https://dheb.site/cs/" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://dheb.site/es/" />
+    <xhtml:link rel="alternate" hreflang="it" href="https://dheb.site/it/" />
+    <xhtml:link rel="alternate" hreflang="hu" href="https://dheb.site/hu/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://dheb.site/pl/" />
+  </url>
+
+  <!-- Spanish version -->
+  <url>
+    <loc>https://dheb.site/es/</loc>
+    <xhtml:link rel="alternate" hreflang="pl" href="https://dheb.site/pl/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://dheb.site/en/" />
+    <xhtml:link rel="alternate" hreflang="uk" href="https://dheb.site/uk/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://dheb.site/ru/" />
+    <xhtml:link rel="alternate" hreflang="cs" href="https://dheb.site/cs/" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://dheb.site/es/" />
+    <xhtml:link rel="alternate" hreflang="it" href="https://dheb.site/it/" />
+    <xhtml:link rel="alternate" hreflang="hu" href="https://dheb.site/hu/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://dheb.site/pl/" />
+  </url>
+
+  <!-- Italian version -->
+  <url>
+    <loc>https://dheb.site/it/</loc>
+    <xhtml:link rel="alternate" hreflang="pl" href="https://dheb.site/pl/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://dheb.site/en/" />
+    <xhtml:link rel="alternate" hreflang="uk" href="https://dheb.site/uk/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://dheb.site/ru/" />
+    <xhtml:link rel="alternate" hreflang="cs" href="https://dheb.site/cs/" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://dheb.site/es/" />
+    <xhtml:link rel="alternate" hreflang="it" href="https://dheb.site/it/" />
+    <xhtml:link rel="alternate" hreflang="hu" href="https://dheb.site/hu/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://dheb.site/pl/" />
+  </url>
+
+  <!-- Hungarian version -->
+  <url>
+    <loc>https://dheb.site/hu/</loc>
+    <xhtml:link rel="alternate" hreflang="pl" href="https://dheb.site/pl/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://dheb.site/en/" />
+    <xhtml:link rel="alternate" hreflang="uk" href="https://dheb.site/uk/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://dheb.site/ru/" />
+    <xhtml:link rel="alternate" hreflang="cs" href="https://dheb.site/cs/" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://dheb.site/es/" />
+    <xhtml:link rel="alternate" hreflang="it" href="https://dheb.site/it/" />
+    <xhtml:link rel="alternate" hreflang="hu" href="https://dheb.site/hu/" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://dheb.site/pl/" />
   </url>
 
