@@ -22,10 +22,7 @@ const app = express();
 
 app.set("trust proxy", 1);
 
-app.use(helmet({
-  crossOriginResourcePolicy: { policy: "cross-origin" },
-  contentSecurityPolicy: false,
-}));
+app.use(helmet());
 app.use(cors({ origin: CORS_ORIGINS, credentials: true }));
 app.use(express.json({ limit: "100kb" }));
 app.use(cookieParser());

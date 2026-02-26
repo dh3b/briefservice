@@ -47,8 +47,8 @@ const CategoryForm = ({ category, onClose, onSaved }: Props) => {
   };
 
   return (
-    <div className="fixed inset-0 z-50 bg-foreground/40 flex items-center justify-center p-4" onMouseDown={(e) => e.target === e.currentTarget && onClose()}>
-      <div className="bg-card rounded-xl border border-border w-full max-w-md max-h-[90vh] overflow-y-auto shadow-lg">
+    <div className="fixed inset-0 z-50 bg-foreground/40 flex items-center justify-center p-4" onClick={onClose}>
+      <div className="bg-card rounded-xl border border-border w-full max-w-md max-h-[90vh] overflow-y-auto shadow-lg" onClick={(e) => e.stopPropagation()}>
         <div className="flex items-center justify-between px-6 py-4 border-b border-border">
           <h3 className="font-display text-lg font-bold text-foreground">
             {category ? t.admin.editCategory : t.admin.addCategory}
