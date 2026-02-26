@@ -88,26 +88,3 @@ CREATE INDEX idx_chats_user_id ON chats(user_id);
 CREATE INDEX idx_services_category_id ON services(category_id);
 CREATE INDEX idx_page_visits_date ON page_visits(visited_at);
 CREATE INDEX idx_chats_created_at ON chats(created_at);
-
--- Migration: Add language columns for uk, ru, cs, es, it, hu
-ALTER TABLE categories
-  ADD COLUMN IF NOT EXISTS name_uk VARCHAR(255),
-  ADD COLUMN IF NOT EXISTS name_ru VARCHAR(255),
-  ADD COLUMN IF NOT EXISTS name_cs VARCHAR(255),
-  ADD COLUMN IF NOT EXISTS name_es VARCHAR(255),
-  ADD COLUMN IF NOT EXISTS name_it VARCHAR(255),
-  ADD COLUMN IF NOT EXISTS name_hu VARCHAR(255);
-
-ALTER TABLE services
-  ADD COLUMN IF NOT EXISTS title_uk VARCHAR(255),
-  ADD COLUMN IF NOT EXISTS title_ru VARCHAR(255),
-  ADD COLUMN IF NOT EXISTS title_cs VARCHAR(255),
-  ADD COLUMN IF NOT EXISTS title_es VARCHAR(255),
-  ADD COLUMN IF NOT EXISTS title_it VARCHAR(255),
-  ADD COLUMN IF NOT EXISTS title_hu VARCHAR(255),
-  ADD COLUMN IF NOT EXISTS description_uk TEXT,
-  ADD COLUMN IF NOT EXISTS description_ru TEXT,
-  ADD COLUMN IF NOT EXISTS description_cs TEXT,
-  ADD COLUMN IF NOT EXISTS description_es TEXT,
-  ADD COLUMN IF NOT EXISTS description_it TEXT,
-  ADD COLUMN IF NOT EXISTS description_hu TEXT;
