@@ -69,6 +69,24 @@ services:
     volumes:
       - lt_data:/home/libretranslate/.local
 
+  # db backups
+  backup:
+    build: ./backup
+    restart: unless-stopped
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      DB_HOST: db
+      DB_PORT: 5432
+      DB_NAME: ${DB_NAME:-briefservice}
+      DB_USER: ${DB_USER:-postgres}
+      PGPASSWORD: ${DB_PASSWORD:?Set DB_PASSWORD in .env}
+      BACKUP_CRON: "${BACKUP_CRON:-0 2 * * *}"
+      BACKUP_RETENTION_DAYS: "${BACKUP_RETENTION_DAYS:-7}"
+    volumes:
+      - ./db_backups:/backups
+
 volumes:
   pgdata:
   uploads:
