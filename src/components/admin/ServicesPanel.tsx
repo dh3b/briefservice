@@ -79,20 +79,19 @@ const ServicesPanel = () => {
               <tr className="border-b border-border bg-muted/50">
                 <th className="text-left px-6 py-3 font-medium text-muted-foreground">{t.admin.titleField}</th>
                 <th className="text-left px-6 py-3 font-medium text-muted-foreground">{t.admin.category}</th>
-                <th className="text-left px-6 py-3 font-medium text-muted-foreground">{t.admin.priceRange}</th>
                 <th className="text-right px-6 py-3 font-medium text-muted-foreground w-24"></th>
               </tr>
             </thead>
             <tbody>
               {services.length === 0 ? (
-                <tr><td className="px-6 py-4 text-muted-foreground" colSpan={4}>{t.admin.noServices}</td></tr>
+                <tr><td className="px-6 py-4 text-muted-foreground" colSpan={3}>{t.admin.noServices}</td></tr>
               ) : services.map((s) => {
                 const loc = localizeService(s, language);
                 return (
                   <tr key={s.id} className="border-b border-border last:border-0">
                     <td className="px-6 py-4 text-foreground">{loc.title}</td>
                     <td className="px-6 py-4 text-foreground">{getCategoryName(categories, s.category_id, language, "\u2014")}</td>
-                    <td className="px-6 py-4 text-foreground">{s.price_range}</td>
+
                     <td className="px-6 py-4 text-right">
                       <div className="flex justify-end gap-2">
                         <button onClick={() => { setEditingService(s); setServiceFormOpen(true); }} className="text-muted-foreground hover:text-foreground"><Pencil className="w-4 h-4" /></button>

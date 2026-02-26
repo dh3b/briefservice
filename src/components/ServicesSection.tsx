@@ -92,9 +92,6 @@ const ServicesSection = ({ onChatAbout }: ServicesSectionProps) => {
                   </span>
                   <h3 className="font-display text-3xl md:text-4xl font-bold text-card-foreground mb-4">{expandedService.title}</h3>
                   <p className="text-muted-foreground leading-relaxed mb-6 whitespace-pre-line">{expandedService.description}</p>
-                  <p className="text-lg font-semibold text-foreground mb-6">
-                    {t.services.priceFrom} {expandedService.price_range}
-                  </p>
                   <button
                     onClick={() => { setExpandedId(null); onChatAbout(expandedService.id, expandedService.title); }}
                     className="self-start inline-flex items-center gap-2 px-6 py-3 rounded-lg bg-primary text-primary-foreground font-medium hover:bg-navy-light transition-colors"

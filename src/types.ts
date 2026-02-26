@@ -17,7 +17,6 @@ export const LANGUAGE_FLAGS: Record<Language, string> = {
 export interface ServiceRow {
   id: string;
   category_id: string | null;
-  price_range: string;
   image_url: string;
   created_at: string;
   [key: string]: string | null | undefined; // title_xx, description_xx
@@ -28,7 +27,6 @@ export interface Service {
   id: string;
   title: string;
   description: string;
-  price_range: string;
   image_url: string;
   category_id: string | null;
 }
@@ -39,7 +37,6 @@ export function localizeService(row: ServiceRow, lang: Language): Service {
     id: row.id,
     title: (row[`title_${lang}`] as string) || (row[`title_${fb}`] as string) || "",
     description: (row[`description_${lang}`] as string) || (row[`description_${fb}`] as string) || "",
-    price_range: row.price_range,
     image_url: row.image_url,
     category_id: row.category_id ?? null,
   };

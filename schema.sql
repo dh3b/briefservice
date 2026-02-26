@@ -8,7 +8,6 @@ CREATE TABLE categories (
 CREATE TABLE services (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   category_id UUID REFERENCES categories(id) ON DELETE SET NULL,
-  price_range TEXT,
   image_url TEXT,
   title_pl VARCHAR(255),
   title_en VARCHAR(255),

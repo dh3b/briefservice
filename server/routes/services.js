@@ -22,9 +22,9 @@ router.get("/:id", asyncHandler(async (req, res) => {
 
 // POST /api/services (admin)
 router.post("/", requireAdmin, asyncHandler(async (req, res) => {
-  const { category_id, price_range, image_url, ...langFields } = req.body;
-  const cols = ["category_id", "price_range", "image_url"];
-  const vals = [category_id || null, v.text(price_range, 100) || "", v.url(image_url) || v.text(image_url, 2048) || ""];
+  const { category_id, image_url, ...langFields } = req.body;
+  const cols = ["category_id", "image_url"];
+  const vals = [category_id || null, v.url(image_url) || v.text(image_url, 2048) || ""];
 
   for (const l of LANGS) {
     cols.push(`title_${l}`, `description_${l}`);
@@ -41,11 +41,11 @@ router.post("/", requireAdmin, asyncHandler(async (req, res) => {
 
 // PUT /api/services/:id (admin)
 router.put("/:id", requireAdmin, asyncHandler(async (req, res) => {
-  const { category_id, price_range, image_url, ...langFields } = req.body;
-  const sets = ["category_id = $1", "price_range = $2", "image_url = $3"];
-  const vals = [category_id || null, v.text(price_range, 100) || "", v.url(image_url) || v.text(image_url, 2048) || ""];
+  const { category_id, image_url, ...langFields } = req.body;
+  const sets = ["category_id = $1", "image_url = $2"];
+  const vals = [category_id || null, v.url(image_url) || v.text(image_url, 2048) || ""];
 
-  let idx = 4;
+  let idx = 3;
   for (const l of LANGS) {
     sets.push(`title_${l} = $${idx}`, `description_${l} = $${idx + 1}`);
     vals.push(v.text(langFields[`title_${l}`], MAX_TITLE_LEN) || null, v.text(langFields[`description_${l}`], MAX_DESC_LEN) || null);

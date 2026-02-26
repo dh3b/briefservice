@@ -29,7 +29,6 @@ const ServiceForm = ({ service, categories, onClose, onSaved }: Props) => {
   const [titles, setTitles] = useState<Record<string, string>>(initLangMap("title"));
   const [descriptions, setDescriptions] = useState<Record<string, string>>(initLangMap("description"));
   const [categoryId, setCategoryId] = useState(service?.category_id || "");
-  const [priceRange, setPriceRange] = useState(service?.price_range || "");
   const [imageUrl, setImageUrl] = useState(service?.image_url || "");
 
   const handleUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -45,7 +44,7 @@ const ServiceForm = ({ service, categories, onClose, onSaved }: Props) => {
 
   const handleSave = async () => {
     setSaving(true);
-    const data: Record<string, unknown> = { category_id: categoryId || null, price_range: priceRange, image_url: imageUrl };
+    const data: Record<string, unknown> = { category_id: categoryId || null, image_url: imageUrl };
     for (const l of SUPPORTED_LANGUAGES) {
       data[`title_${l}`] = titles[l] || null;
       data[`description_${l}`] = descriptions[l] || null;
@@ -107,13 +106,6 @@ const ServiceForm = ({ service, categories, onClose, onSaved }: Props) => {
                 <option key={cat.id} value={cat.id}>{localizeCategory(cat, language)}</option>
               ))}
             </select>
-          </div>
-
-          {/* Price range */}
-          <div>
-            <label className="text-xs font-medium text-muted-foreground mb-1.5 block">{t.admin.priceRange}</label>
-            <input value={priceRange} onChange={(e) => setPriceRange(e.target.value)}
-              className="w-full px-4 py-2.5 rounded-lg bg-secondary border border-border text-foreground text-sm outline-none focus:ring-2 focus:ring-ring" />
           </div>
 
           {/* Image */}
