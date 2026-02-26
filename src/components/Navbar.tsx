@@ -35,7 +35,6 @@ const Navbar = () => {
           <button onClick={() => scrollTo("hero")} className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">{t.nav.home}</button>
           <button onClick={() => scrollTo("services")} className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">{t.nav.services}</button>
           <button onClick={() => scrollTo("contact")} className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">{t.nav.contact}</button>
-          <Link to={`/${language}/admin`} className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">{t.nav.admin}</Link>
 
           {/* Language dropdown */}
           <div ref={langRef} className="relative">
@@ -76,7 +75,7 @@ const Navbar = () => {
           <button onClick={() => scrollTo("hero")} className="block text-sm font-medium text-muted-foreground">{t.nav.home}</button>
           <button onClick={() => scrollTo("services")} className="block text-sm font-medium text-muted-foreground">{t.nav.services}</button>
           <button onClick={() => scrollTo("contact")} className="block text-sm font-medium text-muted-foreground">{t.nav.contact}</button>
-          <Link to={`/${language}/admin`} className="block text-sm font-medium text-muted-foreground">{t.nav.admin}</Link>
+
           <div className="border-t border-border pt-3 grid grid-cols-4 gap-1">
             {SUPPORTED_LANGUAGES.map((code) => (
               <button
