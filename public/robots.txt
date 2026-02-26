@@ -13,4 +13,4 @@ Allow: /
 User-agent: *
 Allow: /
 
-Sitemap: https://dheb.site/sitemap.xml
+Sitemap: https://brief-service.com/sitemap.xml

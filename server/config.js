@@ -1,9 +1,9 @@
 /** Shared server configuration — single source of truth */
 
 export const LANGS = ["pl", "en", "uk", "ru", "cs", "es", "it", "hu"];
-export const DEFAULT_LANG = "pl";
+export const DEFAULT_LANG = "en";
 export const LT_API_URL = "http://libretranslate:5000/translate";
-export const BASE_DOMAIN = "dheb.site";
+export const BASE_DOMAIN = "brief-service.com";
 
 export const API_SENDER_EMAIL = process.env.API_SENDER_EMAIL || `contact@${BASE_DOMAIN}`;
 export const CONTACT_EMAIL = process.env.CONTACT_EMAIL 

@@ -18,7 +18,7 @@ const PrivacyPolicy = () => {
               1. Informacje og&oacute;lne
             </h2>
             <div className="space-y-3 text-sm">
-              <p>Niniejsza polityka dotyczy Serwisu www, funkcjonuj&#261;cego pod adresem: <strong>dheb.site</strong></p>
+              <p>Niniejsza polityka dotyczy Serwisu www, funkcjonuj&#261;cego pod adresem: <strong>brief-service.com</strong></p>
               <p>
                 Operatorem serwisu oraz Administratorem danych osobowych jest:{" "}
                 <strong>Jurecki MAREK PRZEDSI&#280;BIORSTWO WIELOBRAN&#379;OWE &quot;JANMAR&quot;</strong>,

@@ -4,114 +4,114 @@
 
   <!-- Polish version -->
   <url>
-    <loc>https://dheb.site/pl/</loc>
-    <xhtml:link rel="alternate" hreflang="pl" href="https://dheb.site/pl/" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://dheb.site/en/" />
-    <xhtml:link rel="alternate" hreflang="uk" href="https://dheb.site/uk/" />
-    <xhtml:link rel="alternate" hreflang="ru" href="https://dheb.site/ru/" />
-    <xhtml:link rel="alternate" hreflang="cs" href="https://dheb.site/cs/" />
-    <xhtml:link rel="alternate" hreflang="es" href="https://dheb.site/es/" />
-    <xhtml:link rel="alternate" hreflang="it" href="https://dheb.site/it/" />
-    <xhtml:link rel="alternate" hreflang="hu" href="https://dheb.site/hu/" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://dheb.site/pl/" />
+    <loc>https://brief-service.com/pl/</loc>
+    <xhtml:link rel="alternate" hreflang="pl" href="https://brief-service.com/pl/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://brief-service.com/en/" />
+    <xhtml:link rel="alternate" hreflang="uk" href="https://brief-service.com/uk/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://brief-service.com/ru/" />
+    <xhtml:link rel="alternate" hreflang="cs" href="https://brief-service.com/cs/" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://brief-service.com/es/" />
+    <xhtml:link rel="alternate" hreflang="it" href="https://brief-service.com/it/" />
+    <xhtml:link rel="alternate" hreflang="hu" href="https://brief-service.com/hu/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://brief-service.com/en/" />
   </url>
 
   <!-- English version -->
   <url>
-    <loc>https://dheb.site/en/</loc>
-    <xhtml:link rel="alternate" hreflang="pl" href="https://dheb.site/pl/" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://dheb.site/en/" />
-    <xhtml:link rel="alternate" hreflang="uk" href="https://dheb.site/uk/" />
-    <xhtml:link rel="alternate" hreflang="ru" href="https://dheb.site/ru/" />
-    <xhtml:link rel="alternate" hreflang="cs" href="https://dheb.site/cs/" />
-    <xhtml:link rel="alternate" hreflang="es" href="https://dheb.site/es/" />
-    <xhtml:link rel="alternate" hreflang="it" href="https://dheb.site/it/" />
-    <xhtml:link rel="alternate" hreflang="hu" href="https://dheb.site/hu/" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://dheb.site/pl/" />
+    <loc>https://brief-service.com/en/</loc>
+    <xhtml:link rel="alternate" hreflang="pl" href="https://brief-service.com/pl/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://brief-service.com/en/" />
+    <xhtml:link rel="alternate" hreflang="uk" href="https://brief-service.com/uk/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://brief-service.com/ru/" />
+    <xhtml:link rel="alternate" hreflang="cs" href="https://brief-service.com/cs/" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://brief-service.com/es/" />
+    <xhtml:link rel="alternate" hreflang="it" href="https://brief-service.com/it/" />
+    <xhtml:link rel="alternate" hreflang="hu" href="https://brief-service.com/hu/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://brief-service.com/en/" />
   </url>
 
   <!-- Ukrainian version -->
   <url>
-    <loc>https://dheb.site/uk/</loc>
-    <xhtml:link rel="alternate" hreflang="pl" href="https://dheb.site/pl/" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://dheb.site/en/" />
-    <xhtml:link rel="alternate" hreflang="uk" href="https://dheb.site/uk/" />
-    <xhtml:link rel="alternate" hreflang="ru" href="https://dheb.site/ru/" />
-    <xhtml:link rel="alternate" hreflang="cs" href="https://dheb.site/cs/" />
-    <xhtml:link rel="alternate" hreflang="es" href="https://dheb.site/es/" />
-    <xhtml:link rel="alternate" hreflang="it" href="https://dheb.site/it/" />
-    <xhtml:link rel="alternate" hreflang="hu" href="https://dheb.site/hu/" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://dheb.site/pl/" />
+    <loc>https://brief-service.com/uk/</loc>
+    <xhtml:link rel="alternate" hreflang="pl" href="https://brief-service.com/pl/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://brief-service.com/en/" />
+    <xhtml:link rel="alternate" hreflang="uk" href="https://brief-service.com/uk/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://brief-service.com/ru/" />
+    <xhtml:link rel="alternate" hreflang="cs" href="https://brief-service.com/cs/" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://brief-service.com/es/" />
+    <xhtml:link rel="alternate" hreflang="it" href="https://brief-service.com/it/" />
+    <xhtml:link rel="alternate" hreflang="hu" href="https://brief-service.com/hu/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://brief-service.com/en/" />
   </url>
 
   <!-- Russian version -->
   <url>
-    <loc>https://dheb.site/ru/</loc>
-    <xhtml:link rel="alternate" hreflang="pl" href="https://dheb.site/pl/" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://dheb.site/en/" />
-    <xhtml:link rel="alternate" hreflang="uk" href="https://dheb.site/uk/" />
-    <xhtml:link rel="alternate" hreflang="ru" href="https://dheb.site/ru/" />
-    <xhtml:link rel="alternate" hreflang="cs" href="https://dheb.site/cs/" />
-    <xhtml:link rel="alternate" hreflang="es" href="https://dheb.site/es/" />
-    <xhtml:link rel="alternate" hreflang="it" href="https://dheb.site/it/" />
-    <xhtml:link rel="alternate" hreflang="hu" href="https://dheb.site/hu/" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://dheb.site/pl/" />
+    <loc>https://brief-service.com/ru/</loc>
+    <xhtml:link rel="alternate" hreflang="pl" href="https://brief-service.com/pl/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://brief-service.com/en/" />
+    <xhtml:link rel="alternate" hreflang="uk" href="https://brief-service.com/uk/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://brief-service.com/ru/" />
+    <xhtml:link rel="alternate" hreflang="cs" href="https://brief-service.com/cs/" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://brief-service.com/es/" />
+    <xhtml:link rel="alternate" hreflang="it" href="https://brief-service.com/it/" />
+    <xhtml:link rel="alternate" hreflang="hu" href="https://brief-service.com/hu/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://brief-service.com/en/" />
   </url>
 
   <!-- Czech version -->
   <url>
-    <loc>https://dheb.site/cs/</loc>
-    <xhtml:link rel="alternate" hreflang="pl" href="https://dheb.site/pl/" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://dheb.site/en/" />
-    <xhtml:link rel="alternate" hreflang="uk" href="https://dheb.site/uk/" />
-    <xhtml:link rel="alternate" hreflang="ru" href="https://dheb.site/ru/" />
-    <xhtml:link rel="alternate" hreflang="cs" href="https://dheb.site/cs/" />
-    <xhtml:link rel="alternate" hreflang="es" href="https://dheb.site/es/" />
-    <xhtml:link rel="alternate" hreflang="it" href="https://dheb.site/it/" />
-    <xhtml:link rel="alternate" hreflang="hu" href="https://dheb.site/hu/" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://dheb.site/pl/" />
+    <loc>https://brief-service.com/cs/</loc>
+    <xhtml:link rel="alternate" hreflang="pl" href="https://brief-service.com/pl/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://brief-service.com/en/" />
+    <xhtml:link rel="alternate" hreflang="uk" href="https://brief-service.com/uk/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://brief-service.com/ru/" />
+    <xhtml:link rel="alternate" hreflang="cs" href="https://brief-service.com/cs/" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://brief-service.com/es/" />
+    <xhtml:link rel="alternate" hreflang="it" href="https://brief-service.com/it/" />
+    <xhtml:link rel="alternate" hreflang="hu" href="https://brief-service.com/hu/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://brief-service.com/en/" />
   </url>
 
   <!-- Spanish version -->
   <url>
-    <loc>https://dheb.site/es/</loc>
-    <xhtml:link rel="alternate" hreflang="pl" href="https://dheb.site/pl/" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://dheb.site/en/" />
-    <xhtml:link rel="alternate" hreflang="uk" href="https://dheb.site/uk/" />
-    <xhtml:link rel="alternate" hreflang="ru" href="https://dheb.site/ru/" />
-    <xhtml:link rel="alternate" hreflang="cs" href="https://dheb.site/cs/" />
-    <xhtml:link rel="alternate" hreflang="es" href="https://dheb.site/es/" />
-    <xhtml:link rel="alternate" hreflang="it" href="https://dheb.site/it/" />
-    <xhtml:link rel="alternate" hreflang="hu" href="https://dheb.site/hu/" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://dheb.site/pl/" />
+    <loc>https://brief-service.com/es/</loc>
+    <xhtml:link rel="alternate" hreflang="pl" href="https://brief-service.com/pl/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://brief-service.com/en/" />
+    <xhtml:link rel="alternate" hreflang="uk" href="https://brief-service.com/uk/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://brief-service.com/ru/" />
+    <xhtml:link rel="alternate" hreflang="cs" href="https://brief-service.com/cs/" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://brief-service.com/es/" />
+    <xhtml:link rel="alternate" hreflang="it" href="https://brief-service.com/it/" />
+    <xhtml:link rel="alternate" hreflang="hu" href="https://brief-service.com/hu/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://brief-service.com/en/" />
   </url>
 
   <!-- Italian version -->
   <url>
-    <loc>https://dheb.site/it/</loc>
-    <xhtml:link rel="alternate" hreflang="pl" href="https://dheb.site/pl/" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://dheb.site/en/" />
-    <xhtml:link rel="alternate" hreflang="uk" href="https://dheb.site/uk/" />
-    <xhtml:link rel="alternate" hreflang="ru" href="https://dheb.site/ru/" />
-    <xhtml:link rel="alternate" hreflang="cs" href="https://dheb.site/cs/" />
-    <xhtml:link rel="alternate" hreflang="es" href="https://dheb.site/es/" />
-    <xhtml:link rel="alternate" hreflang="it" href="https://dheb.site/it/" />
-    <xhtml:link rel="alternate" hreflang="hu" href="https://dheb.site/hu/" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://dheb.site/pl/" />
+    <loc>https://brief-service.com/it/</loc>
+    <xhtml:link rel="alternate" hreflang="pl" href="https://brief-service.com/pl/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://brief-service.com/en/" />
+    <xhtml:link rel="alternate" hreflang="uk" href="https://brief-service.com/uk/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://brief-service.com/ru/" />
+    <xhtml:link rel="alternate" hreflang="cs" href="https://brief-service.com/cs/" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://brief-service.com/es/" />
+    <xhtml:link rel="alternate" hreflang="it" href="https://brief-service.com/it/" />
+    <xhtml:link rel="alternate" hreflang="hu" href="https://brief-service.com/hu/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://brief-service.com/en/" />
   </url>
 
   <!-- Hungarian version -->
   <url>
-    <loc>https://dheb.site/hu/</loc>
-    <xhtml:link rel="alternate" hreflang="pl" href="https://dheb.site/pl/" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://dheb.site/en/" />
-    <xhtml:link rel="alternate" hreflang="uk" href="https://dheb.site/uk/" />
-    <xhtml:link rel="alternate" hreflang="ru" href="https://dheb.site/ru/" />
-    <xhtml:link rel="alternate" hreflang="cs" href="https://dheb.site/cs/" />
-    <xhtml:link rel="alternate" hreflang="es" href="https://dheb.site/es/" />
-    <xhtml:link rel="alternate" hreflang="it" href="https://dheb.site/it/" />
-    <xhtml:link rel="alternate" hreflang="hu" href="https://dheb.site/hu/" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://dheb.site/pl/" />
+    <loc>https://brief-service.com/hu/</loc>
+    <xhtml:link rel="alternate" hreflang="pl" href="https://brief-service.com/pl/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://brief-service.com/en/" />
+    <xhtml:link rel="alternate" hreflang="uk" href="https://brief-service.com/uk/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://brief-service.com/ru/" />
+    <xhtml:link rel="alternate" hreflang="cs" href="https://brief-service.com/cs/" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://brief-service.com/es/" />
+    <xhtml:link rel="alternate" hreflang="it" href="https://brief-service.com/it/" />
+    <xhtml:link rel="alternate" hreflang="hu" href="https://brief-service.com/hu/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://brief-service.com/en/" />
   </url>
 
 </urlset>

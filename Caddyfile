@@ -1,4 +1,4 @@
-dheb.site, www.dheb.site, localhost {
+brief-service.com, www.brief-service.com, localhost {
 	encode
 
 	handle /api/* {
