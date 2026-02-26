@@ -64,7 +64,7 @@ services:
     image: libretranslate/libretranslate:latest
     restart: unless-stopped
     environment:
-      LT_LOAD_ONLY: "en,pl"
+      LT_LOAD_ONLY: "en,pl,uk,ru,cs,es,it,hu"
       LT_API_KEYS: "true"
     volumes:
       - lt_data:/home/libretranslate/.local
