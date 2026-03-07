@@ -4,9 +4,8 @@ import { useState, useEffect, useCallback } from "react";
 import herobg1 from "@/assets/herobg1.jpg";
 import herobg2 from "@/assets/herobg2.jpg";
 import herobg3 from "@/assets/herobg3.jpg";
-import herobg4 from "@/assets/herobg4.jpg";
 
-const SLIDES = [herobg1, herobg2, herobg3, herobg4];
+const SLIDES = [herobg1, herobg2, herobg3];
 
 const HeroSection = () => {
   const { t } = useLanguage();
@@ -58,14 +57,14 @@ const HeroSection = () => {
       </div>
 
       <div className="relative container mx-auto px-6 py-32 z-10">
-        <div className="max-w-2xl animate-fade-in-up bg-card/40 backdrop-blur-lg border border-border rounded-xl p-8 shadow-lg">
-          <h1 className="font-display text-5xl md:text-6xl lg:text-7xl font-bold text-gray-100 leading-tight mb-2">
+        <div className="max-w-5xl animate-fade-in-up bg-black/20 backdrop-blur-lg border border-border rounded-xl p-8 shadow-lg">
+          <h1 className="font-display text-3xl md:text-4xl lg:text-5xl font-bold text-gray-100 leading-tight mb-2">
             {t.hero.title}
           </h1>
           <p className="font-display text-3xl md:text-4xl lg:text-5xl font-bold text-gradient-gold mb-6">
             {t.hero.titleAccent}
           </p>
-          <p className="md:text-xl text-gray-200 mb-10 max-w-lg leading-relaxed">
+          <p className="md:text-xl text-gray-200 mb-10 leading-relaxed">
             {t.hero.subtitle}
           </p>
           <div className="flex flex-wrap gap-4">
