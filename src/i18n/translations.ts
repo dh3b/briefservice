@@ -16,6 +16,15 @@ const base = {
   },
   footer: { rights: "", description: "", cookieNotice: { before: "", linkText: "", after: "" } },
   notFound: { title: "", goHome: "" },
+  landing: {
+    title: "",
+    subtitle: "",
+    bullet1: "",
+    bullet2: "",
+    bullet3: "",
+    cta: "",
+    disclaimer: "",
+  },
 };
 
 type TranslationShape = typeof base;
@@ -47,6 +56,15 @@ const pl: TranslationShape = {
   },
   footer: { rights: "Wszelkie prawa zastrzeżone.", description: "Oferta dotyczy wyrobienia nowych dokumentów rejestracyjnych niemieckich Briefów (w przypadku zagubienia, utraty, kradzieży)!", cookieNotice: { before: "Strona korzysta z plików cookie. Więcej informacji w ", linkText: "Polityce Prywatności", after: "." } },
   notFound: { title: "Ups! Strona nie znaleziona", goHome: "Wróć na stronę główną" },
+  landing: {
+    title: "Wsparcie informacyjne przy formalnościach w Niemczech",
+    subtitle: "Pomagamy zrozumieć typowe wymagania i uporządkować informacje przed wizytą w urzędzie lub przygotowaniem pism.",
+    bullet1: "Przygotowanie do codziennych spraw urzędowych i formularzy.",
+    bullet2: "Wyjaśnienie ogólnych kroków i typowych dokumentów wymaganych w różnych sytuacjach.",
+    bullet3: "Lepsza orientacja w procedurach – bez podejmowania decyzji administracyjnych za klienta.",
+    cta: "Przejdź do pełnej strony",
+    disclaimer: "Serwis ma charakter informacyjny i nie wydaje oficjalnych dokumentów ani nie zastępuje porad urzędów lub doradców prawnych.",
+  },
 };
 
 const en: TranslationShape = {
@@ -76,6 +94,15 @@ const en: TranslationShape = {
   },
   footer: { rights: "All rights reserved.", description: "The offer applies to obtaining new German Brief registration documents (in case of loss, misplacement, or theft)!", cookieNotice: { before: "This site uses cookies. More information in the ", linkText: "Privacy Policy", after: "." } },
   notFound: { title: "Oops! Page not found", goHome: "Return to Home" },
+  landing: {
+    title: "Guidance for everyday formalities in Germany",
+    subtitle: "We help you prepare for administrative steps by explaining typical requirements and structuring information in a clear way.",
+    bullet1: "Orientation for everyday paperwork and forms related to life in Germany.",
+    bullet2: "High-level explanations of common steps and typical information requested in different situations.",
+    bullet3: "Support in preparing for conversations and appointments – without making decisions or acting on your behalf.",
+    cta: "Go to full website",
+    disclaimer: "This site offers general information only. It does not issue official documents, make decisions, or replace guidance from public authorities or legal professionals.",
+  },
 };
 
 const uk: TranslationShape = {
@@ -105,6 +132,15 @@ const uk: TranslationShape = {
   },
   footer: { rights: "Усі права захищені.", description: "Пропозиція стосується виготовлення нових реєстраційних документів німецьких Briefів (у разі втрати, загублення або крадіжки)!", cookieNotice: { before: "Сайт використовує файли cookie. Більше інформації в ", linkText: "Політиці конфіденційності", after: "." } },
   notFound: { title: "Ой! Сторінку не знайдено", goHome: "Повернутися на головну" },
+  landing: {
+    title: "Інформаційна підтримка при повсякденних формальностях у Німеччині",
+    subtitle: "Ми допомагаємо розібратися з типовими вимогами та впорядкувати інформацію перед візитами та підготовкою листування.",
+    bullet1: "Підготовка до щоденних адміністративних справ та заповнення форм.",
+    bullet2: "Загальне пояснення типових кроків та інформації, яку часто запитують у різних життєвих ситуаціях.",
+    bullet3: "Краще розуміння процедур – без прийняття адміністративних рішень замість клієнта.",
+    cta: "Перейти на повний сайт",
+    disclaimer: "Сервіс має інформаційний характер і не видає офіційних документів та не замінює консультації державних органів чи юристів.",
+  },
 };
 
 const ru: TranslationShape = {
@@ -134,6 +170,15 @@ const ru: TranslationShape = {
   },
   footer: { rights: "Все права защищены.", description: "Предложение касается изготовления новых регистрационных документов немецких Briefов (в случае утери, потери или кражи)!", cookieNotice: { before: "Сайт использует файлы cookie. Подробнее в ", linkText: "Политике конфиденциальности", after: "." } },
   notFound: { title: "Упс! Страница не найдена", goHome: "Вернуться на главную" },
+  landing: {
+    title: "Информационная поддержка при повседневных формальностях в Германии",
+    subtitle: "Мы помогаем разобраться с типичными требованиями и структурировать информацию перед визитами и подготовкой писем.",
+    bullet1: "Подготовка к повседневным административным делам и заполнению форм.",
+    bullet2: "Общее объяснение типичных шагов и запрашиваемой информации в разных жизненных ситуациях.",
+    bullet3: "Лучшее понимание процедур без принятия административных решений за клиента.",
+    cta: "Перейти на полный сайт",
+    disclaimer: "Сервис носит информационный характер, не выдает официальные документы и не заменяет консультации госорганов или юристов.",
+  },
 };
 
 const cs: TranslationShape = {
@@ -163,6 +208,15 @@ const cs: TranslationShape = {
   },
   footer: { rights: "Všechna práva vyhrazena.", description: "Nabídka se týká vyřízení nových registračních dokumentů německých Briefů (v případě ztráty, ztrátě nebo krádeži)!", cookieNotice: { before: "Tento web používá soubory cookie. Více informací v ", linkText: "Zásadách ochrany osobních údajů", after: "." } },
   notFound: { title: "Jejda! Stránka nenalezena", goHome: "Zpět na hlavní stránku" },
+  landing: {
+    title: "Informační podpora při každodenních formalitách v Německu",
+    subtitle: "Pomáháme zorientovat se v obecných požadavcích a uspořádat informace před schůzkami a vyřizováním.",
+    bullet1: "Příprava na běžné úřední záležitosti a formuláře.",
+    bullet2: "Vysvětlení obecných kroků a typických údajů požadovaných v různých situacích.",
+    bullet3: "Lepší orientace v postupech – bez rozhodování nebo jednání jménem klienta.",
+    cta: "Přejít na plný web",
+    disclaimer: "Služba má pouze informativní charakter, nevydává úřední dokumenty a nenahrazuje doporučení úřadů ani právníků.",
+  },
 };
 
 const es: TranslationShape = {
@@ -192,6 +246,15 @@ const es: TranslationShape = {
   },
   footer: { rights: "Todos los derechos reservados.", description: "La oferta se aplica a la obtención de nuevos documentos de registro de Briefs alemanes (en caso de pérdida, extravío o robo).", cookieNotice: { before: "Este sitio utiliza cookies. Más información en la ", linkText: "Política de Privacidad", after: "." } },
   notFound: { title: "¡Ups! Página no encontrada", goHome: "Volver a la página principal" },
+  landing: {
+    title: "Orientación para trámites cotidianos en Alemania",
+    subtitle: "Ayudamos a entender requisitos habituales y a organizar la información antes de gestiones y citas.",
+    bullet1: "Preparación para gestiones administrativas y formularios del día a día.",
+    bullet2: "Explicación general de pasos frecuentes e información que suele solicitarse.",
+    bullet3: "Mejor orientación en los procedimientos, sin tomar decisiones ni actuar en nombre del cliente.",
+    cta: "Ir al sitio completo",
+    disclaimer: "Este servicio tiene carácter informativo, no emite documentos oficiales ni sustituye el asesoramiento de autoridades u otros profesionales.",
+  },
 };
 
 const it: TranslationShape = {
@@ -221,6 +284,15 @@ const it: TranslationShape = {
   },
   footer: { rights: "Tutti i diritti riservati.", description: "L'offerta riguarda l'ottenimento di nuovi documenti di immatricolazione dei Brief tedeschi (in caso di smarrimento, perdita o furto)!", cookieNotice: { before: "Questo sito utilizza cookie. Maggiori informazioni nella ", linkText: "Informativa sulla Privacy", after: "." } },
   notFound: { title: "Ops! Pagina non trovata", goHome: "Torna alla pagina principale" },
+  landing: {
+    title: "Supporto informativo per le formalità quotidiane in Germania",
+    subtitle: "Aiutiamo a comprendere i requisiti generali e a organizzare le informazioni prima di appuntamenti e comunicazioni.",
+    bullet1: "Preparazione alle pratiche amministrative e alla compilazione di moduli.",
+    bullet2: "Spiegazione a livello generale dei passaggi ricorrenti e dei dati richiesti in diverse situazioni.",
+    bullet3: "Maggiore orientamento nelle procedure, senza prendere decisioni o agire al posto del cliente.",
+    cta: "Vai al sito completo",
+    disclaimer: "Il servizio ha carattere puramente informativo, non rilascia documenti ufficiali e non sostituisce il parere delle autorità o di consulenti legali.",
+  },
 };
 
 const hu: TranslationShape = {
@@ -250,6 +322,15 @@ const hu: TranslationShape = {
   },
   footer: { rights: "Minden jog fenntartva.", description: "Az ajánlat az új német Brief regisztrációs dokumentumok elkészítésére vonatkozik (elvesztés, elhagyás vagy lopás esetén)!", cookieNotice: { before: "Ez az oldal sütiket használ. További információ az ", linkText: "Adatvédelmi szabályzatban", after: "." } },
   notFound: { title: "Hoppá! Az oldal nem található", goHome: "Vissza a kezdőlapra" },
+  landing: {
+    title: "Információs támogatás mindennapi ügyintézéshez Németországban",
+    subtitle: "Segítünk megérteni az általános elvárásokat és rendszerezni az információkat a találkozók és levelezés előtt.",
+    bullet1: "Felkészülés a mindennapi hivatalos ügyekre és nyomtatványokra.",
+    bullet2: "Általános magyarázat a gyakori lépésekről és a különböző helyzetekben kért adatok típusáról.",
+    bullet3: "Jobb eligazodás az eljárásokban – a döntések és hivatalos lépések a kliensnél maradnak.",
+    cta: "Ugrás a teljes weboldalra",
+    disclaimer: "A szolgáltatás tájékoztató jellegű, nem ad ki hivatalos dokumentumokat, és nem helyettesíti a hatóságok vagy jogi tanácsadók útmutatását.",
+  },
 };
 
 export const translations = { pl, en, uk, ru, cs, es, it, hu } as const;

@@ -5,18 +5,25 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route, Navigate, useParams, useLocation } from "react-router-dom";
 import { LanguageProvider, detectLanguage } from "@/i18n/LanguageContext";
 import { SUPPORTED_LANGUAGES, Language } from "@/types";
-import { FALLBACK_LANGUAGE } from "@/config";
+import { FALLBACK_LANGUAGE, BASE_DOMAIN } from "@/config";
 import Index from "./pages/Index";
 import AdminPage from "./pages/Admin";
 import NotFound from "./pages/NotFound";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
+import InfoLanding from "./pages/InfoLanding";
 
 const queryClient = new QueryClient();
 
 /** Redirects bare "/" to the user's preferred language path. */
 function RootRedirect() {
   const lang = detectLanguage();
-  return <Navigate to={`/${lang}`} replace />;
+  const hostname = window.location.hostname;
+  const isInfoSubdomain =
+    hostname === `info.${BASE_DOMAIN}` || hostname.startsWith(`info.`);
+
+  const targetPath = isInfoSubdomain ? `/${lang}/landing` : `/${lang}`;
+
+  return <Navigate to={targetPath} replace />;
 }
 
 /**
@@ -45,6 +52,7 @@ function LangGuard() {
         <Sonner />
         <Routes>
           <Route index element={<Index />} />
+          <Route path="landing" element={<InfoLanding />} />
           <Route path="admin" element={<AdminPage />} />
           <Route path="privacy-policy" element={<PrivacyPolicy />} />
           <Route path="*" element={<NotFound />} />

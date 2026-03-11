@@ -52,7 +52,7 @@ services:
       - "443:443"
       - "443:443/udp"   # HTTP/3
     environment:
-      SITE_DOMAINS: ${SITE_DOMAINS:-localhost}
+      SITE_DOMAINS: ${SITE_DOMAINS:-brief-service.com, www.brief-service.com, info.brief-service.com, localhost}
     volumes:
       - ./Caddyfile.prod:/etc/caddy/Caddyfile:ro
       - frontend:/srv/dist:ro
