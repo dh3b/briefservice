@@ -2,13 +2,14 @@ import { useNavigate } from "react-router-dom";
 import { useLanguage } from "@/i18n/LanguageContext";
 import { Button } from "@/components/ui/button";
 import LanguageTabs from "@/components/LanguageTabs";
+import { BASE_DOMAIN } from "@/config";
 
 const InfoLanding = () => {
   const { language, setLanguage, t } = useLanguage();
   const navigate = useNavigate();
 
   const handleEnterSite = () => {
-    navigate(`/${language}`, { replace: false });
+    window.location.href = `https://${BASE_DOMAIN}/${language}`;
   };
 
   return (
