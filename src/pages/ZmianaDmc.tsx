@@ -27,6 +27,17 @@ const ZmianaDmcPage = () => {
     return () => document.removeEventListener("mousedown", handler);
   }, []);
 
+  // Google Ads conversion tracking - page view
+  useEffect(() => {
+    if (typeof window !== "undefined" && (window as unknown as { gtag?: (...args: unknown[]) => void }).gtag) {
+      (window as unknown as { gtag: (...args: unknown[]) => void }).gtag("event", "conversion", {
+        send_to: "AW-17997426374/fE1DCPTanJ0cEMbd64VD",
+        value: 1.0,
+        currency: "PLN",
+      });
+    }
+  }, []);
+
   const d = t.zmianaDmc;
 
   return (

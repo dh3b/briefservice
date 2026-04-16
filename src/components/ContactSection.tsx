@@ -3,6 +3,18 @@ import { Mail, MapPin, Phone, CheckCircle } from "lucide-react";
 import { useState, useRef } from "react";
 import { submitContact } from "@/api";
 
+const CONTACT_PHONE = "+48 696 513 109";
+
+const gtagReportConversion = () => {
+  if (typeof window !== "undefined" && (window as unknown as { gtag?: (...args: unknown[]) => void }).gtag) {
+    (window as unknown as { gtag: (...args: unknown[]) => void }).gtag("event", "conversion", {
+      send_to: "AW-17997426374/ZvyICPXqtZ0cEMbd64VD",
+      value: 4.0,
+      currency: "PLN",
+    });
+  }
+};
+
 const ContactSection = () => {
   const { t } = useLanguage();
   const [form, setForm] = useState({ name: "", email: "", message: "" });
@@ -11,6 +23,12 @@ const ContactSection = () => {
   const cooldownUntilRef = useRef<number>(0);
 
   const isCoolingDown = () => Date.now() < cooldownUntilRef.current;
+
+  const handlePhoneClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    e.preventDefault();
+    gtagReportConversion();
+    window.location.href = `tel:${CONTACT_PHONE.replace(/\s/g, "")}`;
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -23,6 +41,15 @@ const ContactSection = () => {
       cooldownUntilRef.current = Date.now() + 60_000;
       setForm({ name: "", email: "", message: "" });
       setTimeout(() => setSent(false), 4000);
+      
+      // Google Ads conversion tracking (Contact form submission)
+      if (typeof window !== "undefined" && (window as unknown as { gtag?: (...args: unknown[]) => void }).gtag) {
+        (window as unknown as { gtag: (...args: unknown[]) => void }).gtag("event", "conversion", {
+          send_to: "AW-17997426374/blJuCIvOnJ0cEMbd64VD",
+          value: 2.5,
+          currency: "PLN",
+        });
+      }
     } catch (err) {
       console.error("Contact form error:", err);
     } finally {
@@ -46,7 +73,15 @@ const ContactSection = () => {
               </div>
               <div>
                 <h4 className="font-semibold text-foreground mb-1">{t.contact.phone}</h4>
-                <p className="text-muted-foreground text-sm">+48 696 513 109</p>
+                <p className="text-muted-foreground text-sm">
+                  <a 
+                    href={`tel:${CONTACT_PHONE.replace(/\s/g, "")}`} 
+                    onClick={handlePhoneClick}
+                    className="hover:text-primary/20 hover:underline"
+                  >
+                    {CONTACT_PHONE}
+                  </a>
+                </p>
               </div>
             </div>
             <div className="flex items-start gap-4">
