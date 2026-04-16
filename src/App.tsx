@@ -11,6 +11,7 @@ import AdminPage from "./pages/Admin";
 import NotFound from "./pages/NotFound";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
 import InfoLanding from "./pages/InfoLanding";
+import ZmianaDmcPage from "./pages/ZmianaDmc";
 
 const queryClient = new QueryClient();
 
@@ -55,6 +56,7 @@ function LangGuard() {
           <Route path="landing" element={<InfoLanding />} />
           <Route path="admin" element={<AdminPage />} />
           <Route path="privacy-policy" element={<PrivacyPolicy />} />
+          <Route path="zmiana-dmc" element={<ZmianaDmcPage />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </TooltipProvider>

@@ -126,3 +126,29 @@
     box-shadow: var(--shadow-chat);
   }
 }
+
+@keyframes pulse-border {
+  0%, 100% {
+    box-shadow: 0 0 15px rgba(212, 169, 76, 0.3);
+  }
+  50% {
+    box-shadow: 0 0 25px rgba(212, 169, 76, 0.5);
+  }
+}
+
+.animate-pulse-border {
+  animation: pulse-border 2s ease-in-out infinite;
+}
+
+.animate-pulse-border .absolute {
+  animation: pulse-border-outer 2s ease-in-out infinite;
+}
+
+@keyframes pulse-border-outer {
+  0%, 100% {
+    border-color: #d4a94c;
+  }
+  50% {
+    border-color: #f0d78c;
+  }
+}

@@ -2,7 +2,7 @@ const base = {
   seo: { title: "", description: "", keywords: "" },
   nav: { home: "", services: "", contact: "", admin: "" },
   hero: { title: "", titleAccent: "", subtitle: "", cta: "", chatCta: "" },
-  services: { title: "", subtitle: "", chatAbout: "", details: "", close: "", allCategories: "" },
+  services: { title: "", subtitle: "", chatAbout: "", details: "", close: "", allCategories: "", featured: "", featured_card: { title: "", description: "", button: "" } },
   contact: { title: "", subtitle: "", name: "", email: "", message: "", send: "", sent: "", phone: "", address: "" },
   chat: { title: "", placeholder: "", send: "", greeting: "", serviceContext: "", namePrompt: "", namePlaceholder: "", emailPlaceholder: "", nameSubmit: "", translateAll: "", showOriginal: "" },
   admin: {
@@ -25,6 +25,16 @@ const base = {
     cta: "",
     disclaimer: "",
   },
+  zmianaDmc: {
+    seo: { title: "", description: "", keywords: "" },
+    nav: { home: "", services: "", contact: "" },
+    intro: { title: "", subtitle: "" },
+    service2500: { tag: "", title: "", subtitle: "", description: "", whatYouGet: "", forWho: "", useCases: "" },
+    service3500: { tag: "", title: "", subtitle: "", description: "", benefits: "" },
+    howItWorks: { title: "", step1: "", step1Desc: "", step2: "", step2Desc: "", step3: "", step3Desc: "", step4: "", step4Desc: "" },
+    note: { title: "", description: "" },
+    contact: { title: "", subtitle: "" },
+  },
 };
 
 type TranslationShape = typeof base;
@@ -37,7 +47,7 @@ const pl: TranslationShape = {
   },
   nav: { home: "Strona główna", services: "Usługi", contact: "Kontakt", admin: "Panel admina" },
   hero: { title: "NIEMIECKIE DOKUMENTY POJAZDU • REJESTRACJA W NIEMCZECH • ZMIANY KONSTRUKCYJNE (DMC 2500 / 3500)", titleAccent: "Zajmujemy się kompleksową obsługą procedur administracyjnych związanych z pojazdami zarejestrowanymi w Niemczech.", subtitle: "Specjalizujemy się w uzyskiwaniu duplikatów utraconych niemieckich dokumentów pojazdu (Zulassungsbescheinigung Teil I oraz Teil II), które są niezbędne do przerejestrowania samochodu importowanego z Niemiec w innych państwach Unii Europejskiej. Prowadzimy również procedury związane z rejestracją pojazdów w Niemczech, zmianami konstrukcyjnymi oraz legalizacją zmian technicznych pojazdów zgodnie z obowiązującymi przepisami. Specjalizujemy się także w sprawach trudnych i niestandardowych, w których standardowe procedury administracyjne okazują się niewystarczające. Obsługujemy klientów z całej Unii Europejskiej, prowadząc sprawy wymagające bezpośredniego kontaktu z niemieckimi urzędami komunikacji oraz instytucjami technicznymi.", cta: "Zobacz usługi", chatCta: "Porozmawiaj z nami" },
-  services: { title: "Nasze Usługi", subtitle: "Sprawdź naszą ofertę i wybierz usługę która jest Ci potrzebna. Oferty są elastyczne.", chatAbout: "Zapytaj o to", details: "Szczegóły", close: "Zamknij", allCategories: "Wszystkie" },
+  services: { title: "Nasze Usługi", subtitle: "Sprawdź naszą ofertę i wybierz usługę która jest Ci potrzebna. Oferty są elastyczne.", chatAbout: "Zapytaj o to", details: "Szczegóły", close: "Zamknij", allCategories: "Wszystkie", featured: "Wyróżnione", featured_card: { title: "Zmiana DMC (w dół) do 2.5T lub 3.5T", description: "Załatwiamy wszystko: dokumenty, nową tabliczkę  znamionową oraz rejestrację pojazdu na niemiecki Brief. Ty otrzymujesz gotowy komplet do przerejestrowania pojazdu.", button: "Dowiedz się więcej" } },
   contact: { title: "Skontaktuj się z nami", subtitle: "Masz pytania? Napisz do nas lub skorzystaj z czatu na żywo.", name: "Imię i nazwisko", email: "Adres e-mail", message: "Wiadomość", send: "Wyślij wiadomość", sent: "Wiadomość wysłana!", phone: "Telefon", address: "Adres" },
   chat: { title: "Czat na żywo", placeholder: "Napisz wiadomość...", send: "Wyślij", greeting: "Cześć! Jak możemy Ci pomóc?", serviceContext: "Pytanie dotyczy usługi:", namePrompt: "Podaj swoje dane, aby rozpocząć czat:", namePlaceholder: "Twoje imię...", emailPlaceholder: "Twój e-mail...", nameSubmit: "Rozpocznij czat", translateAll: "Przetłumacz wiadomości", showOriginal: "Pokaż oryginalne wiadomości" },
   admin: {
@@ -65,6 +75,20 @@ const pl: TranslationShape = {
     cta: "Przejdź do pełnej strony",
     disclaimer: "Serwis ma charakter informacyjny i nie wydaje oficjalnych dokumentów ani nie zastępuje porad urzędów lub doradców prawnych.",
   },
+  zmianaDmc: {
+    seo: {
+      title: "Zmiana DMC pojazdu - obniżenie do 2500 kg lub 3500 kg",
+      description: "Profesjonalna zmiana DMC pojazdów w Niemczech - obniżenie dopuszczalnej masy całkowitej do 3500 kg lub 2500 kg. Pełna obsługa, niemiecka dokumentacja, ważna w całej UE.",
+      keywords: "zmiana DMC do 2500 kg, obniżenie DMC do 2500 kg, DMC 2500 kg, zmiana dopuszczalnej masy całkowitej 2500 kg, obniżenie masy całkowitej pojazdu do 2,5 t, zmiana DMC busa do 2500 kg, obniżenie DMC samochodu do 2500 kg, jak obniżyć DMC do 2500 kg, zmiana DMC pojazdu ciężarowego na 2500 kg, DMC 2500 kg a prawo jazdy, czy można zmniejszyć DMC do 2500 kg, przerobienie auta na 2500 kg, zmiana DMC w Niemczech 2500 kg, obniżenie DMC przed rejestracją w Polsce, zmiana DMC samochodu z Niemiec 2500 kg, jak uniknąć DMC powyżej 3,5 t, DMC 2500 kg a koszty, zmiana DMC a podatek, czy można jeździć na kat B po zmianie DMC, obniżenie DMC a rejestracja w Polsce",
+    },
+    nav: { home: "Strona główna", services: "Usługi", contact: "Kontakt" },
+    intro: { title: "Zmiana DMC (w dół) do 2500 kg i 3500 kg - legalnie i z dokumentacją z Niemiec", subtitle: "Załatwiamy wszystko: dokumenty, nową tabliczkę znamionową oraz rejestrację pojazdu na niemiecki Brief. Ty otrzymujesz gotowy komplet do przerejestrowania pojazdu w Polsce." },
+    service2500: { tag: "Dla transportu lekkiego", title: "Zmiana DMC do 2 500 kg", subtitle: "Idealne dla przesyłek pilnych i wrażliwych", description: "Obniżamy dopuszczalną masę całkowitą pojazdu do 2500 kg - procedura przeprowadzana przez uprawniony instytut techniczny w Niemczech, jeszcze zanim pojazd wjedzie do Polski. Całość kończy się rejestracją pojazdu na terenie Niemiec.", whatYouGet: "Co otrzymujesz", forWho: "Dla kogo to rozwiązanie", useCases: "Przykłady zastosowań" },
+    service3500: { tag: "Najpopularniejsza", title: "Zmiana DMC do 3 500 kg", subtitle: "Kategoria N1 · prawo jazdy kat. B", description: "Obniżamy dopuszczalną masę całkowitą pojazdu - cały proces realizujemy w Niemczech, zanim pojazd trafi do Polski. Oferta dotyczy samochodów zakupionych na terenie całej Unii Europejskiej.", benefits: "Korzyści dla Ciebie" },
+    howItWorks: { title: "Jak wygląda współpraca?", step1: "Kontakt", step1Desc: "Dzwonisz lub piszesz - omawiamy Twój pojazd i cel obniżenia DMC.", step2: "Weryfikacja", step2Desc: "Sprawdzamy, czy pojazd technicznie kwalifikuje się do zmiany DMC.", step3: "Realizacja", step3Desc: "Przeprowadzamy cały proces w Niemczech - Ty nie musisz tam jechać.", step4: "Odbiór", step4Desc: "Dostajesz pojazd z nową dokumentacją, gotowy do przerejestrowania." },
+    note: { title: "", description: "Oferta obniżenia DMC do 2500 kg jest szczególnie korzystna od 1 lipca 2026 r. - dla firm, które potrzebują elastyczności w transporcie międzynarodowym. Każdy przypadek jest indywidualnie weryfikowany pod kątem kwalifikacji technicznej pojazdu." },
+    contact: { title: "Porozmawiajmy o Twoim pojeździe", subtitle: "Bezpłatna konsultacja - odpowiemy na każde pytanie dotyczące zmiany DMC." },
+  },
 };
 
 const en: TranslationShape = {
@@ -75,7 +99,7 @@ const en: TranslationShape = {
   },
   nav: { home: "Home", services: "Services", contact: "Contact", admin: "Admin Panel" },
   hero: { title: "GERMAN VEHICLE DOCUMENTS • REGISTRATION IN GERMANY • STRUCTURAL MODIFICATIONS (GVW 2500 / 3500)", titleAccent: "We provide comprehensive handling of administrative procedures related to vehicles registered in Germany.", subtitle: "We specialize in obtaining duplicates of lost German vehicle documents (Zulassungsbescheinigung Teil I and Teil II), which are essential for re-registering a vehicle imported from Germany in other European Union countries. We also handle procedures related to vehicle registration in Germany, structural modifications, and legalization of technical changes to vehicles in accordance with applicable regulations. We also specialize in difficult and non-standard cases where standard administrative procedures prove insufficient. We serve clients from across the European Union, handling cases that require direct contact with German vehicle registration authorities and technical institutions.", cta: "View Services", chatCta: "Chat With Us" },
-  services: { title: "Our Services", subtitle: "Check our offer and choose the service you need. Offers are flexible.", chatAbout: "Ask about this", details: "Details", close: "Close", allCategories: "All" },
+  services: { title: "Our Services", subtitle: "Check our offer and choose the service you need. Offers are flexible.", chatAbout: "Ask about this", details: "Details", close: "Close", allCategories: "All", featured: "Featured", featured_card: { title: "GVW Change (Reduction) to 2.5T or 3.5T", description: "We handle everything: documents, new type plate, and vehicle registration on German Brief. You receive a complete set for re-registering your vehicle.", button: "Learn more" } },
   contact: { title: "Get In Touch", subtitle: "Have questions? Send us a message or use our live chat.", name: "Full name", email: "Email address", message: "Message", send: "Send Message", sent: "Message sent!", phone: "Phone", address: "Address" },
   chat: { title: "Live Chat", placeholder: "Type a message...", send: "Send", greeting: "Hello! How can we help you?", serviceContext: "Question about service:", namePrompt: "Enter your details to start chatting:", namePlaceholder: "Your name...", emailPlaceholder: "Your email...", nameSubmit: "Start Chat", translateAll: "Translate messages", showOriginal: "Show original messages" },
   admin: {
@@ -103,6 +127,20 @@ const en: TranslationShape = {
     cta: "Go to full website",
     disclaimer: "This site offers general information only. It does not issue official documents, make decisions, or replace guidance from public authorities or legal professionals.",
   },
+  zmianaDmc: {
+    seo: {
+      title: "GVW Change - Reduction to 2500 kg or 3500 kg",
+      description: "Professional GVW change for vehicles in Germany - reduce permissible gross weight to 3500 kg or 2500 kg. Full service, German documentation, valid throughout the EU.",
+      keywords: "GVW change to 2500 kg, reduce GVW to 2500 kg, GVW 2500 kg, reduce permissible gross weight to 2500 kg, reduce vehicle gross weight to 2.5 t, change van GVW to 2500 kg, reduce car GVW to 2500 kg, how to reduce GVW to 2500 kg, change truck GVW to 2500 kg, GVW 2500 kg and drivers license, can you reduce GVW to 2500 kg, convert car to 2500 kg, GVW change Germany 2500 kg, reduce GVW before Poland registration, change GVW car from Germany 2500 kg, how to avoid GVW over 3.5 t, GVW 2500 kg and costs, GVW change and tax, can you drive category B after GVW change, reduce GVW and registration in Poland",
+    },
+    nav: { home: "Home", services: "Services", contact: "Contact" },
+    intro: { title: "GVW Change (reduction) to 2500 kg and 3500 kg - legally and with German documentation", subtitle: "We handle everything: documents, new type plate, and vehicle registration on German Brief. You receive a complete set for re-registering your vehicle in Poland." },
+    service2500: { tag: "For light transport", title: "GVW Change to 2 500 kg", subtitle: "Ideal for urgent and sensitive shipments", description: "We reduce the permissible gross weight of the vehicle to 2500 kg - the procedure is carried out by an authorized technical institute in Germany, before the vehicle enters Poland. Everything ends with vehicle registration in Germany.", whatYouGet: "What you get", forWho: "Who is this solution for", useCases: "Use cases" },
+    service3500: { tag: "Most popular", title: "GVW Change to 3 500 kg", subtitle: "Category N1 · category B driver's license", description: "We reduce the permissible gross weight of the vehicle - the entire process is carried out in Germany, before the vehicle arrives in Poland. The offer applies to cars purchased throughout the European Union.", benefits: "Benefits for you" },
+    howItWorks: { title: "How does the cooperation work?", step1: "Contact", step1Desc: "You call or write - we discuss your vehicle and the purpose of GVW reduction.", step2: "Verification", step2Desc: "We check if the vehicle technically qualifies for GVW change.", step3: "Implementation", step3Desc: "We carry out the entire process in Germany - you don't have to go there.", step4: "Pickup", step4Desc: "You receive the vehicle with new documentation, ready for re-registration." },
+    note: { title: "", description: "The offer to reduce GVW to 2500 kg is particularly beneficial from July 1, 2026 - for companies that need flexibility in international transport. Each case is individually verified for technical qualification of the vehicle." },
+    contact: { title: "Let's talk about your vehicle", subtitle: "Free consultation - we will answer any questions about GVW change." },
+  },
 };
 
 const uk: TranslationShape = {
@@ -113,7 +151,7 @@ const uk: TranslationShape = {
   },
   nav: { home: "Головна", services: "Послуги", contact: "Контакти", admin: "Панель адміна" },
   hero: { title: "НІМЕЦЬКІ ДОКУМЕНТИ ТРАНСПОРТНОГО ЗАСОБУ • РЕЄСТРАЦІЯ В НІМЕЧЧИНІ • КОНСТРУКЦІЙНІ ЗМІНИ (ПМА 2500 / 3500)", titleAccent: "Ми займаємося комплексним обслуговуванням адміністративних процедур, пов'язаних з транспортними засобами, зареєстрованими в Німеччині.", subtitle: "Ми спеціалізуємося на отриманні дублікатів втрачених німецьких документів транспортного засобу (Zulassungsbescheinigung Teil I та Teil II), які є необхідними для перереєстрації автомобіля, імпортованого з Німеччини, в інших країнах Європейського Союзу. Ми також ведемо процедури, пов'язані з реєстрацією транспортних засобів у Німеччині, конструкційними змінами та легалізацією технічних змін транспортних засобів відповідно до чинного законодавства. Крім того, ми спеціалізуємося на складних і нестандартних справах, у яких стандартні адміністративні процедури виявляються недостатніми. Ми обслуговуємо клієнтів з усього Європейського Союзу, ведучи справи, що вимагають безпосереднього контакту з німецькими органами реєстрації транспортних засобів та технічними установами.", cta: "Переглянути послуги", chatCta: "Зв'яжіться з нами" },
-  services: { title: "Наші послуги", subtitle: "Ознайомтесь з нашою пропозицією та оберіть потрібну послугу. Пропозиції гнучкі.", chatAbout: "Запитати про це", details: "Деталі", close: "Закрити", allCategories: "Усі" },
+  services: { title: "Наші послуги", subtitle: "Ознайомтесь з нашою пропозицією та оберіть потрібну послугу. Пропозиції гнучкі.", chatAbout: "Запитати про це", details: "Деталі", close: "Закрити", allCategories: "Усі", featured: "Відзначена", featured_card: { title: "Зміна ПМА (зменшення) до 2.5Т або 3.5Т", description: "Ми все оформимо: документи, нову табличку та реєстрацію на німецький Brief. Ви отримаєте повний комплект для перереєстрації.", button: "Дізнатися більше" } },
   contact: { title: "Зв'яжіться з нами", subtitle: "Маєте запитання? Напишіть нам або скористайтесь онлайн-чатом.", name: "Ім'я та прізвище", email: "Електронна пошта", message: "Повідомлення", send: "Надіслати повідомлення", sent: "Повідомлення надіслано!", phone: "Телефон", address: "Адреса" },
   chat: { title: "Онлайн-чат", placeholder: "Напишіть повідомлення...", send: "Надіслати", greeting: "Привіт! Чим можемо допомогти?", serviceContext: "Запитання стосується послуги:", namePrompt: "Введіть свої дані, щоб розпочати чат:", namePlaceholder: "Ваше ім'я...", emailPlaceholder: "Ваш e-mail...", nameSubmit: "Розпочати чат", translateAll: "Перекласти повідомлення", showOriginal: "Показати оригінальні повідомлення" },
   admin: {
@@ -141,6 +179,20 @@ const uk: TranslationShape = {
     cta: "Перейти на повний сайт",
     disclaimer: "Сервіс має інформаційний характер і не видає офіційних документів та не замінює консультації державних органів чи юристів.",
   },
+  zmianaDmc: {
+    seo: {
+      title: "Зміна ПМА транспортного засобу - зменшення до 2500 кг або 3500 кг",
+      description: "Професійна зміна ПМА транспортних засобів у Німеччині - зменшення дозволеної повної маси до 3500 кг або 2500 кг. Повний сервіс, німецька документація, дійсна по всій ЄС.",
+      keywords: "зміна ПМА до 2500 кг, зменшення ПМА до 2500 кг, ПМА 2500 кг, зміна дозволеної повної маси 2500 кг, зменшення повної маси транспортного засобу до 2,5 т, зміна ПМА буса до 2500 кг, зменшення ПМА автомобіля до 2500 кг, як зменшити ПМА до 2500 кг, зміна ПМА вантажного транспортного засобу на 2500 кг, ПМА 2500 кг і водійське посвідчення, чи можна зменшити ПМА до 2500 кг, переобладнання авто на 2500 кг, зміна ПМА в Німеччині 2500 кг, зменшення ПМА перед реєстрацією в Польщі, зміна ПМА автомобіля з Німеччини 2500 кг, як уникнути ПМА понад 3,5 т, ПМА 2500 кг і витрати, зміна ПМА і податок, чи можна їздити на кат В після зміни ПМА, зменшення ПМА і реєстрація в Польщі",
+    },
+    nav: { home: "Головна", services: "Послуги", contact: "Контакти" },
+    intro: { title: "Зміна ПМА (зменшення) до 2500 кг і 3500 кг - легально і з документацією з Німеччини", subtitle: "Ми оформляємо все: документи, нову табличку та реєстрацію транспортного засобу на німецький Brief. Ви отримуєте повний комплект для перереєстрації транспортного засобу в Польщі." },
+    service2500: { tag: "Для легкого транспорту", title: "Зміна ПМА до 2 500 кг", subtitle: "Ідеально для термінових і чутливих відправлень", description: "Ми зменшуємо дозволену повну масу транспортного засобу до 2500 кг - процедура проводиться уповноваженим технічним інститутом у Німеччині, ще до того, як транспортний засіб въїде до Польщі. Все закінчується реєстрацією транспортного засобу в Німеччині.", whatYouGet: "Що ви отримуєте", forWho: "Для кого це рішення", useCases: "Приклади застосування" },
+    service3500: { tag: "Найпопулярніша", title: "Зміна ПМА до 3 500 кг", subtitle: "Каtegорія N1 · водійське посвідчення кат. B", description: "Ми зменшуємо дозволену повну масу транспортного засобу - весь процес ми реалізуємо в Німеччині, до того як транспортний засіб прибуде до Польщі. Пропозиція стосується автомобілів, придбаних на території всієї Європейської Союзу.", benefits: "Переваги для вас" },
+    howItWorks: { title: "Як виглядає співпраця?", step1: "Контакт", step1Desc: "Ви телефонуєте або пишете - ми обговорюємо ваш транспортний засіб і мету зменшення ПМА.", step2: "Верифікація", step2Desc: "Ми перевіряємо, чи технічно транспортний засіб кваліфікується для зміни ПМА.", step3: "Реалізація", step3Desc: "Ми проводимо весь процес в Німеччині - вам не потрібно туди їхати.", step4: "Отримання", step4Desc: "Ви отримуєте транспортний засіб з новою документацією, готовий до перереєстрації." },
+    note: { title: "", description: "Пропозиція зменшення ПМА до 2500 кг особливо вигідна з 1 липня 2026 р. - для компаній, яким потрібна гнучкість у міжнародних перевезеннях. Кожен випадок індивідуально перевіряється на технічну кваліфікацію транспортного засобу." },
+    contact: { title: "Поговорімо про ваш транспортний засіб", subtitle: "Безкоштовна консультація - ми відповімо на будь-які питання щодо зміни ПМА." },
+  },
 };
 
 const ru: TranslationShape = {
@@ -151,7 +203,7 @@ const ru: TranslationShape = {
   },
   nav: { home: "Главная", services: "Услуги", contact: "Контакты", admin: "Панель админа" },
   hero: { title: "НЕМЕЦКИЕ ДОКУМЕНТЫ ТРАНСПОРТНОГО СРЕДСТВА • РЕГИСТРАЦИЯ В ГЕРМАНИИ • КОНСТРУКЦИОННЫЕ ИЗМЕНЕНИЯ (ПМ 2500 / 3500)", titleAccent: "Мы занимаемся комплексным обслуживанием административных процедур, связанных с транспортными средствами, зарегистрированными в Германии.", subtitle: "Мы специализируемся на получении дубликатов утраченных немецких документов транспортного средства (Zulassungsbescheinigung Teil I и Teil II), которые необходимы для перерегистрации автомобиля, импортированного из Германии, в других государствах Европейского Союза. Мы также ведём процедуры, связанные с регистрацией транспортных средств в Германии, конструкционными изменениями и легализацией технических изменений транспортных средств в соответствии с действующим законодательством. Мы также специализируемся на сложных и нестандартных делах, в которых стандартные административные процедуры оказываются недостаточными. Мы обслуживаем клиентов из всего Европейского Союза, ведя дела, требующие непосредственного контакта с немецкими органами регистрации транспортных средств и техническими учреждениями.", cta: "Смотреть услуги", chatCta: "Свяжитесь с нами" },
-  services: { title: "Наши услуги", subtitle: "Ознакомьтесь с нашим предложением и выберите нужную услугу. Предложения гибкие.", chatAbout: "Спросить об этом", details: "Подробности", close: "Закрыть", allCategories: "Все" },
+  services: { title: "Наши услуги", subtitle: "Ознакомьтесь с нашим предложением и выберите нужную услугу. Предложения гибкие.", chatAbout: "Спросить об этом", details: "Подробности", close: "Закрыть", allCategories: "Все", featured: "Рекомендуемая", featured_card: { title: "Изменение ПМ (снижение) до 2.5Т или 3.5Т", description: "Мы всё оформим: документы, новую табличку и регистрацию на немецкий Brief. Вы получите полный комплект для перерегистрации.", button: "Узнать больше" } },
   contact: { title: "Свяжитесь с нами", subtitle: "Есть вопросы? Напишите нам или воспользуйтесь онлайн-чатом.", name: "Имя и фамилия", email: "Электронная почта", message: "Сообщение", send: "Отправить сообщение", sent: "Сообщение отправлено!", phone: "Телефон", address: "Адрес" },
   chat: { title: "Онлайн-чат", placeholder: "Напишите сообщение...", send: "Отправить", greeting: "Здравствуйте! Чем можем помочь?", serviceContext: "Вопрос касается услуги:", namePrompt: "Введите свои данные, чтобы начать чат:", namePlaceholder: "Ваше имя...", emailPlaceholder: "Ваш e-mail...", nameSubmit: "Начать чат", translateAll: "Перевести сообщения", showOriginal: "Показать оригинальные сообщения" },
   admin: {
@@ -179,6 +231,20 @@ const ru: TranslationShape = {
     cta: "Перейти на полный сайт",
     disclaimer: "Сервис носит информационный характер, не выдает официальные документы и не заменяет консультации госорганов или юристов.",
   },
+  zmianaDmc: {
+    seo: {
+      title: "Изменение ПМ транспортного средства - снижение до 2500 кг или 3500 кг",
+      description: "Профессиональное изменение ПМ транспортных средств в Германии - снижение допустимой полной массы до 3500 кг или 2500 кг. Полный сервис, немецкая документация, действует по всей ЕС.",
+      keywords: "изменение ПМ до 2500 кг, снижение ПМ до 2500 кг, ПМ 2500 кг, изменение допустимой полной массы 2500 кг, снижение полной массы транспортного средства до 2,5 т, изменение ПМ буса до 2500 кг, снижение ПМ автомобиля до 2500 кг, как снизить ПМ до 2500 кг, изменение ПМ грузового транспортного средства на 2500 кг, ПМ 2500 кг и водительское удостоверение, можно ли уменьшить ПМ до 2500 кг, переоборудование авто на 2500 кг, изменение ПМ в Германии 2500 кг, снижение ПМ перед регистрацией в Польше, изменение ПМ автомобиля из Германии 2500 кг, как избежать ПМ свыше 3,5 т, ПМ 2500 кг и расходы, изменение ПМ и налог, можно ли ездить на кат В после изменения ПМ, снижение ПМ и регистрация в Польше",
+    },
+    nav: { home: "Главная", services: "Услуги", contact: "Контакты" },
+    intro: { title: "Изменение ПМ (снижение) до 2500 кг и 3500 кг - легально и с документацией из Германии", subtitle: "Мы оформляем всё: документы, новую табличку и регистрацию транспортного средства на немецкий Brief. Вы получаете полный комплект для перерегистрации транспортного средства в Польше." },
+    service2500: { tag: "Для лёгкого транспорта", title: "Изменение ПМ до 2 500 кг", subtitle: "Идеально для срочных и чувствительных отправлений", description: "Мы снижаем допустимую полную массу транспортного средства до 2500 кг - процедура проводится уполномоченным техническим институтом в Германии, ещё до того, как транспортное средство въедет в Польшу. Всё заканчивается регистрацией транспортного средства в Германии.", whatYouGet: "Что вы получаете", forWho: "Для кого это решение", useCases: "Примеры применения" },
+    service3500: { tag: "Самая популярная", title: "Изменение ПМ до 3 500 кг", subtitle: "Категория N1 · водительское удостоверение кат. B", description: "Мы снижаем допустимую полную массу транспортного средства - весь процесс мы реализуем в Германии, до того как транспортное средство прибудет в Польшу. Предложение касается автомобилей, приобретённых на территории всего Европейского Союза.", benefits: "Преимущества для вас" },
+    howItWorks: { title: "Как выглядит сотрудничество?", step1: "Контакт", step1Desc: "Вы звоните или пишете - мы обсуждаем ваше транспортное средство и цель снижения ПМ.", step2: "Верификация", step2Desc: "Мы проверяем, технически ли транспортное средство квалифицируется для изменения ПМА.", step3: "Реализация", step3Desc: "Мы проводим весь процесс в Германии - вам не нужно туда ехать.", step4: "Получение", step4Desc: "Вы получаете транспортное средство с новой документацией, готовое к перерегистрации." },
+    note: { title: "", description: "Предложение снижения ПМ до 2500 кг особенно выгодно с 1 июля 2026 г. - для компаний, которым нужна гибкость в международных перевозках. Каждый случай индивидуально проверяется на техническую квалификацию транспортного средства." },
+    contact: { title: "Поговорим о вашем транспортном средстве", subtitle: "Бесплатная консультация - мы ответим на любые вопросы об изменении ПМ." },
+  },
 };
 
 const cs: TranslationShape = {
@@ -189,7 +255,7 @@ const cs: TranslationShape = {
   },
   nav: { home: "Domů", services: "Služby", contact: "Kontakt", admin: "Admin panel" },
   hero: { title: "NĚMECKÉ DOKUMENTY VOZIDLA • REGISTRACE V NĚMECKU • KONSTRUKČNÍ ZMĚNY (GVW 2500 / 3500)", titleAccent: "Zajišťujeme komplexní vyřízení administrativních postupů spojených s vozidly registrovanými v Německu.", subtitle: "Specializujeme se na získávání duplikátů ztracených německých dokumentů vozidla (Zulassungsbescheinigung Teil I a Teil II), které jsou nezbytné pro přeregistraci vozidla dovezeného z Německa v jiných státech Evropské unie. Rovněž zajišťujeme postupy spojené s registrací vozidel v Německu, konstrukčními změnami a legalizací technických úprav vozidel v souladu s platnými předpisy. Specializujeme se také na obtížné a nestandardní případy, kde standardní administrativní postupy nestačí. Obsluhujeme klienty z celé Evropské unie, přičemž řešíme případy vyžadující přímý kontakt s německými registračními úřady a technickými institucemi.", cta: "Zobrazit služby", chatCta: "Napište nám" },
-  services: { title: "Naše služby", subtitle: "Prohlédněte si naši nabídku a vyberte si službu, kterou potřebujete. Nabídky jsou flexibilní.", chatAbout: "Zeptat se na toto", details: "Podrobnosti", close: "Zavřít", allCategories: "Všechny" },
+  services: { title: "Naše služby", subtitle: "Prohlédněte si naši nabídku a vyberte si službu, kterou potřebujete. Nabídky jsou flexibilní.", chatAbout: "Zeptat se na toto", details: "Podrobnosti", close: "Zavřít", allCategories: "Všechny", featured: "Doporučená", featured_card: { title: "Změna celkové hmotnosti (snížení) na 2.5T nebo 3.5T", description: "Zařídíme vše: dokumenty, nový štítek a registraci na německý Brief. Získáte kompletní sadu pro přeregistraci vozidla.", button: "Zjistit více" } },
   contact: { title: "Kontaktujte nás", subtitle: "Máte otázky? Napište nám nebo využijte živý chat.", name: "Jméno a příjmení", email: "E-mailová adresa", message: "Zpráva", send: "Odeslat zprávu", sent: "Zpráva odeslána!", phone: "Telefon", address: "Adresa" },
   chat: { title: "Živý chat", placeholder: "Napište zprávu...", send: "Odeslat", greeting: "Dobrý den! Jak vám můžeme pomoci?", serviceContext: "Dotaz se týká služby:", namePrompt: "Zadejte své údaje pro zahájení chatu:", namePlaceholder: "Vaše jméno...", emailPlaceholder: "Váš e-mail...", nameSubmit: "Zahájit chat", translateAll: "Přeložit zprávy", showOriginal: "Zobrazit původní zprávy" },
   admin: {
@@ -217,6 +283,20 @@ const cs: TranslationShape = {
     cta: "Přejít na plný web",
     disclaimer: "Služba má pouze informativní charakter, nevydává úřední dokumenty a nenahrazuje doporučení úřadů ani právníků.",
   },
+  zmianaDmc: {
+    seo: {
+      title: "Změna celkové hmotnosti vozidla - snížení na 2500 kg nebo 3500 kg",
+      description: "Profesionální změna celkové hmotnosti vozidel v Německu - snížení povolené celkové hmotnosti na 3500 kg nebo 2500 kg. Kompletní servis, německá dokumentace, platná v celé EU.",
+      keywords: "změna celkové hmotnosti na 2500 kg, snížení celkové hmotnosti na 2500 kg, celková hmotnost 2500 kg, změna povolené celkové hmotnosti 2500 kg, snížení celkové hmotnosti vozidla na 2,5 t, změna celkové hmotnosti dodávky na 2500 kg, snížení celkové hmotnosti automobilu na 2500 kg, jak snížit celkovou hmotnost na 2500 kg, změna celkové hmotnosti nákladního vozidla na 2500 kg, celková hmotnost 2500 kg a řidičský průkaz, lze snížit celkovou hmotnost na 2500 kg, přestavba auta na 2500 kg, změna celkové hmotnosti v Německu 2500 kg, snížení celkové hmotnosti před registrací v Polsku, změna celkové hmotnosti automobilu z Německa 2500 kg, jak se vyhnout celkové hmotnosti nad 3,5 t, celková hmotnost 2500 kg a náklady, změna celkové hmotnosti a daň, lze jezdit na kat B po změně celkové hmotnosti, snížení celkové hmotnosti a registrace v Polsku",
+    },
+    nav: { home: "Domů", services: "Služby", contact: "Kontakt" },
+    intro: { title: "Změna celkové hmotnosti (snížení) na 2500 kg a 3500 kg - legálně a s německou dokumentací", subtitle: "Zařídíme vše: dokumenty, nový štítek a registraci vozidla na německý Brief. Získáte kompletní sadu pro přeregistraci vozidla v Polsku." },
+    service2500: { tag: "Pro lehkou přepravu", title: "Změna celkové hmotnosti na 2 500 kg", subtitle: "Ideální pro urgentní a citlivé zásilky", description: "Snižujeme povolenou celkovou hmotnost vozidla na 2500 kg - proceduru provádí autorizovaný technický institut v Německu, ještě před vjezdem vozidla do Polska. Vše končí registrací vozidla v Německu.", whatYouGet: "Co získáte", forWho: "Pro koho je toto řešení", useCases: "Příklady použití" },
+    service3500: { tag: "Nejoblíbenější", title: "Změna celkové hmotnosti na 3 500 kg", subtitle: "Kategorie N1 · řidičský průkaz kat. B", description: "Snižujeme povolenou celkovou hmotnost vozidla - celý proces realizujeme v Německu, před tím, než vozidlo dorazí do Polska. Nabídka se vztahuje na automobily zakoupené na území celé Evropské unie.", benefits: "Výhody pro vás" },
+    howItWorks: { title: "Jak probíhá spolupráce?", step1: "Kontakt", step1Desc: "Voláte nebo píšete - probíráme vaše vozidlo a účel snížení celkové hmotnosti.", step2: "Ověření", step2Desc: "Kontrolujeme, zda se vozidlo technicky kvalifikuje ke změně celkové hmotnosti.", step3: "Realizace", step3Desc: "Provádíme celý proces v Německu - nemusíte tam jezdit.", step4: "Převzetí", step4Desc: "Obdržíte vozidlo s novou dokumentací, připravené k přeregistraci." },
+    note: { title: "", description: "Nabídka snížení celkové hmotnosti na 2500 kg je zvláště výhodná od 1. července 2026 - pro firmy, které potřebují flexibilitu v mezinárodní přepravě. Každý případ je individuálně ověřován z hlediska technické kvalifikace vozidla." },
+    contact: { title: "Pojďme mluvit o vašem vozidle", subtitle: "Bezplatná konzultace - odpovíme na jakékoliv otázky ohledně změny celkové hmotnosti." },
+  },
 };
 
 const es: TranslationShape = {
@@ -227,7 +307,7 @@ const es: TranslationShape = {
   },
   nav: { home: "Inicio", services: "Servicios", contact: "Contacto", admin: "Panel admin" },
   hero: { title: "DOCUMENTOS ALEMANES DEL VEHÍCULO • MATRICULACIÓN EN ALEMANIA • MODIFICACIONES ESTRUCTURALES (PMA 2500 / 3500)", titleAccent: "Nos encargamos de la gestión integral de los trámites administrativos relacionados con vehículos matriculados en Alemania.", subtitle: "Nos especializamos en la obtención de duplicados de documentos alemanes del vehículo perdidos (Zulassungsbescheinigung Teil I y Teil II), imprescindibles para re-matricular un vehículo importado de Alemania en otros países de la Unión Europea. También gestionamos los trámites relacionados con la matriculación de vehículos en Alemania, modificaciones estructurales y legalización de cambios técnicos de los vehículos conforme a la normativa vigente. Nos especializamos asimismo en casos difíciles y no estándar en los que los procedimientos administrativos habituales resultan insuficientes. Atendemos a clientes de toda la Unión Europea, tramitando asuntos que requieren contacto directo con las autoridades alemanas de matriculación e instituciones técnicas.", cta: "Ver servicios", chatCta: "Chatea con nosotros" },
-  services: { title: "Nuestros servicios", subtitle: "Consulta nuestra oferta y elige el servicio que necesitas. Las ofertas son flexibles.", chatAbout: "Preguntar sobre esto", details: "Detalles", close: "Cerrar", allCategories: "Todos" },
+  services: { title: "Nuestros servicios", subtitle: "Consulta nuestra oferta y elige el servicio que necesitas. Las ofertas son flexibles.", chatAbout: "Preguntar sobre esto", details: "Detalles", close: "Cerrar", allCategories: "Todos", featured: "Destacada", featured_card: { title: "Cambio de PMA (reducción) a 2.5T o 3.5T", description: "Gestionamos todo: documentos, nueva placa y registro en Brief alemán. Reciba un juego completo para re-registrar su vehículo.", button: "Más información" } },
   contact: { title: "Contáctenos", subtitle: "¿Tiene preguntas? Envíenos un mensaje o utilice nuestro chat en vivo.", name: "Nombre completo", email: "Correo electrónico", message: "Mensaje", send: "Enviar mensaje", sent: "¡Mensaje enviado!", phone: "Teléfono", address: "Dirección" },
   chat: { title: "Chat en vivo", placeholder: "Escriba un mensaje...", send: "Enviar", greeting: "¡Hola! ¿Cómo podemos ayudarle?", serviceContext: "Pregunta sobre el servicio:", namePrompt: "Ingrese sus datos para iniciar el chat:", namePlaceholder: "Su nombre...", emailPlaceholder: "Su correo electrónico...", nameSubmit: "Iniciar chat", translateAll: "Traducir mensajes", showOriginal: "Mostrar mensajes originales" },
   admin: {
@@ -255,6 +335,20 @@ const es: TranslationShape = {
     cta: "Ir al sitio completo",
     disclaimer: "Este servicio tiene carácter informativo, no emite documentos oficiales ni sustituye el asesoramiento de autoridades u otros profesionales.",
   },
+  zmianaDmc: {
+    seo: {
+      title: "Cambio de PMA del vehículo - reducción a 2500 kg o 3500 kg",
+      description: "Cambio profesional de PMA de vehículos en Alemania - reducción del peso máximo autorizado a 3500 kg o 2500 kg. Servicio completo, documentación alemana, válida en toda la UE.",
+      keywords: "cambio de PMA a 2500 kg, reducir PMA a 2500 kg, PMA 2500 kg, cambio del peso máximo autorizado 2500 kg, reducir peso total del vehículo a 2,5 t, cambio de PMA de furgoneta a 2500 kg, reducir PMA de coche a 2500 kg, cómo reducir PMA a 2500 kg, cambio de PMA de camión a 2500 kg, PMA 2500 kg y licencia de conducir, se puede reducir PMA a 2500 kg, convertir coche a 2500 kg, cambio de PMA en Alemania 2500 kg, reducir PMA antes de registro en Polonia, cambio de PMA de coche de Alemania 2500 kg, cómo evitar PMA superior a 3,5 t, PMA 2500 kg y costes, cambio de PMA e impuestos, se puede conducir con licencia B tras cambio de PMA, reducir PMA y registro en Polonia",
+    },
+    nav: { home: "Inicio", services: "Servicios", contact: "Contacto" },
+    intro: { title: "Cambio de PMA (reducción) a 2500 kg y 3500 kg - legalmente y con documentación alemana", subtitle: "Gestionamos todo: documentos, nueva placa y registro del vehículo en Brief alemán. Recibirás el juego completo para re-registrar tu vehículo en Polonia." },
+    service2500: { tag: "Para transporte ligero", title: "Cambio de PMA a 2 500 kg", subtitle: "Ideal para envíos urgentes y sensibles", description: "Reducimos el peso máximo autorizado del vehículo a 2500 kg - el procedimiento lo realiza un instituto técnico autorizado en Alemania, antes de que el vehículo entre en Polonia. Todo termina con el registro del vehículo en Alemania.", whatYouGet: "Qué recibes", forWho: "Para quién es esta solución", useCases: "Ejemplos de uso" },
+    service3500: { tag: "Más popular", title: "Cambio de PMA a 3 500 kg", subtitle: "Categoría N1 · licencia de conducir cat. B", description: "Reducimos el peso máximo autorizado del vehículo - todo el proceso lo llevamos a cabo en Alemania, antes de que el vehículo llegue a Polonia. La oferta se aplica a coches comprados en todo el territorio de la Unión Europea.", benefits: "Beneficios para ti" },
+    howItWorks: { title: "¿Cómo es la cooperación?", step1: "Contacto", step1Desc: "Llamas o escribes - analizamos tu vehículo y el propósito de la reducción del PMA.", step2: "Verificación", step2Desc: "Comprobamos si el vehículo se cualifica técnicamente para el cambio de PMA.", step3: "Realización", step3Desc: "Llevamos a cabo todo el proceso en Alemania - no tienes que ir allí.", step4: "Recogida", step4Desc: "Recibes el vehículo con nueva documentación, listo para re-registrar." },
+    note: { title: "", description: "La oferta de reducción del PMA a 2500 kg es especialmente ventajosa desde el 1 de julio de 2026 - para empresas que necesitan flexibilidad en el transporte internacional. Cada caso se verifica individualmente para la cualificación técnica del vehículo." },
+    contact: { title: "Hablemos de tu vehículo", subtitle: "Consulta gratuita - responderemos a cualquier pregunta sobre el cambio de PMA." },
+  },
 };
 
 const it: TranslationShape = {
@@ -265,7 +359,7 @@ const it: TranslationShape = {
   },
   nav: { home: "Home", services: "Servizi", contact: "Contatti", admin: "Pannello admin" },
   hero: { title: "DOCUMENTI TEDESCHI DEL VEICOLO • IMMATRICOLAZIONE IN GERMANIA • MODIFICHE STRUTTURALI (PMA 2500 / 3500)", titleAccent: "Ci occupiamo della gestione completa delle procedure amministrative relative ai veicoli immatricolati in Germania.", subtitle: "Siamo specializzati nell'ottenimento di duplicati dei documenti tedeschi del veicolo smarriti (Zulassungsbescheinigung Teil I e Teil II), indispensabili per la re-immatricolazione di un veicolo importato dalla Germania in altri paesi dell'Unione Europea. Ci occupiamo anche delle procedure relative all'immatricolazione di veicoli in Germania, alle modifiche strutturali e alla legalizzazione delle modifiche tecniche dei veicoli conformemente alle normative vigenti. Siamo specializzati anche in casi difficili e non standard, in cui le procedure amministrative standard risultano insufficienti. Serviamo clienti da tutta l'Unione Europea, gestendo pratiche che richiedono un contatto diretto con le autorità tedesche di immatricolazione e le istituzioni tecniche.", cta: "Vedi servizi", chatCta: "Chatta con noi" },
-  services: { title: "I nostri servizi", subtitle: "Consulta la nostra offerta e scegli il servizio di cui hai bisogno. Le offerte sono flessibili.", chatAbout: "Chiedi informazioni", details: "Dettagli", close: "Chiudi", allCategories: "Tutti" },
+  services: { title: "I nostri servizi", subtitle: "Consulta la nostra offerta e scegli il servizio di cui hai bisogno. Le offerte sono flessibili.", chatAbout: "Chiedi informazioni", details: "Dettagli", close: "Chiudi", allCategories: "Tutti", featured: "In evidenza", featured_card: { title: "Cambio PMA (riduzione) a 2.5T o 3.5T", description: "Gestiamo tutto: documenti, nuova targhetta e registrazione su Brief tedesco. Riceverai un set completo per re-immatricolare il tuo veicolo.", button: "Ulteriori informazioni" } },
   contact: { title: "Contattaci", subtitle: "Hai domande? Inviaci un messaggio o utilizza la chat dal vivo.", name: "Nome e cognome", email: "Indirizzo e-mail", message: "Messaggio", send: "Invia messaggio", sent: "Messaggio inviato!", phone: "Telefono", address: "Indirizzo" },
   chat: { title: "Chat dal vivo", placeholder: "Scrivi un messaggio...", send: "Invia", greeting: "Ciao! Come possiamo aiutarti?", serviceContext: "Domanda relativa al servizio:", namePrompt: "Inserisci i tuoi dati per avviare la chat:", namePlaceholder: "Il tuo nome...", emailPlaceholder: "La tua e-mail...", nameSubmit: "Avvia chat", translateAll: "Traduci messaggi", showOriginal: "Mostra messaggi originali" },
   admin: {
@@ -293,6 +387,20 @@ const it: TranslationShape = {
     cta: "Vai al sito completo",
     disclaimer: "Il servizio ha carattere puramente informativo, non rilascia documenti ufficiali e non sostituisce il parere delle autorità o di consulenti legali.",
   },
+  zmianaDmc: {
+    seo: {
+      title: "Cambio PMA del veicolo - riduzione a 2500 kg o 3500 kg",
+      description: "Cambio professionale PMA veicoli in Germania - riduzione della massa massima autorizzata a 3500 kg o 2500 kg. Servizio completo, documentazione tedesca, valida in tutta l'UE.",
+      keywords: "cambio PMA a 2500 kg, ridurre PMA a 2500 kg, PMA 2500 kg, cambio massa massima autorizzata 2500 kg, ridurre massa totale veicolo a 2,5 t, cambio PMA furgone a 2500 kg, ridurre PMA auto a 2500 kg, come ridurre PMA a 2500 kg, cambio PMA camion a 2500 kg, PMA 2500 kg e patente, si può ridurre PMA a 2500 kg, convertire auto a 2500 kg, cambio PMA Germania 2500 kg, ridurre PMA prima registrazione Polonia, cambio PMA auto dalla Germania 2500 kg, come evitare PMA superiore a 3,5 t, PMA 2500 kg e costi, cambio PMA e tassa, si può guidare con patente B dopo cambio PMA, ridurre PMA e registrazione Polonia",
+    },
+    nav: { home: "Home", services: "Servizi", contact: "Contatti" },
+    intro: { title: "Cambio PMA (riduzione) a 2500 kg e 3500 kg - legalmente e con documentazione tedesca", subtitle: "Gestiamo tutto: documenti, nuova targhetta e registrazione del veicolo su Brief tedesco. Riceverai il set completo per re-registrare il tuo veicolo in Polonia." },
+    service2500: { tag: "Per trasporto leggero", title: "Cambio PMA a 2 500 kg", subtitle: "Ideale per spedizioni urgenti e sensibili", description: "Riduciamo la massa massima autorizzata del veicolo a 2500 kg - la procedura viene eseguita da un istituto tecnico autorizzato in Germania, prima che il veicolo entri in Polonia. Tutto si conclude con la registrazione del veicolo in Germania.", whatYouGet: "Cosa ricevi", forWho: "Per chi è questa soluzione", useCases: "Esempi di utilizzo" },
+    service3500: { tag: "Più popolare", title: "Cambio PMA a 3 500 kg", subtitle: "Categoria N1 · patente cat. B", description: "Riduciamo la massa massima autorizzata del veicolo - l'intero processo lo realizziamo in Germania, prima che il veicolo arrivi in Polonia. L'offerta si applica alle auto acquistate in tutto il territorio dell'Unione Europea.", benefits: "Vantaggi per te" },
+    howItWorks: { title: "Come funziona la cooperazione?", step1: "Contatto", step1Desc: "Chiami o scrivi - discutiamo del tuo veicolo e dello scopo della riduzione del PMA.", step2: "Verifica", step2Desc: "Verifichiamo se il veicolo si qualifica tecnicamente per il cambio PMA.", step3: "Realizzazione", step3Desc: "Realizziamo l'intero processo in Germania - non devi andarci.", step4: "Ritiro", step4Desc: "Ricevi il veicolo con nuova documentazione, pronto per la re-registrazione." },
+    note: { title: "", description: "L'offerta di riduzione del PMA a 2500 kg è particolarmente vantaggiosa dal 1° luglio 2026 - per aziende che necessitano di flessibilità nel trasporto internazionale. Ogni caso viene verificato individualmente per la qualifica tecnica del veicolo." },
+    contact: { title: "Parliamo del tuo veicolo", subtitle: "Consulenza gratuita - risponderemo a qualsiasi domanda sul cambio PMA." },
+  },
 };
 
 const hu: TranslationShape = {
@@ -303,7 +411,7 @@ const hu: TranslationShape = {
   },
   nav: { home: "Kezdőlap", services: "Szolgáltatások", contact: "Kapcsolat", admin: "Admin panel" },
   hero: { title: "NÉMET JÁRMŰOKMÁNYOK • REGISZTRÁCIÓ NÉMETORSZÁGBAN • SZERKEZETI MÓDOSÍTÁSOK (ÖTM 2500 / 3500)", titleAccent: "Átfogóan intézzük a Németországban regisztrált járművekkel kapcsolatos adminisztratív eljárásokat.", subtitle: "Specializálódtunk az elveszett német járműokmányok (Zulassungsbescheinigung Teil I és Teil II) másodpéldányainak megszerzésére, amelyek nélkülözhetetlenek a Németországból importált járművek más európai uniós tagállamban történő átírásához. Foglalkozunk a Németországban történő járműregisztrációhoz, szerkezeti módosításokhoz és a járművek műszaki változtatásainak legalizálásához kapcsolódó eljárásokkal is, a hatályos jogszabályok szerint. Emellett specializálódtunk a nehéz és nem szokványos ügyekre, ahol a szokványos adminisztratív eljárások nem elegendők. Az egész Európai Unióból fogadunk ügyfeleket, olyan ügyeket intézve, amelyek közvetlen kapcsolatot igényelnek a német közlekedési hatóságokkal és műszaki intézményekkel.", cta: "Szolgáltatások megtekintése", chatCta: "Írjon nekünk" },
-  services: { title: "Szolgáltatásaink", subtitle: "Tekintse meg kínálatunkat és válassza ki a szükséges szolgáltatást. Az ajánlatok rugalmasak.", chatAbout: "Kérdezzen erről", details: "Részletek", close: "Bezárás", allCategories: "Összes" },
+  services: { title: "Szolgáltatásaink", subtitle: "Tekintse meg kínálatunkat és válassza ki a szükséges szolgáltatást. Az ajánlatok rugalmasak.", chatAbout: "Kérdezzen erről", details: "Részletek", close: "Bezárás", allCategories: "Összes", featured: "Kiemelt", featured_card: { title: "ÖTM változtatás (csökkentés) 2.5T vagy 3.5T-ra", description: "Mindenről gondoskodunk: dokumentumok, új táblácska és magyarítás a német Briefre. Megkapja a teljes készletet járműve átrögzítéséhez.", button: "További információk" } },
   contact: { title: "Lépjen kapcsolatba velünk", subtitle: "Kérdése van? Írjon nekünk vagy használja az élő chatet.", name: "Teljes név", email: "E-mail cím", message: "Üzenet", send: "Üzenet küldése", sent: "Üzenet elküldve!", phone: "Telefon", address: "Cím" },
   chat: { title: "Élő chat", placeholder: "Írjon üzenetet...", send: "Küldés", greeting: "Üdvözöljük! Miben segíthetünk?", serviceContext: "Kérdés a szolgáltatásról:", namePrompt: "Adja meg adatait a chat indításához:", namePlaceholder: "Az Ön neve...", emailPlaceholder: "Az Ön e-mail címe...", nameSubmit: "Chat indítása", translateAll: "Üzenetek fordítása", showOriginal: "Eredeti üzenetek megjelenítése" },
   admin: {
@@ -330,6 +438,20 @@ const hu: TranslationShape = {
     bullet3: "Jobb eligazodás az eljárásokban – a döntések és hivatalos lépések a kliensnél maradnak.",
     cta: "Ugrás a teljes weboldalra",
     disclaimer: "A szolgáltatás tájékoztató jellegű, nem ad ki hivatalos dokumentumokat, és nem helyettesíti a hatóságok vagy jogi tanácsadók útmutatását.",
+  },
+  zmianaDmc: {
+    seo: {
+      title: "ÖTM változtatása járműveknél - csökkentés 2500 kg vagy 3500 kg-ra",
+      description: "Professzionális ÖTM változtatás járműveknek Németországban - megengedett össztömeg csökkentése 3500 kg-ra vagy 2500 kg-ra. Teljes körű szolgáltatás, német dokumentáció, az EU-ban érvényes.",
+      keywords: "ÖTM változtatás 2500 kg-ra, ÖTM csökkentés 2500 kg-ra, ÖTM 2500 kg, megengedett össztömeg változtatás 2500 kg-ra, jármű össztömeg csökkentése 2,5 t-ra, kisteherautó ÖTM változtatás 2500 kg-ra, személygépkocsi ÖTM csökkentés 2500 kg-ra, hogyan csökkentsük az ÖTM-et 2500 kg-ra, tehergépkocsi ÖTM változtatása 2500 kg-ra, ÖTM 2500 kg és jogosítvány, lehet-e csökkenteni az ÖTM-et 2500 kg-ra, autó átalakítása 2500 kg-ra, ÖTM változtatás Németországban 2500 kg, ÖTM csökkentés magyarországi regisztráció előtt, ÖTM változtatás németországi autó 2500 kg, hogyan kerüljük el a 3,5 t feletti ÖTM-et, ÖTM 2500 kg és költségek, ÖTM változtatás és adó, lehet-e B kategóriás jogosítvánnyal vezetni ÖTM változtatás után, ÖTM csökkentés és magyarországi regisztráció",
+    },
+    nav: { home: "Kezdőlap", services: "Szolgáltatások", contact: "Kapcsolat" },
+    intro: { title: "ÖTM változtatás (csökkentés) 2500 kg és 3500 kg-ra - legálisan és német dokumentációval", subtitle: "Mindenről gondoskodunk: dokumentumok, új táblácska és jármű regisztrációja a német Briefre. Megkapja a teljes készletet járműve magyarországi átregisztrációjához." },
+    service2500: { tag: "Könnyű szállításhoz", title: "ÖTM változtatás 2 500 kg-ra", subtitle: "Ideális sürgős és érzékeny szállítmányokhoz", description: "Csökkentjük a jármű megengedett össztömegét 2500 kg-ra - az eljárást egy felhatalmazott műszaki intézet végzi Németországban, még mielőtt a jármű belépne Magyarországra. Minden a jármű németországi regisztrációjával zárul.", whatYouGet: "Mit kap", forWho: "Kinek ajánlott", useCases: "Felhasználási példák" },
+    service3500: { tag: "Legnépszerűbb", title: "ÖTM változtatás 3 500 kg-ra", subtitle: "N1 kategória · B kategóriás jogosítvány", description: "Csökkentjük a jármű megengedett össztömegét - a teljes folyamatot Népországban végezzük, mielőtt a jármű Magyarországra érkezne. Az ajánlat az Európai Unió egész területén vásárolt autókra vonatkozik.", benefits: "Előnyök az Ön számára" },
+    howItWorks: { title: "Hogyan működik az együttműködés?", step1: "Kapcsolatfelvétel", step1Desc: "Hív vagy ír - megbeszéljük az Ön járművét és az ÖTM csökkentésének célját.", step2: "Ellenőrzés", step2Desc: "Ellenőrizzük, hogy a jármű technikailag alkalmas-e az ÖTM változtatására.", step3: "Végrehajtás", step3Desc: "A teljes folyamatot Németországban végezzük - Önnek nem kell odautaznia.", step4: "Átvétel", step4Desc: "Megkapja a járművet az új dokumentációval, készen az átregisztrációra." },
+    note: { title: "", description: "Az ÖTM 2500 kg-ra csökkentésének ajánlata különösen előnyös 2026. július 1-jétől - a nemzetközi szállításban rugalmasságra váró cégeknek. Minden eset egyedileg kerül ellenőrzésre a jármű műszaki alkalmassága szempontjából." },
+    contact: { title: "Beszéljünk az Ön járművéről", subtitle: "Ingyenes konzultáció - válaszolunk bármilyen kérdésre az ÖTM változtatásával kapcsolatban." },
   },
 };
 

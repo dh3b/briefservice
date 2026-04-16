@@ -3,14 +3,16 @@ import { useLanguage } from "@/i18n/LanguageContext";
 import { ServiceRow, Service, CategoryRow, localizeService, localizeCategory } from "@/types";
 import { fetchServices, fetchCategories } from "@/api";
 import ServiceCard from "./ServiceCard";
+import FeaturedServiceCard from "./FeaturedServiceCard";
 import { X } from "lucide-react";
 import { getCategoryName } from "@/lib/localize";
 
 interface ServicesSectionProps {
   onChatAbout: (serviceId: string, serviceName: string) => void;
+  featuredHref?: string;
 }
 
-const ServicesSection = ({ onChatAbout }: ServicesSectionProps) => {
+const ServicesSection = ({ onChatAbout, featuredHref = "/privacy-policy" }: ServicesSectionProps) => {
   const { t, language } = useLanguage();
   const [activeCategory, setActiveCategory] = useState("all");
   const [allRows, setAllRows] = useState<ServiceRow[]>([]);
@@ -104,6 +106,7 @@ const ServicesSection = ({ onChatAbout }: ServicesSectionProps) => {
           </div>
         ) : (
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
+            <FeaturedServiceCard href={featuredHref} categoryName={t.services.featured} />
             {filtered.map((service) => (
               <ServiceCard
                 key={service.id}
