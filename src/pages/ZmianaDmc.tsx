@@ -27,8 +27,27 @@ const ZmianaDmcPage = () => {
     return () => document.removeEventListener("mousedown", handler);
   }, []);
 
+  // Fade-in on scroll
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("visible");
+          }
+        });
+      },
+      { threshold: 0.1 }
+    );
+    document.querySelectorAll(".fade-in").forEach((el) => observer.observe(el));
+    return () => observer.disconnect();
+  }, []);
+
+  const d = t.zmianaDmc;
+
   return (
     <div className="min-h-screen bg-background">
+      {/* ===== NAVBAR ===== */}
       <nav className="fixed top-0 left-0 right-0 z-50 bg-card/80 backdrop-blur-lg border-b border-border">
         <div className="container mx-auto px-6 h-16 flex items-center justify-between">
           <Link to={`/${language}`} className="font-display text-xl font-bold text-foreground tracking-tight">
@@ -37,7 +56,7 @@ const ZmianaDmcPage = () => {
 
           <div className="hidden md:flex items-center gap-8">
             <Link to={`/${language}`} className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">
-              {t.zmianaDmc.nav.home}
+              {d.nav.home}
             </Link>
 
             <div ref={langRef} className="relative">
@@ -74,9 +93,8 @@ const ZmianaDmcPage = () => {
         {mobileOpen && (
           <div className="md:hidden bg-card border-b border-border px-6 py-4 space-y-3">
             <Link to={`/${language}`} onClick={() => setMobileOpen(false)} className="block text-sm font-medium text-muted-foreground">
-              {t.zmianaDmc.nav.home}
+              {d.nav.home}
             </Link>
-
             <div className="border-t border-border pt-3 grid grid-cols-4 gap-1">
               {SUPPORTED_LANGUAGES.map((code) => (
                 <a
@@ -94,145 +112,167 @@ const ZmianaDmcPage = () => {
       </nav>
 
       <main className="pt-16">
-        <section className="py-20 px-6">
-          <div className="container mx-auto max-w-4xl">
-            <h1 className="font-display text-4xl md:text-5xl font-bold text-foreground mb-6 text-center">
-              {t.zmianaDmc.intro.title}
+        {/* ===== INTRO ===== */}
+        <section className="fade-in py-20 px-6">
+          <div className="container mx-auto max-w-4xl text-center">
+            <h1 className="font-display text-4xl md:text-5xl font-bold text-foreground mb-6">
+              {d.intro.title}
             </h1>
-            <p className="text-lg text-muted-foreground text-center max-w-2xl mx-auto">
-              {t.zmianaDmc.intro.subtitle}
+            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+              {d.intro.subtitle}
             </p>
           </div>
         </section>
 
-        <section className="py-16 px-6 bg-secondary/30">
-          <div className="container mx-auto">
-            <div className="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto">
-              <article className="bg-card rounded-xl border border-border p-8">
-                <div className="mb-6">
-                  <span className="inline-block px-3 py-1 text-xs font-medium rounded-full bg-primary/10 text-primary mb-3">
-                    {t.zmianaDmc.service2500.tag}
-                  </span>
-                  <h2 className="font-display text-2xl font-bold text-foreground mb-2">
-                    {t.zmianaDmc.service2500.title}
-                  </h2>
-                  <p className="text-muted-foreground">{t.zmianaDmc.service2500.subtitle}</p>
-                </div>
-                <div className="space-y-4">
-                  <p className="text-sm text-foreground/80">{t.zmianaDmc.service2500.description}</p>
-                  <h3 className="font-semibold text-foreground">{t.zmianaDmc.service2500.whatYouGet}</h3>
-                  <ul className="space-y-2 text-sm text-foreground/80">
-                    <li className="flex items-start gap-2">
-                      <span className="text-primary">✓</span>
-                      <span>Komplet nowych dowodów rejestracyjnych (Brief Teil I i II) z DMC = 2500 kg</span>
-                    </li>
-                    <li className="flex items-start gap-2">
-                      <span className="text-primary">✓</span>
-                      <span>Nową tabliczkę znamionową z aktualnymi masami</span>
-                    </li>
-                    <li className="flex items-start gap-2">
-                      <span className="text-primary">✓</span>
-                      <span>Dokumentację techniczną honorowaną w całej UE</span>
-                    </li>
-                  </ul>
-                  <h3 className="font-semibold text-foreground">{t.zmianaDmc.service2500.forWho}</h3>
-                  <ul className="space-y-2 text-sm text-foreground/80">
-                    <li className="flex items-start gap-2">
-                      <span className="text-primary">✓</span>
-                      <span>Pojazdy, które nie potrzebują ładowności 2,5–3,5 t</span>
-                    </li>
-                    <li className="flex items-start gap-2">
-                      <span className="text-primary">✓</span>
-                      <span>Lekkie, pilne i wrażliwe ładunki</span>
-                    </li>
-                    <li className="flex items-start gap-2">
-                      <span className="text-primary">✓</span>
-                      <span>Firmy ceniące elastyczność i czas</span>
-                    </li>
-                  </ul>
-                </div>
-              </article>
+        {/* ===== SERVICES ===== */}
+        <section className="px-6 pb-16">
+          <div className="container mx-auto max-w-5xl grid md:grid-cols-2 gap-8">
 
-              <article className="bg-card rounded-xl border border-border p-8">
-                <div className="mb-6">
-                  <span className="inline-block px-3 py-1 text-xs font-medium rounded-full bg-gold-gradient text-accent-foreground mb-3">
-                    {t.zmianaDmc.service3500.tag}
-                  </span>
-                  <h2 className="font-display text-2xl font-bold text-foreground mb-2">
-                    {t.zmianaDmc.service3500.title}
-                  </h2>
-                  <p className="text-muted-foreground">{t.zmianaDmc.service3500.subtitle}</p>
-                </div>
-                <div className="space-y-4">
-                  <p className="text-sm text-foreground/80">{t.zmianaDmc.service3500.description}</p>
-                  <h3 className="font-semibold text-foreground">{t.zmianaDmc.service3500.benefits}</h3>
-                  <ul className="space-y-2 text-sm text-foreground/80">
-                    <li className="flex items-start gap-2">
-                      <span className="text-primary">✓</span>
-                      <span>Prowadzisz pojazd na prawo jazdy kategorii B</span>
-                    </li>
-                    <li className="flex items-start gap-2">
-                      <span className="text-primary">✓</span>
-                      <span>Brak konieczności posiadania karty kierowcy i tachografu</span>
-                    </li>
-                    <li className="flex items-start gap-2">
-                      <span className="text-primary">✓</span>
-                      <span>Mniejsze koszty eksploatacji i ubezpieczenia</span>
-                    </li>
+            {/* CARD 1: DMC 2500 */}
+            <article className="fade-in bg-card rounded-xl border border-border overflow-hidden flex flex-col">
+              <div className="p-8 pb-4">
+                <span className="inline-block px-3 py-1 text-xs font-medium rounded-full bg-primary/10 text-primary mb-3">
+                  {d.service2500.tag}
+                </span>
+                <h2 className="font-display text-2xl font-bold text-foreground mb-2">
+                  {d.service2500.title}
+                </h2>
+                <p className="text-muted-foreground">{d.service2500.subtitle}</p>
+              </div>
+              <div className="px-8 pb-8 space-y-5 flex-1 flex flex-col">
+                <p className="text-sm text-foreground/80">{d.service2500.description}</p>
+
+                <div>
+                  <h3 className="font-semibold text-foreground mb-2">{d.service2500.whatYouGet}</h3>
+                  <ul className="space-y-2">
+                    {d.service2500.whatYouGetList.map((item, i) => (
+                      <li key={i} className="flex items-start gap-2 text-sm text-foreground/80">
+                        <span className="text-primary mt-0.5">✓</span>
+                        <span>{item}</span>
+                      </li>
+                    ))}
                   </ul>
                 </div>
-              </article>
-            </div>
+
+                <div>
+                  <h3 className="font-semibold text-foreground mb-2">{d.service2500.forWho}</h3>
+                  <ul className="space-y-2">
+                    {d.service2500.forWhoList.map((item, i) => (
+                      <li key={i} className="flex items-start gap-2 text-sm text-foreground/80">
+                        <span className="text-primary mt-0.5">✓</span>
+                        <span>{item}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+
+                <div>
+                  <h3 className="font-semibold text-foreground mb-2">{d.service2500.useCases}</h3>
+                  <div className="flex flex-wrap gap-2">
+                    {d.service2500.useCasesList.map((pill, i) => (
+                      <span
+                        key={i}
+                        className="inline-block px-3 py-1.5 text-xs font-medium rounded-full bg-secondary text-secondary-foreground"
+                      >
+                        {pill}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </article>
+
+            {/* CARD 2: DMC 3500 */}
+            <article className="fade-in bg-card rounded-xl border border-border overflow-hidden flex flex-col">
+              <div className="p-8 pb-4">
+                <span className="inline-block px-3 py-1 text-xs font-medium rounded-full bg-primary/10 text-primary mb-3">
+                  {d.service3500.tag}
+                </span>
+                <h2 className="font-display text-2xl font-bold text-foreground mb-2">
+                  {d.service3500.title}
+                </h2>
+                <p className="text-muted-foreground">{d.service3500.subtitle}</p>
+              </div>
+              <div className="px-8 pb-8 space-y-5 flex-1 flex flex-col">
+                <p className="text-sm text-foreground/80">{d.service3500.description}</p>
+
+                <div>
+                  <h3 className="font-semibold text-foreground mb-2">{d.service3500.whatYouGet}</h3>
+                  <ul className="space-y-2">
+                    {d.service3500.whatYouGetList.map((item, i) => (
+                      <li key={i} className="flex items-start gap-2 text-sm text-foreground/80">
+                        <span className="text-primary mt-0.5">✓</span>
+                        <span>{item}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+
+                <div>
+                  <h3 className="font-semibold text-foreground mb-2">{d.service3500.benefits}</h3>
+                  <ul className="space-y-2">
+                    {d.service3500.benefitsList.map((item, i) => (
+                      <li key={i} className="flex items-start gap-2 text-sm text-foreground/80">
+                        <span className="text-primary mt-0.5">✓</span>
+                        <span>{item}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+
+                <p className="text-xs text-muted-foreground mt-auto pt-4">
+                  {d.service3500.footerNote}
+                </p>
+              </div>
+            </article>
           </div>
         </section>
 
-        <section className="py-16 px-6">
+        {/* ===== HOW IT WORKS ===== */}
+        <section className="fade-in py-16 px-6">
           <div className="container mx-auto max-w-4xl">
             <h2 className="font-display text-3xl font-bold text-foreground mb-12 text-center">
-              {t.zmianaDmc.howItWorks.title}
+              {d.howItWorks.title}
             </h2>
-            <div className="grid md:grid-cols-4 gap-8">
-              <div className="text-center">
-                <div className="font-display text-4xl font-bold text-primary/20 mb-2">01</div>
-                <h4 className="font-semibold text-foreground mb-2">{t.zmianaDmc.howItWorks.step1}</h4>
-                <p className="text-sm text-muted-foreground">{t.zmianaDmc.howItWorks.step1Desc}</p>
-              </div>
-              <div className="text-center">
-                <div className="font-display text-4xl font-bold text-primary/20 mb-2">02</div>
-                <h4 className="font-semibold text-foreground mb-2">{t.zmianaDmc.howItWorks.step2}</h4>
-                <p className="text-sm text-muted-foreground">{t.zmianaDmc.howItWorks.step2Desc}</p>
-              </div>
-              <div className="text-center">
-                <div className="font-display text-4xl font-bold text-primary/20 mb-2">03</div>
-                <h4 className="font-semibold text-foreground mb-2">{t.zmianaDmc.howItWorks.step3}</h4>
-                <p className="text-sm text-muted-foreground">{t.zmianaDmc.howItWorks.step3Desc}</p>
-              </div>
-              <div className="text-center">
-                <div className="font-display text-4xl font-bold text-primary/20 mb-2">04</div>
-                <h4 className="font-semibold text-foreground mb-2">{t.zmianaDmc.howItWorks.step4}</h4>
-                <p className="text-sm text-muted-foreground">{t.zmianaDmc.howItWorks.step4Desc}</p>
-              </div>
+            <div className="grid sm:grid-cols-2 md:grid-cols-4 gap-8">
+              {(
+                [
+                  { num: "01", title: d.howItWorks.step1, desc: d.howItWorks.step1Desc },
+                  { num: "02", title: d.howItWorks.step2, desc: d.howItWorks.step2Desc },
+                  { num: "03", title: d.howItWorks.step3, desc: d.howItWorks.step3Desc },
+                  { num: "04", title: d.howItWorks.step4, desc: d.howItWorks.step4Desc },
+                ] as const
+              ).map((step) => (
+                <div key={step.num} className="text-center">
+                  <div className="font-display text-4xl font-bold text-primary/20 mb-2">{step.num}</div>
+                  <h4 className="font-semibold text-foreground mb-2">{step.title}</h4>
+                  <p className="text-sm text-muted-foreground">{step.desc}</p>
+                </div>
+              ))}
             </div>
           </div>
         </section>
 
-        <section className="py-16 px-6 bg-secondary/30">
+        {/* ===== NOTE ===== */}
+        <section className="fade-in py-12 px-6">
           <div className="container mx-auto max-w-3xl">
             <div className="bg-card border border-border rounded-xl p-8 flex items-start gap-4">
               <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0">
-                <svg className="w-5 h-5 text-primary" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                <svg className="w-5 h-5 text-primary" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                   <circle cx="12" cy="12" r="10" />
                   <line x1="12" y1="16" x2="12" y2="12" />
                   <line x1="12" y1="8" x2="12.01" y2="8" />
                 </svg>
               </div>
-              <div>
-                <p className="text-foreground/80">{t.zmianaDmc.note.description}</p>
-              </div>
+              <p className="text-foreground/80 text-sm leading-relaxed">
+                <strong>{d.note.title && `${d.note.title} `}</strong>
+                {d.note.description}
+              </p>
             </div>
           </div>
         </section>
 
+        {/* ===== CONTACT SECTION ===== */}
         <ContactSection />
       </main>
 
