@@ -8,7 +8,7 @@ import Footer from "@/components/Footer";
 import { useSEO } from "@/hooks/useSEO";
 
 const ZmianaDmcPage = () => {
-  const { t, language, setLanguage } = useLanguage();
+  const { t, language } = useLanguage();
   const [mobileOpen, setMobileOpen] = useState(false);
   const [langOpen, setLangOpen] = useState(false);
   const langRef = useRef<HTMLDivElement>(null);
@@ -25,22 +25,6 @@ const ZmianaDmcPage = () => {
     };
     document.addEventListener("mousedown", handler);
     return () => document.removeEventListener("mousedown", handler);
-  }, []);
-
-  // Fade-in on scroll
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add("visible");
-          }
-        });
-      },
-      { threshold: 0.1 }
-    );
-    document.querySelectorAll(".fade-in").forEach((el) => observer.observe(el));
-    return () => observer.disconnect();
   }, []);
 
   const d = t.zmianaDmc;
@@ -113,7 +97,7 @@ const ZmianaDmcPage = () => {
 
       <main className="pt-16">
         {/* ===== INTRO ===== */}
-        <section className="fade-in py-20 px-6">
+        <section className="py-20 px-6">
           <div className="container mx-auto max-w-4xl text-center">
             <h1 className="font-display text-4xl md:text-5xl font-bold text-foreground mb-6">
               {d.intro.title}
@@ -129,9 +113,9 @@ const ZmianaDmcPage = () => {
           <div className="container mx-auto max-w-5xl grid md:grid-cols-2 gap-8">
 
             {/* CARD 1: DMC 2500 */}
-            <article className="fade-in bg-card rounded-xl border border-border overflow-hidden flex flex-col">
+            <article className="bg-card rounded-xl border border-border overflow-hidden flex flex-col">
               <div className="p-8 pb-4">
-                <span className="inline-block px-3 py-1 text-xs font-medium rounded-full bg-primary/10 text-primary mb-3">
+                <span className="inline-block px-3 py-1 text-xs font-medium rounded-full bg-[#d4a94c]/20 text-[#d4a94c] mb-3">
                   {d.service2500.tag}
                 </span>
                 <h2 className="font-display text-2xl font-bold text-foreground mb-2">
@@ -145,47 +129,66 @@ const ZmianaDmcPage = () => {
                 <div>
                   <h3 className="font-semibold text-foreground mb-2">{d.service2500.whatYouGet}</h3>
                   <ul className="space-y-2">
-                    {d.service2500.whatYouGetList.map((item, i) => (
-                      <li key={i} className="flex items-start gap-2 text-sm text-foreground/80">
-                        <span className="text-primary mt-0.5">✓</span>
-                        <span>{item}</span>
-                      </li>
-                    ))}
+                    <li className="flex items-start gap-2 text-sm text-foreground/80">
+                      <span className="text-[#d4a94c] mt-0.5">✓</span>
+                      <span>Komplet nowych dowodów rejestracyjnych (Brief Teil I i II) z DMC = 2500 kg</span>
+                    </li>
+                    <li className="flex items-start gap-2 text-sm text-foreground/80">
+                      <span className="text-[#d4a94c] mt-0.5">✓</span>
+                      <span>Nową tabliczkę znamionową z aktualnymi masami</span>
+                    </li>
+                    <li className="flex items-start gap-2 text-sm text-foreground/80">
+                      <span className="text-[#d4a94c] mt-0.5">✓</span>
+                      <span>Dokumentację techniczną honorowaną w całej UE</span>
+                    </li>
                   </ul>
                 </div>
 
                 <div>
                   <h3 className="font-semibold text-foreground mb-2">{d.service2500.forWho}</h3>
                   <ul className="space-y-2">
-                    {d.service2500.forWhoList.map((item, i) => (
-                      <li key={i} className="flex items-start gap-2 text-sm text-foreground/80">
-                        <span className="text-primary mt-0.5">✓</span>
-                        <span>{item}</span>
-                      </li>
-                    ))}
+                    <li className="flex items-start gap-2 text-sm text-foreground/80">
+                      <span className="text-[#d4a94c] mt-0.5">✓</span>
+                      <span>Pojazdy, które nie potrzebują ładowności 2,5–3,5 t</span>
+                    </li>
+                    <li className="flex items-start gap-2 text-sm text-foreground/80">
+                      <span className="text-[#d4a94c] mt-0.5">✓</span>
+                      <span>Lekkie, pilne i wrażliwe ładunki</span>
+                    </li>
+                    <li className="flex items-start gap-2 text-sm text-foreground/80">
+                      <span className="text-[#d4a94c] mt-0.5">✓</span>
+                      <span>Firmy ceniące elastyczność i czas</span>
+                    </li>
                   </ul>
                 </div>
 
                 <div>
                   <h3 className="font-semibold text-foreground mb-2">{d.service2500.useCases}</h3>
                   <div className="flex flex-wrap gap-2">
-                    {d.service2500.useCasesList.map((pill, i) => (
-                      <span
-                        key={i}
-                        className="inline-block px-3 py-1.5 text-xs font-medium rounded-full bg-secondary text-secondary-foreground"
-                      >
-                        {pill}
-                      </span>
-                    ))}
+                    <span className="inline-block px-3 py-1.5 text-xs font-medium rounded-full bg-secondary text-secondary-foreground">
+                      🩺 Leki i farmaceutyki
+                    </span>
+                    <span className="inline-block px-3 py-1.5 text-xs font-medium rounded-full bg-secondary text-secondary-foreground">
+                      🧬 Wyroby medyczne
+                    </span>
+                    <span className="inline-block px-3 py-1.5 text-xs font-medium rounded-full bg-secondary text-secondary-foreground">
+                      ⚙️ Części krytyczne (AOG)
+                    </span>
+                    <span className="inline-block px-3 py-1.5 text-xs font-medium rounded-full bg-secondary text-secondary-foreground">
+                      💻 Elektronika
+                    </span>
+                    <span className="inline-block px-3 py-1.5 text-xs font-medium rounded-full bg-secondary text-secondary-foreground">
+                      ⏱️ Przesyłki just-in-time
+                    </span>
                   </div>
                 </div>
               </div>
             </article>
 
             {/* CARD 2: DMC 3500 */}
-            <article className="fade-in bg-card rounded-xl border border-border overflow-hidden flex flex-col">
+            <article className="bg-card rounded-xl border border-border overflow-hidden flex flex-col">
               <div className="p-8 pb-4">
-                <span className="inline-block px-3 py-1 text-xs font-medium rounded-full bg-primary/10 text-primary mb-3">
+                <span className="inline-block px-3 py-1 text-xs font-medium rounded-full bg-[#d4a94c]/20 text-[#d4a94c] mb-3">
                   {d.service3500.tag}
                 </span>
                 <h2 className="font-display text-2xl font-bold text-foreground mb-2">
@@ -197,31 +200,25 @@ const ZmianaDmcPage = () => {
                 <p className="text-sm text-foreground/80">{d.service3500.description}</p>
 
                 <div>
-                  <h3 className="font-semibold text-foreground mb-2">{d.service3500.whatYouGet}</h3>
-                  <ul className="space-y-2">
-                    {d.service3500.whatYouGetList.map((item, i) => (
-                      <li key={i} className="flex items-start gap-2 text-sm text-foreground/80">
-                        <span className="text-primary mt-0.5">✓</span>
-                        <span>{item}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-
-                <div>
                   <h3 className="font-semibold text-foreground mb-2">{d.service3500.benefits}</h3>
                   <ul className="space-y-2">
-                    {d.service3500.benefitsList.map((item, i) => (
-                      <li key={i} className="flex items-start gap-2 text-sm text-foreground/80">
-                        <span className="text-primary mt-0.5">✓</span>
-                        <span>{item}</span>
-                      </li>
-                    ))}
+                    <li className="flex items-start gap-2 text-sm text-foreground/80">
+                      <span className="text-[#d4a94c] mt-0.5">✓</span>
+                      <span>Prowadzisz pojazd na prawo jazdy kategorii B</span>
+                    </li>
+                    <li className="flex items-start gap-2 text-sm text-foreground/80">
+                      <span className="text-[#d4a94c] mt-0.5">✓</span>
+                      <span>Brak konieczności posiadania karty kierowcy i tachografu</span>
+                    </li>
+                    <li className="flex items-start gap-2 text-sm text-foreground/80">
+                      <span className="text-[#d4a94c] mt-0.5">✓</span>
+                      <span>Mniejsze koszty eksploatacji i ubezpieczenia</span>
+                    </li>
                   </ul>
                 </div>
 
                 <p className="text-xs text-muted-foreground mt-auto pt-4">
-                  {d.service3500.footerNote}
+                  Szczegółowe informacje udzielamy telefonicznie - zadzwoń, a dobierzemy najlepsze rozwiązanie do Twojego pojazdu.
                 </p>
               </div>
             </article>
@@ -229,43 +226,48 @@ const ZmianaDmcPage = () => {
         </section>
 
         {/* ===== HOW IT WORKS ===== */}
-        <section className="fade-in py-16 px-6">
+        <section className="py-16 px-6">
           <div className="container mx-auto max-w-4xl">
             <h2 className="font-display text-3xl font-bold text-foreground mb-12 text-center">
               {d.howItWorks.title}
             </h2>
             <div className="grid sm:grid-cols-2 md:grid-cols-4 gap-8">
-              {(
-                [
-                  { num: "01", title: d.howItWorks.step1, desc: d.howItWorks.step1Desc },
-                  { num: "02", title: d.howItWorks.step2, desc: d.howItWorks.step2Desc },
-                  { num: "03", title: d.howItWorks.step3, desc: d.howItWorks.step3Desc },
-                  { num: "04", title: d.howItWorks.step4, desc: d.howItWorks.step4Desc },
-                ] as const
-              ).map((step) => (
-                <div key={step.num} className="text-center">
-                  <div className="font-display text-4xl font-bold text-primary/20 mb-2">{step.num}</div>
-                  <h4 className="font-semibold text-foreground mb-2">{step.title}</h4>
-                  <p className="text-sm text-muted-foreground">{step.desc}</p>
-                </div>
-              ))}
+              <div className="text-center">
+                <div className="font-display text-4xl font-bold text-[#1e3a5f] mb-2">01</div>
+                <h4 className="font-semibold text-foreground mb-2">{d.howItWorks.step1}</h4>
+                <p className="text-sm text-muted-foreground">{d.howItWorks.step1Desc}</p>
+              </div>
+              <div className="text-center">
+                <div className="font-display text-4xl font-bold text-[#1e3a5f] mb-2">02</div>
+                <h4 className="font-semibold text-foreground mb-2">{d.howItWorks.step2}</h4>
+                <p className="text-sm text-muted-foreground">{d.howItWorks.step2Desc}</p>
+              </div>
+              <div className="text-center">
+                <div className="font-display text-4xl font-bold text-[#1e3a5f] mb-2">03</div>
+                <h4 className="font-semibold text-foreground mb-2">{d.howItWorks.step3}</h4>
+                <p className="text-sm text-muted-foreground">{d.howItWorks.step3Desc}</p>
+              </div>
+              <div className="text-center">
+                <div className="font-display text-4xl font-bold text-[#1e3a5f] mb-2">04</div>
+                <h4 className="font-semibold text-foreground mb-2">{d.howItWorks.step4}</h4>
+                <p className="text-sm text-muted-foreground">{d.howItWorks.step4Desc}</p>
+              </div>
             </div>
           </div>
         </section>
 
         {/* ===== NOTE ===== */}
-        <section className="fade-in py-12 px-6">
+        <section className="py-12 px-6">
           <div className="container mx-auto max-w-3xl">
-            <div className="bg-card border border-border rounded-xl p-8 flex items-start gap-4">
-              <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0">
-                <svg className="w-5 h-5 text-primary" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <div className="bg-card border border-[#1e3a5f] rounded-xl p-8 flex items-start gap-4">
+              <div className="w-10 h-10 rounded-full bg-[#1e3a5f]/10 flex items-center justify-center flex-shrink-0">
+                <svg className="w-5 h-5 text-[#1e3a5f]" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                   <circle cx="12" cy="12" r="10" />
                   <line x1="12" y1="16" x2="12" y2="12" />
                   <line x1="12" y1="8" x2="12.01" y2="8" />
                 </svg>
               </div>
               <p className="text-foreground/80 text-sm leading-relaxed">
-                <strong>{d.note.title && `${d.note.title} `}</strong>
                 {d.note.description}
               </p>
             </div>
