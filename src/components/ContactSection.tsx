@@ -1,5 +1,5 @@
 import { useLanguage } from "@/i18n/LanguageContext";
-import { Mail, MapPin, Phone, CheckCircle } from "lucide-react";
+import { Mail, MapPin, Phone, CheckCircle, MessageCircle, Languages } from "lucide-react";
 import { useState, useRef } from "react";
 import { submitContact } from "@/api";
 
@@ -102,9 +102,45 @@ const ContactSection = () => {
                 <p className="text-muted-foreground text-sm">ul. Sosnowa 10/7, 68-100, Żagań</p>
               </div>
             </div>
+
+            <div className="rounded-xl bg-gradient-to-br from-accent/10 to-accent/5 border border-accent/20 p-5">
+              <h4 className="font-semibold text-foreground text-sm mb-4 flex items-center gap-2">
+                <Languages className="w-4 h-4 text-accent-foreground" />
+                {t.contact.languageAccessibility.title}
+              </h4>
+              <div className="space-y-3">
+                <div className="flex items-center gap-3">
+                  <div className="w-8 h-8 rounded-full bg-emerald-100 dark:bg-emerald-900/30 flex items-center justify-center flex-shrink-0">
+                    <MessageCircle className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />
+                  </div>
+                  <div>
+                    <p className="text-sm font-medium text-foreground">{t.chat.title}</p>
+                    <p className="text-xs text-muted-foreground">{t.contact.languageAccessibility.chat}</p>
+                  </div>
+                </div>
+                <div className="flex items-center gap-3">
+                  <div className="w-8 h-8 rounded-full bg-sky-100 dark:bg-sky-900/30 flex items-center justify-center flex-shrink-0">
+                    <Mail className="w-4 h-4 text-sky-600 dark:text-sky-400" />
+                  </div>
+                  <div>
+                    <p className="text-sm font-medium text-foreground">Email</p>
+                    <p className="text-xs text-muted-foreground">{t.contact.languageAccessibility.email}</p>
+                  </div>
+                </div>
+                <div className="flex items-center gap-3">
+                  <div className="w-8 h-8 rounded-full bg-amber-100 dark:bg-amber-900/30 flex items-center justify-center flex-shrink-0">
+                    <Phone className="w-4 h-4 text-amber-600 dark:text-amber-400" />
+                  </div>
+                  <div>
+                    <p className="text-sm font-medium text-foreground">{t.contact.phone}</p>
+                    <p className="text-xs text-muted-foreground">{t.contact.languageAccessibility.phone} <span className="text-xs leading-none" title="Polski">🇵🇱</span> <span className="text-xs leading-none" title="Deutsch">🇩🇪</span></p>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
 
-          <form onSubmit={handleSubmit} className="space-y-5">
+          <form onSubmit={handleSubmit} className="space-y-5 flex flex-col">
             {sent && (
               <div className="flex items-center gap-2 px-4 py-3 rounded-lg bg-accent/20 text-accent-foreground text-sm">
                 <CheckCircle className="w-4 h-4" /> {t.contact.sent}
@@ -114,8 +150,8 @@ const ContactSection = () => {
               className="w-full px-4 py-3 rounded-lg bg-card border border-border text-foreground placeholder:text-muted-foreground text-sm focus:ring-2 focus:ring-ring focus:border-transparent outline-none transition-all" />
             <input type="email" placeholder={t.contact.email} value={form.email} maxLength={255} onChange={(e) => setForm({ ...form, email: e.target.value })}
               className="w-full px-4 py-3 rounded-lg bg-card border border-border text-foreground placeholder:text-muted-foreground text-sm focus:ring-2 focus:ring-ring focus:border-transparent outline-none transition-all" />
-            <textarea placeholder={t.contact.message} rows={4} value={form.message} maxLength={500} onChange={(e) => setForm({ ...form, message: e.target.value })}
-              className="w-full px-4 py-3 rounded-lg bg-card border border-border text-foreground placeholder:text-muted-foreground text-sm focus:ring-2 focus:ring-ring focus:border-transparent outline-none transition-all resize-none" />
+            <textarea placeholder={t.contact.message} value={form.message} maxLength={500} onChange={(e) => setForm({ ...form, message: e.target.value })}
+              className="w-full px-4 py-3 rounded-lg bg-card border border-border text-foreground placeholder:text-muted-foreground text-sm focus:ring-2 focus:ring-ring focus:border-transparent outline-none transition-all resize-none flex-1" />
             <button type="submit" disabled={sending || isCoolingDown()}
               className="w-full py-3.5 rounded-lg bg-gold-gradient text-accent-foreground font-semibold text-sm hover:shadow-lg transition-all hover:-translate-y-0.5 disabled:opacity-50">
               {t.contact.send}
