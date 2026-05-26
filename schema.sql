@@ -8,6 +8,8 @@ CREATE TABLE categories (
   name_es VARCHAR(255),
   name_it VARCHAR(255),
   name_hu VARCHAR(255),
+  name_ro VARCHAR(255),
+  name_lt VARCHAR(255),
   created_at TIMESTAMPTZ DEFAULT NOW()
 );
 
@@ -23,6 +25,8 @@ CREATE TABLE services (
   title_es VARCHAR(255),
   title_it VARCHAR(255),
   title_hu VARCHAR(255),
+  title_ro VARCHAR(255),
+  title_lt VARCHAR(255),
   description_pl TEXT,
   description_en TEXT,
   description_uk TEXT,
@@ -31,6 +35,8 @@ CREATE TABLE services (
   description_es TEXT,
   description_it TEXT,
   description_hu TEXT,
+  description_ro TEXT,
+  description_lt TEXT,
   created_at TIMESTAMPTZ DEFAULT NOW()
 );
 

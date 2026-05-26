@@ -1,6 +1,6 @@
 import { FALLBACK_LANGUAGE } from "@/config";
 
-export const SUPPORTED_LANGUAGES = ["pl", "en", "uk", "ru", "cs", "es", "it", "hu"] as const;
+export const SUPPORTED_LANGUAGES = ["pl", "en", "uk", "ru", "cs", "es", "it", "hu", "ro", "lt"] as const;
 
 export type Language = (typeof SUPPORTED_LANGUAGES)[number];
 
@@ -13,10 +13,12 @@ export const LANGUAGE_LABELS: Record<Language, string> = {
   es: "Español",
   it: "Italiano",
   hu: "Magyar",
+  ro: "Română",
+  lt: "Lietuvių",
 };
 
 export const LANGUAGE_FLAGS: Record<Language, string> = {
-  pl: "🇵🇱", en: "🇬🇧", uk: "🇺🇦", ru: "🇷🇺", cs: "🇨🇿", es: "🇪🇸", it: "🇮🇹", hu: "🇭🇺",
+  pl: "🇵🇱", en: "🇬🇧", uk: "🇺🇦", ru: "🇷🇺", cs: "🇨🇿", es: "🇪🇸", it: "🇮🇹", hu: "🇭🇺", ro: "🇷🇴", lt: "🇱🇹",
 };
 
 /** Raw DB row — has title/description columns per language */

@@ -4,6 +4,7 @@ import { useLanguage } from "@/i18n/LanguageContext";
 import { ChevronDown, Menu, X } from "lucide-react";
 import { SUPPORTED_LANGUAGES, LANGUAGE_LABELS, LANGUAGE_FLAGS, Language } from "@/types";
 import ContactSection from "@/components/ContactSection";
+import ChatWidget from "@/components/ChatWidget";
 import Footer from "@/components/Footer";
 import { useSEO } from "@/hooks/useSEO";
 
@@ -137,22 +138,35 @@ const ZmianaDmcPage = () => {
               <div className="px-8 pb-8 space-y-5 flex-1 flex flex-col">
                 <p className="text-sm text-foreground/80">{d.service2500.description}</p>
 
+                <div className="bg-[#1e3a5f]/5 border border-[#1e3a5f]/20 rounded-lg p-4 text-sm text-foreground/80">
+                  <h3 className="font-semibold text-foreground mb-1.5">{d.service2500.premiumProcedure}</h3>
+                  <p>{d.service2500.premiumProcedureDesc}</p>
+                </div>
+
                 <div>
                   <h3 className="font-semibold text-foreground mb-2">{d.service2500.whatYouGet}</h3>
                   <ul className="space-y-2">
                     <li className="flex items-start gap-2 text-sm text-foreground/80">
                       <span className="text-[#d4a94c] mt-0.5">✓</span>
-                      <span>Komplet nowych dowodów rejestracyjnych (Brief Teil I i II) z DMC = 2500 kg</span>
+                      <span>{d.service2500.whatYouGetList[0]}</span>
                     </li>
                     <li className="flex items-start gap-2 text-sm text-foreground/80">
                       <span className="text-[#d4a94c] mt-0.5">✓</span>
-                      <span>Nową tabliczkę znamionową z aktualnymi masami</span>
+                      <span>{d.service2500.whatYouGetList[1]}</span>
                     </li>
                     <li className="flex items-start gap-2 text-sm text-foreground/80">
                       <span className="text-[#d4a94c] mt-0.5">✓</span>
-                      <span>Dokumentację techniczną honorowaną w całej UE</span>
+                      <span>{d.service2500.whatYouGetList[2]}</span>
                     </li>
                   </ul>
+                </div>
+
+                <div className="flex items-start gap-3 p-3 bg-secondary/50 rounded-lg">
+                  <span className="text-[#1e3a5f] text-lg flex-shrink-0 mt-0.5">🛡️</span>
+                  <div>
+                    <h3 className="font-semibold text-foreground text-sm mb-0.5">{d.service2500.roadside}</h3>
+                    <p className="text-xs text-muted-foreground">{d.service2500.roadsideDesc}</p>
+                  </div>
                 </div>
 
                 <div>
@@ -160,15 +174,15 @@ const ZmianaDmcPage = () => {
                   <ul className="space-y-2">
                     <li className="flex items-start gap-2 text-sm text-foreground/80">
                       <span className="text-[#d4a94c] mt-0.5">✓</span>
-                      <span>Pojazdy, które nie potrzebują ładowności 2,5–3,5 t</span>
+                      <span>{d.service2500.forWhoList[0]}</span>
                     </li>
                     <li className="flex items-start gap-2 text-sm text-foreground/80">
                       <span className="text-[#d4a94c] mt-0.5">✓</span>
-                      <span>Lekkie, pilne i wrażliwe ładunki</span>
+                      <span>{d.service2500.forWhoList[1]}</span>
                     </li>
                     <li className="flex items-start gap-2 text-sm text-foreground/80">
                       <span className="text-[#d4a94c] mt-0.5">✓</span>
-                      <span>Firmy ceniące elastyczność i czas</span>
+                      <span>{d.service2500.forWhoList[2]}</span>
                     </li>
                   </ul>
                 </div>
@@ -177,22 +191,26 @@ const ZmianaDmcPage = () => {
                   <h3 className="font-semibold text-foreground mb-2">{d.service2500.useCases}</h3>
                   <div className="flex flex-wrap gap-2">
                     <span className="inline-block px-3 py-1.5 text-xs font-medium rounded-full bg-secondary text-secondary-foreground">
-                      🩺 Leki i farmaceutyki
+                      🩺 {d.service2500.useCasesList[0]}
                     </span>
                     <span className="inline-block px-3 py-1.5 text-xs font-medium rounded-full bg-secondary text-secondary-foreground">
-                      🧬 Wyroby medyczne
+                      🧬 {d.service2500.useCasesList[1]}
                     </span>
                     <span className="inline-block px-3 py-1.5 text-xs font-medium rounded-full bg-secondary text-secondary-foreground">
-                      ⚙️ Części krytyczne (AOG)
+                      ⚙️ {d.service2500.useCasesList[2]}
                     </span>
                     <span className="inline-block px-3 py-1.5 text-xs font-medium rounded-full bg-secondary text-secondary-foreground">
-                      💻 Elektronika
+                      💻 {d.service2500.useCasesList[3]}
                     </span>
                     <span className="inline-block px-3 py-1.5 text-xs font-medium rounded-full bg-secondary text-secondary-foreground">
-                      ⏱️ Przesyłki just-in-time
+                      ⏱️ {d.service2500.useCasesList[4]}
                     </span>
                   </div>
                 </div>
+
+                <p className="text-xs text-muted-foreground border-t border-border pt-3">
+                  {d.service2500.verificationNote}
+                </p>
               </div>
             </article>
 
@@ -215,21 +233,21 @@ const ZmianaDmcPage = () => {
                   <ul className="space-y-2">
                     <li className="flex items-start gap-2 text-sm text-foreground/80">
                       <span className="text-[#d4a94c] mt-0.5">✓</span>
-                      <span>Prowadzisz pojazd na prawo jazdy kategorii B</span>
+                      <span>{d.service3500.benefitsList[0]}</span>
                     </li>
                     <li className="flex items-start gap-2 text-sm text-foreground/80">
                       <span className="text-[#d4a94c] mt-0.5">✓</span>
-                      <span>Brak konieczności posiadania karty kierowcy i tachografu</span>
+                      <span>{d.service3500.benefitsList[1]}</span>
                     </li>
                     <li className="flex items-start gap-2 text-sm text-foreground/80">
                       <span className="text-[#d4a94c] mt-0.5">✓</span>
-                      <span>Mniejsze koszty eksploatacji i ubezpieczenia</span>
+                      <span>{d.service3500.benefitsList[2]}</span>
                     </li>
                   </ul>
                 </div>
 
                 <p className="text-xs text-muted-foreground mt-auto pt-4">
-                  Szczegółowe informacje udzielamy telefonicznie - zadzwoń, a dobierzemy najlepsze rozwiązanie do Twojego pojazdu.
+                  {d.service3500.footerNote}
                 </p>
               </div>
             </article>
@@ -290,6 +308,7 @@ const ZmianaDmcPage = () => {
       </main>
 
       <Footer />
+      <ChatWidget />
     </div>
   );
 };

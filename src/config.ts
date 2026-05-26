@@ -22,5 +22,5 @@ export const BASE_DOMAIN = "brief-service.com";
  * Currently 1:1 but abstracted for future divergence.
  */
 export const LANG_TO_LT: Record<string, string> = {
-  pl: "pl", en: "en", uk: "uk", ru: "ru", cs: "cs", es: "es", it: "it", hu: "hu",
+  pl: "pl", en: "en", uk: "uk", ru: "ru", cs: "cs", es: "es", it: "it", hu: "hu", ro: "ro", lt: "lt",
 };

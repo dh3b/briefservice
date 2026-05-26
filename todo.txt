@@ -1,0 +1,10 @@
+1. Naprawic niedzialajace polaczenie z libretranslate przy tlumaczeniu chatu. (DONE)
+2. Zmienic content karty zmiana dmc 2500kg w brief-service.com i zmianadmc.pl (DONE)
+3. Upewnic sie ze karta zmiana dmc 2500kg jest tlumaczona poprawnie (DONE)
+4. Dodac jezyki litewski oraz rumunski (DONE)
+5. Dodac dymek chatu w brief-service.com/lang/zmiana-dmc (DONE)
+6. Dodac informacje na temat kontaktu przez telefon tylko w jezyku polskim albo niemieckim (emial - idc, chat - tlumaczony)
+
+Po update:
+pamietaj zeby zrestartowac libretranslate po dodaniu jezykow
+pododawaj tlumaczenia serwisow manualnie przez wpisy do bazy danych
