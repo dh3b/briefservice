@@ -2,7 +2,9 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
         xmlns:xhtml="http://www.w3.org/1999/xhtml">
 
-  <!-- Polish version -->
+  <!-- ==================== MAIN PAGES ==================== -->
+
+  <!-- Polish -->
   <url>
     <loc>https://brief-service.com/pl/</loc>
     <xhtml:link rel="alternate" hreflang="pl" href="https://brief-service.com/pl/" />
@@ -13,10 +15,12 @@
     <xhtml:link rel="alternate" hreflang="es" href="https://brief-service.com/es/" />
     <xhtml:link rel="alternate" hreflang="it" href="https://brief-service.com/it/" />
     <xhtml:link rel="alternate" hreflang="hu" href="https://brief-service.com/hu/" />
+    <xhtml:link rel="alternate" hreflang="ro" href="https://brief-service.com/ro/" />
+    <xhtml:link rel="alternate" hreflang="lt" href="https://brief-service.com/lt/" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://brief-service.com/en/" />
   </url>
 
-  <!-- English version -->
+  <!-- English -->
   <url>
     <loc>https://brief-service.com/en/</loc>
     <xhtml:link rel="alternate" hreflang="pl" href="https://brief-service.com/pl/" />
@@ -27,10 +31,12 @@
     <xhtml:link rel="alternate" hreflang="es" href="https://brief-service.com/es/" />
     <xhtml:link rel="alternate" hreflang="it" href="https://brief-service.com/it/" />
     <xhtml:link rel="alternate" hreflang="hu" href="https://brief-service.com/hu/" />
+    <xhtml:link rel="alternate" hreflang="ro" href="https://brief-service.com/ro/" />
+    <xhtml:link rel="alternate" hreflang="lt" href="https://brief-service.com/lt/" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://brief-service.com/en/" />
   </url>
 
-  <!-- Ukrainian version -->
+  <!-- Ukrainian -->
   <url>
     <loc>https://brief-service.com/uk/</loc>
     <xhtml:link rel="alternate" hreflang="pl" href="https://brief-service.com/pl/" />
@@ -41,10 +47,12 @@
     <xhtml:link rel="alternate" hreflang="es" href="https://brief-service.com/es/" />
     <xhtml:link rel="alternate" hreflang="it" href="https://brief-service.com/it/" />
     <xhtml:link rel="alternate" hreflang="hu" href="https://brief-service.com/hu/" />
+    <xhtml:link rel="alternate" hreflang="ro" href="https://brief-service.com/ro/" />
+    <xhtml:link rel="alternate" hreflang="lt" href="https://brief-service.com/lt/" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://brief-service.com/en/" />
   </url>
 
-  <!-- Russian version -->
+  <!-- Russian -->
   <url>
     <loc>https://brief-service.com/ru/</loc>
     <xhtml:link rel="alternate" hreflang="pl" href="https://brief-service.com/pl/" />
@@ -55,10 +63,12 @@
     <xhtml:link rel="alternate" hreflang="es" href="https://brief-service.com/es/" />
     <xhtml:link rel="alternate" hreflang="it" href="https://brief-service.com/it/" />
     <xhtml:link rel="alternate" hreflang="hu" href="https://brief-service.com/hu/" />
+    <xhtml:link rel="alternate" hreflang="ro" href="https://brief-service.com/ro/" />
+    <xhtml:link rel="alternate" hreflang="lt" href="https://brief-service.com/lt/" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://brief-service.com/en/" />
   </url>
 
-  <!-- Czech version -->
+  <!-- Czech -->
   <url>
     <loc>https://brief-service.com/cs/</loc>
     <xhtml:link rel="alternate" hreflang="pl" href="https://brief-service.com/pl/" />
@@ -69,10 +79,12 @@
     <xhtml:link rel="alternate" hreflang="es" href="https://brief-service.com/es/" />
     <xhtml:link rel="alternate" hreflang="it" href="https://brief-service.com/it/" />
     <xhtml:link rel="alternate" hreflang="hu" href="https://brief-service.com/hu/" />
+    <xhtml:link rel="alternate" hreflang="ro" href="https://brief-service.com/ro/" />
+    <xhtml:link rel="alternate" hreflang="lt" href="https://brief-service.com/lt/" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://brief-service.com/en/" />
   </url>
 
-  <!-- Spanish version -->
+  <!-- Spanish -->
   <url>
     <loc>https://brief-service.com/es/</loc>
     <xhtml:link rel="alternate" hreflang="pl" href="https://brief-service.com/pl/" />
@@ -83,10 +95,12 @@
     <xhtml:link rel="alternate" hreflang="es" href="https://brief-service.com/es/" />
     <xhtml:link rel="alternate" hreflang="it" href="https://brief-service.com/it/" />
     <xhtml:link rel="alternate" hreflang="hu" href="https://brief-service.com/hu/" />
+    <xhtml:link rel="alternate" hreflang="ro" href="https://brief-service.com/ro/" />
+    <xhtml:link rel="alternate" hreflang="lt" href="https://brief-service.com/lt/" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://brief-service.com/en/" />
   </url>
 
-  <!-- Italian version -->
+  <!-- Italian -->
   <url>
     <loc>https://brief-service.com/it/</loc>
     <xhtml:link rel="alternate" hreflang="pl" href="https://brief-service.com/pl/" />
@@ -97,10 +111,12 @@
     <xhtml:link rel="alternate" hreflang="es" href="https://brief-service.com/es/" />
     <xhtml:link rel="alternate" hreflang="it" href="https://brief-service.com/it/" />
     <xhtml:link rel="alternate" hreflang="hu" href="https://brief-service.com/hu/" />
+    <xhtml:link rel="alternate" hreflang="ro" href="https://brief-service.com/ro/" />
+    <xhtml:link rel="alternate" hreflang="lt" href="https://brief-service.com/lt/" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://brief-service.com/en/" />
   </url>
 
-  <!-- Hungarian version -->
+  <!-- Hungarian -->
   <url>
     <loc>https://brief-service.com/hu/</loc>
     <xhtml:link rel="alternate" hreflang="pl" href="https://brief-service.com/pl/" />
@@ -111,7 +127,203 @@
     <xhtml:link rel="alternate" hreflang="es" href="https://brief-service.com/es/" />
     <xhtml:link rel="alternate" hreflang="it" href="https://brief-service.com/it/" />
     <xhtml:link rel="alternate" hreflang="hu" href="https://brief-service.com/hu/" />
+    <xhtml:link rel="alternate" hreflang="ro" href="https://brief-service.com/ro/" />
+    <xhtml:link rel="alternate" hreflang="lt" href="https://brief-service.com/lt/" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://brief-service.com/en/" />
+  </url>
+
+  <!-- Romanian -->
+  <url>
+    <loc>https://brief-service.com/ro/</loc>
+    <xhtml:link rel="alternate" hreflang="pl" href="https://brief-service.com/pl/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://brief-service.com/en/" />
+    <xhtml:link rel="alternate" hreflang="uk" href="https://brief-service.com/uk/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://brief-service.com/ru/" />
+    <xhtml:link rel="alternate" hreflang="cs" href="https://brief-service.com/cs/" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://brief-service.com/es/" />
+    <xhtml:link rel="alternate" hreflang="it" href="https://brief-service.com/it/" />
+    <xhtml:link rel="alternate" hreflang="hu" href="https://brief-service.com/hu/" />
+    <xhtml:link rel="alternate" hreflang="ro" href="https://brief-service.com/ro/" />
+    <xhtml:link rel="alternate" hreflang="lt" href="https://brief-service.com/lt/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://brief-service.com/en/" />
+  </url>
+
+  <!-- Lithuanian -->
+  <url>
+    <loc>https://brief-service.com/lt/</loc>
+    <xhtml:link rel="alternate" hreflang="pl" href="https://brief-service.com/pl/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://brief-service.com/en/" />
+    <xhtml:link rel="alternate" hreflang="uk" href="https://brief-service.com/uk/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://brief-service.com/ru/" />
+    <xhtml:link rel="alternate" hreflang="cs" href="https://brief-service.com/cs/" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://brief-service.com/es/" />
+    <xhtml:link rel="alternate" hreflang="it" href="https://brief-service.com/it/" />
+    <xhtml:link rel="alternate" hreflang="hu" href="https://brief-service.com/hu/" />
+    <xhtml:link rel="alternate" hreflang="ro" href="https://brief-service.com/ro/" />
+    <xhtml:link rel="alternate" hreflang="lt" href="https://brief-service.com/lt/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://brief-service.com/en/" />
+  </url>
+
+  <!-- ==================== ZMIANA-DMC SUBPAGES ==================== -->
+
+  <!-- Polish /zmiana-dmc -->
+  <url>
+    <loc>https://brief-service.com/pl/zmiana-dmc</loc>
+    <xhtml:link rel="alternate" hreflang="pl" href="https://brief-service.com/pl/zmiana-dmc" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://brief-service.com/en/zmiana-dmc" />
+    <xhtml:link rel="alternate" hreflang="uk" href="https://brief-service.com/uk/zmiana-dmc" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://brief-service.com/ru/zmiana-dmc" />
+    <xhtml:link rel="alternate" hreflang="cs" href="https://brief-service.com/cs/zmiana-dmc" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://brief-service.com/es/zmiana-dmc" />
+    <xhtml:link rel="alternate" hreflang="it" href="https://brief-service.com/it/zmiana-dmc" />
+    <xhtml:link rel="alternate" hreflang="hu" href="https://brief-service.com/hu/zmiana-dmc" />
+    <xhtml:link rel="alternate" hreflang="ro" href="https://brief-service.com/ro/zmiana-dmc" />
+    <xhtml:link rel="alternate" hreflang="lt" href="https://brief-service.com/lt/zmiana-dmc" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://brief-service.com/en/zmiana-dmc" />
+  </url>
+
+  <!-- English /zmiana-dmc -->
+  <url>
+    <loc>https://brief-service.com/en/zmiana-dmc</loc>
+    <xhtml:link rel="alternate" hreflang="pl" href="https://brief-service.com/pl/zmiana-dmc" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://brief-service.com/en/zmiana-dmc" />
+    <xhtml:link rel="alternate" hreflang="uk" href="https://brief-service.com/uk/zmiana-dmc" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://brief-service.com/ru/zmiana-dmc" />
+    <xhtml:link rel="alternate" hreflang="cs" href="https://brief-service.com/cs/zmiana-dmc" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://brief-service.com/es/zmiana-dmc" />
+    <xhtml:link rel="alternate" hreflang="it" href="https://brief-service.com/it/zmiana-dmc" />
+    <xhtml:link rel="alternate" hreflang="hu" href="https://brief-service.com/hu/zmiana-dmc" />
+    <xhtml:link rel="alternate" hreflang="ro" href="https://brief-service.com/ro/zmiana-dmc" />
+    <xhtml:link rel="alternate" hreflang="lt" href="https://brief-service.com/lt/zmiana-dmc" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://brief-service.com/en/zmiana-dmc" />
+  </url>
+
+  <!-- Romanian /zmiana-dmc -->
+  <url>
+    <loc>https://brief-service.com/ro/zmiana-dmc</loc>
+    <xhtml:link rel="alternate" hreflang="pl" href="https://brief-service.com/pl/zmiana-dmc" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://brief-service.com/en/zmiana-dmc" />
+    <xhtml:link rel="alternate" hreflang="uk" href="https://brief-service.com/uk/zmiana-dmc" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://brief-service.com/ru/zmiana-dmc" />
+    <xhtml:link rel="alternate" hreflang="cs" href="https://brief-service.com/cs/zmiana-dmc" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://brief-service.com/es/zmiana-dmc" />
+    <xhtml:link rel="alternate" hreflang="it" href="https://brief-service.com/it/zmiana-dmc" />
+    <xhtml:link rel="alternate" hreflang="hu" href="https://brief-service.com/hu/zmiana-dmc" />
+    <xhtml:link rel="alternate" hreflang="ro" href="https://brief-service.com/ro/zmiana-dmc" />
+    <xhtml:link rel="alternate" hreflang="lt" href="https://brief-service.com/lt/zmiana-dmc" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://brief-service.com/en/zmiana-dmc" />
+  </url>
+
+  <!-- Lithuanian /zmiana-dmc -->
+  <url>
+    <loc>https://brief-service.com/lt/zmiana-dmc</loc>
+    <xhtml:link rel="alternate" hreflang="pl" href="https://brief-service.com/pl/zmiana-dmc" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://brief-service.com/en/zmiana-dmc" />
+    <xhtml:link rel="alternate" hreflang="uk" href="https://brief-service.com/uk/zmiana-dmc" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://brief-service.com/ru/zmiana-dmc" />
+    <xhtml:link rel="alternate" hreflang="cs" href="https://brief-service.com/cs/zmiana-dmc" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://brief-service.com/es/zmiana-dmc" />
+    <xhtml:link rel="alternate" hreflang="it" href="https://brief-service.com/it/zmiana-dmc" />
+    <xhtml:link rel="alternate" hreflang="hu" href="https://brief-service.com/hu/zmiana-dmc" />
+    <xhtml:link rel="alternate" hreflang="ro" href="https://brief-service.com/ro/zmiana-dmc" />
+    <xhtml:link rel="alternate" hreflang="lt" href="https://brief-service.com/lt/zmiana-dmc" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://brief-service.com/en/zmiana-dmc" />
+  </url>
+
+  <!-- Ukrainian /zmiana-dmc -->
+  <url>
+    <loc>https://brief-service.com/uk/zmiana-dmc</loc>
+    <xhtml:link rel="alternate" hreflang="pl" href="https://brief-service.com/pl/zmiana-dmc" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://brief-service.com/en/zmiana-dmc" />
+    <xhtml:link rel="alternate" hreflang="uk" href="https://brief-service.com/uk/zmiana-dmc" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://brief-service.com/ru/zmiana-dmc" />
+    <xhtml:link rel="alternate" hreflang="cs" href="https://brief-service.com/cs/zmiana-dmc" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://brief-service.com/es/zmiana-dmc" />
+    <xhtml:link rel="alternate" hreflang="it" href="https://brief-service.com/it/zmiana-dmc" />
+    <xhtml:link rel="alternate" hreflang="hu" href="https://brief-service.com/hu/zmiana-dmc" />
+    <xhtml:link rel="alternate" hreflang="ro" href="https://brief-service.com/ro/zmiana-dmc" />
+    <xhtml:link rel="alternate" hreflang="lt" href="https://brief-service.com/lt/zmiana-dmc" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://brief-service.com/en/zmiana-dmc" />
+  </url>
+
+  <!-- Russian /zmiana-dmc -->
+  <url>
+    <loc>https://brief-service.com/ru/zmiana-dmc</loc>
+    <xhtml:link rel="alternate" hreflang="pl" href="https://brief-service.com/pl/zmiana-dmc" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://brief-service.com/en/zmiana-dmc" />
+    <xhtml:link rel="alternate" hreflang="uk" href="https://brief-service.com/uk/zmiana-dmc" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://brief-service.com/ru/zmiana-dmc" />
+    <xhtml:link rel="alternate" hreflang="cs" href="https://brief-service.com/cs/zmiana-dmc" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://brief-service.com/es/zmiana-dmc" />
+    <xhtml:link rel="alternate" hreflang="it" href="https://brief-service.com/it/zmiana-dmc" />
+    <xhtml:link rel="alternate" hreflang="hu" href="https://brief-service.com/hu/zmiana-dmc" />
+    <xhtml:link rel="alternate" hreflang="ro" href="https://brief-service.com/ro/zmiana-dmc" />
+    <xhtml:link rel="alternate" hreflang="lt" href="https://brief-service.com/lt/zmiana-dmc" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://brief-service.com/en/zmiana-dmc" />
+  </url>
+
+  <!-- Czech /zmiana-dmc -->
+  <url>
+    <loc>https://brief-service.com/cs/zmiana-dmc</loc>
+    <xhtml:link rel="alternate" hreflang="pl" href="https://brief-service.com/pl/zmiana-dmc" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://brief-service.com/en/zmiana-dmc" />
+    <xhtml:link rel="alternate" hreflang="uk" href="https://brief-service.com/uk/zmiana-dmc" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://brief-service.com/ru/zmiana-dmc" />
+    <xhtml:link rel="alternate" hreflang="cs" href="https://brief-service.com/cs/zmiana-dmc" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://brief-service.com/es/zmiana-dmc" />
+    <xhtml:link rel="alternate" hreflang="it" href="https://brief-service.com/it/zmiana-dmc" />
+    <xhtml:link rel="alternate" hreflang="hu" href="https://brief-service.com/hu/zmiana-dmc" />
+    <xhtml:link rel="alternate" hreflang="ro" href="https://brief-service.com/ro/zmiana-dmc" />
+    <xhtml:link rel="alternate" hreflang="lt" href="https://brief-service.com/lt/zmiana-dmc" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://brief-service.com/en/zmiana-dmc" />
+  </url>
+
+  <!-- Spanish /zmiana-dmc -->
+  <url>
+    <loc>https://brief-service.com/es/zmiana-dmc</loc>
+    <xhtml:link rel="alternate" hreflang="pl" href="https://brief-service.com/pl/zmiana-dmc" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://brief-service.com/en/zmiana-dmc" />
+    <xhtml:link rel="alternate" hreflang="uk" href="https://brief-service.com/uk/zmiana-dmc" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://brief-service.com/ru/zmiana-dmc" />
+    <xhtml:link rel="alternate" hreflang="cs" href="https://brief-service.com/cs/zmiana-dmc" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://brief-service.com/es/zmiana-dmc" />
+    <xhtml:link rel="alternate" hreflang="it" href="https://brief-service.com/it/zmiana-dmc" />
+    <xhtml:link rel="alternate" hreflang="hu" href="https://brief-service.com/hu/zmiana-dmc" />
+    <xhtml:link rel="alternate" hreflang="ro" href="https://brief-service.com/ro/zmiana-dmc" />
+    <xhtml:link rel="alternate" hreflang="lt" href="https://brief-service.com/lt/zmiana-dmc" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://brief-service.com/en/zmiana-dmc" />
+  </url>
+
+  <!-- Italian /zmiana-dmc -->
+  <url>
+    <loc>https://brief-service.com/it/zmiana-dmc</loc>
+    <xhtml:link rel="alternate" hreflang="pl" href="https://brief-service.com/pl/zmiana-dmc" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://brief-service.com/en/zmiana-dmc" />
+    <xhtml:link rel="alternate" hreflang="uk" href="https://brief-service.com/uk/zmiana-dmc" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://brief-service.com/ru/zmiana-dmc" />
+    <xhtml:link rel="alternate" hreflang="cs" href="https://brief-service.com/cs/zmiana-dmc" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://brief-service.com/es/zmiana-dmc" />
+    <xhtml:link rel="alternate" hreflang="it" href="https://brief-service.com/it/zmiana-dmc" />
+    <xhtml:link rel="alternate" hreflang="hu" href="https://brief-service.com/hu/zmiana-dmc" />
+    <xhtml:link rel="alternate" hreflang="ro" href="https://brief-service.com/ro/zmiana-dmc" />
+    <xhtml:link rel="alternate" hreflang="lt" href="https://brief-service.com/lt/zmiana-dmc" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://brief-service.com/en/zmiana-dmc" />
+  </url>
+
+  <!-- Hungarian /zmiana-dmc -->
+  <url>
+    <loc>https://brief-service.com/hu/zmiana-dmc</loc>
+    <xhtml:link rel="alternate" hreflang="pl" href="https://brief-service.com/pl/zmiana-dmc" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://brief-service.com/en/zmiana-dmc" />
+    <xhtml:link rel="alternate" hreflang="uk" href="https://brief-service.com/uk/zmiana-dmc" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://brief-service.com/ru/zmiana-dmc" />
+    <xhtml:link rel="alternate" hreflang="cs" href="https://brief-service.com/cs/zmiana-dmc" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://brief-service.com/es/zmiana-dmc" />
+    <xhtml:link rel="alternate" hreflang="it" href="https://brief-service.com/it/zmiana-dmc" />
+    <xhtml:link rel="alternate" hreflang="hu" href="https://brief-service.com/hu/zmiana-dmc" />
+    <xhtml:link rel="alternate" hreflang="ro" href="https://brief-service.com/ro/zmiana-dmc" />
+    <xhtml:link rel="alternate" hreflang="lt" href="https://brief-service.com/lt/zmiana-dmc" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://brief-service.com/en/zmiana-dmc" />
   </url>
 
 </urlset>

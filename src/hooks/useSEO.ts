@@ -19,6 +19,7 @@ export function useSEO(overrides?: { title?: string; description?: string; keywo
     const pathWithoutLang = window.location.pathname.replace(/^\/[^/]*/, "") || "/";
     const canonicalPath = pathWithoutLang === "/" ? "" : pathWithoutLang;
 
+    document.title = title;
     setMeta("description", description);
     setMeta("keywords", keywords);
     setCanonical(`https://${BASE_DOMAIN}/${language}${canonicalPath}`);

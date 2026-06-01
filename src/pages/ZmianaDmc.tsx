@@ -121,7 +121,7 @@ const ZmianaDmcPage = () => {
         </section>
 
         {/* ===== SERVICES ===== */}
-        <section className="px-6 pb-16">
+        <section id="services" className="px-6 pb-16">
           <div className="container mx-auto max-w-5xl grid md:grid-cols-2 gap-8">
 
             {/* CARD 1: DMC 2500 */}
@@ -255,7 +255,7 @@ const ZmianaDmcPage = () => {
         </section>
 
         {/* ===== HOW IT WORKS ===== */}
-        <section className="py-16 px-6">
+        <section id="how" className="py-16 px-6">
           <div className="container mx-auto max-w-4xl">
             <h2 className="font-display text-3xl font-bold text-foreground mb-12 text-center">
               {d.howItWorks.title}
