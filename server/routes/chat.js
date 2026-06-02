@@ -2,9 +2,11 @@ import { Router } from "express";
 import pool from "../db.js";
 import { requireAdmin } from "./auth.js";
 import v from "../validate.js";
-import { CHAT_COOKIE_MAX_AGE, MAX_NAME_LEN, MAX_TEXT_LEN, MAX_SHORT_TEXT_LEN, MAX_TITLE_LEN, JWT_SECRET } from "../config.js";
+import { CHAT_COOKIE_MAX_AGE, MAX_NAME_LEN, MAX_TEXT_LEN, MAX_SHORT_TEXT_LEN, MAX_TITLE_LEN, JWT_SECRET, SMTP_TOKEN, CONTACT_EMAIL, API_SENDER_EMAIL, BASE_DOMAIN } from "../config.js";
 import { asyncHandler } from "../middleware/errorHandler.js";
 import { chatCreateLimiter, chatMessageLimiter } from "../middleware/rateLimiter.js";
+import { MailtrapClient } from "mailtrap";
+import { newChatEmailHtml } from "../templates/newChatEmail.js";
 import jwt from "jsonwebtoken";
 
 const router = Router();
@@ -14,6 +16,26 @@ function generateChatTitle() {
   let suffix = "";
   for (let i = 0; i < 5; i++) suffix += chars[Math.floor(Math.random() * chars.length)];
   return `Chat_${suffix}`;
+}
+
+async function notifyOwnerOfNewChat(chat) {
+  const mailtrap = new MailtrapClient({ token: SMTP_TOKEN });
+  const name = chat.user_name || "Nowy gość";
+
+  await mailtrap.send({
+    from: { name: "BriefService", email: API_SENDER_EMAIL },
+    to: [{ email: CONTACT_EMAIL }],
+    ...(chat.user_email ? { reply_to: { name, email: chat.user_email } } : {}),
+    subject: `BriefService Czat | ${name} rozpoczął(a) rozmowę`,
+    html: newChatEmailHtml({
+      name: chat.user_name,
+      email: chat.user_email,
+      serviceRef: chat.service_ref,
+      chatTitle: chat.title,
+      adminUrl: `https://${BASE_DOMAIN}/pl/admin`,
+    }),
+    category: "New Chat",
+  });
 }
 
 // POST /api/chats — create a new chat session
@@ -50,6 +72,10 @@ router.post("/", chatCreateLimiter, asyncHandler(async (req, res) => {
   });
 
   res.status(201).json(rows[0]);
+
+  notifyOwnerOfNewChat(rows[0]).catch((err) =>
+    console.error("New-chat owner notification failed:", err)
+  );
 }));
 
 // GET /api/chats — list all chats (admin)
