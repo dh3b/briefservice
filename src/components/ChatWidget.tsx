@@ -5,6 +5,7 @@ import { Message } from "@/types";
 import { createChat, fetchMessages, sendMessage as apiSendMessage, updateChat } from "@/api";
 import { translateText } from "@/lib/translate";
 import { POLL_INTERVAL_MESSAGES, MAX_MESSAGE_LEN, MAX_NAME_LEN, MAX_EMAIL_LEN, EMAIL_REGEX } from "@/config";
+import { reportConversion } from "@/lib/conversions";
 import ChatBubble from "./ChatBubble";
 
 interface ChatWidgetProps {
@@ -41,6 +42,7 @@ const ChatWidget = ({ serviceId, serviceName, onOpenTriggered }: ChatWidgetProps
   const prevServiceRef = useRef<string | null>(null);
   const lastSentRef = useRef<number>(0);
   const creatingRef = useRef(false);
+  const chatStartReportedRef = useRef(false);
   const [sending, setSending] = useState(false);
 
   const SEND_COOLDOWN_MS = 800;
@@ -136,6 +138,11 @@ const ChatWidget = ({ serviceId, serviceName, onOpenTriggered }: ChatWidgetProps
     lastSentRef.current = now;
     const id = await ensureChat();
     if (!id) return;
+    // Google Ads conversion: fire once when the user commits by sending their first message.
+    if (!chatStartReportedRef.current) {
+      chatStartReportedRef.current = true;
+      reportConversion("chatStart");
+    }
     const content = input.trim().slice(0, MAX_MESSAGE_LEN);
     setInput("");
     const optimistic: Message = {

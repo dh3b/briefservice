@@ -2,18 +2,9 @@ import { useLanguage } from "@/i18n/LanguageContext";
 import { Mail, MapPin, Phone, CheckCircle, MessageCircle, Languages } from "lucide-react";
 import { useState, useRef } from "react";
 import { submitContact } from "@/api";
+import { reportConversion } from "@/lib/conversions";
 
 const CONTACT_PHONE = "+48 696 513 109";
-
-const gtagReportConversion = () => {
-  if (typeof window !== "undefined" && (window as unknown as { gtag?: (...args: unknown[]) => void }).gtag) {
-    (window as unknown as { gtag: (...args: unknown[]) => void }).gtag("event", "conversion", {
-      send_to: "AW-17997426374/ZvyICPXqtZ0cEMbd64VD",
-      value: 4.0,
-      currency: "PLN",
-    });
-  }
-};
 
 const ContactSection = () => {
   const { t } = useLanguage();
@@ -26,7 +17,7 @@ const ContactSection = () => {
 
   const handlePhoneClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
     e.preventDefault();
-    gtagReportConversion();
+    reportConversion("phone", { value: 4.0, currency: "PLN" });
     window.location.href = `tel:${CONTACT_PHONE.replace(/\s/g, "")}`;
   };
 
@@ -43,13 +34,7 @@ const ContactSection = () => {
       setTimeout(() => setSent(false), 4000);
       
       // Google Ads conversion tracking (Contact form submission)
-      if (typeof window !== "undefined" && (window as unknown as { gtag?: (...args: unknown[]) => void }).gtag) {
-        (window as unknown as { gtag: (...args: unknown[]) => void }).gtag("event", "conversion", {
-          send_to: "AW-17997426374/blJuCIvOnJ0cEMbd64VD",
-          value: 2.5,
-          currency: "PLN",
-        });
-      }
+      reportConversion("contactForm", { value: 2.5, currency: "PLN" });
     } catch (err) {
       console.error("Contact form error:", err);
     } finally {
@@ -90,7 +75,7 @@ const ContactSection = () => {
               </div>
               <div>
                 <h4 className="font-semibold text-foreground mb-1">Email</h4>
-                <p className="text-muted-foreground text-sm"><a href="mailto:audicarforme@op.pl" className="hover:text-primary/20 hover:underline">audicarforme@op.pl</a></p>
+                <p className="text-muted-foreground text-sm"><a href="mailto:audicarforme@op.pl" onClick={() => reportConversion("emailClick")} className="hover:text-primary/20 hover:underline">audicarforme@op.pl</a></p>
               </div>
             </div>
             <div className="flex items-start gap-4">
