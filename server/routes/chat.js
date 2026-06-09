@@ -38,7 +38,7 @@ async function notifyOwnerOfNewChat(chat) {
   });
 }
 
-// POST /api/chats — create a new chat session
+// POST /api/chats - create a new chat session
 router.post("/", chatCreateLimiter, asyncHandler(async (req, res) => {
   const existingId = req.cookies?.chat_id;
   if (existingId) {
@@ -78,7 +78,7 @@ router.post("/", chatCreateLimiter, asyncHandler(async (req, res) => {
   );
 }));
 
-// GET /api/chats — list all chats (admin)
+// GET /api/chats - list all chats (admin)
 router.get("/", requireAdmin, asyncHandler(async (_req, res) => {
   const { rows } = await pool.query(
     `SELECT c.*,
@@ -129,7 +129,7 @@ router.post("/:id/messages", chatMessageLimiter, asyncHandler(async (req, res) =
   res.status(201).json(rows[0]);
 }));
 
-// PUT /api/chats/:id — update chat title/service_ref
+// PUT /api/chats/:id - update chat title/service_ref
 router.put("/:id", asyncHandler(async (req, res) => {
   const { title, service_ref } = req.body;
   const sets = [];

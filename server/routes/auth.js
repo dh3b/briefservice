@@ -48,7 +48,7 @@ router.post("/logout", (_req, res) => {
   res.json({ message: "Logged out" });
 });
 
-// GET /api/auth/me — verify current session
+// GET /api/auth/me - verify current session
 router.get("/me", (req, res) => {
   const token = req.cookies.admin_token;
   if (!token) return res.status(401).json({ error: "Not authenticated" });

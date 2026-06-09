@@ -115,129 +115,87 @@ const ZmianaDmcPage = () => {
 
             {/* CARD 1: DMC 2500 */}
             <article className="bg-card rounded-xl border border-border overflow-hidden flex flex-col">
-              <div className="p-8 pb-4">
-                <span className="inline-block px-3 py-1 text-xs font-medium rounded-full bg-[#d4a94c]/20 text-[#d4a94c] mb-3">
+              <div className="bg-[#1e3a5f] p-8 pb-7">
+                <span className="inline-block px-3 py-1 text-[0.7rem] font-semibold uppercase tracking-[0.12em] rounded bg-[#d4a94c]/15 text-[#d4a94c] mb-3.5">
                   {d.service2500.tag}
                 </span>
-                <h2 className="font-display text-2xl font-bold text-foreground mb-2">
+                <h2 className="font-display text-2xl font-bold text-white mb-1.5 leading-tight">
                   {d.service2500.title}
                 </h2>
-                <p className="text-muted-foreground">{d.service2500.subtitle}</p>
+                <p className="text-sm text-slate-300">{d.service2500.subtitle}</p>
               </div>
-              <div className="px-8 pb-8 space-y-5 flex-1 flex flex-col">
-                <p className="text-sm text-foreground/80">{d.service2500.description}</p>
+              <div className="px-8 py-7 space-y-6 flex-1 flex flex-col">
+                <p className="text-[0.95rem] text-foreground/80 leading-relaxed">{d.service2500.lead}</p>
 
-                <div className="bg-[#1e3a5f]/5 border border-[#1e3a5f]/20 rounded-lg p-4 text-sm text-foreground/80">
-                  <h3 className="font-semibold text-foreground mb-1.5">{d.service2500.premiumProcedure}</h3>
-                  <p>{d.service2500.premiumProcedureDesc}</p>
+                <div>
+                  <h3 className="text-[0.8rem] font-bold uppercase tracking-[0.1em] text-[#1e3a5f] mb-3">{d.service2500.scopeTitle}</h3>
+                  <div className="space-y-3 text-[0.92rem] text-foreground/80 leading-relaxed">
+                    {d.service2500.scopeText.map((p, i) => (
+                      <p key={i}>{p}</p>
+                    ))}
+                  </div>
+                  <p className="mt-4 border-l-[3px] border-[#d4a94c] pl-3.5 text-[0.92rem] font-semibold text-[#1e3a5f]">
+                    {d.service2500.scopeNote}
+                  </p>
                 </div>
 
                 <div>
-                  <h3 className="font-semibold text-foreground mb-2">{d.service2500.whatYouGet}</h3>
-                  <ul className="space-y-2">
-                    <li className="flex items-start gap-2 text-sm text-foreground/80">
-                      <span className="text-[#d4a94c] mt-0.5">✓</span>
-                      <span>{d.service2500.whatYouGetList[0]}</span>
-                    </li>
-                    <li className="flex items-start gap-2 text-sm text-foreground/80">
-                      <span className="text-[#d4a94c] mt-0.5">✓</span>
-                      <span>{d.service2500.whatYouGetList[1]}</span>
-                    </li>
-                    <li className="flex items-start gap-2 text-sm text-foreground/80">
-                      <span className="text-[#d4a94c] mt-0.5">✓</span>
-                      <span>{d.service2500.whatYouGetList[2]}</span>
-                    </li>
+                  <h3 className="text-[0.8rem] font-bold uppercase tracking-[0.1em] text-[#1e3a5f] mb-3">{d.service2500.getTitle}</h3>
+                  <ul className="space-y-2.5">
+                    {d.service2500.getList.map((item, i) => (
+                      <li key={i} className="flex items-start gap-3 text-[0.92rem] text-foreground/90">
+                        <span className="mt-[0.5rem] h-1.5 w-1.5 rounded-[2px] bg-[#d4a94c] shrink-0" />
+                        <span>{item}</span>
+                      </li>
+                    ))}
                   </ul>
                 </div>
 
-                <div className="flex items-start gap-3 p-3 bg-secondary/50 rounded-lg">
-                  <span className="text-[#1e3a5f] text-lg flex-shrink-0 mt-0.5">🛡️</span>
-                  <div>
-                    <h3 className="font-semibold text-foreground text-sm mb-0.5">{d.service2500.roadside}</h3>
-                    <p className="text-xs text-muted-foreground">{d.service2500.roadsideDesc}</p>
-                  </div>
+                <div className="mt-auto pt-1">
+                  <h3 className="text-[0.8rem] font-bold uppercase tracking-[0.1em] text-[#1e3a5f] mb-2">{d.service2500.verifyTitle}</h3>
+                  <p className="text-[0.92rem] text-foreground/80 leading-relaxed">{d.service2500.verifyText}</p>
+                  <p className="mt-3 pt-3 border-t border-border text-xs text-muted-foreground leading-relaxed">{d.service2500.verifyPhotos}</p>
                 </div>
-
-                <div>
-                  <h3 className="font-semibold text-foreground mb-2">{d.service2500.forWho}</h3>
-                  <ul className="space-y-2">
-                    <li className="flex items-start gap-2 text-sm text-foreground/80">
-                      <span className="text-[#d4a94c] mt-0.5">✓</span>
-                      <span>{d.service2500.forWhoList[0]}</span>
-                    </li>
-                    <li className="flex items-start gap-2 text-sm text-foreground/80">
-                      <span className="text-[#d4a94c] mt-0.5">✓</span>
-                      <span>{d.service2500.forWhoList[1]}</span>
-                    </li>
-                    <li className="flex items-start gap-2 text-sm text-foreground/80">
-                      <span className="text-[#d4a94c] mt-0.5">✓</span>
-                      <span>{d.service2500.forWhoList[2]}</span>
-                    </li>
-                  </ul>
-                </div>
-
-                <div>
-                  <h3 className="font-semibold text-foreground mb-2">{d.service2500.useCases}</h3>
-                  <div className="flex flex-wrap gap-2">
-                    <span className="inline-block px-3 py-1.5 text-xs font-medium rounded-full bg-secondary text-secondary-foreground">
-                      🩺 {d.service2500.useCasesList[0]}
-                    </span>
-                    <span className="inline-block px-3 py-1.5 text-xs font-medium rounded-full bg-secondary text-secondary-foreground">
-                      🧬 {d.service2500.useCasesList[1]}
-                    </span>
-                    <span className="inline-block px-3 py-1.5 text-xs font-medium rounded-full bg-secondary text-secondary-foreground">
-                      ⚙️ {d.service2500.useCasesList[2]}
-                    </span>
-                    <span className="inline-block px-3 py-1.5 text-xs font-medium rounded-full bg-secondary text-secondary-foreground">
-                      💻 {d.service2500.useCasesList[3]}
-                    </span>
-                    <span className="inline-block px-3 py-1.5 text-xs font-medium rounded-full bg-secondary text-secondary-foreground">
-                      ⏱️ {d.service2500.useCasesList[4]}
-                    </span>
-                  </div>
-                </div>
-
-                <p className="text-xs text-muted-foreground border-t border-border pt-3">
-                  {d.service2500.verificationNote}
-                </p>
               </div>
             </article>
 
             {/* CARD 2: DMC 3500 */}
             <article className="bg-card rounded-xl border border-border overflow-hidden flex flex-col">
-              <div className="p-8 pb-4">
-                <span className="inline-block px-3 py-1 text-xs font-medium rounded-full bg-[#d4a94c]/20 text-[#d4a94c] mb-3">
+              <div className="bg-[#1e3a5f] p-8 pb-7">
+                <span className="inline-block px-3 py-1 text-[0.7rem] font-semibold uppercase tracking-[0.12em] rounded bg-[#d4a94c]/15 text-[#d4a94c] mb-3.5">
                   {d.service3500.tag}
                 </span>
-                <h2 className="font-display text-2xl font-bold text-foreground mb-2">
+                <h2 className="font-display text-2xl font-bold text-white mb-1.5 leading-tight">
                   {d.service3500.title}
                 </h2>
-                <p className="text-muted-foreground">{d.service3500.subtitle}</p>
+                <p className="text-sm text-slate-300">{d.service3500.subtitle}</p>
               </div>
-              <div className="px-8 pb-8 space-y-5 flex-1 flex flex-col">
-                <p className="text-sm text-foreground/80">{d.service3500.description}</p>
+              <div className="px-8 py-7 space-y-6 flex-1 flex flex-col">
+                <p className="text-[0.95rem] text-foreground/80 leading-relaxed">{d.service3500.lead}</p>
 
                 <div>
-                  <h3 className="font-semibold text-foreground mb-2">{d.service3500.benefits}</h3>
-                  <ul className="space-y-2">
-                    <li className="flex items-start gap-2 text-sm text-foreground/80">
-                      <span className="text-[#d4a94c] mt-0.5">✓</span>
-                      <span>{d.service3500.benefitsList[0]}</span>
-                    </li>
-                    <li className="flex items-start gap-2 text-sm text-foreground/80">
-                      <span className="text-[#d4a94c] mt-0.5">✓</span>
-                      <span>{d.service3500.benefitsList[1]}</span>
-                    </li>
-                    <li className="flex items-start gap-2 text-sm text-foreground/80">
-                      <span className="text-[#d4a94c] mt-0.5">✓</span>
-                      <span>{d.service3500.benefitsList[2]}</span>
-                    </li>
-                  </ul>
+                  <h3 className="text-[0.8rem] font-bold uppercase tracking-[0.1em] text-[#1e3a5f] mb-3">{d.service3500.scopeTitle}</h3>
+                  <div className="space-y-3 text-[0.92rem] text-foreground/80 leading-relaxed">
+                    {d.service3500.scopeText.map((p, i) => (
+                      <p key={i}>{p}</p>
+                    ))}
+                  </div>
+                  <p className="mt-4 border-l-[3px] border-[#d4a94c] pl-3.5 text-[0.92rem] font-semibold text-[#1e3a5f]">
+                    {d.service3500.scopeNote}
+                  </p>
                 </div>
 
-                <p className="text-xs text-muted-foreground mt-auto pt-4">
-                  {d.service3500.footerNote}
-                </p>
+                <div className="mt-auto">
+                  <h3 className="text-[0.8rem] font-bold uppercase tracking-[0.1em] text-[#1e3a5f] mb-3">{d.service3500.getTitle}</h3>
+                  <ul className="space-y-2.5">
+                    {d.service3500.getList.map((item, i) => (
+                      <li key={i} className="flex items-start gap-3 text-[0.92rem] text-foreground/90">
+                        <span className="mt-[0.5rem] h-1.5 w-1.5 rounded-[2px] bg-[#d4a94c] shrink-0" />
+                        <span>{item}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
               </div>
             </article>
           </div>

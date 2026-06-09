@@ -9,7 +9,7 @@ export function asyncHandler(fn) {
 }
 
 /**
- * Express error-handling middleware — mount after all routes.
+ * Express error-handling middleware - mount after all routes.
  * Logs the error and sends a uniform JSON response.
  */
 export function errorMiddleware(err, _req, res, _next) {

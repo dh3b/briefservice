@@ -1,5 +1,3 @@
-/** Centralized frontend configuration — single source of truth */
-
 export const LIBRETRANSLATE_URL =
   import.meta.env.VITE_LIBRETRANSLATE_URL || "/api/translate";
 export const API_BASE =

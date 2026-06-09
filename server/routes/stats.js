@@ -7,14 +7,14 @@ import { statsVisitLimiter } from "../middleware/rateLimiter.js";
 
 const router = Router();
 
-// POST /api/stats/visit — record a page visit
+// POST /api/stats/visit - record a page visit
 router.post("/visit", statsVisitLimiter, asyncHandler(async (req, res) => {
   const country = v.text(req.body.country, 100) || "Unknown";
   await pool.query("INSERT INTO page_visits (country) VALUES ($1)", [country]);
   res.status(201).json({ ok: true });
 }));
 
-// GET /api/stats/visits — aggregated visits by country (admin)
+// GET /api/stats/visits - aggregated visits by country (admin)
 router.get("/visits", requireAdmin, asyncHandler(async (req, res) => {
   const interval = getInterval(v.timeRange(req.query.range));
   const { rows } = await pool.query(
@@ -28,7 +28,7 @@ router.get("/visits", requireAdmin, asyncHandler(async (req, res) => {
   res.json(rows);
 }));
 
-// GET /api/stats/chats — aggregated chats by service type (admin)
+// GET /api/stats/chats - aggregated chats by service type (admin)
 router.get("/chats", requireAdmin, asyncHandler(async (req, res) => {
   const interval = getInterval(v.timeRange(req.query.range));
   const { rows } = await pool.query(

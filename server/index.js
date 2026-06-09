@@ -43,7 +43,7 @@ app.use("/api/translate", translateRouter);
 
 app.get("/api/health", (_req, res) => res.json({ status: "ok" }));
 
-// Centralized error handling — replaces per-route try/catch
+// Centralized error handling - replaces per-route try/catch
 app.use(errorMiddleware);
 
 process.on('unhandledRejection', (reason, promise) => {

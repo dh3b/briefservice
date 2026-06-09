@@ -6,12 +6,12 @@ import { translateLimiter } from "../middleware/rateLimiter.js";
 
 const router = Router();
 
-// Derived from LANGS in config.js — update that list to extend coverage here too
+// Derived from LANGS in config.js - update that list to extend coverage here too
 const ALLOWED_SOURCE_LANGS = new Set([...LANGS, "auto"]);
 const ALLOWED_TARGET_LANGS = new Set(LANGS);
 const ALLOWED_FORMATS = new Set(["text", "html"]);
 
-// POST /api/translate — proxies to LibreTranslate, injecting the server-side API key
+// POST /api/translate - proxies to LibreTranslate, injecting the server-side API key
 router.post("/", translateLimiter, asyncHandler(async (req, res) => {
   const apiKey = process.env.LT_TRANSLATE_API_KEY;
   if (!apiKey) {

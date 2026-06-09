@@ -21,7 +21,6 @@ export const LANGUAGE_FLAGS: Record<Language, string> = {
   pl: "🇵🇱", en: "🇬🇧", uk: "🇺🇦", ru: "🇷🇺", cs: "🇨🇿", es: "🇪🇸", it: "🇮🇹", hu: "🇭🇺", ro: "🇷🇴", lt: "🇱🇹",
 };
 
-/** Raw DB row — has title/description columns per language */
 export interface ServiceRow {
   id: string;
   category_id: string | null;

@@ -101,7 +101,7 @@ const ServiceForm = ({ service, categories, onClose, onSaved }: Props) => {
             <label className="text-xs font-medium text-muted-foreground mb-1.5 block">{t.admin.category}</label>
             <select value={categoryId} onChange={(e) => setCategoryId(e.target.value)}
               className="w-full px-4 py-2.5 rounded-lg bg-secondary border border-border text-foreground text-sm outline-none focus:ring-2 focus:ring-ring">
-              <option value="">—</option>
+              <option value="">-</option>
               {categories.map((cat) => (
                 <option key={cat.id} value={cat.id}>{localizeCategory(cat, language)}</option>
               ))}

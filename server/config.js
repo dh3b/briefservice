@@ -1,4 +1,4 @@
-/** Shared server configuration — single source of truth */
+/** Shared server configuration - single source of truth */
 
 export const LANGS = ["pl", "en", "uk", "ru", "cs", "es", "it", "hu", "lt", "ro"];
 export const DEFAULT_LANG = "en";

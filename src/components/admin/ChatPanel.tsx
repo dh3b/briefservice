@@ -139,8 +139,8 @@ const ChatPanel = () => {
             {/* Title bar */}
             <div className="bg-muted/50 border-b border-border px-4 py-2.5 flex flex-wrap items-center gap-x-6 gap-y-1 text-xs flex-shrink-0">
               <span><strong>ID:</strong> {selectedChatObj.id.slice(0, 8)}</span>
-              <span><strong>{t.admin.chatUser}:</strong> {selectedChatObj.user_name || "—"}</span>
-              <span><strong>{t.admin.chatEmail}:</strong> {selectedChatObj.user_email || "—"}</span>
+              <span><strong>{t.admin.chatUser}:</strong> {selectedChatObj.user_name || "-"}</span>
+              <span><strong>{t.admin.chatEmail}:</strong> {selectedChatObj.user_email || "-"}</span>
             </div>
 
             <div className="flex-1 overflow-y-auto p-4 space-y-3">
