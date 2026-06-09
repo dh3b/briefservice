@@ -98,8 +98,8 @@ const pl: TranslationShape = {
     },
     nav: { home: "Strona główna", services: "Usługi", contact: "Kontakt" },
     intro: {
-      title: "Zmiana\u00a0DMC (w dół) do 2500 kg i 3500 kg - legalnie i z\u00a0dokumentacją\u00a0z Niemiec",
-      subtitle: "Załatwiamy wszystko: dokumenty, nową tabliczkę\u00a0znamionową oraz rejestrację pojazdu na niemiecki\u00a0Brief. Ty otrzymujesz gotowy komplet do przerejestrowania\u00a0pojazdu w Polsce.",
+      title: "Zmiana DMC (Dopuszczalna Masa Całkowita) do 2500\u00a0kg (2490\u00a0kg) oraz 3500\u00a0kg",
+      subtitle: "Legalnie - w Niemczech - z pełną procedurą techniczną! Prowadzimy Cię przez cały proces krok po kroku: od weryfikacji pojazdu, przez procedury wykonywane przez niemieckie placówki techniczne, przygotowujące kompletną dokumentację techniczną, w wyniku czego otrzymasz nową tabliczkę znamionową oraz komplet nowych niemieckich Briefów cz. I i cz. II ze zmienionym DMC. Na ich podstawie pojazd może zostać następnie przepisany w Polsce lub w każdym innym kraju UE!",
     },
     service2500: {
       tag: "Transport lekki i pilny",
@@ -194,8 +194,8 @@ const en: TranslationShape = {
     },
     nav: { home: "Home", services: "Services", contact: "Contact" },
     intro: {
-      title: "GVW Change (reduction) to 2500\u00a0kg and 3500\u00a0kg - legally and with German documentation",
-      subtitle: "We handle everything: documents, new type plate, and vehicle registration on German Brief. You receive a complete set for re-registering your vehicle in Poland.",
+      title: "GVW (Gross Vehicle Weight) change to 2500\u00a0kg (2490\u00a0kg) and 3500\u00a0kg",
+      subtitle: "Legally - in Germany - with a full technical procedure! We guide you through the entire process step by step: from vehicle verification, through procedures carried out by German technical facilities that prepare complete technical documentation, as a result of which you receive a new type plate and a complete set of new German Briefs (Teil I and Teil II) with the changed GVW. On their basis, the vehicle can then be re-registered in Poland or in any other EU country!",
     },
     service2500: {
       tag: "Light & urgent transport",
@@ -290,8 +290,8 @@ const uk: TranslationShape = {
     },
     nav: { home: "Головна", services: "Послуги", contact: "Контакти" },
     intro: {
-      title: "Зміна ПМА (зменшення) до 2500 кг і 3500 кг - легально і з документацією з Німеччини",
-      subtitle: "Ми оформляємо все: документи, нову табличку та реєстрацію транспортного засобу на німецький Brief. Ви отримуєте повний комплект для перереєстрації транспортного засобу в Польщі.",
+      title: "Зміна ПМА (повна маса автомобіля) до 2500\u00a0кг (2490\u00a0кг) та 3500\u00a0кг",
+      subtitle: "Легально - в Німеччині - з повною технічною процедурою! Ми проводимо вас через увесь процес крок за кроком: від перевірки транспортного засобу, через процедури, що виконуються німецькими технічними установами, які готують повну технічну документацію, у результаті чого ви отримуєте нову табличку з даними та комплект нових німецьких Briefів (Teil I та Teil II) зі зміненою ПМА. На їх підставі транспортний засіб може бути згодом перереєстрований у Польщі або в будь-якій іншій країні ЄС!",
     },
     service2500: {
       tag: "Легкий і терміновий транспорт",
@@ -386,8 +386,8 @@ const ru: TranslationShape = {
     },
     nav: { home: "Главная", services: "Услуги", contact: "Контакты" },
     intro: {
-      title: "Изменение ПМ (снижение) до 2500 кг и 3500 кг - легально и с документацией из Германии",
-      subtitle: "Мы оформляем всё: документы, новую табличку и регистрацию транспортного средства на немецкий Brief. Вы получаете полный комплект для перерегистрации транспортного средства в Польше.",
+      title: "Изменение ПМ (полная масса) до 2500\u00a0кг (2490\u00a0кг) и 3500\u00a0кг",
+      subtitle: "Легально - в Германии - с полной технической процедурой! Мы проводим вас через весь процесс шаг за шагом: от проверки транспортного средства, через процедуры, выполняемые немецкими техническими учреждениями, которые готовят полную техническую документацию, в результате чего вы получаете новую табличку с данными и комплект новых немецких Briefов (Teil I и Teil II) с изменённой ПМ. На их основании транспортное средство может быть затем перерегистрировано в Польше или в любой другой стране ЕС!",
     },
     service2500: {
       tag: "Лёгкий и срочный транспорт",
@@ -482,8 +482,8 @@ const cs: TranslationShape = {
     },
     nav: { home: "Domů", services: "Služby", contact: "Kontakt" },
     intro: {
-      title: "Změna celkové hmotnosti (snížení) na 2500 kg a 3500 kg - legálně a s německou dokumentací",
-      subtitle: "Zařídíme vše: dokumenty, nový štítek a registraci vozidla na německý Brief. Získáte kompletní sadu pro přeregistraci vozidla v Polsku.",
+      title: "Změna celkové hmotnosti do 2500\u00a0kg (2490\u00a0kg) a 3500\u00a0kg",
+      subtitle: "Legálně - v Německu - s plnou technickou procedurou! Provedeme vás celým procesem krok za krokem: od ověření vozidla, přes procedury prováděné německými technickými institucemi, které připravují kompletní technickou dokumentaci, v jejímž důsledku obdržíte nový štítek a kompletní nové německé Briefy (Teil I a Teil II) se změněnou celkovou hmotností. Na jejich základě může být vozidlo následně přeregistrováno v Polsku nebo v jakékoli jiné zemi EU!",
     },
     service2500: {
       tag: "Lehká a urgentní přeprava",
@@ -578,8 +578,8 @@ const es: TranslationShape = {
     },
     nav: { home: "Inicio", services: "Servicios", contact: "Contacto" },
     intro: {
-      title: "Cambio de PMA (reducción) a 2500 kg y 3500 kg - legalmente y con documentación alemana",
-      subtitle: "Gestionamos todo: documentos, nueva placa y registro del vehículo en Brief alemán. Recibirás el juego completo para re-registrar tu vehículo en Polonia.",
+      title: "Cambio de PMA (Peso Máximo Autorizado) a 2500\u00a0kg (2490\u00a0kg) y 3500\u00a0kg",
+      subtitle: "¡Legalmente - en Alemania - con un procedimiento técnico completo! Te guiamos por todo el proceso paso a paso: desde la verificación del vehículo, pasando por los procedimientos realizados por instituciones técnicas alemanas que preparan la documentación técnica completa, como resultado de lo cual recibes una nueva placa de datos y un juego completo de nuevos Briefs alemanes (Teil I y Teil II) con la PMA modificada. ¡Sobre su base, el vehículo puede luego re-registrarse en Polonia o en cualquier otro país de la UE!",
     },
     service2500: {
       tag: "Transporte ligero y urgente",
@@ -674,8 +674,8 @@ const it: TranslationShape = {
     },
     nav: { home: "Home", services: "Servizi", contact: "Contatti" },
     intro: {
-      title: "Cambio PMA (riduzione) a 2500 kg e 3500 kg - legalmente e con documentazione tedesca",
-      subtitle: "Gestiamo tutto: documenti, nuova targhetta e registrazione del veicolo su Brief tedesco. Riceverai il set completo per re-registrare il tuo veicolo in Polonia.",
+      title: "Cambio PMA (Peso Massimo Autorizzato) a 2500\u00a0kg (2490\u00a0kg) e 3500\u00a0kg",
+      subtitle: "Legalmente - in Germania - con una procedura tecnica completa! Ti accompagniamo nell'intero processo passo dopo passo: dalla verifica del veicolo, attraverso le procedure svolte da strutture tecniche tedesche che preparano la documentazione tecnica completa, a seguito della quale ricevi una nuova targhetta e un set completo di nuovi Brief tedeschi (Teil I e Teil II) con la PMA modificata. Sulla loro base, il veicolo può poi essere re-immatricolato in Polonia o in qualsiasi altro paese UE!",
     },
     service2500: {
       tag: "Trasporto leggero e urgente",
@@ -770,8 +770,8 @@ const hu: TranslationShape = {
     },
     nav: { home: "Kezdőlap", services: "Szolgáltatások", contact: "Kapcsolat" },
     intro: {
-      title: "ÖTM változtatás (csökkentés) 2500 kg és 3500 kg-ra - legálisan és német dokumentációval",
-      subtitle: "Mindenről gondoskodunk: dokumentumok, új táblácska és jármű regisztrációja a német Briefre. Megkapja a teljes készletet járműve átregisztrációjához.",
+      title: "ÖTM (megengedett össztömeg) változtatás 2500\u00a0kg-ra (2490\u00a0kg-ra) és 3500\u00a0kg-ra",
+      subtitle: "Legálisan - Németországban - teljes körű műszaki eljárással! Lépésről lépésre végigvezetjük a teljes folyamaton: a jármű ellenőrzésétől, a német technikai intézmények által végzett eljárásokon át, amelyek elkészítik a teljes műszaki dokumentációt, melynek eredményeként új adattáblát és komplett új német Briefeket (Teil I és Teil II) kap megváltoztatott ÖTM-mel. Ezek alapján a jármű ezt követően átírható Lengyelországban vagy bármely más EU-országban!",
     },
     service2500: {
       tag: "Könnyű és sürgős szállítás",
@@ -866,8 +866,8 @@ const ro: TranslationShape = {
     },
     nav: { home: "Acasă", services: "Servicii", contact: "Contact" },
     intro: {
-      title: "Modificare MTMA (reducere) la 2500 kg și 3500 kg - legal și cu documentație germană",
-      subtitle: "Ne ocupăm de toate: documente, nouă plăcuță de identificare și înmatricularea vehiculului pe Brief german. Primești setul complet pentru reînmatricularea vehiculului în Polonia.",
+      title: "Modificare MTMA (Masa Totală Maximă Autorizată) la 2500\u00a0kg (2490\u00a0kg) și 3500\u00a0kg",
+      subtitle: "Legal - în Germania - cu o procedură tehnică completă! Te ghidăm prin întregul proces pas cu pas: de la verificarea vehiculului, prin procedurile efectuate de instituții tehnice germane care pregătesc documentația tehnică completă, în urma cărora primești o plăcuță de identificare nouă și un set complet de Briefuri germane noi (Teil I și Teil II) cu MTMA modificată. Pe baza acestora, vehiculul poate fi ulterior reînmatriculat în Polonia sau în orice altă țară UE!",
     },
     service2500: {
       tag: "Transport ușor și urgent",
@@ -962,8 +962,8 @@ const lt: TranslationShape = {
     },
     nav: { home: "Pagrindinis", services: "Paslaugos", contact: "Kontaktai" },
     intro: {
-      title: "DLM keitimas (mažinimas) iki 2500 kg ir 3500 kg - legaliai ir su vokiška dokumentacija",
-      subtitle: "Mes viską sutvarkome: dokumentus, naują identifikacinę lentelę ir transporto priemonės registraciją vokiškame Briefe. Jūs gaunate pilną rinkinį transporto priemonės perregistravimui Lenkijoje.",
+      title: "DLM (didžiausioji leidžiamoji masė) keitimas iki 2500\u00a0kg (2490\u00a0kg) ir 3500\u00a0kg",
+      subtitle: "Teisėtai - Vokietijoje - su visa technine procedūra! Vedame jus per visą procesą žingsnis po žingsnio: nuo transporto priemonės patikros, per procedūras, atliekamas vokiškų techninių įstaigų, kurios parengia pilną techninę dokumentaciją, dėl ko gaunate naują identifikacinę lentelę ir naujų vokiškų Briefų komplektą (Teil I ir Teil II) su pakeista DLM. Jų pagrindu transporto priemonė vėliau gali būti perregistruota Lenkijoje arba bet kurioje kitoje ES šalyje!",
     },
     service2500: {
       tag: "Lengvas ir skubus transportas",
