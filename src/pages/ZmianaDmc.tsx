@@ -125,7 +125,11 @@ const ZmianaDmcPage = () => {
                 <p className="text-sm text-slate-300">{d.service2500.subtitle}</p>
               </div>
               <div className="px-8 py-7 space-y-6 flex-1 flex flex-col">
-                <p className="text-[0.95rem] text-foreground/80 leading-relaxed">{d.service2500.lead}</p>
+                <div className="space-y-3 text-[0.95rem] text-foreground/80 leading-relaxed">
+                  {d.service2500.lead.map((p, i) => (
+                    <p key={i}>{p}</p>
+                  ))}
+                </div>
 
                 <div>
                   <h3 className="text-[0.8rem] font-bold uppercase tracking-[0.1em] text-[#1e3a5f] mb-3">{d.service2500.scopeTitle}</h3>
@@ -171,7 +175,11 @@ const ZmianaDmcPage = () => {
                 <p className="text-sm text-slate-300">{d.service3500.subtitle}</p>
               </div>
               <div className="px-8 py-7 space-y-6 flex-1 flex flex-col">
-                <p className="text-[0.95rem] text-foreground/80 leading-relaxed">{d.service3500.lead}</p>
+                <div className="space-y-3 text-[0.95rem] text-foreground/80 leading-relaxed">
+                  {d.service3500.lead.map((p, i) => (
+                    <p key={i}>{p}</p>
+                  ))}
+                </div>
 
                 <div>
                   <h3 className="text-[0.8rem] font-bold uppercase tracking-[0.1em] text-[#1e3a5f] mb-3">{d.service3500.scopeTitle}</h3>
@@ -183,18 +191,6 @@ const ZmianaDmcPage = () => {
                   <p className="mt-4 border-l-[3px] border-[#d4a94c] pl-3.5 text-[0.92rem] font-semibold text-[#1e3a5f]">
                     {d.service3500.scopeNote}
                   </p>
-                </div>
-
-                <div className="mt-auto">
-                  <h3 className="text-[0.8rem] font-bold uppercase tracking-[0.1em] text-[#1e3a5f] mb-3">{d.service3500.getTitle}</h3>
-                  <ul className="space-y-2.5">
-                    {d.service3500.getList.map((item, i) => (
-                      <li key={i} className="flex items-start gap-3 text-[0.92rem] text-foreground/90">
-                        <span className="mt-[0.5rem] h-1.5 w-1.5 rounded-[2px] bg-[#d4a94c] shrink-0" />
-                        <span>{item}</span>
-                      </li>
-                    ))}
-                  </ul>
                 </div>
               </div>
             </article>
