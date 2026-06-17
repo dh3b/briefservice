@@ -15,11 +15,13 @@ interface ChatWidgetProps {
 }
 
 function getChatIdFromCookie(): string | null {
+  if (typeof document === "undefined") return null;
   const match = document.cookie.match(/(?:^|; )chat_id=([^;]*)/);
   return match ? decodeURIComponent(match[1]) : null;
 }
 
 function getUserDataFromStorage(): { name: string; email: string } | null {
+  if (typeof localStorage === "undefined") return null;
   const name = localStorage.getItem("chat_user_name");
   const email = localStorage.getItem("chat_user_email");
   return name && email ? { name, email } : null;
