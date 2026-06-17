@@ -23,10 +23,10 @@ brief-service.com, www.brief-service.com, localhost {
 		@root path /
 		redir @root /en/ 302
 
-		# Prerendered pages (nested dirStyle) + SPA fallback.
+		# Static prerendered pages (Astro, directory format) + 404 fallback.
 		handle {
 			root * C:/Users/user/Documents/Projects/html/briefservice/dist
-			try_files {path} {path}/index.html /index.html
+			try_files {path} {path}index.html {path}/index.html /404.html
 			file_server
 		}
 	}

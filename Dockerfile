@@ -3,7 +3,7 @@ FROM node:20-alpine AS frontend-build
 WORKDIR /app
 COPY package.json bun.lockb ./
 RUN npm install
-COPY index.html vite.config.ts tsconfig*.json tailwind.config.ts postcss.config.js components.json ./
+COPY astro.config.mjs tsconfig.json tailwind.config.ts postcss.config.js components.json ./
 COPY src/ src/
 COPY public/ public/
 RUN npm run build

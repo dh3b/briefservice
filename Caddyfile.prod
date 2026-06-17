@@ -39,12 +39,12 @@
 		@root path /
 		redir @root /en/ 302
 
-		# --- Prerendered pages (nested dirStyle) + SPA fallback ---
-		# /pl/zmiana-dmc -> dist/pl/zmiana-dmc/index.html; unknown paths fall
-		# back to dist/index.html, which boots the client router.
+		# --- Static prerendered pages (Astro, directory format) ---
+		# /pl/zmiana-dmc -> dist/pl/zmiana-dmc/index.html (handles trailing
+		# slash too); unknown paths fall back to the prerendered 404 page.
 		handle {
 			root * /srv/dist
-			try_files {path} {path}/index.html /index.html
+			try_files {path} {path}index.html {path}/index.html /404.html
 			file_server
 		}
 	}
