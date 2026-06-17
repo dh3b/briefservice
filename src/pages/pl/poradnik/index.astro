@@ -1,0 +1,67 @@
+---
+import { GUIDES } from "@/content/guides";
+import { canonicalUrl, breadcrumbSchema } from "@/seo/site";
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import Navbar from "@/components/astro/Navbar.astro";
+import Footer from "@/components/astro/Footer.astro";
+import Breadcrumbs from "@/components/astro/Breadcrumbs.astro";
+import ChatIsland from "@/islands/ChatIsland";
+
+const lang = "pl";
+const path = "poradnik";
+
+const navLinks = [
+  { label: "Strona główna", href: "/pl" },
+  { label: "Usługi", href: "/pl/uslugi" },
+  { label: "Poradnik", href: "/pl/poradnik" },
+];
+
+const jsonLd = [
+  breadcrumbSchema([
+    { name: "Strona główna", url: canonicalUrl(lang, "") },
+    { name: "Poradnik", url: canonicalUrl(lang, "poradnik") },
+  ]),
+];
+---
+
+<BaseLayout
+  lang={lang}
+  title="Poradnik – niemiecki brief, DMC, duplikat | BriefService"
+  description="Praktyczne poradniki o niemieckim briefie: co to jest mały i duży brief, jak go czytać, jak wyrobić duplikat, zmiana DMC i wyrejestrowanie auta bez briefu."
+  path={path}
+  hreflangLangs={["pl"]}
+  jsonLd={jsonLd}
+>
+  <div class="min-h-screen bg-background">
+    <Navbar lang={lang} navLinks={navLinks} langSuffix="" />
+    <main class="pt-24 pb-16">
+      <Breadcrumbs items={[{ name: "Strona główna", href: "/pl" }, { name: "Poradnik" }]} />
+      <div class="container mx-auto px-6 max-w-4xl">
+        <header class="py-8">
+          <h1 class="font-display text-4xl md:text-5xl font-bold text-foreground mb-4">Poradnik</h1>
+          <p class="text-lg text-muted-foreground max-w-2xl">
+            Najważniejsze tematy wokół niemieckiego briefu i formalności pojazdowych — wyjaśnione prosto.
+          </p>
+        </header>
+
+        <div class="grid sm:grid-cols-2 gap-6">
+          {
+            GUIDES.map((g) => (
+              <a
+                href={`/pl/poradnik/${g.slug}`}
+                class="group bg-card rounded-xl border border-border shadow-card hover:shadow-card-hover transition-all duration-300 p-6 hover:-translate-y-1 block"
+              >
+                <h2 class="font-display text-lg font-bold text-card-foreground mb-2 group-hover:text-primary transition-colors">
+                  {g.h1}
+                </h2>
+                <p class="text-sm text-muted-foreground leading-relaxed">{g.summary}</p>
+              </a>
+            ))
+          }
+        </div>
+      </div>
+    </main>
+    <Footer lang={lang} />
+    <ChatIsland lang={lang} client:idle />
+  </div>
+</BaseLayout>

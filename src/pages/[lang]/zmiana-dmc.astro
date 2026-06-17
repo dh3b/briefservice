@@ -1,6 +1,7 @@
 ---
 import { translations } from "@/i18n/translations";
 import { SUPPORTED_LANGUAGES, type Language } from "@/types";
+import { canonicalUrl, serviceSchema, breadcrumbSchema } from "@/seo/site";
 import BaseLayout from "@/layouts/BaseLayout.astro";
 import Navbar from "@/components/astro/Navbar.astro";
 import Footer from "@/components/astro/Footer.astro";
@@ -16,9 +17,18 @@ const t = translations[lang];
 const d = t.zmianaDmc;
 
 const navLinks = [{ label: d.nav.home, href: `/${lang}` }];
+
+const url = canonicalUrl(lang, "zmiana-dmc");
+const jsonLd = [
+  serviceSchema({ name: d.seo.title, description: d.seo.description, url }),
+  breadcrumbSchema([
+    { name: t.nav.home, url: canonicalUrl(lang, "") },
+    { name: d.seo.title, url },
+  ]),
+];
 ---
 
-<BaseLayout lang={lang} title={d.seo.title} description={d.seo.description} path="zmiana-dmc">
+<BaseLayout lang={lang} title={d.seo.title} description={d.seo.description} path="zmiana-dmc" jsonLd={jsonLd}>
   <div class="min-h-screen bg-background">
     <Navbar lang={lang} langSuffix="/zmiana-dmc" navLinks={navLinks} />
 

@@ -1,0 +1,77 @@
+---
+import { SERVICE_PAGES } from "@/content/services";
+import { canonicalUrl, breadcrumbSchema } from "@/seo/site";
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import Navbar from "@/components/astro/Navbar.astro";
+import Footer from "@/components/astro/Footer.astro";
+import Breadcrumbs from "@/components/astro/Breadcrumbs.astro";
+import ChatIsland from "@/islands/ChatIsland";
+
+const lang = "pl";
+const path = "uslugi";
+
+// The DMC change service keeps its established /pl/zmiana-dmc URL.
+const cards = [
+  {
+    name: "Zmiana DMC (2,5t / 3,5t)",
+    summary: "Legalne obniżenie dopuszczalnej masy całkowitej w Niemczech — nowe Briefy i tabliczka znamionowa.",
+    href: "/pl/zmiana-dmc",
+  },
+  ...SERVICE_PAGES.map((s) => ({ name: s.name, summary: s.summary, href: `/pl/uslugi/${s.slug}` })),
+];
+
+const navLinks = [
+  { label: "Strona główna", href: "/pl" },
+  { label: "Usługi", href: "/pl/uslugi" },
+  { label: "Poradnik", href: "/pl/poradnik" },
+];
+
+const jsonLd = [
+  breadcrumbSchema([
+    { name: "Strona główna", url: canonicalUrl(lang, "") },
+    { name: "Usługi", url: canonicalUrl(lang, "uslugi") },
+  ]),
+];
+---
+
+<BaseLayout
+  lang={lang}
+  title="Usługi – formalności pojazdowe w Niemczech | BriefService"
+  description="Nasze usługi: zmiana DMC, legalizacja zmian konstrukcyjnych, zmiana rodzaju pojazdu oraz odzyskanie i duplikat niemieckiego briefu. Prywatna firma – nie urząd."
+  path={path}
+  hreflangLangs={["pl"]}
+  jsonLd={jsonLd}
+>
+  <div class="min-h-screen bg-background">
+    <Navbar lang={lang} navLinks={navLinks} langSuffix="" />
+    <main class="pt-24 pb-16">
+      <Breadcrumbs items={[{ name: "Strona główna", href: "/pl" }, { name: "Usługi" }]} />
+      <div class="container mx-auto px-6 max-w-4xl">
+        <header class="py-8">
+          <h1 class="font-display text-4xl md:text-5xl font-bold text-foreground mb-4">Usługi</h1>
+          <p class="text-lg text-muted-foreground max-w-2xl">
+            Kompleksowa obsługa formalności pojazdowych w Niemczech. Jesteśmy prywatną firmą usługową – nie urzędem.
+          </p>
+        </header>
+
+        <div class="grid sm:grid-cols-2 gap-6">
+          {
+            cards.map((c) => (
+              <a
+                href={c.href}
+                class="group bg-card rounded-xl border border-border shadow-card hover:shadow-card-hover transition-all duration-300 p-6 hover:-translate-y-1 block"
+              >
+                <h2 class="font-display text-xl font-bold text-card-foreground mb-2 group-hover:text-primary transition-colors">
+                  {c.name}
+                </h2>
+                <p class="text-sm text-muted-foreground leading-relaxed">{c.summary}</p>
+              </a>
+            ))
+          }
+        </div>
+      </div>
+    </main>
+    <Footer lang={lang} />
+    <ChatIsland lang={lang} client:idle />
+  </div>
+</BaseLayout>
