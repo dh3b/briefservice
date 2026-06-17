@@ -7,6 +7,11 @@ import * as api from "@/api";
 import ChatPanel from "@/components/admin/ChatPanel";
 import ServicesPanel from "@/components/admin/ServicesPanel";
 import StatsPanel from "@/components/admin/StatsPanel";
+import Seo from "@/seo/Seo";
+
+const adminSeo = (
+  <Seo title="Admin — BriefService" description="BriefService administration panel." path="admin" noindex />
+);
 
 const AdminPage = () => {
   const { t, language } = useLanguage();
@@ -27,6 +32,7 @@ const AdminPage = () => {
   if (!admin) {
     return (
       <div className="min-h-screen bg-background flex items-center justify-center px-6">
+        {adminSeo}
         <div className="w-full max-w-sm">
           <div className="text-center mb-8">
             <Link to={`/${language}`} className="font-display text-2xl font-bold text-foreground"><span className="text-gradient-gold">Brief</span>Service</Link>
@@ -52,6 +58,7 @@ const AdminPage = () => {
 
   return (
     <div className="min-h-screen bg-background">
+      {adminSeo}
       <header className="bg-card border-b border-border px-6 py-4 flex items-center justify-between">
         <div className="flex items-center gap-4">
           <Link to={`/${language}`} className="font-display text-lg font-bold text-foreground"><span className="text-gradient-gold">Brief</span>Service</Link>

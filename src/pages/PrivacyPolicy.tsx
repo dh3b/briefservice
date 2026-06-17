@@ -1,6 +1,13 @@
+import Seo from "@/seo/Seo";
+
 const PrivacyPolicy = () => {
   return (
     <div className="min-h-screen bg-card">
+      <Seo
+        title="Polityka Prywatności — BriefService"
+        description="Polityka prywatności serwisu brief-service.com: jakie dane zbieramy, w jakim celu i jakie masz prawa."
+        path="privacy-policy"
+      />
       <div className="container mx-auto px-6 py-24 max-w-3xl">
 
         <div className="mb-12">

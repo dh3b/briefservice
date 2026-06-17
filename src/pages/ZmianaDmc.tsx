@@ -6,19 +6,13 @@ import { SUPPORTED_LANGUAGES, LANGUAGE_LABELS, LANGUAGE_FLAGS, Language } from "
 import ContactSection from "@/components/ContactSection";
 import ChatWidget from "@/components/ChatWidget";
 import Footer from "@/components/Footer";
-import { useSEO } from "@/hooks/useSEO";
+import Seo from "@/seo/Seo";
 
 const ZmianaDmcPage = () => {
   const { t, language } = useLanguage();
   const [mobileOpen, setMobileOpen] = useState(false);
   const [langOpen, setLangOpen] = useState(false);
   const langRef = useRef<HTMLDivElement>(null);
-
-  useSEO({
-    title: t.zmianaDmc.seo.title,
-    description: t.zmianaDmc.seo.description,
-    keywords: t.zmianaDmc.seo.keywords,
-  });
 
   useEffect(() => {
     const handler = (e: MouseEvent) => {
@@ -32,6 +26,11 @@ const ZmianaDmcPage = () => {
 
   return (
     <div className="min-h-screen bg-background">
+      <Seo
+        title={t.zmianaDmc.seo.title}
+        description={t.zmianaDmc.seo.description}
+        path="zmiana-dmc"
+      />
       {/* ===== NAVBAR ===== */}
       <nav className="fixed top-0 left-0 right-0 z-50 bg-card/80 backdrop-blur-lg border-b border-border">
         <div className="container mx-auto px-6 h-16 flex items-center justify-between">

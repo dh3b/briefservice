@@ -2,6 +2,7 @@ import { useNavigate } from "react-router-dom";
 import { useLanguage } from "@/i18n/LanguageContext";
 import { Button } from "@/components/ui/button";
 import LanguageTabs from "@/components/LanguageTabs";
+import Seo from "@/seo/Seo";
 import { BASE_DOMAIN } from "@/config";
 
 const InfoLanding = () => {
@@ -14,6 +15,7 @@ const InfoLanding = () => {
 
   return (
     <div className="min-h-screen bg-background text-foreground flex flex-col">
+      <Seo title={t.landing.title} description={t.landing.subtitle} path="landing" />
       <header className="border-b border-border">
         <div className="container mx-auto px-6 py-4 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
           <div>

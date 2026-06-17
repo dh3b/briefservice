@@ -5,10 +5,11 @@ import ServicesSection from "@/components/ServicesSection";
 import ContactSection from "@/components/ContactSection";
 import ChatWidget from "@/components/ChatWidget";
 import Footer from "@/components/Footer";
-import { useSEO } from "@/hooks/useSEO";
+import Seo from "@/seo/Seo";
+import { useLanguage } from "@/i18n/LanguageContext";
 
 const Index = () => {
-  useSEO();
+  const { t } = useLanguage();
   const [chatServiceId, setChatServiceId] = useState<string | null>(null);
   const [chatServiceName, setChatServiceName] = useState<string | null>(null);
 
@@ -23,6 +24,7 @@ const Index = () => {
 
   return (
     <div className="min-h-screen bg-background">
+      <Seo title={t.seo.title} description={t.seo.description} path="" />
       <Navbar />
       <HeroSection />
       <ServicesSection onChatAbout={handleChatAbout} />

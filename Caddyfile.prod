@@ -1,17 +1,51 @@
 {$SITE_DOMAINS} {
 	encode
 
-	handle /api/* {
-		reverse_proxy api:3001
-	}
+	# `route` preserves the written order of the directives below, so the API
+	# proxy and the bare-domain redirects are evaluated before the static
+	# file server / SPA fallback.
+	route {
+		handle /api/* {
+			reverse_proxy api:3001
+		}
 
-	handle /uploads/* {
-		reverse_proxy api:3001
-	}
+		handle /uploads/* {
+			reverse_proxy api:3001
+		}
 
-	handle {
-		root * /srv/dist
-		try_files {path} /index.html
-		file_server
+		# --- Bare "/" on the info.* subdomain → language landing page ---
+		@info_root_lang {
+			host info.brief-service.com
+			path /
+			header_regexp ilang Accept-Language ^(pl|en|uk|ru|cs|es|it|hu|ro|lt)
+		}
+		redir @info_root_lang /{http.regexp.ilang.1}/landing 302
+
+		@info_root {
+			host info.brief-service.com
+			path /
+		}
+		redir @info_root /en/landing 302
+
+		# --- Bare "/" on the main domain → best matching language home ---
+		# Server-side redirect (no JS) based on the visitor's Accept-Language,
+		# falling back to /en/ (the x-default) for unsupported languages.
+		@root_lang {
+			path /
+			header_regexp rlang Accept-Language ^(pl|en|uk|ru|cs|es|it|hu|ro|lt)
+		}
+		redir @root_lang /{http.regexp.rlang.1}/ 302
+
+		@root path /
+		redir @root /en/ 302
+
+		# --- Prerendered pages (nested dirStyle) + SPA fallback ---
+		# /pl/zmiana-dmc -> dist/pl/zmiana-dmc/index.html; unknown paths fall
+		# back to dist/index.html, which boots the client router.
+		handle {
+			root * /srv/dist
+			try_files {path} {path}/index.html /index.html
+			file_server
+		}
 	}
 }

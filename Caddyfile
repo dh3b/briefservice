@@ -1,17 +1,33 @@
 brief-service.com, www.brief-service.com, localhost {
 	encode
 
-	handle /api/* {
-		reverse_proxy localhost:3001
-	}
-    
-    handle /uploads/* {
-        reverse_proxy localhost:3001
-    }
+	# `route` preserves directive order so the API proxy and the bare-domain
+	# redirect run before the static file server / SPA fallback.
+	route {
+		handle /api/* {
+			reverse_proxy localhost:3001
+		}
 
-	handle {
-		root * C:/Users/user/Documents/Projects/html/briefservice/dist
-		try_files {path} /index.html
-		file_server
+		handle /uploads/* {
+			reverse_proxy localhost:3001
+		}
+
+		# Bare "/" → best matching language home (server-side, no JS),
+		# falling back to /en/ for unsupported languages.
+		@root_lang {
+			path /
+			header_regexp rlang Accept-Language ^(pl|en|uk|ru|cs|es|it|hu|ro|lt)
+		}
+		redir @root_lang /{http.regexp.rlang.1}/ 302
+
+		@root path /
+		redir @root /en/ 302
+
+		# Prerendered pages (nested dirStyle) + SPA fallback.
+		handle {
+			root * C:/Users/user/Documents/Projects/html/briefservice/dist
+			try_files {path} {path}/index.html /index.html
+			file_server
+		}
 	}
 }
