@@ -1,5 +1,4 @@
 import { createContext, useContext, ReactNode, useEffect } from "react";
-import { useNavigate, useLocation } from "react-router-dom";
 import { translations, Translations } from "./translations";
 import { Language, SUPPORTED_LANGUAGES } from "@/types";
 import { FALLBACK_LANGUAGE } from "@/config";
@@ -14,10 +13,12 @@ const LanguageContext = createContext<LanguageContextType | undefined>(undefined
 
 /**
  * Detects the user's preferred language from the URL path, localStorage, or
- * browser settings.  Exported for use by the root-redirect component in App.tsx.
+ * browser settings. SSR-safe (returns the fallback when there is no window).
  */
 export function detectLanguage(): Language {
-  // 1. Path segment  (e.g. /pl/... or /en/...)
+  if (typeof window === "undefined") return FALLBACK_LANGUAGE;
+
+  // 1. Path segment (e.g. /pl/... or /en/...)
   const seg = window.location.pathname.split("/")[1];
   if (SUPPORTED_LANGUAGES.includes(seg as Language)) {
     return seg as Language;
@@ -39,22 +40,25 @@ export function detectLanguage(): Language {
 }
 
 interface LanguageProviderProps {
-  /** The validated language code from the :lang URL segment. */
+  /** The validated language code for this island/page. */
   lang: Language;
   children: ReactNode;
 }
 
+/**
+ * Provides translations + language to a React island. Router-free: switching
+ * language is a full navigation (each language is its own prerendered page),
+ * so `setLanguage` simply updates the URL.
+ */
 export const LanguageProvider = ({ lang, children }: LanguageProviderProps) => {
-  const navigate = useNavigate();
-  const location = useLocation();
   const t = translations[lang];
 
   const setLanguage = (newLang: Language) => {
+    if (typeof window === "undefined") return;
     localStorage.setItem("lang", newLang);
-    // Replace the first path segment (current lang) with the new lang,
-    // preserving everything else (subpath, query string, hash).
-    const rest = location.pathname.replace(/^\/[^/]*/, "") || "";
-    navigate(`/${newLang}${rest}${location.search}${location.hash}`, { replace: true });
+    // Replace the first path segment (current lang) with the new lang.
+    const rest = window.location.pathname.replace(/^\/[^/]*/, "") || "";
+    window.location.href = `/${newLang}${rest}${window.location.search}${window.location.hash}`;
   };
 
   useEffect(() => {

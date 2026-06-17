@@ -1,0 +1,62 @@
+---
+import { translations } from "@/i18n/translations";
+import { SUPPORTED_LANGUAGES, LANGUAGE_LABELS, type Language } from "@/types";
+import BaseLayout from "@/layouts/BaseLayout.astro";
+
+export function getStaticPaths() {
+  return SUPPORTED_LANGUAGES.map((lang) => ({ params: { lang } }));
+}
+
+const lang = Astro.params.lang as Language;
+const t = translations[lang];
+---
+
+<BaseLayout lang={lang} title={t.landing.title} description={t.landing.subtitle} path="landing">
+  <div class="min-h-screen bg-background text-foreground flex flex-col">
+    <header class="border-b border-border">
+      <div class="container mx-auto px-6 py-4 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+        <div>
+          <div class="text-sm font-semibold tracking-wide uppercase text-muted-foreground">BriefService</div>
+          <div class="text-xs text-muted-foreground">{t.seo.title}</div>
+        </div>
+        <div class="flex flex-wrap gap-1">
+          {
+            SUPPORTED_LANGUAGES.map((code) => (
+              <a
+                href={`/${code}/landing`}
+                class={`px-3 py-1.5 text-xs rounded-md font-medium transition-colors ${lang === code ? "bg-primary text-primary-foreground" : "bg-secondary text-secondary-foreground hover:bg-muted"}`}
+              >
+                {LANGUAGE_LABELS[code]}
+              </a>
+            ))
+          }
+        </div>
+      </div>
+    </header>
+
+    <main class="flex-1">
+      <section class="py-16 sm:py-20">
+        <div class="container mx-auto px-6 max-w-3xl">
+          <h1 class="font-display text-3xl sm:text-4xl font-bold mb-4">{t.landing.title}</h1>
+          <p class="text-base sm:text-lg text-muted-foreground mb-8 leading-relaxed">{t.landing.subtitle}</p>
+
+          <ul class="space-y-3 mb-10 text-sm sm:text-base text-muted-foreground">
+            <li>• {t.landing.bullet1}</li>
+            <li>• {t.landing.bullet2}</li>
+            <li>• {t.landing.bullet3}</li>
+          </ul>
+
+          <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+            <a
+              href={`/${lang}`}
+              class="inline-flex items-center justify-center rounded-md bg-primary text-primary-foreground h-11 px-8 text-sm font-medium hover:bg-primary/90 transition-colors"
+            >
+              {t.landing.cta}
+            </a>
+            <p class="text-xs text-muted-foreground max-w-md">{t.landing.disclaimer}</p>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+</BaseLayout>

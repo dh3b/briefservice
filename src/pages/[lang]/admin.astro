@@ -1,0 +1,15 @@
+---
+import { SUPPORTED_LANGUAGES, type Language } from "@/types";
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import AdminIsland from "@/islands/AdminIsland";
+
+export function getStaticPaths() {
+  return SUPPORTED_LANGUAGES.map((lang) => ({ params: { lang } }));
+}
+
+const lang = Astro.params.lang as Language;
+---
+
+<BaseLayout lang={lang} title="Admin — BriefService" description="BriefService administration panel." path="admin" noindex>
+  <AdminIsland lang={lang} client:only="react" />
+</BaseLayout>

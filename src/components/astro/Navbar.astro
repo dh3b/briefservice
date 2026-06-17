@@ -1,0 +1,104 @@
+---
+import { SUPPORTED_LANGUAGES, LANGUAGE_LABELS, LANGUAGE_FLAGS, type Language } from "@/types";
+
+interface Props {
+  lang: Language;
+  /** Suffix appended to the language-switch links, e.g. "" or "/zmiana-dmc". */
+  langSuffix?: string;
+  /** In-page / cross-page navigation links shown in the bar. */
+  navLinks: { label: string; href: string }[];
+}
+
+const { lang, langSuffix = "", navLinks } = Astro.props;
+---
+
+<nav class="fixed top-0 left-0 right-0 z-50 bg-card/80 backdrop-blur-lg border-b border-border">
+  <div class="container mx-auto px-6 h-16 flex items-center justify-between">
+    <a href={`/${lang}`} class="font-display text-xl font-bold text-foreground tracking-tight">
+      <span class="text-gradient-gold">Brief</span>Service
+    </a>
+
+    <!-- Desktop -->
+    <div class="hidden md:flex items-center gap-8">
+      {
+        navLinks.map((l) => (
+          <a href={l.href} class="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">
+            {l.label}
+          </a>
+        ))
+      }
+
+      <div class="relative">
+        <button
+          data-lang-toggle
+          aria-haspopup="true"
+          class="flex items-center gap-1.5 px-3 py-1.5 rounded-md bg-secondary text-secondary-foreground text-sm font-medium hover:bg-accent hover:text-accent-foreground transition-colors"
+        >
+          <span>{LANGUAGE_FLAGS[lang]}</span>
+          <span>{LANGUAGE_LABELS[lang]}</span>
+          <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+        </button>
+        <div data-lang-menu class="hidden absolute right-0 top-full mt-1 w-48 bg-card border border-border rounded-lg shadow-lg overflow-hidden z-50 max-h-80 overflow-y-auto">
+          {
+            SUPPORTED_LANGUAGES.map((code) => (
+              <a
+                href={`/${code}${langSuffix}`}
+                class={`w-full px-4 py-2 text-left text-sm flex items-center gap-2 hover:bg-muted transition-colors ${lang === code ? "bg-muted font-semibold text-foreground" : "text-muted-foreground"}`}
+              >
+                <span>{LANGUAGE_FLAGS[code]}</span>
+                <span>{LANGUAGE_LABELS[code]}</span>
+              </a>
+            ))
+          }
+        </div>
+      </div>
+    </div>
+
+    <!-- Mobile toggle -->
+    <button data-mobile-toggle class="md:hidden text-foreground" aria-label="Menu">
+      <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="4" x2="20" y1="6" y2="6"/><line x1="4" x2="20" y1="12" y2="12"/><line x1="4" x2="20" y1="18" y2="18"/></svg>
+    </button>
+  </div>
+
+  <!-- Mobile menu -->
+  <div data-mobile-menu class="hidden md:hidden bg-card border-b border-border px-6 py-4 space-y-3">
+    {
+      navLinks.map((l) => (
+        <a href={l.href} class="block text-sm font-medium text-muted-foreground">
+          {l.label}
+        </a>
+      ))
+    }
+    <div class="border-t border-border pt-3 grid grid-cols-4 gap-1">
+      {
+        SUPPORTED_LANGUAGES.map((code) => (
+          <a
+            href={`/${code}${langSuffix}`}
+            class={`px-2 py-1.5 text-xs rounded-md text-center ${lang === code ? "bg-primary text-primary-foreground" : "bg-secondary text-secondary-foreground"}`}
+          >
+            {LANGUAGE_FLAGS[code]} {code.toUpperCase()}
+          </a>
+        ))
+      }
+    </div>
+  </div>
+</nav>
+
+<script>
+  const langToggle = document.querySelector<HTMLButtonElement>("[data-lang-toggle]");
+  const langMenu = document.querySelector<HTMLElement>("[data-lang-menu]");
+  const mobileToggle = document.querySelector<HTMLButtonElement>("[data-mobile-toggle]");
+  const mobileMenu = document.querySelector<HTMLElement>("[data-mobile-menu]");
+
+  langToggle?.addEventListener("click", (e) => {
+    e.stopPropagation();
+    langMenu?.classList.toggle("hidden");
+  });
+  mobileToggle?.addEventListener("click", () => mobileMenu?.classList.toggle("hidden"));
+  document.addEventListener("click", (e) => {
+    const target = e.target as Node;
+    if (langMenu && !langMenu.classList.contains("hidden") && !langToggle?.contains(target) && !langMenu.contains(target)) {
+      langMenu.classList.add("hidden");
+    }
+  });
+</script>

@@ -69,6 +69,21 @@ const ChatWidget = ({ serviceId, serviceName, onOpenTriggered }: ChatWidgetProps
     }
   }, [serviceName, chatId, onOpenTriggered]);
 
+  // Cross-island trigger: the services island dispatches this event to open
+  // the chat with a service context (they are separate React roots in Astro).
+  useEffect(() => {
+    const handler = (e: Event) => {
+      const name = (e as CustomEvent<{ serviceName?: string }>).detail?.serviceName;
+      if (name && name !== prevServiceRef.current) {
+        prevServiceRef.current = name;
+        setOpen(true);
+        if (chatId) updateChat(chatId, { service_ref: name }).catch(() => {});
+      }
+    };
+    window.addEventListener("briefservice:open-chat", handler);
+    return () => window.removeEventListener("briefservice:open-chat", handler);
+  }, [chatId]);
+
   const clearChatCookie = () => {
     document.cookie = "chat_id=; max-age=0; path=/; SameSite=Lax";
   };

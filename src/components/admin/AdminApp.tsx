@@ -1,19 +1,13 @@
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect } from "react";
 import { useLanguage } from "@/i18n/LanguageContext";
 import { LogIn, ArrowLeft, LogOut, MessageSquare, Package, BarChart3 } from "lucide-react";
-import { Link } from "react-router-dom";
 import { Admin } from "@/types";
 import * as api from "@/api";
 import ChatPanel from "@/components/admin/ChatPanel";
 import ServicesPanel from "@/components/admin/ServicesPanel";
 import StatsPanel from "@/components/admin/StatsPanel";
-import Seo from "@/seo/Seo";
 
-const adminSeo = (
-  <Seo title="Admin — BriefService" description="BriefService administration panel." path="admin" noindex />
-);
-
-const AdminPage = () => {
+const AdminApp = () => {
   const { t, language } = useLanguage();
   const [admin, setAdmin] = useState<Admin | null>(null);
   const [username, setUsername] = useState("");
@@ -32,10 +26,9 @@ const AdminPage = () => {
   if (!admin) {
     return (
       <div className="min-h-screen bg-background flex items-center justify-center px-6">
-        {adminSeo}
         <div className="w-full max-w-sm">
           <div className="text-center mb-8">
-            <Link to={`/${language}`} className="font-display text-2xl font-bold text-foreground"><span className="text-gradient-gold">Brief</span>Service</Link>
+            <a href={`/${language}`} className="font-display text-2xl font-bold text-foreground"><span className="text-gradient-gold">Brief</span>Service</a>
             <h2 className="font-display text-2xl font-bold text-foreground mt-6">{t.admin.login}</h2>
           </div>
           <form onSubmit={handleLogin} className="space-y-4">
@@ -48,9 +41,9 @@ const AdminPage = () => {
               <LogIn className="w-4 h-4" /> {t.admin.signIn}
             </button>
           </form>
-          <Link to={`/${language}`} className="flex items-center justify-center gap-1 mt-6 text-sm text-muted-foreground hover:text-foreground transition-colors">
+          <a href={`/${language}`} className="flex items-center justify-center gap-1 mt-6 text-sm text-muted-foreground hover:text-foreground transition-colors">
             <ArrowLeft className="w-4 h-4" /> {t.nav.home}
-          </Link>
+          </a>
         </div>
       </div>
     );
@@ -58,10 +51,9 @@ const AdminPage = () => {
 
   return (
     <div className="min-h-screen bg-background">
-      {adminSeo}
       <header className="bg-card border-b border-border px-6 py-4 flex items-center justify-between">
         <div className="flex items-center gap-4">
-          <Link to={`/${language}`} className="font-display text-lg font-bold text-foreground"><span className="text-gradient-gold">Brief</span>Service</Link>
+          <a href={`/${language}`} className="font-display text-lg font-bold text-foreground"><span className="text-gradient-gold">Brief</span>Service</a>
           <span className="text-muted-foreground text-sm">/ {t.admin.dashboard}</span>
         </div>
         <button onClick={async () => { await api.adminLogout(); setAdmin(null); }} className="flex items-center gap-1.5 text-sm text-muted-foreground hover:text-foreground transition-colors">
@@ -89,4 +81,4 @@ const AdminPage = () => {
   );
 };
 
-export default AdminPage;
+export default AdminApp;

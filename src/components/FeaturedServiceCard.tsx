@@ -1,6 +1,5 @@
 import { useLanguage } from "@/i18n/LanguageContext";
 import { ArrowRight, Star } from "lucide-react";
-import { Link } from "react-router-dom";
 import featured_service_image from "@/assets/featured_service.jpg";
 
 interface FeaturedServiceCardProps {
@@ -12,13 +11,13 @@ const FeaturedServiceCard = ({ href, categoryName = "Featured" }: FeaturedServic
   const { t, language } = useLanguage();
 
   return (
-    <Link
-      to={`/${language}/zmiana-dmc`}
+    <a
+      href={`/${language}/zmiana-dmc`}
       className="group bg-card rounded-xl border-2 border-[#d4a94c] shadow-[0_0_20px_rgba(212,169,76,0.3)] hover:shadow-[0_0_30px_rgba(212,169,76,0.5)] transition-all duration-300 overflow-hidden hover:-translate-y-1 block animate-pulse-border"
     >
       <div className="aspect-[16/10] overflow-hidden">
         <img
-          src={featured_service_image}
+          src={featured_service_image.src}
           alt={t.services.featured_card.title}
           className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
         />
@@ -37,7 +36,7 @@ const FeaturedServiceCard = ({ href, categoryName = "Featured" }: FeaturedServic
           </span>
         </div>
       </div>
-    </Link>
+    </a>
   );
 };
 

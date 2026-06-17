@@ -1,0 +1,35 @@
+---
+import { translations } from "@/i18n/translations";
+import { SUPPORTED_LANGUAGES, type Language } from "@/types";
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import Navbar from "@/components/astro/Navbar.astro";
+import Hero from "@/components/astro/Hero.astro";
+import Footer from "@/components/astro/Footer.astro";
+import ServicesIsland from "@/islands/ServicesIsland";
+import ContactIsland from "@/islands/ContactIsland";
+import ChatIsland from "@/islands/ChatIsland";
+
+export function getStaticPaths() {
+  return SUPPORTED_LANGUAGES.map((lang) => ({ params: { lang } }));
+}
+
+const lang = Astro.params.lang as Language;
+const t = translations[lang];
+
+const navLinks = [
+  { label: t.nav.home, href: "#hero" },
+  { label: t.nav.services, href: "#services" },
+  { label: t.nav.contact, href: "#contact" },
+];
+---
+
+<BaseLayout lang={lang} title={t.seo.title} description={t.seo.description} path="">
+  <div class="min-h-screen bg-background">
+    <Navbar lang={lang} navLinks={navLinks} />
+    <Hero lang={lang} />
+    <ServicesIsland lang={lang} client:visible />
+    <ContactIsland lang={lang} client:visible />
+    <Footer lang={lang} />
+    <ChatIsland lang={lang} client:idle />
+  </div>
+</BaseLayout>

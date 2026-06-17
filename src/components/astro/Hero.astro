@@ -1,0 +1,104 @@
+---
+import { translations } from "@/i18n/translations";
+import type { Language } from "@/types";
+import herobg1 from "@/assets/herobg1.jpg";
+import herobg2 from "@/assets/herobg2.jpg";
+import herobg3 from "@/assets/herobg3.jpg";
+
+interface Props {
+  lang: Language;
+}
+
+const { lang } = Astro.props;
+const t = translations[lang];
+const slides = [herobg1.src, herobg2.src, herobg3.src];
+---
+
+<section id="hero" class="relative min-h-[90vh] flex items-center overflow-hidden -mb-24 z-[1]">
+  <!-- Slideshow backgrounds -->
+  {
+    slides.map((src, i) => (
+      <div
+        data-slide
+        class="absolute inset-0 transition-opacity duration-1000"
+        style={`background-image:url(${src});background-size:cover;background-position:center;opacity:${i === 0 ? 1 : 0}`}
+      />
+    ))
+  }
+
+  <!-- Bottom gradient fade into services section -->
+  <div class="absolute bottom-0 left-0 right-0 h-48 z-[2] pointer-events-none bg-gradient-to-b from-transparent to-background"></div>
+
+  <!-- Slide controls -->
+  <button data-slide-prev class="absolute left-4 top-1/2 -translate-y-1/2 z-10 p-2 rounded-full bg-card/20 text-primary-foreground hover:bg-card/40 transition-colors" aria-label="Previous slide">
+    <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
+  </button>
+  <button data-slide-next class="absolute right-4 top-1/2 -translate-y-1/2 z-10 p-2 rounded-full bg-card/20 text-primary-foreground hover:bg-card/40 transition-colors" aria-label="Next slide">
+    <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
+  </button>
+
+  <!-- Indicators -->
+  <div class="absolute bottom-8 left-1/2 -translate-x-1/2 z-10 flex gap-2">
+    {
+      slides.map((_, i) => (
+        <button data-slide-dot class={`h-2.5 rounded-full transition-all ${i === 0 ? "bg-accent w-8" : "bg-primary-foreground/40 w-2.5"}`} aria-label={`Go to slide ${i + 1}`} />
+      ))
+    }
+  </div>
+
+  <div class="relative container mx-auto px-6 py-32 z-10">
+    <div class="max-w-5xl animate-fade-in-up bg-black/20 backdrop-blur-lg border border-border rounded-xl p-8 shadow-lg">
+      <h1 class="font-display text-3xl md:text-4xl lg:text-5xl font-bold text-gray-100 leading-tight mb-2">
+        {t.hero.title}
+      </h1>
+      <p class="font-display text-3xl md:text-4xl lg:text-5xl font-bold text-gradient-gold mb-6">
+        {t.hero.titleAccent}
+      </p>
+      <p class="md:text-xl text-gray-200 mb-10 leading-relaxed">
+        {t.hero.subtitle}
+      </p>
+      <div class="flex flex-wrap gap-4">
+        <a href="#services" class="inline-flex items-center gap-2 px-8 py-3.5 rounded-lg bg-gold-gradient text-accent-foreground font-semibold text-sm shadow-lg hover:shadow-xl transition-all hover:-translate-y-0.5">
+          {t.hero.cta}
+          <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14"/><path d="m19 12-7 7-7-7"/></svg>
+        </a>
+        <a href="#contact" class="inline-flex items-center gap-2 px-8 py-3.5 rounded-lg border border-gray-300 text-gray-100 font-semibold text-sm hover:bg-white/10 transition-all">
+          <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"/></svg>
+          {t.hero.chatCta}
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  const slides = Array.from(document.querySelectorAll<HTMLElement>("[data-slide]"));
+  const dots = Array.from(document.querySelectorAll<HTMLElement>("[data-slide-dot]"));
+  const prev = document.querySelector<HTMLButtonElement>("[data-slide-prev]");
+  const next = document.querySelector<HTMLButtonElement>("[data-slide-next]");
+
+  if (slides.length > 0) {
+    let current = 0;
+    const show = (i: number) => {
+      current = (i + slides.length) % slides.length;
+      slides.forEach((s, idx) => (s.style.opacity = idx === current ? "1" : "0"));
+      dots.forEach((d, idx) => {
+        d.classList.toggle("bg-accent", idx === current);
+        d.classList.toggle("w-8", idx === current);
+        d.classList.toggle("bg-primary-foreground/40", idx !== current);
+        d.classList.toggle("w-2.5", idx !== current);
+      });
+    };
+    prev?.addEventListener("click", () => show(current - 1));
+    next?.addEventListener("click", () => show(current + 1));
+    dots.forEach((dot, idx) => dot.addEventListener("click", () => show(idx)));
+    let timer = setInterval(() => show(current + 1), 5000);
+    // Reset the timer on manual interaction so it does not jump immediately after.
+    [prev, next, ...dots].forEach((el) =>
+      el?.addEventListener("click", () => {
+        clearInterval(timer);
+        timer = setInterval(() => show(current + 1), 5000);
+      }),
+    );
+  }
+</script>

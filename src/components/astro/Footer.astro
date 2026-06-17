@@ -1,0 +1,35 @@
+---
+import { translations } from "@/i18n/translations";
+import type { Language } from "@/types";
+
+interface Props {
+  lang: Language;
+}
+
+const { lang } = Astro.props;
+const t = translations[lang];
+const year = new Date().getFullYear();
+---
+
+<footer class="bg-primary py-12">
+  <div class="container mx-auto px-6">
+    <div class="flex flex-col md:flex-row items-center justify-between gap-4">
+      <div>
+        <span class="font-display text-xl font-bold text-primary-foreground">
+          <span class="text-gradient-gold">Brief</span>Service
+        </span>
+        <p class="text-primary-foreground/60 text-sm mt-1">{t.footer.description}</p>
+        <p class="text-primary-foreground/60 text-sm mt-1">
+          {t.footer.cookieNotice.before}
+          <a href={`/${lang}/privacy-policy`} class="underline hover:text-primary-foreground/80 transition-colors">
+            {t.footer.cookieNotice.linkText}
+          </a>
+          {t.footer.cookieNotice.after}
+        </p>
+      </div>
+      <p class="text-primary-foreground/40 text-sm">
+        © {year} BriefService. {t.footer.rights}
+      </p>
+    </div>
+  </div>
+</footer>

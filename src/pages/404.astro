@@ -1,0 +1,20 @@
+---
+import { translations } from "@/i18n/translations";
+import { FALLBACK_LANGUAGE } from "@/config";
+import BaseLayout from "@/layouts/BaseLayout.astro";
+
+const lang = FALLBACK_LANGUAGE;
+const t = translations[lang];
+---
+
+<BaseLayout lang={lang} title={`404 — ${t.notFound.title}`} description={t.notFound.title} path="" noindex>
+  <div class="flex min-h-screen items-center justify-center bg-muted">
+    <div class="text-center">
+      <h1 class="mb-4 text-4xl font-bold">404</h1>
+      <p class="mb-4 text-xl text-muted-foreground">{t.notFound.title}</p>
+      <a href={`/${lang}`} class="text-primary underline hover:text-primary/90">
+        {t.notFound.goHome}
+      </a>
+    </div>
+  </div>
+</BaseLayout>
