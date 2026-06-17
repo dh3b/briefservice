@@ -1,15 +1,10 @@
 /**
- * Single source of truth for the site's language/route matrix and the
- * SEO primitives derived from it (canonical URLs, hreflang alternates,
- * prerender path list, sitemap XML).
+ * Single source of truth for the site's language/route data and the SEO
+ * primitives derived from it: canonical URLs, hreflang alternates, JSON-LD
+ * builders, and the sitemap.
  *
- * This module is intentionally dependency-free: it imports nothing and
- * touches no browser or `import.meta` globals, so it can be imported both
- * by the React app (via the `@/seo/site` alias) and by `vite.config.ts`
- * at build time (via a relative path) without resolution surprises.
- *
- * `src/config.ts` and `src/types.ts` re-export the constants below so the
- * rest of the codebase keeps importing from its usual places.
+ * Pure data + functions (no browser globals), so it can be imported anywhere —
+ * Astro layouts, the sitemap endpoint, and unit tests.
  */
 
 export const SUPPORTED_LANGUAGES = ["pl", "en", "uk", "ru", "cs", "es", "it", "hu", "ro", "lt"] as const;
@@ -22,26 +17,6 @@ export const FALLBACK_LANGUAGE: Language = "en";
 export const BASE_DOMAIN = "brief-service.com";
 export const SITE_URL = `https://${BASE_DOMAIN}`;
 
-export interface PageDef {
-  /** Path after the language segment. "" is the language home page. */
-  path: string;
-  /** Whether the page should be indexed and appear in the sitemap. */
-  index: boolean;
-}
-
-/**
- * Every content route the app renders under `/:lang`. Order here drives the
- * sitemap order. `admin` is rendered (so its noindex tag is baked in) but is
- * never indexed nor listed in the sitemap.
- */
-export const PAGES: readonly PageDef[] = [
-  { path: "", index: true },
-  { path: "zmiana-dmc", index: true },
-  { path: "landing", index: true },
-  { path: "privacy-policy", index: true },
-  { path: "admin", index: false },
-];
-
 /** Strip leading/trailing slashes from a sub-path. */
 function clean(subPath: string): string {
   return subPath.replace(/^\/+|\/+$/g, "");
@@ -50,7 +25,7 @@ function clean(subPath: string): string {
 /**
  * Absolute, self-referential canonical URL for a page in a given language.
  * The language home keeps a trailing slash (`/pl/`); sub-pages do not
- * (`/pl/zmiana-dmc`), matching the served file layout (dirStyle: nested).
+ * (`/pl/zmiana-dmc`), matching the served file layout.
  */
 export function canonicalUrl(lang: Language, subPath: string): string {
   const rest = clean(subPath);
@@ -62,35 +37,85 @@ export interface HreflangAlternate {
   href: string;
 }
 
-/** hreflang alternates for a given sub-path: one per language, plus x-default. */
-export function hreflangAlternates(subPath: string): HreflangAlternate[] {
-  const alts: HreflangAlternate[] = SUPPORTED_LANGUAGES.map((lang) => ({
+/**
+ * hreflang alternates for a sub-path. `langs` is the set of languages the page
+ * actually exists in (defaults to all). x-default points at the fallback
+ * language when present, otherwise the first available language.
+ */
+export function hreflangAlternates(
+  subPath: string,
+  langs: readonly Language[] = SUPPORTED_LANGUAGES,
+): HreflangAlternate[] {
+  const alts: HreflangAlternate[] = langs.map((lang) => ({
     hreflang: lang,
     href: canonicalUrl(lang, subPath),
   }));
-  alts.push({ hreflang: "x-default", href: canonicalUrl(FALLBACK_LANGUAGE, subPath) });
+  const xDefault = langs.includes(FALLBACK_LANGUAGE) ? FALLBACK_LANGUAGE : langs[0];
+  if (xDefault) alts.push({ hreflang: "x-default", href: canonicalUrl(xDefault, subPath) });
   return alts;
 }
 
-/**
- * The full list of route paths to statically prerender:
- * the bare root plus every language × page (admin included so its noindex
- * markup is generated). Consumed by `ssgOptions.includedRoutes`.
- */
-export function staticRenderPaths(): string[] {
-  const paths: string[] = ["/"];
-  for (const lang of SUPPORTED_LANGUAGES) {
-    for (const page of PAGES) {
-      paths.push(page.path ? `/${lang}/${page.path}` : `/${lang}`);
-    }
-  }
-  return paths;
+export interface PageDef {
+  /** Path after the language segment. "" is the language home page. */
+  path: string;
+  /** Whether the page should be indexed and appear in the sitemap. */
+  index: boolean;
 }
 
 /**
- * Sitewide Organization structured data. Rendered once per page so every URL
- * carries it. States explicitly that this is a private service, not a
- * government authority.
+ * The base pages that exist in every supported language (driven by
+ * translations.ts). Per-service and guide pages are Polish-only and live in
+ * their own content modules; the sitemap endpoint adds them as entries.
+ */
+export const PAGES: readonly PageDef[] = [
+  { path: "", index: true },
+  { path: "zmiana-dmc", index: true },
+  { path: "landing", index: true },
+  { path: "privacy-policy", index: true },
+  { path: "admin", index: false },
+];
+
+/** A page (sub-path) and the set of languages it is published in. */
+export interface SitemapEntry {
+  subPath: string;
+  langs: readonly Language[];
+}
+
+/** Sitemap entries for the base, all-language indexable pages. */
+export function baseSitemapEntries(): SitemapEntry[] {
+  return PAGES.filter((p) => p.index).map((p) => ({
+    subPath: p.path,
+    langs: SUPPORTED_LANGUAGES,
+  }));
+}
+
+/** Build sitemap XML from a list of (sub-path × languages) entries. */
+export function buildSitemapXml(entries: SitemapEntry[]): string {
+  const urls: string[] = [];
+
+  for (const entry of entries) {
+    for (const lang of entry.langs) {
+      const loc = canonicalUrl(lang, entry.subPath);
+      const alternates = hreflangAlternates(entry.subPath, entry.langs)
+        .map((a) => `    <xhtml:link rel="alternate" hreflang="${a.hreflang}" href="${a.href}" />`)
+        .join("\n");
+      urls.push(`  <url>\n    <loc>${loc}</loc>\n${alternates}\n  </url>`);
+    }
+  }
+
+  return `<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:xhtml="http://www.w3.org/1999/xhtml">
+${urls.join("\n")}
+</urlset>
+`;
+}
+
+/* ----------------------------- JSON-LD builders ---------------------------- */
+
+/**
+ * Sitewide Organization structured data. States explicitly that this is a
+ * private service, not a government authority.
  */
 export function organizationSchema(): Record<string, unknown> {
   return {
@@ -113,25 +138,51 @@ export function organizationSchema(): Record<string, unknown> {
   };
 }
 
-/** Build the sitemap XML from the indexable language × page matrix. */
-export function buildSitemapXml(): string {
-  const indexable = PAGES.filter((p) => p.index);
-  const urls: string[] = [];
+/** `Service` JSON-LD for a single service page. */
+export function serviceSchema(opts: {
+  name: string;
+  description: string;
+  url: string;
+}): Record<string, unknown> {
+  return {
+    "@context": "https://schema.org",
+    "@type": "Service",
+    name: opts.name,
+    serviceType: opts.name,
+    description: opts.description,
+    url: opts.url,
+    areaServed: { "@type": "Country", name: "DE" },
+    provider: {
+      "@type": "Organization",
+      name: "BriefService",
+      url: `${SITE_URL}/`,
+    },
+  };
+}
 
-  for (const page of indexable) {
-    for (const lang of SUPPORTED_LANGUAGES) {
-      const loc = canonicalUrl(lang, page.path);
-      const alternates = hreflangAlternates(page.path)
-        .map((a) => `    <xhtml:link rel="alternate" hreflang="${a.hreflang}" href="${a.href}" />`)
-        .join("\n");
-      urls.push(`  <url>\n    <loc>${loc}</loc>\n${alternates}\n  </url>`);
-    }
-  }
+/** `FAQPage` JSON-LD from question/answer pairs. */
+export function faqSchema(faqs: { q: string; a: string }[]): Record<string, unknown> {
+  return {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: faqs.map((f) => ({
+      "@type": "Question",
+      name: f.q,
+      acceptedAnswer: { "@type": "Answer", text: f.a },
+    })),
+  };
+}
 
-  return `<?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
-        xmlns:xhtml="http://www.w3.org/1999/xhtml">
-${urls.join("\n")}
-</urlset>
-`;
+/** `BreadcrumbList` JSON-LD from an ordered list of crumbs. */
+export function breadcrumbSchema(items: { name: string; url: string }[]): Record<string, unknown> {
+  return {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: items.map((item, i) => ({
+      "@type": "ListItem",
+      position: i + 1,
+      name: item.name,
+      item: item.url,
+    })),
+  };
 }
