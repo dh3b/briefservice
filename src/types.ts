@@ -1,8 +1,7 @@
-import { FALLBACK_LANGUAGE } from "@/config";
+import { SUPPORTED_LANGUAGES, FALLBACK_LANGUAGE, type Language } from "@/seo/site";
 
-export const SUPPORTED_LANGUAGES = ["pl", "en", "uk", "ru", "cs", "es", "it", "hu", "ro", "lt"] as const;
-
-export type Language = (typeof SUPPORTED_LANGUAGES)[number];
+export { SUPPORTED_LANGUAGES };
+export type { Language };
 
 export const LANGUAGE_LABELS: Record<Language, string> = {
   pl: "Polski",

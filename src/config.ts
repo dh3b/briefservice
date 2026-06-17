@@ -12,8 +12,9 @@ export const MAX_EMAIL_LEN = 255;
 
 export const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-export const FALLBACK_LANGUAGE = "en" as const;
-export const BASE_DOMAIN = "brief-service.com";
+// Re-exported from the dependency-free SEO module so there is a single
+// source of truth for the language/domain constants used across the app.
+export { FALLBACK_LANGUAGE, BASE_DOMAIN } from "@/seo/site";
 
 /**
  * Maps app language codes to LibreTranslate language codes.
