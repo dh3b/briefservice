@@ -12,38 +12,49 @@ interface Props {
 const { lang, langSuffix = "", navLinks } = Astro.props;
 ---
 
-<nav class="fixed top-0 left-0 right-0 z-50 bg-card/80 backdrop-blur-lg border-b border-border">
-  <div class="container mx-auto px-6 h-16 flex items-center justify-between">
-    <a href={`/${lang}`} class="font-display text-xl font-bold text-foreground tracking-tight">
-      <span class="text-gradient-gold">Brief</span>Service
+<header data-nav class="sticky top-0 z-50 transition-colors duration-300">
+  <div class="container-editorial flex h-[72px] items-center justify-between gap-6">
+    <!-- Logo mark + wordmark -->
+    <a href={`/${lang}`} class="flex items-center gap-2.5 shrink-0" aria-label="BriefService">
+      <span class="grid h-9 w-9 place-items-center rounded-[11px] bg-ink text-paper">
+        <svg viewBox="0 0 24 24" class="h-[18px] w-[18px]" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M7 3.5h7l4 4V20a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V4.5a1 1 0 0 1 1-1Z" />
+          <path d="M13.5 3.5V8h4.5" />
+          <circle cx="12" cy="14.5" r="2.4" class="text-terracotta" stroke="hsl(var(--terracotta))" />
+        </svg>
+      </span>
+      <span class="font-display text-[1.15rem] font-extrabold tracking-tight text-ink">brief<span class="text-terracotta">service</span></span>
     </a>
 
-    <!-- Desktop -->
-    <div class="hidden md:flex items-center gap-8">
+    <!-- Desktop nav -->
+    <nav class="hidden md:flex items-center gap-9">
       {
         navLinks.map((l) => (
-          <a href={l.href} class="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">
+          <a href={l.href} class="text-sm font-medium text-ink/70 hover:text-ink transition-colors">
             {l.label}
           </a>
         ))
       }
+    </nav>
 
+    <div class="flex items-center gap-3">
+      <!-- Language: dark pill + dropdown -->
       <div class="relative">
         <button
           data-lang-toggle
           aria-haspopup="true"
-          class="flex items-center gap-1.5 px-3 py-1.5 rounded-md bg-secondary text-secondary-foreground text-sm font-medium hover:bg-accent hover:text-accent-foreground transition-colors"
+          class="flex items-center gap-2 rounded-full bg-ink px-3.5 py-2 text-sm font-medium text-paper transition-transform hover:-translate-y-px"
         >
           <span>{LANGUAGE_FLAGS[lang]}</span>
-          <span>{LANGUAGE_LABELS[lang]}</span>
-          <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+          <span class="uppercase tracking-wide text-xs font-semibold">{lang}</span>
+          <svg class="h-3.5 w-3.5 opacity-70" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6" /></svg>
         </button>
-        <div data-lang-menu class="hidden absolute right-0 top-full mt-1 w-48 bg-card border border-border rounded-lg shadow-lg overflow-hidden z-50 max-h-80 overflow-y-auto">
+        <div data-lang-menu class="hidden absolute right-0 top-full mt-2 w-52 overflow-hidden rounded-2xl border border-border bg-paper p-1.5 shadow-float">
           {
             SUPPORTED_LANGUAGES.map((code) => (
               <a
                 href={`/${code}${langSuffix}`}
-                class={`w-full px-4 py-2 text-left text-sm flex items-center gap-2 hover:bg-muted transition-colors ${lang === code ? "bg-muted font-semibold text-foreground" : "text-muted-foreground"}`}
+                class={`flex items-center gap-2.5 rounded-xl px-3 py-2 text-sm transition-colors ${lang === code ? "bg-secondary font-semibold text-ink" : "text-ink/70 hover:bg-secondary/70"}`}
               >
                 <span>{LANGUAGE_FLAGS[code]}</span>
                 <span>{LANGUAGE_LABELS[code]}</span>
@@ -52,39 +63,30 @@ const { lang, langSuffix = "", navLinks } = Astro.props;
           }
         </div>
       </div>
-    </div>
 
-    <!-- Mobile toggle -->
-    <button data-mobile-toggle class="md:hidden text-foreground" aria-label="Menu">
-      <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="4" x2="20" y1="6" y2="6"/><line x1="4" x2="20" y1="12" y2="12"/><line x1="4" x2="20" y1="18" y2="18"/></svg>
-    </button>
+      <!-- Mobile toggle -->
+      <button data-mobile-toggle class="md:hidden grid h-9 w-9 place-items-center rounded-full border border-border text-ink" aria-label="Menu">
+        <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="4" x2="20" y1="7" y2="7" /><line x1="4" x2="20" y1="12" y2="12" /><line x1="4" x2="20" y1="17" y2="17" /></svg>
+      </button>
+    </div>
   </div>
 
   <!-- Mobile menu -->
-  <div data-mobile-menu class="hidden md:hidden bg-card border-b border-border px-6 py-4 space-y-3">
-    {
-      navLinks.map((l) => (
-        <a href={l.href} class="block text-sm font-medium text-muted-foreground">
-          {l.label}
-        </a>
-      ))
-    }
-    <div class="border-t border-border pt-3 grid grid-cols-4 gap-1">
+  <div data-mobile-menu class="hidden md:hidden container-editorial pb-4">
+    <div class="card-surface p-3 space-y-1">
       {
-        SUPPORTED_LANGUAGES.map((code) => (
-          <a
-            href={`/${code}${langSuffix}`}
-            class={`px-2 py-1.5 text-xs rounded-md text-center ${lang === code ? "bg-primary text-primary-foreground" : "bg-secondary text-secondary-foreground"}`}
-          >
-            {LANGUAGE_FLAGS[code]} {code.toUpperCase()}
+        navLinks.map((l) => (
+          <a href={l.href} class="block rounded-xl px-3 py-2.5 text-sm font-medium text-ink/80 hover:bg-secondary/70">
+            {l.label}
           </a>
         ))
       }
     </div>
   </div>
-</nav>
+</header>
 
 <script>
+  const header = document.querySelector<HTMLElement>("[data-nav]");
   const langToggle = document.querySelector<HTMLButtonElement>("[data-lang-toggle]");
   const langMenu = document.querySelector<HTMLElement>("[data-lang-menu]");
   const mobileToggle = document.querySelector<HTMLButtonElement>("[data-mobile-toggle]");
@@ -96,9 +98,21 @@ const { lang, langSuffix = "", navLinks } = Astro.props;
   });
   mobileToggle?.addEventListener("click", () => mobileMenu?.classList.toggle("hidden"));
   document.addEventListener("click", (e) => {
-    const target = e.target as Node;
-    if (langMenu && !langMenu.classList.contains("hidden") && !langToggle?.contains(target) && !langMenu.contains(target)) {
+    const t = e.target as Node;
+    if (langMenu && !langMenu.classList.contains("hidden") && !langToggle?.contains(t) && !langMenu.contains(t)) {
       langMenu.classList.add("hidden");
     }
   });
+
+  // Faint backdrop once scrolled — sticky but blends at the top.
+  const onScroll = () => {
+    if (!header) return;
+    if (window.scrollY > 12) {
+      header.classList.add("bg-linen/80", "backdrop-blur-md", "border-b", "border-border/60");
+    } else {
+      header.classList.remove("bg-linen/80", "backdrop-blur-md", "border-b", "border-border/60");
+    }
+  };
+  window.addEventListener("scroll", onScroll, { passive: true });
+  onScroll();
 </script>

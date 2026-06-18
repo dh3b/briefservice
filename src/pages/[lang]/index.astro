@@ -21,15 +21,50 @@ const navLinks = [
   { label: t.nav.services, href: "#services" },
   { label: t.nav.contact, href: "#contact" },
 ];
+
+// Short assurances strip — pl/en authored, others fall back to en.
+type Assure = { k: string; v: string };
+const ASSURE: Partial<Record<Language, Assure[]>> = {
+  pl: [
+    { k: "01", v: "Działamy bezpośrednio w Niemczech" },
+    { k: "02", v: "Dokumenty ważne w całej Unii Europejskiej" },
+    { k: "03", v: "Specjalizacja w sprawach trudnych i nietypowych" },
+    { k: "04", v: "Prywatna firma — nie jesteśmy urzędem" },
+  ],
+  en: [
+    { k: "01", v: "We work directly with German institutions" },
+    { k: "02", v: "Documents valid across the European Union" },
+    { k: "03", v: "Specialised in difficult, non-standard cases" },
+    { k: "04", v: "A private company — not a government authority" },
+  ],
+};
+const assurances = ASSURE[lang] ?? ASSURE.en!;
 ---
 
 <BaseLayout lang={lang} title={t.seo.title} description={t.seo.description} path="">
-  <div class="min-h-screen bg-background">
-    <Navbar lang={lang} navLinks={navLinks} />
+  <Navbar lang={lang} navLinks={navLinks} />
+
+  <main id="hero">
     <Hero lang={lang} />
+
+    <!-- Assurances strip -->
+    <section class="border-y border-border">
+      <div class="container-editorial grid gap-x-10 gap-y-8 py-12 sm:grid-cols-2 lg:grid-cols-4">
+        {
+          assurances.map((a) => (
+            <div data-reveal class="flex flex-col gap-2">
+              <span class="font-mono text-xs text-terracotta">{a.k}</span>
+              <span class="text-[15px] leading-snug text-ink/80">{a.v}</span>
+            </div>
+          ))
+        }
+      </div>
+    </section>
+
     <ServicesIsland lang={lang} client:visible />
     <ContactIsland lang={lang} client:visible />
-    <Footer lang={lang} />
-    <ChatIsland lang={lang} client:idle />
-  </div>
+  </main>
+
+  <Footer lang={lang} />
+  <ChatIsland lang={lang} client:idle />
 </BaseLayout>

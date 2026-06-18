@@ -32,8 +32,6 @@ const ContactSection = () => {
       cooldownUntilRef.current = Date.now() + 60_000;
       setForm({ name: "", email: "", message: "" });
       setTimeout(() => setSent(false), 4000);
-      
-      // Google Ads conversion tracking (Contact form submission)
       reportConversion("contactForm", { value: 2.5, currency: "PLN" });
     } catch (err) {
       console.error("Contact form error:", err);
@@ -42,103 +40,67 @@ const ContactSection = () => {
     }
   };
 
+  const inputCls =
+    "w-full rounded-xl border border-border bg-paper px-4 py-3 text-sm text-ink outline-none transition-all placeholder:text-muted-foreground focus:border-terracotta focus:ring-2 focus:ring-terracotta/20";
+
   return (
-    <section id="contact" className="py-24 bg-secondary/50">
-      <div className="container mx-auto px-6">
-        <div className="text-center mb-14">
-          <h2 className="font-display text-4xl md:text-5xl font-bold text-foreground mb-4">{t.contact.title}</h2>
-          <p className="text-muted-foreground text-lg max-w-md mx-auto">{t.contact.subtitle}</p>
+    <section id="contact" className="section">
+      <div className="container-editorial">
+        <div className="max-w-2xl" data-reveal>
+          <p className="eyebrow">{t.contact.phone ? t.contact.title : "Contact"}</p>
+          <h2 className="mt-3 text-[clamp(2.2rem,4.5vw,3.5rem)] text-ink">{t.contact.title}</h2>
+          <p className="mt-4 text-[15px] leading-relaxed text-muted-foreground">{t.contact.subtitle}</p>
         </div>
 
-        <div className="grid md:grid-cols-2 gap-12 max-w-4xl mx-auto">
-          <div className="space-y-8">
+        <div className="mt-12 grid gap-10 md:grid-cols-2" data-reveal>
+          {/* Contact details */}
+          <div className="space-y-6">
+            <a href={`tel:${CONTACT_PHONE.replace(/\s/g, "")}`} onClick={handlePhoneClick} className="group flex items-start gap-4">
+              <span className="grid h-11 w-11 shrink-0 place-items-center rounded-xl bg-ink text-paper"><Phone className="h-5 w-5" /></span>
+              <span>
+                <span className="block text-sm font-semibold text-ink">{t.contact.phone}</span>
+                <span className="block text-sm text-muted-foreground group-hover:text-terracotta transition-colors">{CONTACT_PHONE}</span>
+              </span>
+            </a>
+            <a href="mailto:audicarforme@op.pl" onClick={() => reportConversion("emailClick")} className="group flex items-start gap-4">
+              <span className="grid h-11 w-11 shrink-0 place-items-center rounded-xl bg-ink text-paper"><Mail className="h-5 w-5" /></span>
+              <span>
+                <span className="block text-sm font-semibold text-ink">Email</span>
+                <span className="block text-sm text-muted-foreground group-hover:text-terracotta transition-colors">audicarforme@op.pl</span>
+              </span>
+            </a>
             <div className="flex items-start gap-4">
-              <div className="w-10 h-10 rounded-lg bg-primary flex items-center justify-center flex-shrink-0">
-                <Phone className="w-5 h-5 text-primary-foreground" />
-              </div>
-              <div>
-                <h4 className="font-semibold text-foreground mb-1">{t.contact.phone}</h4>
-                <p className="text-muted-foreground text-sm">
-                  <a 
-                    href={`tel:${CONTACT_PHONE.replace(/\s/g, "")}`} 
-                    onClick={handlePhoneClick}
-                    className="hover:text-primary/20 hover:underline"
-                  >
-                    {CONTACT_PHONE}
-                  </a>
-                </p>
-              </div>
-            </div>
-            <div className="flex items-start gap-4">
-              <div className="w-10 h-10 rounded-lg bg-primary flex items-center justify-center flex-shrink-0">
-                <Mail className="w-5 h-5 text-primary-foreground" />
-              </div>
-              <div>
-                <h4 className="font-semibold text-foreground mb-1">Email</h4>
-                <p className="text-muted-foreground text-sm"><a href="mailto:audicarforme@op.pl" onClick={() => reportConversion("emailClick")} className="hover:text-primary/20 hover:underline">audicarforme@op.pl</a></p>
-              </div>
-            </div>
-            <div className="flex items-start gap-4">
-              <div className="w-10 h-10 rounded-lg bg-primary flex items-center justify-center flex-shrink-0">
-                <MapPin className="w-5 h-5 text-primary-foreground" />
-              </div>
-              <div>
-                <h4 className="font-semibold text-foreground mb-1">{t.contact.address}</h4>
-                <p className="text-muted-foreground text-sm">ul. Sosnowa 10/7, 68-100, Żagań</p>
-              </div>
+              <span className="grid h-11 w-11 shrink-0 place-items-center rounded-xl bg-ink text-paper"><MapPin className="h-5 w-5" /></span>
+              <span>
+                <span className="block text-sm font-semibold text-ink">{t.contact.address}</span>
+                <span className="block text-sm text-muted-foreground">ul. Sosnowa 10/7, 68-100 Żagań</span>
+              </span>
             </div>
 
-            <div className="rounded-xl bg-gradient-to-br from-accent/10 to-accent/5 border border-accent/20 p-5">
-              <h4 className="font-semibold text-foreground text-sm mb-4 flex items-center gap-2">
-                <Languages className="w-4 h-4 text-accent-foreground" />
+            <div className="card-surface rounded-2xl p-5">
+              <p className="flex items-center gap-2 text-sm font-semibold text-ink">
+                <Languages className="h-4 w-4 text-terracotta" />
                 {t.contact.languageAccessibility.title}
-              </h4>
-              <div className="space-y-3">
-                <div className="flex items-center gap-3">
-                  <div className="w-8 h-8 rounded-full bg-emerald-100 dark:bg-emerald-900/30 flex items-center justify-center flex-shrink-0">
-                    <MessageCircle className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />
-                  </div>
-                  <div>
-                    <p className="text-sm font-medium text-foreground">{t.chat.title}</p>
-                    <p className="text-xs text-muted-foreground">{t.contact.languageAccessibility.chat}</p>
-                  </div>
-                </div>
-                <div className="flex items-center gap-3">
-                  <div className="w-8 h-8 rounded-full bg-sky-100 dark:bg-sky-900/30 flex items-center justify-center flex-shrink-0">
-                    <Mail className="w-4 h-4 text-sky-600 dark:text-sky-400" />
-                  </div>
-                  <div>
-                    <p className="text-sm font-medium text-foreground">Email</p>
-                    <p className="text-xs text-muted-foreground">{t.contact.languageAccessibility.email}</p>
-                  </div>
-                </div>
-                <div className="flex items-center gap-3">
-                  <div className="w-8 h-8 rounded-full bg-amber-100 dark:bg-amber-900/30 flex items-center justify-center flex-shrink-0">
-                    <Phone className="w-4 h-4 text-amber-600 dark:text-amber-400" />
-                  </div>
-                  <div>
-                    <p className="text-sm font-medium text-foreground">{t.contact.phone}</p>
-                    <p className="text-xs text-muted-foreground">{t.contact.languageAccessibility.phone} <span className="text-xs leading-none" title="Polski">🇵🇱</span> <span className="text-xs leading-none" title="Deutsch">🇩🇪</span></p>
-                  </div>
-                </div>
-              </div>
+              </p>
+              <ul className="mt-3 space-y-2 text-sm text-muted-foreground">
+                <li className="flex items-center gap-2"><MessageCircle className="h-3.5 w-3.5 text-terracotta" /> {t.contact.languageAccessibility.chat}</li>
+                <li className="flex items-center gap-2"><Mail className="h-3.5 w-3.5 text-terracotta" /> {t.contact.languageAccessibility.email}</li>
+                <li className="flex items-center gap-2"><Phone className="h-3.5 w-3.5 text-terracotta" /> {t.contact.languageAccessibility.phone} 🇵🇱 🇩🇪</li>
+              </ul>
             </div>
           </div>
 
-          <form onSubmit={handleSubmit} className="space-y-5 flex flex-col">
+          {/* Form */}
+          <form onSubmit={handleSubmit} className="card-surface flex flex-col gap-4 rounded-2xl p-6 sm:p-8">
             {sent && (
-              <div className="flex items-center gap-2 px-4 py-3 rounded-lg bg-accent/20 text-accent-foreground text-sm">
-                <CheckCircle className="w-4 h-4" /> {t.contact.sent}
+              <div className="flex items-center gap-2 rounded-xl bg-emerald-500/12 px-4 py-3 text-sm text-emerald-700">
+                <CheckCircle className="h-4 w-4" /> {t.contact.sent}
               </div>
             )}
-            <input type="text" placeholder={t.contact.name} value={form.name} maxLength={255} onChange={(e) => setForm({ ...form, name: e.target.value })}
-              className="w-full px-4 py-3 rounded-lg bg-card border border-border text-foreground placeholder:text-muted-foreground text-sm focus:ring-2 focus:ring-ring focus:border-transparent outline-none transition-all" />
-            <input type="email" placeholder={t.contact.email} value={form.email} maxLength={255} onChange={(e) => setForm({ ...form, email: e.target.value })}
-              className="w-full px-4 py-3 rounded-lg bg-card border border-border text-foreground placeholder:text-muted-foreground text-sm focus:ring-2 focus:ring-ring focus:border-transparent outline-none transition-all" />
-            <textarea placeholder={t.contact.message} value={form.message} maxLength={500} onChange={(e) => setForm({ ...form, message: e.target.value })}
-              className="w-full px-4 py-3 rounded-lg bg-card border border-border text-foreground placeholder:text-muted-foreground text-sm focus:ring-2 focus:ring-ring focus:border-transparent outline-none transition-all resize-none flex-1" />
-            <button type="submit" disabled={sending || isCoolingDown()}
-              className="w-full py-3.5 rounded-lg bg-gold-gradient text-accent-foreground font-semibold text-sm hover:shadow-lg transition-all hover:-translate-y-0.5 disabled:opacity-50">
+            <input type="text" placeholder={t.contact.name} value={form.name} maxLength={255} onChange={(e) => setForm({ ...form, name: e.target.value })} className={inputCls} />
+            <input type="email" placeholder={t.contact.email} value={form.email} maxLength={255} onChange={(e) => setForm({ ...form, email: e.target.value })} className={inputCls} />
+            <textarea placeholder={t.contact.message} value={form.message} maxLength={500} rows={5} onChange={(e) => setForm({ ...form, message: e.target.value })} className={`${inputCls} resize-none`} />
+            <button type="submit" disabled={sending || isCoolingDown()} className="btn-primary w-full disabled:opacity-50">
               {t.contact.send}
             </button>
           </form>

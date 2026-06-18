@@ -11,37 +11,47 @@ const t = translations[lang];
 const year = new Date().getFullYear();
 ---
 
-<footer class="bg-primary py-12">
-  <div class="container mx-auto px-6">
-    <div class="flex flex-col md:flex-row items-center justify-between gap-4">
-      <div>
-        <span class="font-display text-xl font-bold text-primary-foreground">
-          <span class="text-gradient-gold">Brief</span>Service
-        </span>
-        <p class="text-primary-foreground/60 text-sm mt-1">{t.footer.description}</p>
-        {
-          lang === "pl" && (
-            <nav class="flex flex-wrap gap-x-4 gap-y-1 mt-3 text-sm">
-              <a href="/pl/uslugi" class="text-primary-foreground/80 hover:text-primary-foreground underline-offset-2 hover:underline transition-colors">
-                Usługi
-              </a>
-              <a href="/pl/poradnik" class="text-primary-foreground/80 hover:text-primary-foreground underline-offset-2 hover:underline transition-colors">
-                Poradnik
-              </a>
-            </nav>
-          )
-        }
-        <p class="text-primary-foreground/60 text-sm mt-3">
-          {t.footer.cookieNotice.before}
-          <a href={`/${lang}/privacy-policy`} class="underline hover:text-primary-foreground/80 transition-colors">
-            {t.footer.cookieNotice.linkText}
-          </a>
-          {t.footer.cookieNotice.after}
-        </p>
+<footer class="panel-dark">
+  <div class="container-editorial py-16">
+    <div class="grid gap-10 md:grid-cols-[1.3fr_1fr_1fr]">
+      <div class="max-w-sm">
+        <div class="flex items-center gap-2.5">
+          <span class="grid h-9 w-9 place-items-center rounded-[11px] bg-terracotta text-paper">
+            <svg viewBox="0 0 24 24" class="h-[18px] w-[18px]" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M7 3.5h7l4 4V20a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V4.5a1 1 0 0 1 1-1Z" />
+              <path d="M13.5 3.5V8h4.5" />
+            </svg>
+          </span>
+          <span class="font-display text-lg font-extrabold tracking-tight">briefservice</span>
+        </div>
+        <p class="mt-4 text-sm leading-relaxed text-paper/55">{t.footer.description}</p>
       </div>
-      <p class="text-primary-foreground/40 text-sm">
-        © {year} BriefService. {t.footer.rights}
-      </p>
+
+      <div>
+        <p class="eyebrow text-paper/45">Kontakt</p>
+        <ul class="mt-4 space-y-2.5 text-sm text-paper/70">
+          <li><a href="tel:+48696513109" class="hover:text-paper transition-colors">+48 696 513 109</a></li>
+          <li><a href="mailto:audicarforme@op.pl" class="hover:text-paper transition-colors">audicarforme@op.pl</a></li>
+          <li class="text-paper/50">ul. Sosnowa 10/7, 68-100 Żagań</li>
+        </ul>
+      </div>
+
+      <div>
+        <p class="eyebrow text-paper/45">{lang === "pl" ? "Na stronie" : "Site"}</p>
+        <ul class="mt-4 space-y-2.5 text-sm text-paper/70">
+          <li><a href={`/${lang}`} class="hover:text-paper transition-colors">{t.nav.home}</a></li>
+          {lang === "pl" && <li><a href="/pl/uslugi" class="hover:text-paper transition-colors">Usługi</a></li>}
+          {lang === "pl" && <li><a href="/pl/poradnik" class="hover:text-paper transition-colors">Poradnik</a></li>}
+          <li>
+            <a href={`/${lang}/privacy-policy`} class="hover:text-paper transition-colors">{t.footer.cookieNotice.linkText}</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="mt-14 flex flex-col gap-3 border-t border-paper/12 pt-6 text-xs text-paper/45 sm:flex-row sm:items-center sm:justify-between">
+      <p>© {year} BriefService. {t.footer.rights}</p>
+      <p>{lang === "pl" ? "Prywatna firma — nie jesteśmy urzędem." : "Private company — not a government authority."}</p>
     </div>
   </div>
 </footer>

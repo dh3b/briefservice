@@ -197,20 +197,21 @@ const ChatWidget = ({ serviceId, serviceName, onOpenTriggered }: ChatWidgetProps
       {!open && (
         <button
           onClick={() => setOpen(true)}
-          className="fixed bottom-6 right-6 z-50 w-14 h-14 rounded-full bg-gold-gradient shadow-chat flex items-center justify-center hover:scale-110 transition-transform animate-chat-bounce"
+          aria-label={t.chat.title}
+          className="fixed bottom-6 right-6 z-50 flex h-14 w-14 items-center justify-center rounded-full bg-terracotta text-paper shadow-float transition-transform hover:-translate-y-0.5 hover:scale-105"
         >
-          <MessageCircle className="w-6 h-6 text-accent-foreground" />
+          <MessageCircle className="h-6 w-6" />
         </button>
       )}
 
       {open && (
-        <div className="fixed bottom-6 right-6 z-50 w-[360px] max-w-[calc(100vw-3rem)] h-[500px] max-h-[calc(100vh-6rem)] rounded-2xl bg-card border border-border shadow-chat flex flex-col overflow-hidden">
-          <div className="bg-primary px-5 py-4 flex items-center justify-between flex-shrink-0">
+        <div className="fixed bottom-6 right-6 z-50 w-[360px] max-w-[calc(100vw-3rem)] h-[500px] max-h-[calc(100vh-6rem)] rounded-2xl bg-card border border-border shadow-float flex flex-col overflow-hidden">
+          <div className="panel-dark px-5 py-4 flex items-center justify-between flex-shrink-0">
             <div className="flex items-center gap-3">
-              <div className="w-8 h-8 rounded-full bg-gold-gradient flex items-center justify-center">
-                <MessageCircle className="w-4 h-4 text-accent-foreground" />
+              <div className="w-8 h-8 rounded-full bg-terracotta flex items-center justify-center">
+                <MessageCircle className="w-4 h-4 text-paper" />
               </div>
-              <span className="text-primary-foreground font-semibold text-sm">{t.chat.title}</span>
+              <span className="text-paper font-semibold text-sm">{t.chat.title}</span>
             </div>
             <div className="flex gap-1">
               <button onClick={() => setOpen(false)} className="p-1.5 rounded-md text-primary-foreground/70 hover:text-primary-foreground hover:bg-primary-foreground/10 transition-colors">
@@ -242,7 +243,7 @@ const ChatWidget = ({ serviceId, serviceName, onOpenTriggered }: ChatWidgetProps
               />
               <button
                 onClick={handleNameSubmit}
-                className="w-full py-2.5 rounded-xl bg-gold-gradient text-accent-foreground font-semibold text-sm hover:shadow-md transition-all"
+                className="w-full py-2.5 rounded-xl bg-terracotta text-paper font-semibold text-sm hover:bg-terracotta-deep transition-all"
               >
                 {t.chat.nameSubmit}
               </button>
@@ -282,7 +283,7 @@ const ChatWidget = ({ serviceId, serviceName, onOpenTriggered }: ChatWidgetProps
                   <button
                     onClick={handleTranslate}
                     disabled={translating}
-                    className="w-full flex items-center justify-center gap-2 py-2 text-xs font-bold text-accent-foreground hover:underline disabled:opacity-50 transition-opacity"
+                    className="w-full flex items-center justify-center gap-2 py-2 text-xs font-bold text-terracotta hover:underline disabled:opacity-50 transition-opacity"
                   >
                     <Languages className="w-3.5 h-3.5" />
                     {translating ? "..." : translated ? t.chat.showOriginal : t.chat.translateAll}
@@ -302,9 +303,9 @@ const ChatWidget = ({ serviceId, serviceName, onOpenTriggered }: ChatWidgetProps
                 <button
                   onClick={handleSend}
                   disabled={sending}
-                  className="w-10 h-10 rounded-xl bg-gold-gradient flex items-center justify-center hover:shadow-md transition-all flex-shrink-0 disabled:opacity-50"
+                  className="w-10 h-10 rounded-xl bg-terracotta flex items-center justify-center hover:bg-terracotta-deep transition-all flex-shrink-0 disabled:opacity-50"
                 >
-                  <Send className="w-4 h-4 text-accent-foreground" />
+                  <Send className="w-4 h-4 text-paper" />
                 </button>
               </div>
             </>

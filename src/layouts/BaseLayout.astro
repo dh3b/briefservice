@@ -46,6 +46,18 @@ const schemas = [organizationSchema(), ...pageSchemas];
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="author" content="Marek Jurecki" />
+    <meta name="theme-color" content="#F5F0EA" />
+
+    <!-- Flag JS early so scroll-reveal only hides content when JS can reveal it -->
+    <script is:inline>document.documentElement.classList.add("js");</script>
+
+    <!-- Fonts: Hanken Grotesk (sans/display), Playfair Display (serif italic), JetBrains Mono -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500&family=Playfair+Display:ital,wght@1,500;1,600;1,700&display=swap"
+    />
 
     <title>{title}</title>
     <meta name="description" content={description} />
@@ -105,5 +117,52 @@ const schemas = [organizationSchema(), ...pageSchemas];
     <!-- End Google Tag Manager (noscript) -->
 
     <slot />
+
+    <script>
+      // Calm scroll motion: reveal-on-enter + gentle parallax for floating cards.
+      const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      const reveals = document.querySelectorAll<HTMLElement>("[data-reveal]");
+
+      if (reduce) {
+        reveals.forEach((el) => el.classList.add("reveal-in"));
+      } else {
+        const io = new IntersectionObserver(
+          (entries) => {
+            for (const e of entries) {
+              if (e.isIntersecting) {
+                e.target.classList.add("reveal-in");
+                io.unobserve(e.target);
+              }
+            }
+          },
+          { rootMargin: "0px 0px -8% 0px", threshold: 0.08 },
+        );
+        reveals.forEach((el) => io.observe(el));
+
+        const parallax = Array.from(document.querySelectorAll<HTMLElement>("[data-parallax]"));
+        if (parallax.length) {
+          let ticking = false;
+          const update = () => {
+            const vh = window.innerHeight;
+            for (const el of parallax) {
+              const speed = parseFloat(el.dataset.parallax || "0.04");
+              const rect = el.getBoundingClientRect();
+              const shift = (rect.top + rect.height / 2 - vh / 2) * -speed;
+              el.style.transform = `translate3d(0, ${shift.toFixed(1)}px, 0)`;
+            }
+            ticking = false;
+          };
+          const onScroll = () => {
+            if (!ticking) {
+              ticking = true;
+              requestAnimationFrame(update);
+            }
+          };
+          window.addEventListener("scroll", onScroll, { passive: true });
+          window.addEventListener("resize", onScroll, { passive: true });
+          update();
+        }
+      }
+    </script>
   </body>
 </html>
