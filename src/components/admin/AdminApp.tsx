@@ -1,11 +1,12 @@
 import { useState, useEffect } from "react";
 import { useLanguage } from "@/i18n/LanguageContext";
-import { LogIn, ArrowLeft, LogOut, MessageSquare, Package, BarChart3 } from "lucide-react";
+import { LogIn, ArrowLeft, LogOut, MessageSquare, Package, BarChart3, BookOpen, UploadCloud } from "lucide-react";
 import { Admin } from "@/types";
 import * as api from "@/api";
 import ChatPanel from "@/components/admin/ChatPanel";
 import ServicesPanel from "@/components/admin/ServicesPanel";
 import StatsPanel from "@/components/admin/StatsPanel";
+import GuidesPanel from "@/components/admin/GuidesPanel";
 
 const AdminApp = () => {
   const { t, language } = useLanguage();
@@ -13,14 +14,30 @@ const AdminApp = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [loginError, setLoginError] = useState("");
-  const [activeTab, setActiveTab] = useState<"chats" | "services" | "stats">("chats");
+  const [activeTab, setActiveTab] = useState<"chats" | "services" | "guides" | "stats">("chats");
+  const [publishing, setPublishing] = useState(false);
+  const [publishMsg, setPublishMsg] = useState("");
 
   useEffect(() => { api.adminMe().then(setAdmin).catch(() => {}); }, []);
+
+  const handlePublish = async () => {
+    setPublishing(true);
+    setPublishMsg("");
+    try {
+      await api.triggerRebuild();
+      setPublishMsg("Rebuild triggered — changes go live in a moment.");
+    } catch (err) {
+      setPublishMsg((err as Error).message || "Rebuild failed");
+    } finally {
+      setPublishing(false);
+      setTimeout(() => setPublishMsg(""), 6000);
+    }
+  };
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoginError("");
-    try { setAdmin(await api.adminLogin(username, password)); } catch (err: any) { setLoginError(err.message || "Login failed"); }
+    try { setAdmin(await api.adminLogin(username, password)); } catch (err) { setLoginError((err as Error).message || "Login failed"); }
   };
 
   if (!admin) {
@@ -56,9 +73,16 @@ const AdminApp = () => {
           <a href={`/${language}`} className="font-display text-lg font-bold text-foreground"><span className="text-gradient-gold">Brief</span>Service</a>
           <span className="text-muted-foreground text-sm">/ {t.admin.dashboard}</span>
         </div>
-        <button onClick={async () => { await api.adminLogout(); setAdmin(null); }} className="flex items-center gap-1.5 text-sm text-muted-foreground hover:text-foreground transition-colors">
-          <LogOut className="w-4 h-4" /> {t.admin.logout}
-        </button>
+        <div className="flex items-center gap-4">
+          {publishMsg && <span className="text-xs text-muted-foreground hidden sm:inline">{publishMsg}</span>}
+          <button onClick={handlePublish} disabled={publishing}
+            className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-gold-gradient text-accent-foreground text-sm font-medium hover:shadow-md transition-all disabled:opacity-50">
+            <UploadCloud className="w-4 h-4" /> {publishing ? "Publishing…" : "Publish"}
+          </button>
+          <button onClick={async () => { await api.adminLogout(); setAdmin(null); }} className="flex items-center gap-1.5 text-sm text-muted-foreground hover:text-foreground transition-colors">
+            <LogOut className="w-4 h-4" /> {t.admin.logout}
+          </button>
+        </div>
       </header>
       <div className="container mx-auto px-6 py-8">
         <div className="flex gap-2 mb-8">
@@ -70,12 +94,16 @@ const AdminApp = () => {
             className={`flex items-center gap-2 px-5 py-2.5 rounded-lg text-sm font-medium transition-all ${activeTab === "services" ? "bg-primary text-primary-foreground" : "bg-secondary text-secondary-foreground hover:bg-muted"}`}>
             <Package className="w-4 h-4" /> {t.admin.servicesManage}
           </button>
+          <button onClick={() => setActiveTab("guides")}
+            className={`flex items-center gap-2 px-5 py-2.5 rounded-lg text-sm font-medium transition-all ${activeTab === "guides" ? "bg-primary text-primary-foreground" : "bg-secondary text-secondary-foreground hover:bg-muted"}`}>
+            <BookOpen className="w-4 h-4" /> Guides
+          </button>
           <button onClick={() => setActiveTab("stats")}
             className={`flex items-center gap-2 px-5 py-2.5 rounded-lg text-sm font-medium transition-all ${activeTab === "stats" ? "bg-primary text-primary-foreground" : "bg-secondary text-secondary-foreground hover:bg-muted"}`}>
             <BarChart3 className="w-4 h-4" /> {t.admin.statistics}
           </button>
         </div>
-        {activeTab === "chats" ? <ChatPanel /> : activeTab === "services" ? <ServicesPanel /> : <StatsPanel />}
+        {activeTab === "chats" ? <ChatPanel /> : activeTab === "services" ? <ServicesPanel /> : activeTab === "guides" ? <GuidesPanel /> : <StatsPanel />}
       </div>
     </div>
   );
