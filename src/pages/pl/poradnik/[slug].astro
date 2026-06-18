@@ -1,5 +1,5 @@
 ---
-import { GUIDES } from "@/content/guides";
+import { getGuides } from "@/lib/content-source";
 import { canonicalUrl, faqSchema, breadcrumbSchema } from "@/seo/site";
 import type { Guide } from "@/content/types";
 import BaseLayout from "@/layouts/BaseLayout.astro";
@@ -8,8 +8,9 @@ import Footer from "@/components/astro/Footer.astro";
 import Breadcrumbs from "@/components/astro/Breadcrumbs.astro";
 import ChatIsland from "@/islands/ChatIsland";
 
-export function getStaticPaths() {
-  return GUIDES.map((guide) => ({ params: { slug: guide.slug }, props: { guide } }));
+export async function getStaticPaths() {
+  const guides = await getGuides();
+  return guides.map((guide) => ({ params: { slug: guide.slug }, props: { guide } }));
 }
 
 const lang = "pl";

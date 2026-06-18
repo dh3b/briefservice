@@ -1,6 +1,5 @@
 ---
-import { SERVICE_PAGES } from "@/content/services";
-import { getGuide } from "@/content/guides";
+import { getServicePages, getGuides } from "@/lib/content-source";
 import { canonicalUrl, serviceSchema, faqSchema, breadcrumbSchema } from "@/seo/site";
 import type { ServicePage } from "@/content/types";
 import BaseLayout from "@/layouts/BaseLayout.astro";
@@ -10,18 +9,28 @@ import Breadcrumbs from "@/components/astro/Breadcrumbs.astro";
 import ContactIsland from "@/islands/ContactIsland";
 import ChatIsland from "@/islands/ChatIsland";
 
-export function getStaticPaths() {
-  return SERVICE_PAGES.map((service) => ({ params: { slug: service.slug }, props: { service } }));
+export async function getStaticPaths() {
+  const [services, guides] = await Promise.all([getServicePages(), getGuides()]);
+  const guideBySlug = new Map(guides.map((g) => [g.slug, g]));
+  return services.map((service) => ({
+    params: { slug: service.slug },
+    props: {
+      service,
+      related: (service.relatedGuides ?? [])
+        .map((s) => guideBySlug.get(s))
+        .filter((g): g is NonNullable<typeof g> => Boolean(g))
+        .map((g) => ({ slug: g.slug, h1: g.h1 })),
+    },
+  }));
 }
 
 const lang = "pl";
-const { service } = Astro.props as { service: ServicePage };
+const { service, related } = Astro.props as {
+  service: ServicePage;
+  related: { slug: string; h1: string }[];
+};
 const path = `uslugi/${service.slug}`;
 const url = canonicalUrl(lang, path);
-
-const related = (service.relatedGuides ?? [])
-  .map((slug) => getGuide(slug))
-  .filter((g): g is NonNullable<typeof g> => Boolean(g));
 
 const navLinks = [
   { label: "Strona główna", href: "/pl" },

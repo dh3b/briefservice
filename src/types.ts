@@ -35,6 +35,8 @@ export interface Service {
   description: string;
   image_url: string;
   category_id: string | null;
+  /** When set, the service has a dedicated page at /<lang>/uslugi/<slug>. */
+  slug: string | null;
 }
 
 export function localizeService(row: ServiceRow, lang: Language): Service {
@@ -45,6 +47,7 @@ export function localizeService(row: ServiceRow, lang: Language): Service {
     description: (row[`description_${lang}`] as string) || (row[`description_${fb}`] as string) || "",
     image_url: row.image_url,
     category_id: row.category_id ?? null,
+    slug: (row.slug as string) ?? null,
   };
 }
 
@@ -52,6 +55,16 @@ export interface CategoryRow {
   id: string;
   created_at: string;
   [key: string]: string | null | undefined; // name_xx
+}
+
+/** A guide article row (rich content keyed by language in `content`). */
+export interface GuideRow {
+  id: string;
+  slug: string;
+  content: Record<string, Record<string, unknown>>;
+  published: boolean;
+  sort_order: number;
+  created_at: string;
 }
 
 export function localizeCategory(row: CategoryRow, lang: Language): string {

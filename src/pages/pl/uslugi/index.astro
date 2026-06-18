@@ -1,5 +1,5 @@
 ---
-import { SERVICE_PAGES } from "@/content/services";
+import { getServicePages } from "@/lib/content-source";
 import { canonicalUrl, breadcrumbSchema } from "@/seo/site";
 import BaseLayout from "@/layouts/BaseLayout.astro";
 import Navbar from "@/components/astro/Navbar.astro";
@@ -10,6 +10,7 @@ import ChatIsland from "@/islands/ChatIsland";
 const lang = "pl";
 const path = "uslugi";
 
+const services = await getServicePages();
 // The DMC change service keeps its established /pl/zmiana-dmc URL.
 const cards = [
   {
@@ -17,7 +18,7 @@ const cards = [
     summary: "Legalne obniżenie dopuszczalnej masy całkowitej w Niemczech — nowe Briefy i tabliczka znamionowa.",
     href: "/pl/zmiana-dmc",
   },
-  ...SERVICE_PAGES.map((s) => ({ name: s.name, summary: s.summary, href: `/pl/uslugi/${s.slug}` })),
+  ...services.map((s) => ({ name: s.name, summary: s.summary, href: `/pl/uslugi/${s.slug}` })),
 ];
 
 const navLinks = [

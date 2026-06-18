@@ -17,6 +17,16 @@ CREATE TABLE services (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   category_id UUID REFERENCES categories(id) ON DELETE SET NULL,
   image_url TEXT,
+  -- URL slug for the dedicated service page (/<lang>/uslugi/<slug>).
+  -- When NULL the service is only a homepage tile (no landing page).
+  slug VARCHAR(120) UNIQUE,
+  -- Rich page content, keyed by language:
+  -- { "<lang>": { seoTitle, seoDescription, h1, lead,
+  --              sections:[{heading, body:[], bullets:[]}],
+  --              highlights:[], faq:[{q,a}], relatedGuides:[] } }
+  content JSONB NOT NULL DEFAULT '{}'::jsonb,
+  published BOOLEAN NOT NULL DEFAULT false,
+  sort_order INTEGER NOT NULL DEFAULT 0,
   title_pl VARCHAR(255),
   title_en VARCHAR(255),
   title_uk VARCHAR(255),
@@ -37,6 +47,19 @@ CREATE TABLE services (
   description_hu TEXT,
   description_ro TEXT,
   description_lt TEXT,
+  created_at TIMESTAMPTZ DEFAULT NOW()
+);
+
+CREATE TABLE guides (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  slug VARCHAR(120) UNIQUE NOT NULL,
+  -- Rich guide content, keyed by language:
+  -- { "<lang>": { seoTitle, seoDescription, h1, summary, lead,
+  --              sections:[{heading, body:[], bullets:[]}],
+  --              faq:[{q,a}], cta:{href,label,text} } }
+  content JSONB NOT NULL DEFAULT '{}'::jsonb,
+  published BOOLEAN NOT NULL DEFAULT false,
+  sort_order INTEGER NOT NULL DEFAULT 0,
   created_at TIMESTAMPTZ DEFAULT NOW()
 );
 
@@ -92,5 +115,9 @@ CREATE TABLE page_visits (
 CREATE INDEX idx_messages_chat_id ON messages(chat_id);
 CREATE INDEX idx_chats_user_id ON chats(user_id);
 CREATE INDEX idx_services_category_id ON services(category_id);
+CREATE INDEX idx_services_slug ON services(slug);
+CREATE INDEX idx_services_published ON services(published);
+CREATE INDEX idx_guides_slug ON guides(slug);
+CREATE INDEX idx_guides_published ON guides(published);
 CREATE INDEX idx_page_visits_date ON page_visits(visited_at);
 CREATE INDEX idx_chats_created_at ON chats(created_at);

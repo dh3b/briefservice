@@ -39,6 +39,17 @@ const ServicesSection = ({ onChatAbout, featuredHref = "/privacy-policy" }: Serv
   const expandedService = expandedId ? localized.find((s) => s.id === expandedId) : null;
   const expandedRow = expandedId ? allRows.find((r) => r.id === expandedId) : null;
 
+  // A service with a slug has its own dedicated page; navigate there instead of
+  // expanding the tile inline. Services without one keep the inline detail view.
+  const handleDetails = (serviceId: string) => {
+    const svc = localized.find((s) => s.id === serviceId);
+    if (svc?.slug) {
+      window.location.href = `/${language}/uslugi/${svc.slug}`;
+    } else {
+      setExpandedId(serviceId);
+    }
+  };
+
   return (
     <section id="services" className="pt-[7.5rem] pb-24 bg-background">
       <div className="container mx-auto px-6">
@@ -113,7 +124,7 @@ const ServicesSection = ({ onChatAbout, featuredHref = "/privacy-policy" }: Serv
                 service={service}
                 categoryName={getCategoryName(categories, service.category_id, language)}
                 onChatAbout={onChatAbout}
-                onDetails={setExpandedId}
+                onDetails={handleDetails}
               />
             ))}
           </div>
