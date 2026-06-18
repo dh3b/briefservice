@@ -5,6 +5,8 @@ import cookieParser from "cookie-parser";
 import path from "path";
 import { fileURLToPath } from "url";
 import servicesRouter from "./routes/services.js";
+import guidesRouter from "./routes/guides.js";
+import rebuildRouter from "./routes/rebuild.js";
 import authRouter from "./routes/auth.js";
 import chatRouter from "./routes/chat.js";
 import categoriesRouter from "./routes/categories.js";
@@ -24,7 +26,7 @@ app.set("trust proxy", 1);
 
 app.use(helmet());
 app.use(cors({ origin: CORS_ORIGINS, credentials: true }));
-app.use(express.json({ limit: "100kb" }));
+app.use(express.json({ limit: "1mb" })); // rich service/guide content payloads
 app.use(cookieParser());
 app.use(generalLimiter);
 
@@ -33,6 +35,8 @@ app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 
 // Routes
 app.use("/api/services", servicesRouter);
+app.use("/api/guides", guidesRouter);
+app.use("/api/rebuild", rebuildRouter);
 app.use("/api/auth", authRouter);
 app.use("/api/chats", chatRouter);
 app.use("/api/categories", categoriesRouter);

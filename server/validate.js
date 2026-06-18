@@ -45,10 +45,29 @@ export function senderType(val) {
   return val === "user" || val === "admin" ? val : null;
 }
 
+/** Validate a URL slug: lowercase letters/digits/hyphens, max 120 chars. */
+export function slug(val) {
+  if (typeof val !== "string") return null;
+  const clean = sanitize(val).toLowerCase();
+  return /^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(clean) && clean.length <= 120 ? clean : null;
+}
+
+/**
+ * Validate the per-language rich `content` JSONB for services/guides.
+ * Accepts a plain object keyed by language; rejects anything that serializes
+ * beyond `maxBytes`. Deep field validation is intentionally light — the route
+ * is admin-only.
+ */
+export function contentJson(val, maxBytes = 200_000) {
+  if (!val || typeof val !== "object" || Array.isArray(val)) return {};
+  const json = JSON.stringify(val);
+  return json.length <= maxBytes ? val : {};
+}
+
 /** Validate stats range enum */
 export function timeRange(val) {
   const allowed = ["1w", "1m", "6m", "1y"];
   return allowed.includes(val) ? val : "1m";
 }
 
-export default { text, email, url, senderType, timeRange };
+export default { text, email, url, senderType, timeRange, slug, contentJson };
