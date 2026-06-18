@@ -81,11 +81,11 @@ const jsonLd = [
         </section>
 
         <!-- CTA to the relevant service -->
-        <aside class="bg-card border border-[#1e3a5f] rounded-xl p-6 flex flex-col sm:flex-row sm:items-center gap-4 justify-between">
+        <aside class="flex flex-col justify-between gap-4 rounded-2xl border border-terracotta/30 p-7 sm:flex-row sm:items-center" style="background-color: hsl(18 48% 92% / 0.55)">
           <p class="text-foreground/80 text-sm leading-relaxed">{guide.cta.text}</p>
           <a
             href={guide.cta.href}
-            class="inline-flex items-center justify-center whitespace-nowrap rounded-lg bg-primary text-primary-foreground px-6 py-3 text-sm font-semibold hover:bg-navy-light transition-colors"
+            class="btn-primary whitespace-nowrap"
           >
             {guide.cta.label}
           </a>

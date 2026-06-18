@@ -45,7 +45,7 @@ const AdminApp = () => {
       <div className="min-h-screen bg-background flex items-center justify-center px-6">
         <div className="w-full max-w-sm">
           <div className="text-center mb-8">
-            <a href={`/${language}`} className="font-display text-2xl font-bold text-foreground"><span className="text-gradient-gold">Brief</span>Service</a>
+            <a href={`/${language}`} className="font-display text-2xl font-bold text-foreground"><span className="text-terracotta">Brief</span>Service</a>
             <h2 className="font-display text-2xl font-bold text-foreground mt-6">{t.admin.login}</h2>
           </div>
           <form onSubmit={handleLogin} className="space-y-4">
@@ -54,7 +54,7 @@ const AdminApp = () => {
               className="w-full px-4 py-3 rounded-lg bg-card border border-border text-foreground placeholder:text-muted-foreground text-sm focus:ring-2 focus:ring-ring outline-none" />
             <input type="password" placeholder={t.admin.password} value={password} onChange={(e) => setPassword(e.target.value)}
               className="w-full px-4 py-3 rounded-lg bg-card border border-border text-foreground placeholder:text-muted-foreground text-sm focus:ring-2 focus:ring-ring outline-none" />
-            <button type="submit" className="w-full py-3.5 rounded-lg bg-primary text-primary-foreground font-semibold text-sm hover:bg-navy-light transition-colors flex items-center justify-center gap-2">
+            <button type="submit" className="w-full py-3.5 rounded-lg bg-primary text-primary-foreground font-semibold text-sm hover:bg-terracotta-deep transition-colors flex items-center justify-center gap-2">
               <LogIn className="w-4 h-4" /> {t.admin.signIn}
             </button>
           </form>
@@ -70,13 +70,13 @@ const AdminApp = () => {
     <div className="min-h-screen bg-background">
       <header className="bg-card border-b border-border px-6 py-4 flex items-center justify-between">
         <div className="flex items-center gap-4">
-          <a href={`/${language}`} className="font-display text-lg font-bold text-foreground"><span className="text-gradient-gold">Brief</span>Service</a>
+          <a href={`/${language}`} className="font-display text-lg font-bold text-foreground"><span className="text-terracotta">Brief</span>Service</a>
           <span className="text-muted-foreground text-sm">/ {t.admin.dashboard}</span>
         </div>
         <div className="flex items-center gap-4">
           {publishMsg && <span className="text-xs text-muted-foreground hidden sm:inline">{publishMsg}</span>}
           <button onClick={handlePublish} disabled={publishing}
-            className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-gold-gradient text-accent-foreground text-sm font-medium hover:shadow-md transition-all disabled:opacity-50">
+            className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-terracotta text-paper text-sm font-medium hover:bg-terracotta-deep transition-all disabled:opacity-50">
             <UploadCloud className="w-4 h-4" /> {publishing ? "Publishing…" : "Publish"}
           </button>
           <button onClick={async () => { await api.adminLogout(); setAdmin(null); }} className="flex items-center gap-1.5 text-sm text-muted-foreground hover:text-foreground transition-colors">

@@ -69,7 +69,7 @@ const ServicesPanel = () => {
         <div className="flex justify-between items-center mb-4">
           <h3 className="text-lg font-semibold text-foreground">{t.admin.servicesManage}</h3>
           <button onClick={() => { setEditingService(null); setServiceFormOpen(true); }}
-            className="flex items-center gap-2 px-4 py-2 rounded-lg bg-gold-gradient text-accent-foreground text-sm font-medium hover:shadow-md transition-all">
+            className="flex items-center gap-2 px-4 py-2 rounded-lg bg-terracotta text-paper text-sm font-medium hover:shadow-md transition-all">
             <Plus className="w-4 h-4" /> {t.admin.addService}
           </button>
         </div>

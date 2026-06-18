@@ -192,7 +192,7 @@ const ServiceForm = ({ service, categories, onClose, onSaved }: Props) => {
 
         <div className="flex justify-end gap-2 px-6 py-4 border-t border-border sticky bottom-0 bg-card">
           <button onClick={onClose} className="px-5 py-2.5 rounded-lg bg-secondary text-secondary-foreground text-sm font-medium hover:bg-muted">{t.admin.cancel}</button>
-          <button onClick={handleSave} disabled={saving} className="px-5 py-2.5 rounded-lg bg-primary text-primary-foreground text-sm font-medium hover:bg-navy-light disabled:opacity-50">{t.admin.save}</button>
+          <button onClick={handleSave} disabled={saving} className="px-5 py-2.5 rounded-lg bg-primary text-primary-foreground text-sm font-medium hover:bg-terracotta-deep disabled:opacity-50">{t.admin.save}</button>
         </div>
       </div>
     </div>

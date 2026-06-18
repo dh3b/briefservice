@@ -109,13 +109,13 @@ const ChatPanel = () => {
                         <input value={titleInput} onChange={(e) => setTitleInput(e.target.value)}
                           className="flex-1 px-2 py-1 text-sm rounded bg-secondary text-foreground outline-none"
                           onKeyDown={(e) => e.key === "Enter" && handleSaveTitle(chat.id)} />
-                        <button onClick={() => handleSaveTitle(chat.id)} className="p-1 text-accent-foreground"><Check className="w-3.5 h-3.5" /></button>
+                        <button onClick={() => handleSaveTitle(chat.id)} className="p-1 text-terracotta"><Check className="w-3.5 h-3.5" /></button>
                         <button onClick={() => setEditingTitle(null)} className="p-1 text-muted-foreground"><X className="w-3.5 h-3.5" /></button>
                       </div>
                     ) : (
                       <p className="text-sm font-medium text-foreground truncate">{getChatDisplayTitle(chat)}</p>
                     )}
-                    {chat.service_ref && <p className="text-[11px] text-accent-foreground/70 truncate">📦 {chat.service_ref}</p>}
+                    {chat.service_ref && <p className="text-[11px] text-terracotta/70 truncate">📦 {chat.service_ref}</p>}
                     <p className="text-xs text-muted-foreground truncate">{chat.last_message || "..."}</p>
                   </div>
                   <div className="flex gap-1 flex-shrink-0">
@@ -161,7 +161,7 @@ const ChatPanel = () => {
                 <button
                   onClick={handleTranslate}
                   disabled={translating}
-                  className="w-full flex items-center justify-center gap-2 py-2 text-xs font-bold text-accent-foreground hover:underline disabled:opacity-50 transition-opacity"
+                  className="w-full flex items-center justify-center gap-2 py-2 text-xs font-bold text-terracotta hover:underline disabled:opacity-50 transition-opacity"
                 >
                   <Languages className="w-3.5 h-3.5" />
                   {translating ? "..." : translated ? t.chat.showOriginal : t.chat.translateAll}
