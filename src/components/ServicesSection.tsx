@@ -18,6 +18,15 @@ const ServicesSection = ({ onChatAbout }: ServicesSectionProps) => {
   const [categories, setCategories] = useState<CategoryRow[]>([]);
   const [loading, setLoading] = useState(true);
   const [expandedId, setExpandedId] = useState<string | null>(null);
+  const [shown, setShown] = useState(false);
+
+  // Reveal-on-mount: this island hydrates (client:visible) only once in view, so
+  // a frame after mount is the moment to fade in. React owns the `in` class, so
+  // hydration can't strip it the way the global [data-reveal] script's class is.
+  useEffect(() => {
+    const id = requestAnimationFrame(() => setShown(true));
+    return () => cancelAnimationFrame(id);
+  }, []);
 
   useEffect(() => {
     setLoading(true);
@@ -53,17 +62,19 @@ const ServicesSection = ({ onChatAbout }: ServicesSectionProps) => {
       active ? "bg-ink text-paper" : "border border-border bg-paper text-ink/70 hover:text-ink"
     }`;
 
+  const rv = shown ? "reveal-up in" : "reveal-up";
+
   return (
     <section id="services" className="section bg-cream">
       <div className="container-editorial">
-        <div className="max-w-2xl" data-reveal>
+        <div className={`max-w-2xl ${rv}`}>
           <p className="eyebrow">{language === "pl" ? "Usługi" : "Services"}</p>
           <h2 className="mt-3 text-[clamp(2.2rem,4.5vw,3.5rem)] text-ink">{t.services.title}</h2>
           <p className="mt-4 text-[15px] leading-relaxed text-muted-foreground">{t.services.subtitle}</p>
         </div>
 
         {!expandedId && categories.length > 0 && (
-          <div className="mt-10 flex flex-wrap gap-2" data-reveal>
+          <div className={`mt-10 flex flex-wrap gap-2 ${rv}`}>
             <button onClick={() => setActiveCategory("all")} className={pill(activeCategory === "all")}>
               {t.services.allCategories}
             </button>
@@ -108,7 +119,7 @@ const ServicesSection = ({ onChatAbout }: ServicesSectionProps) => {
             </div>
           </div>
         ) : (
-          <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3" data-reveal>
+          <div className={`mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3 ${rv}`}>
             {filtered.map((service) =>
               service.featured && service.slug ? (
                 <FeaturedServiceCard

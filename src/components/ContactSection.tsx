@@ -1,6 +1,6 @@
 import { useLanguage } from "@/i18n/LanguageContext";
 import { Mail, MapPin, Phone, CheckCircle, MessageCircle, Languages } from "lucide-react";
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import { submitContact } from "@/api";
 import { reportConversion } from "@/lib/conversions";
 
@@ -11,7 +11,14 @@ const ContactSection = () => {
   const [form, setForm] = useState({ name: "", email: "", message: "" });
   const [sent, setSent] = useState(false);
   const [sending, setSending] = useState(false);
+  const [shown, setShown] = useState(false);
   const cooldownUntilRef = useRef<number>(0);
+
+  // React-owned reveal (see ServicesSection) — survives hydration.
+  useEffect(() => {
+    const id = requestAnimationFrame(() => setShown(true));
+    return () => cancelAnimationFrame(id);
+  }, []);
 
   const isCoolingDown = () => Date.now() < cooldownUntilRef.current;
 
@@ -43,16 +50,18 @@ const ContactSection = () => {
   const inputCls =
     "w-full rounded-xl border border-border bg-paper px-4 py-3 text-sm text-ink outline-none transition-all placeholder:text-muted-foreground focus:border-terracotta focus:ring-2 focus:ring-terracotta/20";
 
+  const rv = shown ? "reveal-up in" : "reveal-up";
+
   return (
     <section id="contact" className="section">
       <div className="container-editorial">
-        <div className="max-w-2xl" data-reveal>
+        <div className={`max-w-2xl ${rv}`}>
           <p className="eyebrow">{t.contact.phone ? t.contact.title : "Contact"}</p>
           <h2 className="mt-3 text-[clamp(2.2rem,4.5vw,3.5rem)] text-ink">{t.contact.title}</h2>
           <p className="mt-4 text-[15px] leading-relaxed text-muted-foreground">{t.contact.subtitle}</p>
         </div>
 
-        <div className="mt-12 grid gap-10 md:grid-cols-2" data-reveal>
+        <div className={`mt-12 grid gap-10 md:grid-cols-2 ${rv}`}>
           {/* Contact details */}
           <div className="space-y-6">
             <a href={`tel:${CONTACT_PHONE.replace(/\s/g, "")}`} onClick={handlePhoneClick} className="group flex items-start gap-4">

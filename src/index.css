@@ -197,10 +197,24 @@
     opacity: 1;
     transform: none;
   }
+
+  /* Reveal for React islands: the `in` class is toggled by React state (not the
+     global script), so hydration never strips it. Uses its own class so the
+     global [data-reveal] observer doesn't double-handle island DOM. */
+  .js .reveal-up {
+    opacity: 0;
+    transform: translateY(18px);
+    transition: opacity 0.45s ease-out, transform 0.45s ease-out;
+    will-change: opacity, transform;
+  }
+  .js .reveal-up.in {
+    opacity: 1;
+    transform: none;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
-  [data-reveal] { opacity: 1 !important; transform: none !important; transition: none; }
+  [data-reveal], .reveal-up { opacity: 1 !important; transform: none !important; transition: none; }
   [data-parallax] { transform: none !important; }
 }
