@@ -42,7 +42,7 @@ const ServicesSection = ({ onChatAbout, featuredHref = "/privacy-policy" }: Serv
   const handleDetails = (serviceId: string) => {
     const svc = localized.find((s) => s.id === serviceId);
     if (svc?.slug) {
-      window.location.href = `/${language}/uslugi/${svc.slug}`;
+      window.location.href = `/${language}/services/${svc.slug}`;
     } else {
       setExpandedId(serviceId);
     }

@@ -3,13 +3,18 @@ import { SUPPORTED_LANGUAGES, LANGUAGE_LABELS, LANGUAGE_FLAGS, type Language } f
 
 interface Props {
   lang: Language;
-  /** Suffix appended to the language-switch links, e.g. "" or "/zmiana-dmc". */
+  /** Suffix appended to the language-switch links, e.g. "" or "/services". */
   langSuffix?: string;
+  /**
+   * Languages this page actually exists in. Switching to a language outside
+   * this set goes to that language's home instead of a 404. Defaults to all.
+   */
+  availableLangs?: readonly Language[];
   /** In-page / cross-page navigation links shown in the bar. */
   navLinks: { label: string; href: string }[];
 }
 
-const { lang, langSuffix = "", navLinks } = Astro.props;
+const { lang, langSuffix = "", availableLangs = SUPPORTED_LANGUAGES, navLinks } = Astro.props;
 ---
 
 <header data-nav class="sticky top-0 z-50 transition-colors duration-300">
@@ -53,7 +58,7 @@ const { lang, langSuffix = "", navLinks } = Astro.props;
           {
             SUPPORTED_LANGUAGES.map((code) => (
               <a
-                href={`/${code}${langSuffix}`}
+                href={`/${code}${availableLangs.includes(code) ? langSuffix : ""}`}
                 class={`flex items-center gap-2.5 rounded-xl px-3 py-2 text-sm transition-colors ${lang === code ? "bg-secondary font-semibold text-ink" : "text-ink/70 hover:bg-secondary/70"}`}
               >
                 <span>{LANGUAGE_FLAGS[code]}</span>

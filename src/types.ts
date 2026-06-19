@@ -35,7 +35,7 @@ export interface Service {
   description: string;
   image_url: string;
   category_id: string | null;
-  /** When set, the service has a dedicated page at /<lang>/uslugi/<slug>. */
+  /** When set, the service has a dedicated page at /<lang>/services/<slug>. */
   slug: string | null;
 }
 

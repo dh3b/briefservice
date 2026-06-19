@@ -11,7 +11,7 @@ const FeaturedServiceCard = ({ categoryName = "Featured" }: FeaturedServiceCardP
 
   return (
     <a
-      href={`/${language}/zmiana-dmc`}
+      href={`/${language}/services/zmiana-dmc`}
       className="panel-dark group relative flex flex-col justify-between overflow-hidden rounded-2xl p-7 transition-all duration-300 hover:-translate-y-1 hover:shadow-float"
     >
       {/* faint terracotta glow */}

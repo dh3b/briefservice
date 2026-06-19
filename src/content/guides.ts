@@ -1,17 +1,33 @@
-import type { Guide } from "./types";
+import type { GuideEntry, Faq, GuideCta } from "./types";
+import { sectionsToMarkdown, type Section } from "./_build";
 
 /**
  * Informational guides (Polish) targeting the real search demand around German
  * vehicle titles. Each ends with a CTA to the relevant service page.
  */
-export const GUIDES: Guide[] = [
+
+interface GuideSource {
+  slug: string;
+  sortOrder: number;
+  title: string;
+  h1: string;
+  summary: string;
+  description: string;
+  lead: string;
+  sections: Section[];
+  faq: Faq[];
+  cta: GuideCta;
+}
+
+const SOURCES: GuideSource[] = [
   {
     slug: "co-to-jest-niemiecki-brief",
+    sortOrder: 10,
     title: "Co to jest niemiecki brief? Mały i duży brief (Teil I i II)",
-    description:
-      "Czym jest niemiecki brief samochodowy, czym różni się mały brief (Teil I) od dużego (Teil II) i do czego służą. Prosty przewodnik po niemieckich dokumentach pojazdu.",
     h1: "Co to jest niemiecki brief? Mały i duży brief",
     summary: "Wyjaśniamy, czym jest niemiecki brief i jaka jest różnica między małym a dużym briefem.",
+    description:
+      "Czym jest niemiecki brief samochodowy, czym różni się mały brief (Teil I) od dużego (Teil II) i do czego służą. Prosty przewodnik po niemieckich dokumentach pojazdu.",
     lead: "„Brief” to potoczna nazwa niemieckich dokumentów pojazdu. W praktyce chodzi o dwa dokumenty: Zulassungsbescheinigung Teil I (mały brief) i Teil II (duży brief). Poniżej wyjaśniamy, czym się różnią i do czego są potrzebne.",
     sections: [
       {
@@ -31,6 +47,7 @@ export const GUIDES: Guide[] = [
         heading: "Dlaczego to ważne przy imporcie",
         body: [
           "Przy sprowadzaniu auta z Niemiec to duży brief (Teil II) decyduje o możliwości rejestracji w Polsce. Jego brak jest najczęstszą przyczyną problemów — dlatego zawsze upewnij się, że sprzedający przekazuje komplet dokumentów.",
+          "Warto też wiedzieć, gdzie szukać numerów w dokumencie — zobacz: [guide:jak-czytac-niemiecki-brief].",
         ],
       },
     ],
@@ -49,19 +66,19 @@ export const GUIDES: Guide[] = [
       },
     ],
     cta: {
-      href: "/pl/uslugi/odzyskanie-briefu",
+      serviceSlug: "odzyskanie-briefu",
       label: "Odzyskanie i duplikat briefu",
       text: "Brakuje Ci briefu albo masz tylko część dokumentów? Sprawdź, jak możemy pomóc.",
     },
   },
-
   {
     slug: "jak-czytac-niemiecki-brief",
+    sortOrder: 20,
     title: "Jak czytać niemiecki brief – numery i numer karty pojazdu",
-    description:
-      "Gdzie w niemieckim briefie znaleźć VIN, numer dokumentu i numer karty pojazdu. Wyjaśniamy najważniejsze pola w Zulassungsbescheinigung Teil I i Teil II.",
     h1: "Jak czytać niemiecki brief – gdzie są numery",
     summary: "Przewodnik po polach niemieckiego briefu: VIN, numer dokumentu i numer karty pojazdu.",
+    description:
+      "Gdzie w niemieckim briefie znaleźć VIN, numer dokumentu i numer karty pojazdu. Wyjaśniamy najważniejsze pola w Zulassungsbescheinigung Teil I i Teil II.",
     lead: "Niemiecki brief jest pełen kodów i pól oznaczonych literami. Pokazujemy, gdzie szukać najważniejszych numerów, które przydają się przy zakupie, rejestracji i wyrobieniu duplikatu.",
     sections: [
       {
@@ -102,19 +119,19 @@ export const GUIDES: Guide[] = [
       },
     ],
     cta: {
-      href: "/pl/uslugi/odzyskanie-briefu",
+      serviceSlug: "odzyskanie-briefu",
       label: "Pomoc z dokumentami",
       text: "Nie zgadzają się numery albo brakuje dokumentu? Pomożemy to uporządkować.",
     },
   },
-
   {
     slug: "zgubiony-brief-duplikat",
+    sortOrder: 30,
     title: "Zgubiony lub skradziony niemiecki brief – jak wyrobić duplikat",
-    description:
-      "Co zrobić, gdy zgubisz lub ktoś ukradnie niemiecki brief (Teil II). Jak wyrobić duplikat (Duplikat) i co jest do tego potrzebne. Praktyczny przewodnik krok po kroku.",
     h1: "Zgubiony lub skradziony niemiecki brief – duplikat",
     summary: "Co robić po utracie dużego briefu i jak krok po kroku wyrobić jego duplikat.",
+    description:
+      "Co zrobić, gdy zgubisz lub ktoś ukradnie niemiecki brief (Teil II). Jak wyrobić duplikat (Duplikat) i co jest do tego potrzebne. Praktyczny przewodnik krok po kroku.",
     lead: "Utrata dużego briefu (Teil II) blokuje sprzedaż i rejestrację pojazdu, ale nie oznacza, że auto jest „bez dokumentów”. Dokument można odtworzyć — wyjaśniamy, jak działa duplikat (Duplikat) i od czego zacząć.",
     sections: [
       {
@@ -154,19 +171,19 @@ export const GUIDES: Guide[] = [
       },
     ],
     cta: {
-      href: "/pl/uslugi/odzyskanie-briefu",
+      serviceSlug: "odzyskanie-briefu",
       label: "Wyrób duplikat briefu",
       text: "Zgubiłeś brief? Podaj nam VIN — sprawdzimy, jak szybko odzyskać dokument.",
     },
   },
-
   {
     slug: "zmiana-dmc-jak-dziala",
+    sortOrder: 40,
     title: "Zmiana DMC 2,5t / 3,5t – jak działa zmiana dopuszczalnej masy",
-    description:
-      "Jak działa legalna zmiana DMC pojazdu w Niemczech do 2500 kg lub 3500 kg: ekspertyza, nowa tabliczka znamionowa i nowe Briefy. Co daje obniżenie DMC i kto się kwalifikuje.",
     h1: "Zmiana DMC 2,5t / 3,5t – jak to działa",
     summary: "Na czym polega legalna zmiana dopuszczalnej masy całkowitej i co po niej otrzymujesz.",
+    description:
+      "Jak działa legalna zmiana DMC pojazdu w Niemczech do 2500 kg lub 3500 kg: ekspertyza, nowa tabliczka znamionowa i nowe Briefy. Co daje obniżenie DMC i kto się kwalifikuje.",
     lead: "Obniżenie DMC (dopuszczalnej masy całkowitej) bywa potrzebne np. po to, by prowadzić pojazd na prawo jazdy kat. B albo dopasować auto do potrzeb transportu. W Niemczech robi się to legalnie — z ekspertyzą techniczną, a nie „przez zmianę cyferek w dokumentach”.",
     sections: [
       {
@@ -204,19 +221,19 @@ export const GUIDES: Guide[] = [
       },
     ],
     cta: {
-      href: "/pl/zmiana-dmc",
+      serviceSlug: "zmiana-dmc",
       label: "Usługa zmiany DMC",
       text: "Chcesz obniżyć DMC do 2,5t lub 3,5t? Zobacz szczegóły usługi i sprawdź swój pojazd.",
     },
   },
-
   {
     slug: "wyrejestrowanie-auta-bez-briefu",
+    sortOrder: 50,
     title: "Wyrejestrowanie auta w Niemczech bez briefu – co zrobić",
-    description:
-      "Czy można wyrejestrować auto w Niemczech bez briefu i jak to zrobić. Wyjaśniamy ścieżki postępowania, gdy brakuje dużego briefu (Teil II), oraz rolę duplikatu.",
     h1: "Wyrejestrowanie auta w Niemczech bez briefu",
     summary: "Co zrobić, gdy trzeba uporządkować status pojazdu w Niemczech, a brakuje dokumentów.",
+    description:
+      "Czy można wyrejestrować auto w Niemczech bez briefu i jak to zrobić. Wyjaśniamy ścieżki postępowania, gdy brakuje dużego briefu (Teil II), oraz rolę duplikatu.",
     lead: "Brak dużego briefu komplikuje formalności, ale zwykle nie blokuje ich całkowicie. Wyjaśniamy, jakie są możliwości, gdy auto trzeba wyrejestrować lub uporządkować jego status w Niemczech bez kompletu dokumentów.",
     sections: [
       {
@@ -251,19 +268,19 @@ export const GUIDES: Guide[] = [
       },
     ],
     cta: {
-      href: "/pl/uslugi/odzyskanie-briefu",
+      serviceSlug: "odzyskanie-briefu",
       label: "Odzyskanie dokumentacji",
       text: "Brakuje dokumentów do załatwienia sprawy? Sprawdź, jak odzyskać niemiecki brief.",
     },
   },
-
   {
     slug: "koszt-wyrobienia-briefu",
+    sortOrder: 60,
     title: "Ile kosztuje wyrobienie lub wymiana niemieckiego briefu?",
-    description:
-      "Od czego zależy koszt wyrobienia, duplikatu lub wymiany niemieckiego briefu. Co wpływa na cenę i dlaczego wycena jest indywidualna. Jak otrzymać konkretną wycenę.",
     h1: "Ile kosztuje wyrobienie lub wymiana niemieckiego briefu?",
     summary: "Co wpływa na koszt duplikatu lub wymiany briefu i jak dostać konkretną wycenę.",
+    description:
+      "Od czego zależy koszt wyrobienia, duplikatu lub wymiany niemieckiego briefu. Co wpływa na cenę i dlaczego wycena jest indywidualna. Jak otrzymać konkretną wycenę.",
     lead: "Koszt zależy od rodzaju sprawy i stanu dokumentacji, dlatego nie ma jednej „ceny z cennika”. Wyjaśniamy, co wpływa na wycenę i jak szybko otrzymać konkretną kwotę dla swojego pojazdu.",
     sections: [
       {
@@ -299,14 +316,30 @@ export const GUIDES: Guide[] = [
       },
     ],
     cta: {
-      href: "/pl/uslugi/odzyskanie-briefu",
+      serviceSlug: "odzyskanie-briefu",
       label: "Poproś o wycenę",
       text: "Chcesz poznać koszt dla swojego auta? Podaj VIN — przygotujemy wycenę.",
     },
   },
 ];
 
-/** Look up a guide by slug. */
-export function getGuide(slug: string): Guide | undefined {
-  return GUIDES.find((g) => g.slug === slug);
+function toEntry(g: GuideSource): GuideEntry {
+  return {
+    slug: g.slug,
+    sortOrder: g.sortOrder,
+    translations: {
+      pl: {
+        title: g.h1,
+        seoTitle: g.title,
+        seoDescription: g.description,
+        excerpt: g.summary,
+        markdown: sectionsToMarkdown(g.lead, g.sections),
+        faq: g.faq,
+        cta: g.cta,
+      },
+    },
+  };
 }
+
+/** The committed (seed/fallback) guides. */
+export const GUIDES: GuideEntry[] = SOURCES.map(toEntry);

@@ -39,6 +39,20 @@
 		@root path /
 		redir @root /en/ 302
 
+		# --- Legacy Phase-3 paths → new English routes (permanent) ---
+		# /<lang>/uslugi(/x) → /<lang>/services(/x); poradnik → guides;
+		# the old /<lang>/zmiana-dmc page is now the featured service.
+		@usl_idx path_regexp uslidx ^/([a-z]{2})/uslugi/?$
+		redir @usl_idx /{http.regexp.uslidx.1}/services 301
+		@usl_slug path_regexp uslslug ^/([a-z]{2})/uslugi/(.+?)/?$
+		redir @usl_slug /{http.regexp.uslslug.1}/services/{http.regexp.uslslug.2} 301
+		@por_idx path_regexp poridx ^/([a-z]{2})/poradnik/?$
+		redir @por_idx /{http.regexp.poridx.1}/guides 301
+		@por_slug path_regexp porslug ^/([a-z]{2})/poradnik/(.+?)/?$
+		redir @por_slug /{http.regexp.porslug.1}/guides/{http.regexp.porslug.2} 301
+		@zmiana path_regexp zmiana ^/([a-z]{2})/zmiana-dmc/?$
+		redir @zmiana /{http.regexp.zmiana.1}/services/zmiana-dmc 301
+
 		# --- Static prerendered pages (Astro, directory format) ---
 		# /pl/zmiana-dmc -> dist/pl/zmiana-dmc/index.html (handles trailing
 		# slash too); unknown paths fall back to the prerendered 404 page.

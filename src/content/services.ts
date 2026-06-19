@@ -1,20 +1,41 @@
-import type { ServicePage } from "./types";
+import type { ServiceEntry, Faq } from "./types";
+import { sectionsToMarkdown, type Section } from "./_build";
 
 /**
- * Dedicated, indexable service pages (Polish). The DMC/GVW change service has
- * its own established page at /pl/zmiana-dmc; these are the remaining services
- * that were previously buried as homepage sections.
+ * Dedicated, indexable service pages. Authored in Polish; `zmiana-dmc` (the
+ * featured service) is assembled separately from `translations.ts` so it keeps
+ * all 10 languages — see `./zmiana-dmc.ts`.
  */
-export const SERVICE_PAGES: ServicePage[] = [
+
+interface ServiceSource {
+  slug: string;
+  sortOrder: number;
+  relatedGuides: string[];
+  /** Polish (authored base) content. */
+  name: string;
+  h1: string;
+  seoTitle: string;
+  summary: string;
+  seoDescription: string;
+  lead: string;
+  sections: Section[];
+  /** "What you get" — folded into the Markdown body. */
+  highlights: string[];
+  faq: Faq[];
+}
+
+const SOURCES: ServiceSource[] = [
   {
     slug: "modyfikacje-konstrukcyjne",
+    sortOrder: 10,
+    relatedGuides: ["co-to-jest-niemiecki-brief", "jak-czytac-niemiecki-brief", "zmiana-dmc-jak-dziala"],
     name: "Legalizacja zmian konstrukcyjnych",
-    title: "Legalizacja zmian konstrukcyjnych pojazdu w Niemczech | BriefService",
-    description:
-      "Legalizujemy modyfikacje konstrukcyjne pojazdu w Niemczech: zawieszenie, ogumienie, liczba miejsc, zabudowa. Pełna dokumentacja techniczna i nowy niemiecki brief (Teil I i II).",
     h1: "Legalizacja zmian konstrukcyjnych pojazdu w Niemczech",
+    seoTitle: "Legalizacja zmian konstrukcyjnych pojazdu w Niemczech | BriefService",
     summary:
       "Wpisanie zmian technicznych do dokumentów i wydanie nowego niemieckiego briefu — legalnie, z ekspertyzą.",
+    seoDescription:
+      "Legalizujemy modyfikacje konstrukcyjne pojazdu w Niemczech: zawieszenie, ogumienie, liczba miejsc, zabudowa. Pełna dokumentacja techniczna i nowy niemiecki brief (Teil I i II).",
     lead: "Zmieniłeś coś w pojeździe, a zmiana nie jest ujęta w dokumentach? Pomożemy ją zalegalizować w Niemczech — z pełną ekspertyzą techniczną i nowym kompletem niemieckich Briefów (Zulassungsbescheinigung Teil I i Teil II), które są honorowane w całej Unii Europejskiej.",
     sections: [
       {
@@ -62,18 +83,18 @@ export const SERVICE_PAGES: ServicePage[] = [
         a: "Tak. Niemieckie Briefy (Zulassungsbescheinigung Teil I i Teil II) wraz z dokumentacją techniczną są honorowane w całej UE, w tym przy rejestracji w Polsce.",
       },
     ],
-    relatedGuides: ["co-to-jest-niemiecki-brief", "jak-czytac-niemiecki-brief", "zmiana-dmc-jak-dziala"],
   },
-
   {
     slug: "zmiana-rodzaju-pojazdu",
+    sortOrder: 20,
+    relatedGuides: ["zmiana-dmc-jak-dziala", "co-to-jest-niemiecki-brief"],
     name: "Zmiana rodzaju pojazdu",
-    title: "Zmiana rodzaju pojazdu w Niemczech (ciężarowy ↔ osobowy) | BriefService",
-    description:
-      "Zmiana rodzaju / przeznaczenia pojazdu w Niemczech — np. z ciężarowego na osobowy lub specjalny. Ekspertyza, nowa tabliczka znamionowa i nowy niemiecki brief.",
     h1: "Zmiana rodzaju pojazdu w Niemczech",
+    seoTitle: "Zmiana rodzaju pojazdu w Niemczech (ciężarowy ↔ osobowy) | BriefService",
     summary:
       "Zmiana klasyfikacji pojazdu (np. ciężarowy na osobowy) z pełną procedurą techniczną i nowymi dokumentami.",
+    seoDescription:
+      "Zmiana rodzaju / przeznaczenia pojazdu w Niemczech — np. z ciężarowego na osobowy lub specjalny. Ekspertyza, nowa tabliczka znamionowa i nowy niemiecki brief.",
     lead: "Potrzebujesz zmienić rodzaj lub przeznaczenie pojazdu — na przykład z ciężarowego na osobowy albo specjalny? Przeprowadzamy tę procedurę w Niemczech, łącznie z ekspertyzą techniczną i wydaniem nowych niemieckich Briefów z poprawioną klasyfikacją.",
     sections: [
       {
@@ -93,7 +114,7 @@ export const SERVICE_PAGES: ServicePage[] = [
         ],
       },
       {
-        heading: "Co otrzymujesz",
+        heading: "Co otrzymujesz po zakończeniu",
         body: [
           "Po zakończeniu procedury dostajesz komplet nowych niemieckich Briefów z poprawnym rodzajem pojazdu oraz pełną dokumentację techniczną. Na ich podstawie zarejestrujesz pojazd w Polsce lub innym kraju UE bez dodatkowych komplikacji.",
         ],
@@ -119,18 +140,24 @@ export const SERVICE_PAGES: ServicePage[] = [
         a: "Czas zależy od zakresu zmian i dostępności terminów w niemieckiej jednostce. Realny termin podajemy po weryfikacji pojazdu.",
       },
     ],
-    relatedGuides: ["zmiana-dmc-jak-dziala", "co-to-jest-niemiecki-brief"],
   },
-
   {
     slug: "odzyskanie-briefu",
+    sortOrder: 30,
+    relatedGuides: [
+      "co-to-jest-niemiecki-brief",
+      "jak-czytac-niemiecki-brief",
+      "zgubiony-brief-duplikat",
+      "wyrejestrowanie-auta-bez-briefu",
+      "koszt-wyrobienia-briefu",
+    ],
     name: "Odzyskanie i duplikat briefu",
-    title: "Odzyskanie i duplikat niemieckiego briefu (Teil I i II) | BriefService",
-    description:
-      "Zgubiony, zniszczony lub zatrzymany niemiecki brief? Pomagamy odzyskać dokumentację i wyrobić duplikat Zulassungsbescheinigung Teil I i Teil II — także w sprawach trudnych.",
     h1: "Odzyskanie i duplikat niemieckiego briefu",
+    seoTitle: "Odzyskanie i duplikat niemieckiego briefu (Teil I i II) | BriefService",
     summary:
       "Wyrobienie duplikatu lub odtworzenie brakującej niemieckiej dokumentacji pojazdu — również w trudnych przypadkach.",
+    seoDescription:
+      "Zgubiony, zniszczony lub zatrzymany niemiecki brief? Pomagamy odzyskać dokumentację i wyrobić duplikat Zulassungsbescheinigung Teil I i Teil II — także w sprawach trudnych.",
     lead: "Brak briefu zwykle blokuje rejestrację i sprzedaż pojazdu. Pomagamy odzyskać brakującą niemiecką dokumentację oraz wyrobić duplikat briefu (Zulassungsbescheinigung Teil I i Teil II) — specjalizujemy się w sprawach trudnych i nietypowych.",
     sections: [
       {
@@ -153,6 +180,7 @@ export const SERVICE_PAGES: ServicePage[] = [
         heading: "Jak zaczynamy",
         body: [
           "Przyślij nam numer VIN oraz wszystkie dokumenty, które masz (np. mały brief, umowę, stary dowód). Na tej podstawie sprawdzamy, czy i w jaki sposób można odzyskać dokumentację, i przedstawiamy plan działania.",
+          "Pomocne mogą być też nasze poradniki: [guide:zgubiony-brief-duplikat] oraz [guide:wyrejestrowanie-auta-bez-briefu].",
         ],
       },
     ],
@@ -173,20 +201,35 @@ export const SERVICE_PAGES: ServicePage[] = [
       },
       {
         q: "Czy pomagacie przy wyrejestrowaniu auta bez briefu?",
-        a: "Tak. Jeśli brief zaginął, doradzimy najlepszą ścieżkę — od duplikatu po wyrejestrowanie. Zobacz też nasz poradnik o wyrejestrowaniu auta w Niemczech bez briefu.",
+        a: "Tak. Jeśli brief zaginął, doradzimy najlepszą ścieżkę — od duplikatu po wyrejestrowanie auta w Niemczech bez briefu.",
       },
-    ],
-    relatedGuides: [
-      "co-to-jest-niemiecki-brief",
-      "jak-czytac-niemiecki-brief",
-      "zgubiony-brief-duplikat",
-      "wyrejestrowanie-auta-bez-briefu",
-      "koszt-wyrobienia-briefu",
     ],
   },
 ];
 
-/** Look up a service page by slug. */
-export function getService(slug: string): ServicePage | undefined {
-  return SERVICE_PAGES.find((s) => s.slug === slug);
+function toEntry(s: ServiceSource): ServiceEntry {
+  const markdown = sectionsToMarkdown(s.lead, [
+    ...s.sections,
+    { heading: "Co otrzymujesz", bullets: s.highlights },
+  ]);
+  return {
+    slug: s.slug,
+    featured: false,
+    sortOrder: s.sortOrder,
+    relatedGuides: s.relatedGuides,
+    translations: {
+      pl: {
+        title: s.name,
+        h1: s.h1,
+        seoTitle: s.seoTitle,
+        seoDescription: s.seoDescription,
+        excerpt: s.summary,
+        markdown,
+        faq: s.faq,
+      },
+    },
+  };
 }
+
+/** The committed (seed/fallback) service pages, excluding the featured DMC one. */
+export const SERVICE_PAGES: ServiceEntry[] = SOURCES.map(toEntry);

@@ -1,6 +1,7 @@
 ---
 import { translations } from "@/i18n/translations";
 import type { Language } from "@/types";
+import { getServices, getGuides } from "@/lib/content-source";
 
 interface Props {
   lang: Language;
@@ -9,6 +10,14 @@ interface Props {
 const { lang } = Astro.props;
 const t = translations[lang];
 const year = new Date().getFullYear();
+
+// Collection links are shown only for languages that actually have content,
+// so footers never link to a page that wasn't generated.
+const [services, guides] = await Promise.all([getServices(), getGuides()]);
+const hasServices = services.some((s) => s.translations[lang]);
+const hasGuides = guides.some((g) => g.translations[lang]);
+const servicesLabel = lang === "pl" ? "Usługi" : "Services";
+const guidesLabel = lang === "pl" ? "Poradnik" : "Guides";
 ---
 
 <footer class="panel-dark">
@@ -40,8 +49,8 @@ const year = new Date().getFullYear();
         <p class="eyebrow text-paper/45">{lang === "pl" ? "Na stronie" : "Site"}</p>
         <ul class="mt-4 space-y-2.5 text-sm text-paper/70">
           <li><a href={`/${lang}`} class="hover:text-paper transition-colors">{t.nav.home}</a></li>
-          {lang === "pl" && <li><a href="/pl/uslugi" class="hover:text-paper transition-colors">Usługi</a></li>}
-          {lang === "pl" && <li><a href="/pl/poradnik" class="hover:text-paper transition-colors">Poradnik</a></li>}
+          {hasServices && <li><a href={`/${lang}/services`} class="hover:text-paper transition-colors">{servicesLabel}</a></li>}
+          {hasGuides && <li><a href={`/${lang}/guides`} class="hover:text-paper transition-colors">{guidesLabel}</a></li>}
           <li>
             <a href={`/${lang}/privacy-policy`} class="hover:text-paper transition-colors">{t.footer.cookieNotice.linkText}</a>
           </li>

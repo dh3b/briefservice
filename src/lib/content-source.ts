@@ -1,22 +1,34 @@
 /**
- * Build-time content source for the Polish service + guide pages.
+ * Build-time content source for the multilingual service + guide pages.
  *
- * When `CONTENT_API` is set (e.g. the in-place rebuild builder runs with
- * `CONTENT_API=http://api:3001/api`), service/guide content is fetched from the
- * live API and the database is the source of truth. Otherwise — local builds,
- * an empty/unreachable DB — it falls back to the committed content in
+ * When `CONTENT_API` is set (the in-place rebuild builder runs with
+ * `CONTENT_API=http://api:3001/api`), content is fetched from the live API and
+ * the database is the source of truth. Otherwise — local builds, an
+ * empty/unreachable DB — it falls back to the committed seed in
  * `src/content/*`, so a build never breaks and the authored content doubles as
  * the seed.
  *
- * Polish only for now; the DB `content` JSONB is keyed by language, so adding
- * locales later is a matter of reading another key.
+ * `pl` is the authored base and the fallback language for any locale that has
+ * no translation of its own.
  */
-import type { ServicePage, Guide, ContentSection, Faq } from "@/content/types";
+import { SUPPORTED_LANGUAGES, type Language } from "@/seo/site";
+import type {
+  ServiceEntry,
+  GuideEntry,
+  Translation,
+  Translations,
+  ResolvedTranslation,
+  Faq,
+  GuideCta,
+} from "@/content/types";
 import { SERVICE_PAGES } from "@/content/services";
 import { GUIDES } from "@/content/guides";
+import { ZMIANA_DMC_SERVICE } from "@/content/zmiana-dmc";
+import type { GuideLinkResolver } from "@/lib/markdown";
 
-const LANG = "pl";
-// Build runs in Node, so the data-source URL comes from the process env.
+/** Language used as the content fallback (distinct from the SEO x-default). */
+export const DEFAULT_CONTENT_LANG: Language = "pl";
+
 const API = process.env.CONTENT_API;
 
 /* ------------------------------- fetching --------------------------------- */
@@ -38,91 +50,155 @@ async function fetchRows(resource: string): Promise<Record<string, unknown>[] | 
 
 /* --------------------------- normalisation -------------------------------- */
 
-function asSections(v: unknown): ContentSection[] {
-  return Array.isArray(v) ? (v as ContentSection[]) : [];
-}
-function asStrings(v: unknown): string[] {
-  return Array.isArray(v) ? (v.filter((x) => typeof x === "string") as string[]) : [];
-}
-function asFaq(v: unknown): Faq[] {
-  return Array.isArray(v) ? (v as Faq[]) : [];
-}
-
-function langContent(row: Record<string, unknown>): Record<string, unknown> | null {
-  const byLang = row.content as Record<string, Record<string, unknown>> | undefined;
-  return byLang?.[LANG] ?? null;
-}
 const str = (v: unknown): string => (typeof v === "string" ? v : "");
+const num = (v: unknown): number => (typeof v === "number" ? v : 0);
+const asStrings = (v: unknown): string[] =>
+  Array.isArray(v) ? (v.filter((x) => typeof x === "string") as string[]) : [];
+const asFaq = (v: unknown): Faq[] | undefined =>
+  Array.isArray(v) ? (v as Faq[]) : undefined;
 
-/** Map a DB service row (rich `content` JSONB + tile columns) to a ServicePage. */
-function rowToService(row: Record<string, unknown>): ServicePage | null {
+/** Parse the API's per-language translation rows into a `Translations` map. */
+function parseTranslations(v: unknown): Translations {
+  const out: Translations = {};
+  if (!Array.isArray(v)) return out;
+  for (const raw of v) {
+    const row = raw as Record<string, unknown>;
+    const lang = str(row.lang) as Language;
+    if (!SUPPORTED_LANGUAGES.includes(lang)) continue;
+    const title = str(row.title);
+    const markdown = str(row.markdown);
+    if (!title && !markdown) continue;
+    const t: Translation = {
+      title,
+      h1: str(row.h1) || undefined,
+      seoTitle: str(row.seo_title) || undefined,
+      seoDescription: str(row.seo_description) || undefined,
+      excerpt: str(row.excerpt),
+      markdown,
+      faq: asFaq(row.faq),
+      cta: (row.cta as GuideCta | undefined) ?? undefined,
+    };
+    out[lang] = t;
+  }
+  return out;
+}
+
+function rowToService(row: Record<string, unknown>): ServiceEntry | null {
   const slug = str(row.slug);
-  const c = langContent(row);
-  if (!slug || !c) return null;
-  const title = str(row[`title_${LANG}`]);
-  const desc = str(row[`description_${LANG}`]);
+  if (!slug) return null;
+  const translations = parseTranslations(row.translations);
+  if (!Object.keys(translations).length) return null;
   return {
     slug,
-    name: title || str(c.name) || slug,
-    summary: desc || str(c.summary),
-    title: str(c.seoTitle) || title || slug,
-    description: str(c.seoDescription) || desc,
-    h1: str(c.h1) || title || slug,
-    lead: str(c.lead),
-    sections: asSections(c.sections),
-    highlights: asStrings(c.highlights),
-    faq: asFaq(c.faq),
-    relatedGuides: asStrings(c.relatedGuides),
+    featured: Boolean(row.featured),
+    sortOrder: num(row.sort_order),
+    heroImage: str(row.hero_image) || undefined,
+    relatedGuides: asStrings(row.related_guides),
+    translations,
   };
 }
 
-/** Map a DB guide row to a Guide. */
-function rowToGuide(row: Record<string, unknown>): Guide | null {
+function rowToGuide(row: Record<string, unknown>): GuideEntry | null {
   const slug = str(row.slug);
-  const c = langContent(row);
-  if (!slug || !c) return null;
-  const cta = (c.cta as Guide["cta"] | undefined) ?? { href: "/pl/uslugi", label: "Skontaktuj się", text: "" };
+  if (!slug) return null;
+  const translations = parseTranslations(row.translations);
+  if (!Object.keys(translations).length) return null;
   return {
     slug,
-    title: str(c.seoTitle) || str(c.h1) || slug,
-    description: str(c.seoDescription),
-    h1: str(c.h1) || slug,
-    summary: str(c.summary),
-    lead: str(c.lead),
-    sections: asSections(c.sections),
-    faq: asFaq(c.faq),
-    cta,
+    sortOrder: num(row.sort_order),
+    heroImage: str(row.hero_image) || undefined,
+    translations,
   };
+}
+
+/* ------------------------------- ordering --------------------------------- */
+
+function sortServices(list: ServiceEntry[]): ServiceEntry[] {
+  return [...list].sort(
+    (a, b) => Number(b.featured) - Number(a.featured) || a.sortOrder - b.sortOrder,
+  );
+}
+function sortGuides(list: GuideEntry[]): GuideEntry[] {
+  return [...list].sort((a, b) => a.sortOrder - b.sortOrder);
 }
 
 /* ----------------------------- public API --------------------------------- */
 // Memoised so each build fetches once, not once per consuming page.
 
-let servicesPromise: Promise<ServicePage[]> | undefined;
-let guidesPromise: Promise<Guide[]> | undefined;
+const SEED_SERVICES: ServiceEntry[] = [ZMIANA_DMC_SERVICE, ...SERVICE_PAGES];
 
-export function getServicePages(): Promise<ServicePage[]> {
+let servicesPromise: Promise<ServiceEntry[]> | undefined;
+let guidesPromise: Promise<GuideEntry[]> | undefined;
+
+export function getServices(): Promise<ServiceEntry[]> {
   servicesPromise ??= (async () => {
     const rows = await fetchRows("services");
-    if (!rows) return SERVICE_PAGES;
+    if (!rows) return sortServices(SEED_SERVICES);
     const mapped = rows
       .filter((r) => Boolean(r.published))
       .map(rowToService)
-      .filter((s): s is ServicePage => Boolean(s));
-    return mapped.length ? mapped : SERVICE_PAGES;
+      .filter((s): s is ServiceEntry => Boolean(s));
+    return sortServices(mapped.length ? mapped : SEED_SERVICES);
   })();
   return servicesPromise;
 }
 
-export function getGuides(): Promise<Guide[]> {
+export function getGuides(): Promise<GuideEntry[]> {
   guidesPromise ??= (async () => {
     const rows = await fetchRows("guides");
-    if (!rows) return GUIDES;
+    if (!rows) return sortGuides(GUIDES);
     const mapped = rows
       .filter((r) => Boolean(r.published))
       .map(rowToGuide)
-      .filter((g): g is Guide => Boolean(g));
-    return mapped.length ? mapped : GUIDES;
+      .filter((g): g is GuideEntry => Boolean(g));
+    return sortGuides(mapped.length ? mapped : GUIDES);
   })();
   return guidesPromise;
+}
+
+/* ---------------------------- language helpers ---------------------------- */
+
+/** Languages an entry is published in, in canonical order. */
+export function availableLangs(entry: { translations: Translations }): Language[] {
+  return SUPPORTED_LANGUAGES.filter((l) => entry.translations[l]);
+}
+
+/** The set of languages that have at least one of the given entries. */
+export function listingLangs(entries: { translations: Translations }[]): Language[] {
+  const set = new Set<Language>();
+  for (const e of entries) for (const l of availableLangs(e)) set.add(l);
+  return SUPPORTED_LANGUAGES.filter((l) => set.has(l));
+}
+
+/**
+ * Resolve an entry's translation for a requested language, falling back to `pl`
+ * and then to the first available language. Returns null only for empty
+ * entries.
+ */
+export function resolveTranslation(
+  entry: { translations: Translations },
+  lang: Language,
+): ResolvedTranslation | null {
+  const direct = entry.translations[lang];
+  if (direct) return { ...direct, resolvedLang: lang };
+  const fallback = entry.translations[DEFAULT_CONTENT_LANG];
+  if (fallback) return { ...fallback, resolvedLang: DEFAULT_CONTENT_LANG };
+  const first = availableLangs(entry)[0];
+  return first ? { ...entry.translations[first]!, resolvedLang: first } : null;
+}
+
+/**
+ * Build a `[guide:slug]` resolver for a page in `lang`. Links point at the
+ * language the guide actually exists in (falling back to `pl`), so generated
+ * links never 404.
+ */
+export function makeGuideLinkResolver(guides: GuideEntry[], lang: Language): GuideLinkResolver {
+  const bySlug = new Map(guides.map((g) => [g.slug, g]));
+  return (slug, customLabel) => {
+    const guide = bySlug.get(slug);
+    if (!guide) return null;
+    const t = resolveTranslation(guide, lang);
+    if (!t) return null;
+    return { href: `/${t.resolvedLang}/guides/${slug}`, label: customLabel || t.title };
+  };
 }

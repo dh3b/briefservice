@@ -22,8 +22,8 @@ describe("canonicalUrl", () => {
   });
 
   it("normalises stray slashes in the sub-path", () => {
-    expect(canonicalUrl("pl", "/uslugi/odzyskanie-briefu/")).toBe(
-      "https://brief-service.com/pl/uslugi/odzyskanie-briefu",
+    expect(canonicalUrl("pl", "/services/odzyskanie-briefu/")).toBe(
+      "https://brief-service.com/pl/services/odzyskanie-briefu",
     );
   });
 });
@@ -38,13 +38,13 @@ describe("hreflangAlternates", () => {
   });
 
   it("restricts to a language subset and points x-default within it", () => {
-    const alts = hreflangAlternates("poradnik/koszt-wyrobienia-briefu", ["pl"]);
+    const alts = hreflangAlternates("guides/koszt-wyrobienia-briefu", ["pl"]);
     expect(alts).toHaveLength(2); // pl + x-default
     expect(alts.find((a) => a.hreflang === "pl")?.href).toBe(
-      "https://brief-service.com/pl/poradnik/koszt-wyrobienia-briefu",
+      "https://brief-service.com/pl/guides/koszt-wyrobienia-briefu",
     );
     expect(alts.find((a) => a.hreflang === "x-default")?.href).toBe(
-      "https://brief-service.com/pl/poradnik/koszt-wyrobienia-briefu",
+      "https://brief-service.com/pl/guides/koszt-wyrobienia-briefu",
     );
   });
 });
@@ -52,17 +52,17 @@ describe("hreflangAlternates", () => {
 describe("buildSitemapXml", () => {
   const xml = buildSitemapXml([
     ...baseSitemapEntries(),
-    { subPath: "poradnik/co-to-jest-niemiecki-brief", langs: ["pl"] },
+    { subPath: "guides/co-to-jest-niemiecki-brief", langs: ["pl"] },
   ]);
 
   it("includes base pages with self-referential locs", () => {
     expect(xml).toContain("<loc>https://brief-service.com/pl/</loc>");
-    expect(xml).toContain("<loc>https://brief-service.com/pl/zmiana-dmc</loc>");
+    expect(xml).toContain("<loc>https://brief-service.com/pl/privacy-policy</loc>");
     expect(xml).toContain('hreflang="x-default"');
   });
 
   it("includes Polish-only content pages", () => {
-    expect(xml).toContain("<loc>https://brief-service.com/pl/poradnik/co-to-jest-niemiecki-brief</loc>");
+    expect(xml).toContain("<loc>https://brief-service.com/pl/guides/co-to-jest-niemiecki-brief</loc>");
   });
 
   it("excludes the noindex admin route", () => {

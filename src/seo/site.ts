@@ -64,12 +64,12 @@ export interface PageDef {
 
 /**
  * The base pages that exist in every supported language (driven by
- * translations.ts). Per-service and guide pages are Polish-only and live in
- * their own content modules; the sitemap endpoint adds them as entries.
+ * translations.ts). Service + guide pages (including the former /zmiana-dmc,
+ * now a service) live in their own content modules; the sitemap endpoint adds
+ * them as entries from the content source.
  */
 export const PAGES: readonly PageDef[] = [
   { path: "", index: true },
-  { path: "zmiana-dmc", index: true },
   { path: "landing", index: true },
   { path: "privacy-policy", index: true },
   { path: "admin", index: false },
