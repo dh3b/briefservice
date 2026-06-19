@@ -1,36 +1,17 @@
 /**
- * Markdown rendering for service/guide bodies.
+ * Build-time Markdown rendering for service/guide bodies.
  *
  * Content is authored as Markdown and stored as raw Markdown (in the DB or the
  * committed seed). It is rendered to sanitized HTML at build time. Inline
- * `[guide:slug]` / `[guide:slug|Custom label]` shortcodes are expanded to
- * language-aware links before parsing.
+ * `[guide:slug]` shortcodes are expanded to language-aware links first (see
+ * ./guide-shortcodes, which is dependency-free so the admin can share it).
  */
 import { marked } from "marked";
 import sanitizeHtml from "sanitize-html";
+import { resolveGuideShortcodes, type GuideLinkResolver } from "./guide-shortcodes";
 
-export interface GuideLink {
-  href: string;
-  label: string;
-}
-
-/** Resolve a guide slug (and optional custom label) to a link, or null. */
-export type GuideLinkResolver = (slug: string, customLabel?: string) => GuideLink | null;
-
-const SHORTCODE = /\[guide:([a-z0-9-]+)(?:\|([^\]]+))?\]/g;
-
-/**
- * Expand `[guide:slug]` / `[guide:slug|Label]` shortcodes into Markdown links.
- * Unknown slugs degrade gracefully to plain text (the label or the slug).
- */
-export function resolveGuideShortcodes(markdown: string, resolve: GuideLinkResolver): string {
-  return markdown.replace(SHORTCODE, (_whole, slug: string, rawLabel?: string) => {
-    const label = rawLabel?.trim();
-    const link = resolve(slug, label);
-    if (!link) return label || slug;
-    return `[${link.label}](${link.href})`;
-  });
-}
+export { resolveGuideShortcodes };
+export type { GuideLink, GuideLinkResolver } from "./guide-shortcodes";
 
 const SANITIZE_OPTS: sanitizeHtml.IOptions = {
   allowedTags: [...sanitizeHtml.defaults.allowedTags, "h1", "h2", "img"],

@@ -9,7 +9,7 @@
     "preview": "astro preview",
     "astro": "astro",
     "check": "astro check",
-    "seed": "tsx scripts/seed-content.ts",
+    "seed": "tsx scripts/migrate-content.ts",
     "lint": "eslint .",
     "test": "vitest run",
     "test:watch": "vitest"

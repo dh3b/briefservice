@@ -18,5 +18,14 @@ export default defineConfig({
         "@": fileURLToPath(new URL("./src", import.meta.url)),
       },
     },
+    // Dev-only: proxy API/uploads to the local Express server so API-backed
+    // islands work under `astro dev` the same way they do behind Caddy in prod
+    // (same-origin `/api`). Ignored by the static build.
+    server: {
+      proxy: {
+        "/api": "http://localhost:3001",
+        "/uploads": "http://localhost:3001",
+      },
+    },
   },
 });

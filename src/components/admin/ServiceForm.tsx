@@ -1,81 +1,85 @@
 import { useState } from "react";
 import { useLanguage } from "@/i18n/LanguageContext";
 import { X, Upload } from "lucide-react";
-import { ServiceRow, CategoryRow, SUPPORTED_LANGUAGES, Language, localizeCategory } from "@/types";
-import type { ContentSection, Faq } from "@/content/types";
+import {
+  ServiceRow,
+  GuideRow,
+  CategoryRow,
+  SUPPORTED_LANGUAGES,
+  Language,
+  localizeCategory,
+} from "@/types";
+import type { Faq } from "@/content/types";
 import * as api from "@/api";
 import LanguageTabs from "../LanguageTabs";
-import { StringListEditor, SectionsEditor, FaqEditor, FieldLabel, inputCls } from "./editorBits";
+import {
+  MarkdownEditor,
+  RelatedGuidesEditor,
+  FaqEditor,
+  FieldLabel,
+  inputCls,
+} from "./editorBits";
 
 interface Props {
   service: ServiceRow | null;
   categories: CategoryRow[];
+  guides: GuideRow[];
   onClose: () => void;
   onSaved: () => void;
 }
 
-/** Per-language rich content for the dedicated service page. */
-interface SvcContent {
+interface TForm {
+  title: string;
+  h1: string;
   seoTitle: string;
   seoDescription: string;
-  h1: string;
-  lead: string;
-  sections: ContentSection[];
-  highlights: string[];
+  excerpt: string;
+  markdown: string;
   faq: Faq[];
-  relatedGuides: string[];
 }
 
-function emptyContent(): SvcContent {
-  return { seoTitle: "", seoDescription: "", h1: "", lead: "", sections: [], highlights: [], faq: [], relatedGuides: [] };
-}
+const emptyT = (): TForm => ({ title: "", h1: "", seoTitle: "", seoDescription: "", excerpt: "", markdown: "", faq: [] });
 
-const ServiceForm = ({ service, categories, onClose, onSaved }: Props) => {
+const ServiceForm = ({ service, categories, guides, onClose, onSaved }: Props) => {
   const { t, language } = useLanguage();
   const [activeLang, setActiveLang] = useState<Language>(language);
   const [saving, setSaving] = useState(false);
 
-  const initLangMap = (prefix: string) => {
-    const map: Record<string, string> = {};
-    for (const l of SUPPORTED_LANGUAGES) map[l] = (service?.[`${prefix}_${l}`] as string) || "";
-    return map;
-  };
-
-  const initContent = () => {
-    const raw = (service?.content as unknown as Record<string, Partial<SvcContent>>) || {};
-    const map: Record<string, SvcContent> = {};
-    for (const l of SUPPORTED_LANGUAGES) {
-      const c = raw[l] || {};
-      map[l] = {
-        ...emptyContent(),
-        ...c,
-        sections: Array.isArray(c.sections) ? c.sections : [],
-        highlights: Array.isArray(c.highlights) ? c.highlights : [],
-        faq: Array.isArray(c.faq) ? c.faq : [],
-        relatedGuides: Array.isArray(c.relatedGuides) ? c.relatedGuides : [],
+  const initTranslations = () => {
+    const map: Record<string, TForm> = {};
+    for (const l of SUPPORTED_LANGUAGES) map[l] = emptyT();
+    for (const tr of service?.translations ?? []) {
+      map[tr.lang] = {
+        title: tr.title || "",
+        h1: tr.h1 || "",
+        seoTitle: tr.seo_title || "",
+        seoDescription: tr.seo_description || "",
+        excerpt: tr.excerpt || "",
+        markdown: tr.markdown || "",
+        faq: Array.isArray(tr.faq) ? tr.faq : [],
       };
     }
     return map;
   };
 
-  const [titles, setTitles] = useState<Record<string, string>>(initLangMap("title"));
-  const [descriptions, setDescriptions] = useState<Record<string, string>>(initLangMap("description"));
-  const [content, setContent] = useState<Record<string, SvcContent>>(initContent);
+  const [tr, setTr] = useState<Record<string, TForm>>(initTranslations);
   const [categoryId, setCategoryId] = useState(service?.category_id || "");
   const [imageUrl, setImageUrl] = useState(service?.image_url || "");
-  const [slug, setSlug] = useState((service?.slug as string) || "");
+  const [heroImage, setHeroImage] = useState(service?.hero_image || "");
+  const [slug, setSlug] = useState(service?.slug || "");
+  const [featured, setFeatured] = useState(Boolean(service?.featured));
   const [published, setPublished] = useState(Boolean(service?.published));
   const [sortOrder, setSortOrder] = useState(Number(service?.sort_order) || 0);
+  const [relatedGuides, setRelatedGuides] = useState<string[]>(service?.related_guides ?? []);
 
-  const c = content[activeLang];
-  const patchContent = (patch: Partial<SvcContent>) =>
-    setContent({ ...content, [activeLang]: { ...content[activeLang], ...patch } });
+  const c = tr[activeLang];
+  const patch = (p: Partial<TForm>) => setTr({ ...tr, [activeLang]: { ...tr[activeLang], ...p } });
 
-  const handleUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleUpload = async (e: React.ChangeEvent<HTMLInputElement>, set: (url: string) => void) => {
     const file = e.target.files?.[0];
     if (!file) return;
     try {
-      setImageUrl(await api.uploadImage(file));
+      set(await api.uploadImage(file));
     } catch (err) {
       console.error("Upload failed:", err);
     }
@@ -83,18 +87,29 @@ const ServiceForm = ({ service, categories, onClose, onSaved }: Props) => {
 
   const handleSave = async () => {
     setSaving(true);
+    const translations = SUPPORTED_LANGUAGES
+      .filter((l) => tr[l].title || tr[l].markdown || tr[l].excerpt)
+      .map((l) => ({
+        lang: l,
+        title: tr[l].title,
+        h1: tr[l].h1,
+        seo_title: tr[l].seoTitle,
+        seo_description: tr[l].seoDescription,
+        excerpt: tr[l].excerpt,
+        markdown: tr[l].markdown,
+        faq: tr[l].faq,
+      }));
     const data: Record<string, unknown> = {
       category_id: categoryId || null,
       image_url: imageUrl,
+      hero_image: heroImage || null,
       slug: slug.trim() || null,
+      featured,
       published,
       sort_order: sortOrder,
-      content,
+      related_guides: relatedGuides,
+      translations,
     };
-    for (const l of SUPPORTED_LANGUAGES) {
-      data[`title_${l}`] = titles[l] || null;
-      data[`description_${l}`] = descriptions[l] || null;
-    }
     try {
       if (service) await api.updateService(service.id, data);
       else await api.createService(data);
@@ -115,12 +130,15 @@ const ServiceForm = ({ service, categories, onClose, onSaved }: Props) => {
         </div>
 
         <div className="p-6 space-y-5">
-          {/* Slug + publish + order */}
-          <div className="grid grid-cols-1 sm:grid-cols-[1fr_auto_auto] gap-3 items-end">
+          {/* Slug + flags + order */}
+          <div className="grid grid-cols-1 sm:grid-cols-[1fr_auto_auto_auto] gap-3 items-end">
             <div>
               <FieldLabel>Slug (URL — leave empty for a tile without a page)</FieldLabel>
               <input value={slug} onChange={(e) => setSlug(e.target.value)} placeholder="np. odzyskanie-briefu" className={inputCls} />
             </div>
+            <label className="flex items-center gap-2 text-sm text-foreground py-2">
+              <input type="checkbox" checked={featured} onChange={(e) => setFeatured(e.target.checked)} /> Featured
+            </label>
             <label className="flex items-center gap-2 text-sm text-foreground py-2">
               <input type="checkbox" checked={published} onChange={(e) => setPublished(e.target.checked)} /> Published
             </label>
@@ -130,7 +148,7 @@ const ServiceForm = ({ service, categories, onClose, onSaved }: Props) => {
             </div>
           </div>
 
-          {/* Category + image */}
+          {/* Category + tile image */}
           <div className="grid sm:grid-cols-2 gap-3">
             <div>
               <FieldLabel>{t.admin.category}</FieldLabel>
@@ -140,54 +158,42 @@ const ServiceForm = ({ service, categories, onClose, onSaved }: Props) => {
               </select>
             </div>
             <div>
-              <FieldLabel>{t.admin.imageUrl}</FieldLabel>
+              <FieldLabel>Tile image URL</FieldLabel>
               <div className="flex gap-2">
                 <input value={imageUrl} onChange={(e) => setImageUrl(e.target.value)} className={inputCls} />
                 <label className="flex items-center gap-1.5 px-3 py-2 rounded-lg bg-secondary text-secondary-foreground text-sm cursor-pointer hover:bg-muted transition-colors shrink-0">
                   <Upload className="w-4 h-4" />
-                  <input type="file" accept="image/*" onChange={handleUpload} className="hidden" />
+                  <input type="file" accept="image/*" onChange={(e) => handleUpload(e, setImageUrl)} className="hidden" />
                 </label>
               </div>
             </div>
           </div>
-
           {imageUrl && <img src={imageUrl} alt="" className="h-24 rounded-lg object-cover" />}
+
+          <RelatedGuidesEditor value={relatedGuides} onChange={setRelatedGuides} guides={guides} lang={activeLang} />
 
           <div className="border-t border-border pt-5">
             <LanguageTabs
               activeLang={activeLang}
               onSelect={setActiveLang}
-              hasContent={(l) => !!(titles[l] || content[l]?.h1)}
+              hasContent={(l) => !!(tr[l]?.title || tr[l]?.markdown)}
               label={t.admin.languageTab}
             />
           </div>
 
-          {/* Tile fields */}
+          {/* Per-language content */}
           <div className="grid sm:grid-cols-2 gap-3">
-            <div>
-              <FieldLabel>Tile title ({activeLang.toUpperCase()})</FieldLabel>
-              <input value={titles[activeLang] || ""} onChange={(e) => setTitles({ ...titles, [activeLang]: e.target.value })} className={inputCls} />
-            </div>
-            <div>
-              <FieldLabel>Tile summary ({activeLang.toUpperCase()})</FieldLabel>
-              <input value={descriptions[activeLang] || ""} onChange={(e) => setDescriptions({ ...descriptions, [activeLang]: e.target.value })} className={inputCls} />
-            </div>
+            <div><FieldLabel>Title ({activeLang.toUpperCase()}) — card / listing</FieldLabel><input value={c.title} onChange={(e) => patch({ title: e.target.value })} className={inputCls} /></div>
+            <div><FieldLabel>Excerpt — tile summary + meta</FieldLabel><input value={c.excerpt} onChange={(e) => patch({ excerpt: e.target.value })} className={inputCls} /></div>
+          </div>
+          <div><FieldLabel>H1 (page heading)</FieldLabel><input value={c.h1} onChange={(e) => patch({ h1: e.target.value })} className={inputCls} /></div>
+          <div className="grid sm:grid-cols-2 gap-3">
+            <div><FieldLabel>SEO title (defaults to Title)</FieldLabel><input value={c.seoTitle} onChange={(e) => patch({ seoTitle: e.target.value })} className={inputCls} /></div>
+            <div><FieldLabel>SEO description (defaults to Excerpt)</FieldLabel><input value={c.seoDescription} onChange={(e) => patch({ seoDescription: e.target.value })} className={inputCls} /></div>
           </div>
 
-          {/* Page content (only meaningful when a slug is set) */}
-          <div className="space-y-4 rounded-lg bg-muted/30 p-4">
-            <p className="text-xs text-muted-foreground">Page content — used for the dedicated /uslugi/{slug || "<slug>"} page.</p>
-            <div className="grid sm:grid-cols-2 gap-3">
-              <div><FieldLabel>SEO title</FieldLabel><input value={c.seoTitle} onChange={(e) => patchContent({ seoTitle: e.target.value })} className={inputCls} /></div>
-              <div><FieldLabel>SEO description</FieldLabel><input value={c.seoDescription} onChange={(e) => patchContent({ seoDescription: e.target.value })} className={inputCls} /></div>
-            </div>
-            <div><FieldLabel>H1</FieldLabel><input value={c.h1} onChange={(e) => patchContent({ h1: e.target.value })} className={inputCls} /></div>
-            <div><FieldLabel>Lead paragraph</FieldLabel><textarea value={c.lead} onChange={(e) => patchContent({ lead: e.target.value })} rows={3} className={`${inputCls} resize-y`} /></div>
-            <SectionsEditor value={c.sections} onChange={(sections) => patchContent({ sections })} />
-            <StringListEditor label="Highlights (what you get)" value={c.highlights} onChange={(highlights) => patchContent({ highlights })} />
-            <FaqEditor value={c.faq} onChange={(faq) => patchContent({ faq })} />
-            <StringListEditor label="Related guide slugs" value={c.relatedGuides} onChange={(relatedGuides) => patchContent({ relatedGuides })} placeholder="np. co-to-jest-niemiecki-brief" />
-          </div>
+          <MarkdownEditor value={c.markdown} onChange={(markdown) => patch({ markdown })} guides={guides} lang={activeLang} />
+          <FaqEditor value={c.faq} onChange={(faq) => patch({ faq })} />
         </div>
 
         <div className="flex justify-end gap-2 px-6 py-4 border-t border-border sticky bottom-0 bg-card">

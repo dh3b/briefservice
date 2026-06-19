@@ -1,63 +1,76 @@
 import { useState } from "react";
 import { useLanguage } from "@/i18n/LanguageContext";
 import { X } from "lucide-react";
-import { GuideRow, SUPPORTED_LANGUAGES, Language } from "@/types";
-import type { ContentSection, Faq } from "@/content/types";
+import {
+  GuideRow,
+  ServiceRow,
+  SUPPORTED_LANGUAGES,
+  Language,
+  pickTranslation,
+} from "@/types";
+import type { Faq } from "@/content/types";
 import * as api from "@/api";
 import LanguageTabs from "../LanguageTabs";
-import { StringListEditor, SectionsEditor, FaqEditor, FieldLabel, inputCls } from "./editorBits";
+import { MarkdownEditor, FaqEditor, FieldLabel, inputCls } from "./editorBits";
 
 interface Props {
   guide: GuideRow | null;
+  guides: GuideRow[];
+  services: ServiceRow[];
   onClose: () => void;
   onSaved: () => void;
 }
 
-interface GuideContent {
+interface Cta {
+  serviceSlug: string;
+  label: string;
+  text: string;
+}
+interface TForm {
+  title: string;
+  h1: string;
   seoTitle: string;
   seoDescription: string;
-  h1: string;
-  summary: string;
-  lead: string;
-  sections: ContentSection[];
+  excerpt: string;
+  markdown: string;
   faq: Faq[];
-  cta: { href: string; label: string; text: string };
+  cta: Cta;
 }
 
-function emptyContent(): GuideContent {
-  return { seoTitle: "", seoDescription: "", h1: "", summary: "", lead: "", sections: [], faq: [], cta: { href: "", label: "", text: "" } };
-}
+const emptyCta = (): Cta => ({ serviceSlug: "", label: "", text: "" });
+const emptyT = (): TForm => ({ title: "", h1: "", seoTitle: "", seoDescription: "", excerpt: "", markdown: "", faq: [], cta: emptyCta() });
 
-const GuideForm = ({ guide, onClose, onSaved }: Props) => {
+const GuideForm = ({ guide, guides, services, onClose, onSaved }: Props) => {
   const { t, language } = useLanguage();
   const [activeLang, setActiveLang] = useState<Language>(language);
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState("");
 
-  const initContent = () => {
-    const raw = (guide?.content as unknown as Record<string, Partial<GuideContent>>) || {};
-    const map: Record<string, GuideContent> = {};
-    for (const l of SUPPORTED_LANGUAGES) {
-      const cc = raw[l] || {};
-      map[l] = {
-        ...emptyContent(),
-        ...cc,
-        sections: Array.isArray(cc.sections) ? cc.sections : [],
-        faq: Array.isArray(cc.faq) ? cc.faq : [],
-        cta: { ...emptyContent().cta, ...(cc.cta || {}) },
+  const initTranslations = () => {
+    const map: Record<string, TForm> = {};
+    for (const l of SUPPORTED_LANGUAGES) map[l] = emptyT();
+    for (const tr of guide?.translations ?? []) {
+      map[tr.lang] = {
+        title: tr.title || "",
+        h1: tr.h1 || "",
+        seoTitle: tr.seo_title || "",
+        seoDescription: tr.seo_description || "",
+        excerpt: tr.excerpt || "",
+        markdown: tr.markdown || "",
+        faq: Array.isArray(tr.faq) ? tr.faq : [],
+        cta: { ...emptyCta(), ...(tr.cta || {}) },
       };
     }
     return map;
   };
 
-  const [content, setContent] = useState<Record<string, GuideContent>>(initContent);
+  const [tr, setTr] = useState<Record<string, TForm>>(initTranslations);
   const [slug, setSlug] = useState(guide?.slug || "");
   const [published, setPublished] = useState(Boolean(guide?.published));
   const [sortOrder, setSortOrder] = useState(Number(guide?.sort_order) || 0);
 
-  const c = content[activeLang];
-  const patchContent = (patch: Partial<GuideContent>) =>
-    setContent({ ...content, [activeLang]: { ...content[activeLang], ...patch } });
+  const c = tr[activeLang];
+  const patch = (p: Partial<TForm>) => setTr({ ...tr, [activeLang]: { ...tr[activeLang], ...p } });
 
   const handleSave = async () => {
     if (!slug.trim()) {
@@ -66,7 +79,20 @@ const GuideForm = ({ guide, onClose, onSaved }: Props) => {
     }
     setSaving(true);
     setError("");
-    const data: Record<string, unknown> = { slug: slug.trim(), published, sort_order: sortOrder, content };
+    const translations = SUPPORTED_LANGUAGES
+      .filter((l) => tr[l].title || tr[l].markdown || tr[l].excerpt)
+      .map((l) => ({
+        lang: l,
+        title: tr[l].title,
+        h1: tr[l].h1,
+        seo_title: tr[l].seoTitle,
+        seo_description: tr[l].seoDescription,
+        excerpt: tr[l].excerpt,
+        markdown: tr[l].markdown,
+        faq: tr[l].faq,
+        cta: tr[l].cta.serviceSlug || tr[l].cta.label || tr[l].cta.text ? tr[l].cta : null,
+      }));
+    const data: Record<string, unknown> = { slug: slug.trim(), published, sort_order: sortOrder, translations };
     try {
       if (guide) await api.updateGuide(guide.id, data);
       else await api.createGuide(data);
@@ -89,7 +115,7 @@ const GuideForm = ({ guide, onClose, onSaved }: Props) => {
         <div className="p-6 space-y-5">
           <div className="grid grid-cols-1 sm:grid-cols-[1fr_auto_auto] gap-3 items-end">
             <div>
-              <FieldLabel>Slug (URL — /poradnik/&lt;slug&gt;)</FieldLabel>
+              <FieldLabel>Slug (URL — /&lt;lang&gt;/guides/&lt;slug&gt;)</FieldLabel>
               <input value={slug} onChange={(e) => setSlug(e.target.value)} placeholder="np. co-to-jest-niemiecki-brief" className={inputCls} />
             </div>
             <label className="flex items-center gap-2 text-sm text-foreground py-2">
@@ -102,26 +128,36 @@ const GuideForm = ({ guide, onClose, onSaved }: Props) => {
           </div>
 
           <div className="border-t border-border pt-5">
-            <LanguageTabs activeLang={activeLang} onSelect={setActiveLang} hasContent={(l) => !!content[l]?.h1} label={t.admin.languageTab} />
+            <LanguageTabs activeLang={activeLang} onSelect={setActiveLang} hasContent={(l) => !!(tr[l]?.title || tr[l]?.markdown)} label={t.admin.languageTab} />
           </div>
 
           <div className="grid sm:grid-cols-2 gap-3">
-            <div><FieldLabel>SEO title</FieldLabel><input value={c.seoTitle} onChange={(e) => patchContent({ seoTitle: e.target.value })} className={inputCls} /></div>
-            <div><FieldLabel>SEO description</FieldLabel><input value={c.seoDescription} onChange={(e) => patchContent({ seoDescription: e.target.value })} className={inputCls} /></div>
+            <div><FieldLabel>Title ({activeLang.toUpperCase()}) — card / listing</FieldLabel><input value={c.title} onChange={(e) => patch({ title: e.target.value })} className={inputCls} /></div>
+            <div><FieldLabel>Excerpt — card summary + meta</FieldLabel><input value={c.excerpt} onChange={(e) => patch({ excerpt: e.target.value })} className={inputCls} /></div>
           </div>
-          <div><FieldLabel>H1</FieldLabel><input value={c.h1} onChange={(e) => patchContent({ h1: e.target.value })} className={inputCls} /></div>
-          <div><FieldLabel>Card summary (guides hub)</FieldLabel><input value={c.summary} onChange={(e) => patchContent({ summary: e.target.value })} className={inputCls} /></div>
-          <div><FieldLabel>Lead paragraph</FieldLabel><textarea value={c.lead} onChange={(e) => patchContent({ lead: e.target.value })} rows={3} className={`${inputCls} resize-y`} /></div>
+          <div><FieldLabel>H1 (page heading)</FieldLabel><input value={c.h1} onChange={(e) => patch({ h1: e.target.value })} className={inputCls} /></div>
+          <div className="grid sm:grid-cols-2 gap-3">
+            <div><FieldLabel>SEO title (defaults to Title)</FieldLabel><input value={c.seoTitle} onChange={(e) => patch({ seoTitle: e.target.value })} className={inputCls} /></div>
+            <div><FieldLabel>SEO description (defaults to Excerpt)</FieldLabel><input value={c.seoDescription} onChange={(e) => patch({ seoDescription: e.target.value })} className={inputCls} /></div>
+          </div>
 
-          <SectionsEditor value={c.sections} onChange={(sections) => patchContent({ sections })} />
-          <FaqEditor value={c.faq} onChange={(faq) => patchContent({ faq })} />
+          <MarkdownEditor value={c.markdown} onChange={(markdown) => patch({ markdown })} guides={guides} lang={activeLang} />
+          <FaqEditor value={c.faq} onChange={(faq) => patch({ faq })} />
 
           <div className="space-y-3 rounded-lg bg-muted/30 p-4">
-            <p className="text-xs text-muted-foreground">CTA (links the guide to a service)</p>
+            <p className="text-xs text-muted-foreground">CTA — links the guide to a service ({activeLang.toUpperCase()})</p>
             <div className="grid sm:grid-cols-3 gap-3">
-              <div><FieldLabel>Href</FieldLabel><input value={c.cta.href} onChange={(e) => patchContent({ cta: { ...c.cta, href: e.target.value } })} placeholder="/pl/uslugi/odzyskanie-briefu" className={inputCls} /></div>
-              <div><FieldLabel>Button label</FieldLabel><input value={c.cta.label} onChange={(e) => patchContent({ cta: { ...c.cta, label: e.target.value } })} className={inputCls} /></div>
-              <div><FieldLabel>CTA text</FieldLabel><input value={c.cta.text} onChange={(e) => patchContent({ cta: { ...c.cta, text: e.target.value } })} className={inputCls} /></div>
+              <div>
+                <FieldLabel>Service</FieldLabel>
+                <select value={c.cta.serviceSlug} onChange={(e) => patch({ cta: { ...c.cta, serviceSlug: e.target.value } })} className={inputCls}>
+                  <option value="">-</option>
+                  {services.filter((s) => s.slug).map((s) => (
+                    <option key={s.id} value={s.slug!}>{pickTranslation(s.translations, activeLang)?.title || s.slug}</option>
+                  ))}
+                </select>
+              </div>
+              <div><FieldLabel>Button label</FieldLabel><input value={c.cta.label} onChange={(e) => patch({ cta: { ...c.cta, label: e.target.value } })} className={inputCls} /></div>
+              <div><FieldLabel>CTA text</FieldLabel><input value={c.cta.text} onChange={(e) => patch({ cta: { ...c.cta, text: e.target.value } })} className={inputCls} /></div>
             </div>
           </div>
 

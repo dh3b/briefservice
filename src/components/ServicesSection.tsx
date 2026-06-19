@@ -9,10 +9,9 @@ import { getCategoryName } from "@/lib/localize";
 
 interface ServicesSectionProps {
   onChatAbout: (serviceId: string, serviceName: string) => void;
-  featuredHref?: string;
 }
 
-const ServicesSection = ({ onChatAbout, featuredHref = "/privacy-policy" }: ServicesSectionProps) => {
+const ServicesSection = ({ onChatAbout }: ServicesSectionProps) => {
   const { t, language } = useLanguage();
   const [activeCategory, setActiveCategory] = useState("all");
   const [allRows, setAllRows] = useState<ServiceRow[]>([]);
@@ -31,10 +30,11 @@ const ServicesSection = ({ onChatAbout, featuredHref = "/privacy-policy" }: Serv
       .catch(() => setLoading(false));
   }, []);
 
-  const localized = allRows.map((r) => localizeService(r, language));
-  const filtered = activeCategory === "all"
+  const localized = allRows.filter((r) => r.published).map((r) => localizeService(r, language));
+  const filtered = (activeCategory === "all"
     ? localized
-    : localized.filter((s) => s.category_id === activeCategory);
+    : localized.filter((s) => s.category_id === activeCategory)
+  ).slice().sort((a, b) => Number(b.featured) - Number(a.featured));
 
   const expandedService = expandedId ? localized.find((s) => s.id === expandedId) : null;
   const expandedRow = expandedId ? allRows.find((r) => r.id === expandedId) : null;
@@ -109,16 +109,25 @@ const ServicesSection = ({ onChatAbout, featuredHref = "/privacy-policy" }: Serv
           </div>
         ) : (
           <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3" data-reveal>
-            <FeaturedServiceCard href={featuredHref} categoryName={t.services.featured} />
-            {filtered.map((service) => (
-              <ServiceCard
-                key={service.id}
-                service={service}
-                categoryName={getCategoryName(categories, service.category_id, language)}
-                onChatAbout={onChatAbout}
-                onDetails={handleDetails}
-              />
-            ))}
+            {filtered.map((service) =>
+              service.featured && service.slug ? (
+                <FeaturedServiceCard
+                  key={service.id}
+                  title={service.title}
+                  description={service.description}
+                  href={`/${language}/services/${service.slug}`}
+                  categoryName={t.services.featured}
+                />
+              ) : (
+                <ServiceCard
+                  key={service.id}
+                  service={service}
+                  categoryName={getCategoryName(categories, service.category_id, language)}
+                  onChatAbout={onChatAbout}
+                  onDetails={handleDetails}
+                />
+              ),
+            )}
           </div>
         )}
       </div>

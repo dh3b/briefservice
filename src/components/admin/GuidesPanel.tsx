@@ -1,17 +1,20 @@
 import { useState, useEffect, useCallback } from "react";
 import { Plus, Trash2, Pencil } from "lucide-react";
-import { GuideRow } from "@/types";
+import { GuideRow, ServiceRow, pickTranslation } from "@/types";
 import * as api from "@/api";
 import GuideForm from "./GuideForm";
 
 const GuidesPanel = () => {
   const [guides, setGuides] = useState<GuideRow[]>([]);
+  const [services, setServices] = useState<ServiceRow[]>([]);
   const [formOpen, setFormOpen] = useState(false);
   const [editing, setEditing] = useState<GuideRow | null>(null);
 
   const load = useCallback(async () => {
     try {
-      setGuides(await api.fetchGuides());
+      const [g, s] = await Promise.all([api.fetchGuides(), api.fetchServices()]);
+      setGuides(g);
+      setServices(s);
     } catch {
       /* ignore */
     }
@@ -21,7 +24,7 @@ const GuidesPanel = () => {
     load();
   }, [load]);
 
-  const guideTitle = (g: GuideRow) => (g.content?.pl?.h1 as string) || g.slug;
+  const guideTitle = (g: GuideRow) => pickTranslation(g.translations, "pl")?.title || g.slug;
 
   return (
     <div>
@@ -74,6 +77,8 @@ const GuidesPanel = () => {
       {formOpen && (
         <GuideForm
           guide={editing}
+          guides={guides}
+          services={services}
           onClose={() => setFormOpen(false)}
           onSaved={() => { setFormOpen(false); load(); }}
         />

@@ -69,15 +69,3 @@ export interface ResolvedTranslation extends Translation {
   /** Language actually used — may differ from the request after fallback. */
   resolvedLang: Language;
 }
-
-/**
- * @deprecated Legacy structured-content section, still used by the current admin
- * editor (ServiceForm / GuideForm / editorBits). Superseded by the Markdown
- * body in the new model; kept until the admin is migrated to the Markdown
- * editor (Phase 3, part B).
- */
-export interface ContentSection {
-  heading: string;
-  body?: string[];
-  bullets?: string[];
-}
