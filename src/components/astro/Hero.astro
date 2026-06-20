@@ -9,23 +9,7 @@ interface Props {
 
 const { lang } = Astro.props;
 const t = translations[lang];
-
-// Short redesign microcopy (headline / badge / tagline). Body + buttons reuse
-// the existing translated strings. Falls back to English for any missing locale.
-type HeroCopy = { badge: string; line1: string; em: string; line2: string; tagline: string };
-const COPY: Partial<Record<Language, HeroCopy>> = {
-  pl: { badge: "Prywatny serwis — nie urząd", line1: "Niemieckie formalności", em: "pojazdowe", line2: ", ogarnięte.", tagline: "Załatwiamy to za Ciebie — w Niemczech." },
-  en: { badge: "Private service — not an authority", line1: "German vehicle", em: "paperwork", line2: ", handled.", tagline: "We take care of it for you — in Germany." },
-  ru: { badge: "Частный сервис — не госорган", line1: "Автомобильные формальности", em: "в Германии", line2: " — под ключ.", tagline: "Мы всё оформим за вас." },
-  uk: { badge: "Приватний сервіс — не держустанова", line1: "Автомобільні формальності", em: "у Німеччині", line2: " — під ключ.", tagline: "Ми все оформимо за вас." },
-  cs: { badge: "Soukromá služba — ne úřad", line1: "Německé vozidlové", em: "formality", line2: ", vyřízené.", tagline: "Vyřídíme to za vás — v Německu." },
-  es: { badge: "Servicio privado — no una autoridad", line1: "Trámites de vehículos", em: "alemanes", line2: ", resueltos.", tagline: "Nos encargamos por ti — en Alemania." },
-  it: { badge: "Servizio privato — non un ente", line1: "Pratiche auto", em: "tedesche", line2: ", risolte.", tagline: "Ce ne occupiamo noi — in Germania." },
-  hu: { badge: "Magánszolgáltatás — nem hatóság", line1: "Német járműügyintézés", em: "egyszerűen", line2: ".", tagline: "Elintézzük helyetted — Németországban." },
-  ro: { badge: "Serviciu privat — nu o autoritate", line1: "Formalități auto", em: "germane", line2: ", rezolvate.", tagline: "Ne ocupăm noi — în Germania." },
-  lt: { badge: "Privati paslauga — ne įstaiga", line1: "Vokiški transporto", em: "formalumai", line2: ", sutvarkyti.", tagline: "Pasirūpinsime už jus — Vokietijoje." },
-};
-const c = COPY[lang] ?? COPY.en!;
+const c = t.hero;
 ---
 
 <section class="relative overflow-hidden">

@@ -4,42 +4,57 @@ import {
   getGuides,
   resolveTranslation,
   availableLangs,
+  listingLangs,
   makeGuideLinkResolver,
 } from "./content-source";
+import type { ServiceEntry, GuideEntry } from "@/content/types";
 
-describe("content source (committed-seed fallback)", () => {
-  it("returns the featured DMC service first, in every authored language", async () => {
+// Inline fixtures so the helper tests don't depend on seed/DB content.
+const svc: ServiceEntry = {
+  slug: "demo",
+  featured: false,
+  sortOrder: 0,
+  relatedGuides: [],
+  translations: { pl: { title: "Demo", excerpt: "PL", markdown: "x" } },
+};
+const guide: GuideEntry = {
+  slug: "g1",
+  sortOrder: 0,
+  translations: { pl: { title: "Poradnik 1", excerpt: "PL", markdown: "x" } },
+};
+
+describe("language helpers", () => {
+  it("availableLangs lists only authored locales", () => {
+    expect(availableLangs(svc)).toEqual(["pl"]);
+  });
+
+  it("resolveTranslation falls back to pl for an untranslated locale", () => {
+    expect(resolveTranslation(svc, "en")?.resolvedLang).toBe("pl");
+    expect(resolveTranslation(svc, "pl")?.resolvedLang).toBe("pl");
+  });
+
+  it("listingLangs unions across entries", () => {
+    expect(listingLangs([svc, guide])).toEqual(["pl"]);
+  });
+
+  it("makeGuideLinkResolver targets an existing language and rejects unknowns", () => {
+    const resolve = makeGuideLinkResolver([guide], "en"); // guide is pl-only
+    expect(resolve("g1")?.href).toBe("/pl/guides/g1");
+    expect(resolve("g1")?.label).toBe("Poradnik 1");
+    expect(resolve("missing")).toBeNull();
+  });
+});
+
+describe("build fallback (no CONTENT_API)", () => {
+  it("keeps the featured zmiana-dmc service in every authored language", async () => {
     const services = await getServices();
     expect(services[0].slug).toBe("zmiana-dmc");
     expect(services[0].featured).toBe(true);
     expect(availableLangs(services[0]).length).toBe(10);
-  });
-
-  it("keeps the other services Polish-only and falls back to pl", async () => {
-    const services = await getServices();
-    const modyf = services.find((s) => s.slug === "modyfikacje-konstrukcyjne")!;
-    expect(availableLangs(modyf)).toEqual(["pl"]);
-    expect(resolveTranslation(modyf, "en")?.resolvedLang).toBe("pl");
-    expect(resolveTranslation(modyf, "ru")?.resolvedLang).toBe("pl");
-  });
-
-  it("resolves a language that exists directly", async () => {
-    const services = await getServices();
     expect(resolveTranslation(services[0], "ru")?.resolvedLang).toBe("ru");
   });
 
-  it("exposes guides with Markdown bodies", async () => {
-    const guides = await getGuides();
-    expect(guides.length).toBeGreaterThanOrEqual(6);
-    expect(guides[0].translations.pl?.markdown).toBeTruthy();
-  });
-
-  it("guide-link resolver points at an existing language and rejects unknowns", async () => {
-    const guides = await getGuides();
-    const resolve = makeGuideLinkResolver(guides, "en"); // guides are pl-only
-    expect(resolve("co-to-jest-niemiecki-brief")?.href).toBe(
-      "/pl/guides/co-to-jest-niemiecki-brief",
-    );
-    expect(resolve("does-not-exist")).toBeNull();
+  it("has no committed guide fallback (guides are DB-only)", async () => {
+    expect(await getGuides()).toEqual([]);
   });
 });

@@ -133,7 +133,7 @@ const ChatPanel = () => {
 
       <div className="bg-card rounded-xl border border-border flex flex-col h-[500px]">
         {!selectedChat || !selectedChatObj ? (
-          <div className="flex-1 flex items-center justify-center text-muted-foreground text-sm">Select a chat</div>
+          <div className="flex-1 flex items-center justify-center text-muted-foreground text-sm">{t.adminUI.selectChat}</div>
         ) : (
           <>
             {/* Title bar */}
@@ -172,7 +172,7 @@ const ChatPanel = () => {
             <div className="border-t border-border p-3 flex gap-2">
               <input type="text" value={replyInput} onChange={(e) => setReplyInput(e.target.value.slice(0, MAX_MESSAGE_LEN))}
                 onKeyDown={(e) => e.key === "Enter" && handleReply()}
-                placeholder="Reply..." className="flex-1 px-4 py-2.5 rounded-xl bg-secondary text-foreground placeholder:text-muted-foreground text-sm outline-none focus:ring-2 focus:ring-ring" />
+                placeholder={t.adminUI.replyPlaceholder} className="flex-1 px-4 py-2.5 rounded-xl bg-secondary text-foreground placeholder:text-muted-foreground text-sm outline-none focus:ring-2 focus:ring-ring" />
               <button onClick={handleReply} className="w-10 h-10 rounded-xl bg-primary flex items-center justify-center text-primary-foreground">
                 <Send className="w-4 h-4" />
               </button>

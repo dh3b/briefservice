@@ -16,8 +16,6 @@ const year = new Date().getFullYear();
 const [services, guides] = await Promise.all([getServices(), getGuides()]);
 const hasServices = services.some((s) => s.translations[lang]);
 const hasGuides = guides.some((g) => g.translations[lang]);
-const servicesLabel = lang === "pl" ? "Usługi" : "Services";
-const guidesLabel = lang === "pl" ? "Poradnik" : "Guides";
 ---
 
 <footer class="panel-dark">
@@ -37,7 +35,7 @@ const guidesLabel = lang === "pl" ? "Poradnik" : "Guides";
       </div>
 
       <div>
-        <p class="eyebrow text-paper/45">Kontakt</p>
+        <p class="eyebrow text-paper/45">{t.ui.contactHeading}</p>
         <ul class="mt-4 space-y-2.5 text-sm text-paper/70">
           <li><a href="tel:+48696513109" class="hover:text-paper transition-colors">+48 696 513 109</a></li>
           <li><a href="mailto:audicarforme@op.pl" class="hover:text-paper transition-colors">audicarforme@op.pl</a></li>
@@ -46,11 +44,11 @@ const guidesLabel = lang === "pl" ? "Poradnik" : "Guides";
       </div>
 
       <div>
-        <p class="eyebrow text-paper/45">{lang === "pl" ? "Na stronie" : "Site"}</p>
+        <p class="eyebrow text-paper/45">{t.ui.siteHeading}</p>
         <ul class="mt-4 space-y-2.5 text-sm text-paper/70">
           <li><a href={`/${lang}`} class="hover:text-paper transition-colors">{t.nav.home}</a></li>
-          {hasServices && <li><a href={`/${lang}/services`} class="hover:text-paper transition-colors">{servicesLabel}</a></li>}
-          {hasGuides && <li><a href={`/${lang}/guides`} class="hover:text-paper transition-colors">{guidesLabel}</a></li>}
+          {hasServices && <li><a href={`/${lang}/services`} class="hover:text-paper transition-colors">{t.servicesPage.title}</a></li>}
+          {hasGuides && <li><a href={`/${lang}/guides`} class="hover:text-paper transition-colors">{t.guidesPage.title}</a></li>}
           <li>
             <a href={`/${lang}/privacy-policy`} class="hover:text-paper transition-colors">{t.footer.cookieNotice.linkText}</a>
           </li>
@@ -60,7 +58,7 @@ const guidesLabel = lang === "pl" ? "Poradnik" : "Guides";
 
     <div class="mt-14 flex flex-col gap-3 border-t border-paper/12 pt-6 text-xs text-paper/45 sm:flex-row sm:items-center sm:justify-between">
       <p>© {year} BriefService. {t.footer.rights}</p>
-      <p>{lang === "pl" ? "Prywatna firma — nie jesteśmy urzędem." : "Private company — not a government authority."}</p>
+      <p>{t.ui.privateNotice}</p>
     </div>
   </div>
 </footer>

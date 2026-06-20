@@ -4,9 +4,9 @@
  * When `CONTENT_API` is set (the in-place rebuild builder runs with
  * `CONTENT_API=http://api:3001/api`), content is fetched from the live API and
  * the database is the source of truth. Otherwise — local builds, an
- * empty/unreachable DB — it falls back to the committed seed in
- * `src/content/*`, so a build never breaks and the authored content doubles as
- * the seed.
+ * empty/unreachable DB — only the featured `zmiana-dmc` service (generated from
+ * `translations.ts`) is available; every other service/guide is DB-only. The
+ * former committed mockup bodies are archived in `docs/archived-content.md`.
  *
  * `pl` is the authored base and the fallback language for any locale that has
  * no translation of its own.
@@ -21,8 +21,6 @@ import type {
   Faq,
   GuideCta,
 } from "@/content/types";
-import { SERVICE_PAGES } from "@/content/services";
-import { GUIDES } from "@/content/guides";
 import { ZMIANA_DMC_SERVICE } from "@/content/zmiana-dmc";
 import type { GuideLinkResolver } from "@/lib/markdown";
 
@@ -125,7 +123,9 @@ function sortGuides(list: GuideEntry[]): GuideEntry[] {
 /* ----------------------------- public API --------------------------------- */
 // Memoised so each build fetches once, not once per consuming page.
 
-const SEED_SERVICES: ServiceEntry[] = [ZMIANA_DMC_SERVICE, ...SERVICE_PAGES];
+// Only the (translations.ts-driven) featured DMC service is kept as a build
+// fallback; every other service/guide comes from the DB. See docs/archived-content.md.
+const SEED_SERVICES: ServiceEntry[] = [ZMIANA_DMC_SERVICE];
 
 let servicesPromise: Promise<ServiceEntry[]> | undefined;
 let guidesPromise: Promise<GuideEntry[]> | undefined;
@@ -146,12 +146,12 @@ export function getServices(): Promise<ServiceEntry[]> {
 export function getGuides(): Promise<GuideEntry[]> {
   guidesPromise ??= (async () => {
     const rows = await fetchRows("guides");
-    if (!rows) return sortGuides(GUIDES);
+    if (!rows) return [];
     const mapped = rows
       .filter((r) => Boolean(r.published))
       .map(rowToGuide)
       .filter((g): g is GuideEntry => Boolean(g));
-    return sortGuides(mapped.length ? mapped : GUIDES);
+    return sortGuides(mapped);
   })();
   return guidesPromise;
 }

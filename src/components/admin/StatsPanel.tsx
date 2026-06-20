@@ -168,7 +168,7 @@ const StatsPanel = () => {
           {/* Chart */}
           {loading ? (
             <div className="h-[400px] flex items-center justify-center text-muted-foreground text-sm">
-              Loading...
+              {t.adminUI.loading}
             </div>
           ) : chartData.length === 0 ? (
             <div className="h-[400px] flex items-center justify-center text-muted-foreground text-sm">

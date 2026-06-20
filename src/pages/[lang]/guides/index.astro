@@ -24,27 +24,13 @@ const guides = allGuides
   .map((g) => ({ slug: g.slug, ...g.translations[lang]! }));
 const hasServices = allServices.some((s) => s.translations[lang]);
 
-const COPY: Partial<Record<Language, { title: string; eyebrow: string; intro: string }>> = {
-  pl: {
-    title: "Poradnik",
-    eyebrow: "Wiedza",
-    intro:
-      "Najważniejsze tematy wokół niemieckiego briefu i formalności pojazdowych — wyjaśnione prosto.",
-  },
-  en: {
-    title: "Guides",
-    eyebrow: "Knowledge",
-    intro: "The key topics around the German vehicle title and formalities — explained simply.",
-  },
-};
-const c = COPY[lang] ?? COPY.en!;
+const c = t.guidesPage;
 const path = "guides";
 const guideListingLangs = listingLangs(allGuides);
-const servicesLabel = lang === "pl" ? "Usługi" : "Services";
 
 const navLinks = [
   { label: t.nav.home, href: `/${lang}` },
-  ...(hasServices ? [{ label: servicesLabel, href: `/${lang}/services` }] : []),
+  ...(hasServices ? [{ label: t.servicesPage.title, href: `/${lang}/services` }] : []),
   { label: c.title, href: `/${lang}/guides` },
 ];
 
@@ -58,8 +44,8 @@ const jsonLd = [
 
 <BaseLayout
   lang={lang}
-  title={`${c.title} – ${lang === "pl" ? "niemiecki brief, DMC, duplikat" : "German vehicle title, DMC, duplicate"} | BriefService`}
-  description={c.intro}
+  title={c.metaTitle}
+  description={c.metaDescription}
   path={path}
   hreflangLangs={guideListingLangs}
   jsonLd={jsonLd}

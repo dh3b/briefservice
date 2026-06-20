@@ -133,17 +133,17 @@ const ServiceForm = ({ service, categories, guides, onClose, onSaved }: Props) =
           {/* Slug + flags + order */}
           <div className="grid grid-cols-1 sm:grid-cols-[1fr_auto_auto_auto] gap-3 items-end">
             <div>
-              <FieldLabel>Slug (URL — leave empty for a tile without a page)</FieldLabel>
-              <input value={slug} onChange={(e) => setSlug(e.target.value)} placeholder="np. odzyskanie-briefu" className={inputCls} />
+              <FieldLabel>{t.adminUI.slugServiceLabel}</FieldLabel>
+              <input value={slug} onChange={(e) => setSlug(e.target.value)} placeholder={t.adminUI.slugServicePlaceholder} className={inputCls} />
             </div>
             <label className="flex items-center gap-2 text-sm text-foreground py-2">
-              <input type="checkbox" checked={featured} onChange={(e) => setFeatured(e.target.checked)} /> Featured
+              <input type="checkbox" checked={featured} onChange={(e) => setFeatured(e.target.checked)} /> {t.adminUI.featured}
             </label>
             <label className="flex items-center gap-2 text-sm text-foreground py-2">
-              <input type="checkbox" checked={published} onChange={(e) => setPublished(e.target.checked)} /> Published
+              <input type="checkbox" checked={published} onChange={(e) => setPublished(e.target.checked)} /> {t.adminUI.published}
             </label>
             <div>
-              <FieldLabel>Order</FieldLabel>
+              <FieldLabel>{t.adminUI.order}</FieldLabel>
               <input type="number" value={sortOrder} onChange={(e) => setSortOrder(Number(e.target.value) || 0)} className={`${inputCls} w-20`} />
             </div>
           </div>
@@ -158,7 +158,7 @@ const ServiceForm = ({ service, categories, guides, onClose, onSaved }: Props) =
               </select>
             </div>
             <div>
-              <FieldLabel>Tile image URL</FieldLabel>
+              <FieldLabel>{t.adminUI.tileImage}</FieldLabel>
               <div className="flex gap-2">
                 <input value={imageUrl} onChange={(e) => setImageUrl(e.target.value)} className={inputCls} />
                 <label className="flex items-center gap-1.5 px-3 py-2 rounded-lg bg-secondary text-secondary-foreground text-sm cursor-pointer hover:bg-muted transition-colors shrink-0">
@@ -183,13 +183,13 @@ const ServiceForm = ({ service, categories, guides, onClose, onSaved }: Props) =
 
           {/* Per-language content */}
           <div className="grid sm:grid-cols-2 gap-3">
-            <div><FieldLabel>Title ({activeLang.toUpperCase()}) — card / listing</FieldLabel><input value={c.title} onChange={(e) => patch({ title: e.target.value })} className={inputCls} /></div>
-            <div><FieldLabel>Excerpt — tile summary + meta</FieldLabel><input value={c.excerpt} onChange={(e) => patch({ excerpt: e.target.value })} className={inputCls} /></div>
+            <div><FieldLabel>{t.adminUI.fieldTitle} ({activeLang.toUpperCase()})</FieldLabel><input value={c.title} onChange={(e) => patch({ title: e.target.value })} className={inputCls} /></div>
+            <div><FieldLabel>{t.adminUI.fieldExcerpt}</FieldLabel><input value={c.excerpt} onChange={(e) => patch({ excerpt: e.target.value })} className={inputCls} /></div>
           </div>
-          <div><FieldLabel>H1 (page heading)</FieldLabel><input value={c.h1} onChange={(e) => patch({ h1: e.target.value })} className={inputCls} /></div>
+          <div><FieldLabel>{t.adminUI.fieldH1}</FieldLabel><input value={c.h1} onChange={(e) => patch({ h1: e.target.value })} className={inputCls} /></div>
           <div className="grid sm:grid-cols-2 gap-3">
-            <div><FieldLabel>SEO title (defaults to Title)</FieldLabel><input value={c.seoTitle} onChange={(e) => patch({ seoTitle: e.target.value })} className={inputCls} /></div>
-            <div><FieldLabel>SEO description (defaults to Excerpt)</FieldLabel><input value={c.seoDescription} onChange={(e) => patch({ seoDescription: e.target.value })} className={inputCls} /></div>
+            <div><FieldLabel>{t.adminUI.seoTitle}</FieldLabel><input value={c.seoTitle} onChange={(e) => patch({ seoTitle: e.target.value })} className={inputCls} /></div>
+            <div><FieldLabel>{t.adminUI.seoDescription}</FieldLabel><input value={c.seoDescription} onChange={(e) => patch({ seoDescription: e.target.value })} className={inputCls} /></div>
           </div>
 
           <MarkdownEditor value={c.markdown} onChange={(markdown) => patch({ markdown })} guides={guides} lang={activeLang} />

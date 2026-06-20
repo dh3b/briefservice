@@ -25,9 +25,9 @@ const AdminApp = () => {
     setPublishMsg("");
     try {
       await api.triggerRebuild();
-      setPublishMsg("Rebuild triggered — changes go live in a moment.");
+      setPublishMsg(t.adminUI.publishOk);
     } catch (err) {
-      setPublishMsg((err as Error).message || "Rebuild failed");
+      setPublishMsg((err as Error).message || t.adminUI.publishFail);
     } finally {
       setPublishing(false);
       setTimeout(() => setPublishMsg(""), 6000);
@@ -37,7 +37,7 @@ const AdminApp = () => {
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoginError("");
-    try { setAdmin(await api.adminLogin(username, password)); } catch (err) { setLoginError((err as Error).message || "Login failed"); }
+    try { setAdmin(await api.adminLogin(username, password)); } catch (err) { setLoginError((err as Error).message || t.adminUI.loginFailed); }
   };
 
   if (!admin) {
@@ -77,7 +77,7 @@ const AdminApp = () => {
           {publishMsg && <span className="text-xs text-muted-foreground hidden sm:inline">{publishMsg}</span>}
           <button onClick={handlePublish} disabled={publishing}
             className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-terracotta text-paper text-sm font-medium hover:bg-terracotta-deep transition-all disabled:opacity-50">
-            <UploadCloud className="w-4 h-4" /> {publishing ? "Publishing…" : "Publish"}
+            <UploadCloud className="w-4 h-4" /> {publishing ? t.adminUI.publishing : t.adminUI.publish}
           </button>
           <button onClick={async () => { await api.adminLogout(); setAdmin(null); }} className="flex items-center gap-1.5 text-sm text-muted-foreground hover:text-foreground transition-colors">
             <LogOut className="w-4 h-4" /> {t.admin.logout}
@@ -96,7 +96,7 @@ const AdminApp = () => {
           </button>
           <button onClick={() => setActiveTab("guides")}
             className={`flex items-center gap-2 px-5 py-2.5 rounded-lg text-sm font-medium transition-all ${activeTab === "guides" ? "bg-primary text-primary-foreground" : "bg-secondary text-secondary-foreground hover:bg-muted"}`}>
-            <BookOpen className="w-4 h-4" /> Guides
+            <BookOpen className="w-4 h-4" /> {t.adminUI.guides}
           </button>
           <button onClick={() => setActiveTab("stats")}
             className={`flex items-center gap-2 px-5 py-2.5 rounded-lg text-sm font-medium transition-all ${activeTab === "stats" ? "bg-primary text-primary-foreground" : "bg-secondary text-secondary-foreground hover:bg-muted"}`}>

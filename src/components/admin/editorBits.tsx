@@ -3,6 +3,7 @@ import { marked } from "marked";
 import { Plus, Trash2, Eye, Pencil, Link2 } from "lucide-react";
 import type { Faq } from "@/content/types";
 import { type GuideRow, type Language, pickTranslation } from "@/types";
+import { useLanguage } from "@/i18n/LanguageContext";
 import { resolveGuideShortcodes } from "@/lib/guide-shortcodes";
 
 const inputCls =
@@ -20,46 +21,6 @@ function guideLabel(g: GuideRow, lang: Language): string {
   return pickTranslation(g.translations, lang)?.title || g.slug;
 }
 
-/** Edit a flat list of strings. */
-export function StringListEditor({
-  label,
-  value,
-  onChange,
-  placeholder,
-  multiline,
-}: {
-  label: string;
-  value: string[];
-  onChange: (next: string[]) => void;
-  placeholder?: string;
-  multiline?: boolean;
-}) {
-  const set = (i: number, v: string) => onChange(value.map((x, j) => (j === i ? v : x)));
-  const remove = (i: number) => onChange(value.filter((_, j) => j !== i));
-  return (
-    <div>
-      <FieldLabel>{label}</FieldLabel>
-      <div className="space-y-2">
-        {value.map((item, i) => (
-          <div key={i} className="flex gap-2 items-start">
-            {multiline ? (
-              <textarea value={item} onChange={(e) => set(i, e.target.value)} rows={2} placeholder={placeholder} className={`${inputCls} resize-y`} />
-            ) : (
-              <input value={item} onChange={(e) => set(i, e.target.value)} placeholder={placeholder} className={inputCls} />
-            )}
-            <button type="button" onClick={() => remove(i)} className={delBtnCls} aria-label="Remove">
-              <Trash2 className="w-4 h-4" />
-            </button>
-          </div>
-        ))}
-        <button type="button" onClick={() => onChange([...value, ""])} className={addBtnCls}>
-          <Plus className="w-3.5 h-3.5" /> Add
-        </button>
-      </div>
-    </div>
-  );
-}
-
 /** Markdown body editor with an "Insert guide link" helper and a live preview. */
 export function MarkdownEditor({
   value,
@@ -72,6 +33,7 @@ export function MarkdownEditor({
   guides: GuideRow[];
   lang: Language;
 }) {
+  const { t } = useLanguage();
   const ref = useRef<HTMLTextAreaElement>(null);
   const [preview, setPreview] = useState(false);
 
@@ -103,7 +65,7 @@ export function MarkdownEditor({
   return (
     <div>
       <div className="flex items-center justify-between mb-1.5">
-        <FieldLabel>Body (Markdown)</FieldLabel>
+        <FieldLabel>{t.adminUI.bodyMarkdown}</FieldLabel>
         <div className="flex items-center gap-2">
           <div className="relative">
             <select
@@ -115,7 +77,7 @@ export function MarkdownEditor({
               className="appearance-none cursor-pointer pl-7 pr-3 py-1 rounded-md bg-secondary border border-border text-xs text-foreground"
               title="Insert a link to a guide"
             >
-              <option value="">Insert guide link…</option>
+              <option value="">{t.adminUI.insertGuideLink}</option>
               {guides.map((g) => (
                 <option key={g.id} value={g.slug}>
                   {guideLabel(g, lang)}
@@ -131,7 +93,7 @@ export function MarkdownEditor({
             aria-pressed={preview}
           >
             {preview ? <Pencil className="w-3.5 h-3.5" /> : <Eye className="w-3.5 h-3.5" />}
-            {preview ? "Edit" : "Preview"}
+            {preview ? t.adminUI.edit : t.adminUI.preview}
           </button>
         </div>
       </div>
@@ -166,6 +128,7 @@ export function RelatedGuidesEditor({
   guides: GuideRow[];
   lang: Language;
 }) {
+  const { t } = useLanguage();
   const available = guides.filter((g) => !value.includes(g.slug));
   const move = (i: number, dir: -1 | 1) => {
     const j = i + dir;
@@ -180,7 +143,7 @@ export function RelatedGuidesEditor({
   };
   return (
     <div>
-      <FieldLabel>Related guides (curated, ordered)</FieldLabel>
+      <FieldLabel>{t.adminUI.relatedGuides}</FieldLabel>
       <div className="space-y-2">
         {value.map((slug, i) => (
           <div key={slug} className="flex items-center gap-2 rounded-lg border border-border bg-background/50 px-3 py-2">
@@ -199,7 +162,7 @@ export function RelatedGuidesEditor({
             onChange={(e) => e.target.value && onChange([...value, e.target.value])}
             className={inputCls}
           >
-            <option value="">Add a related guide…</option>
+            <option value="">{t.adminUI.addRelatedGuide}</option>
             {available.map((g) => (
               <option key={g.id} value={g.slug}>
                 {guideLabel(g, lang)}
@@ -214,25 +177,26 @@ export function RelatedGuidesEditor({
 
 /** Edit a list of FAQ question/answer pairs (drives FAQPage schema). */
 export function FaqEditor({ value, onChange }: { value: Faq[]; onChange: (next: Faq[]) => void }) {
+  const { t } = useLanguage();
   const set = (i: number, patch: Partial<Faq>) => onChange(value.map((f, j) => (j === i ? { ...f, ...patch } : f)));
   const remove = (i: number) => onChange(value.filter((_, j) => j !== i));
   return (
     <div>
-      <FieldLabel>FAQ</FieldLabel>
+      <FieldLabel>{t.adminUI.faq}</FieldLabel>
       <div className="space-y-3">
         {value.map((f, i) => (
           <div key={i} className="rounded-lg border border-border p-3 space-y-2 bg-background/50">
             <div className="flex gap-2 items-center">
-              <input value={f.q} onChange={(e) => set(i, { q: e.target.value })} placeholder="Question" className={`${inputCls} font-medium`} />
-              <button type="button" onClick={() => remove(i)} className={delBtnCls} aria-label="Remove FAQ">
+              <input value={f.q} onChange={(e) => set(i, { q: e.target.value })} placeholder={t.adminUI.question} className={`${inputCls} font-medium`} />
+              <button type="button" onClick={() => remove(i)} className={delBtnCls} aria-label={t.adminUI.remove}>
                 <Trash2 className="w-4 h-4" />
               </button>
             </div>
-            <textarea value={f.a} onChange={(e) => set(i, { a: e.target.value })} rows={2} placeholder="Answer" className={`${inputCls} resize-y`} />
+            <textarea value={f.a} onChange={(e) => set(i, { a: e.target.value })} rows={2} placeholder={t.adminUI.answer} className={`${inputCls} resize-y`} />
           </div>
         ))}
         <button type="button" onClick={() => onChange([...value, { q: "", a: "" }])} className={addBtnCls}>
-          <Plus className="w-3.5 h-3.5" /> Add FAQ
+          <Plus className="w-3.5 h-3.5" /> {t.adminUI.addFaq}
         </button>
       </div>
     </div>

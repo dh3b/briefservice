@@ -17,9 +17,6 @@ import Footer from "@/components/astro/Footer.astro";
 import Breadcrumbs from "@/components/astro/Breadcrumbs.astro";
 import ChatIsland from "@/islands/ChatIsland";
 
-const GUIDES_LABEL: Partial<Record<Language, string>> = { pl: "Poradnik", en: "Guides" };
-const guidesLabel = (l: Language) => GUIDES_LABEL[l] ?? "Guides";
-
 interface Cta {
   href: string;
   label: string;
@@ -77,7 +74,7 @@ const { slug, h1, seoTitle, seoDescription, excerpt, faq, bodyHtml, cta, langs }
 };
 
 const t = translations[lang];
-const guideLabel = guidesLabel(lang);
+const guideLabel = t.guidesPage.title;
 const path = `guides/${slug}`;
 const url = canonicalUrl(lang, path);
 
@@ -85,9 +82,7 @@ const services = await getServices();
 const hasServices = services.some((s) => s.translations[lang]);
 const navLinks = [
   { label: t.nav.home, href: `/${lang}` },
-  ...(hasServices
-    ? [{ label: lang === "pl" ? "Usługi" : "Services", href: `/${lang}/services` }]
-    : []),
+  ...(hasServices ? [{ label: t.servicesPage.title, href: `/${lang}/services` }] : []),
   { label: guideLabel, href: `/${lang}/guides` },
 ];
 
@@ -99,7 +94,7 @@ const jsonLd = [
     { name: h1, url },
   ]),
 ];
-const faqHeading = lang === "pl" ? "Najczęstsze pytania" : "Frequently asked questions";
+const faqHeading = t.ui.faqHeading;
 ---
 
 <BaseLayout
