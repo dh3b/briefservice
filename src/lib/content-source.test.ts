@@ -45,16 +45,12 @@ describe("language helpers", () => {
   });
 });
 
-describe("build fallback (no CONTENT_API)", () => {
-  it("keeps the featured zmiana-dmc service in every authored language", async () => {
-    const services = await getServices();
-    expect(services[0].slug).toBe("zmiana-dmc");
-    expect(services[0].featured).toBe(true);
-    expect(availableLangs(services[0]).length).toBe(10);
-    expect(resolveTranslation(services[0], "ru")?.resolvedLang).toBe("ru");
+describe("build source (no CONTENT_API — everything is DB-only)", () => {
+  it("returns no services without a database", async () => {
+    expect(await getServices()).toEqual([]);
   });
 
-  it("has no committed guide fallback (guides are DB-only)", async () => {
+  it("returns no guides without a database", async () => {
     expect(await getGuides()).toEqual([]);
   });
 });

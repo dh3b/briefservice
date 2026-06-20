@@ -4,9 +4,9 @@
  * When `CONTENT_API` is set (the in-place rebuild builder runs with
  * `CONTENT_API=http://api:3001/api`), content is fetched from the live API and
  * the database is the source of truth. Otherwise — local builds, an
- * empty/unreachable DB — only the featured `zmiana-dmc` service (generated from
- * `translations.ts`) is available; every other service/guide is DB-only. The
- * former committed mockup bodies are archived in `docs/archived-content.md`.
+ * empty/unreachable DB — services and guides are empty: everything is DB-only,
+ * including the featured `zmiana-dmc` service. The former committed mockup
+ * bodies are archived in `docs/archived-content.md`.
  *
  * `pl` is the authored base and the fallback language for any locale that has
  * no translation of its own.
@@ -21,7 +21,6 @@ import type {
   Faq,
   GuideCta,
 } from "@/content/types";
-import { ZMIANA_DMC_SERVICE } from "@/content/zmiana-dmc";
 import type { GuideLinkResolver } from "@/lib/markdown";
 
 /** Language used as the content fallback (distinct from the SEO x-default). */
@@ -122,10 +121,7 @@ function sortGuides(list: GuideEntry[]): GuideEntry[] {
 
 /* ----------------------------- public API --------------------------------- */
 // Memoised so each build fetches once, not once per consuming page.
-
-// Only the (translations.ts-driven) featured DMC service is kept as a build
-// fallback; every other service/guide comes from the DB. See docs/archived-content.md.
-const SEED_SERVICES: ServiceEntry[] = [ZMIANA_DMC_SERVICE];
+// No committed fallback: services/guides are DB-only (empty without CONTENT_API).
 
 let servicesPromise: Promise<ServiceEntry[]> | undefined;
 let guidesPromise: Promise<GuideEntry[]> | undefined;
@@ -133,12 +129,12 @@ let guidesPromise: Promise<GuideEntry[]> | undefined;
 export function getServices(): Promise<ServiceEntry[]> {
   servicesPromise ??= (async () => {
     const rows = await fetchRows("services");
-    if (!rows) return sortServices(SEED_SERVICES);
+    if (!rows) return [];
     const mapped = rows
       .filter((r) => Boolean(r.published))
       .map(rowToService)
       .filter((s): s is ServiceEntry => Boolean(s));
-    return sortServices(mapped.length ? mapped : SEED_SERVICES);
+    return sortServices(mapped);
   })();
   return servicesPromise;
 }

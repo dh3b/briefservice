@@ -600,3 +600,746 @@ function toEntry(g: GuideSource): GuideEntry {
 export const GUIDES: GuideEntry[] = SOURCES.map(toEntry);
 
 ```
+
+## src/content/zmiana-dmc.ts (generator — zmiana-dmc is now DB-only)
+
+```ts
+/**
+ * The DMC/GVW-change service. It used to be a hardcoded page; it is now a
+ * regular (featured) service. Its content already exists in `translations.ts`
+ * for all 10 languages, so we assemble its per-language Markdown from there —
+ * keeping every locale that the old `/[lang]/zmiana-dmc` page served.
+ */
+import { translations } from "@/i18n/translations";
+import { SUPPORTED_LANGUAGES, type Language } from "@/seo/site";
+import type { ServiceEntry, Translation, Translations } from "./types";
+
+type ZmianaDmc = (typeof translations)[Language]["zmianaDmc"];
+
+function buildMarkdown(d: ZmianaDmc): string {
+  const parts: string[] = [];
+  const push = (s?: string) => {
+    if (s && s.trim()) parts.push(s.trim());
+  };
+  const paras = (items?: string[]) => {
+    for (const x of items ?? []) push(x);
+  };
+  const bullets = (items?: string[]) => {
+    const xs = (items ?? []).filter((x) => x && x.trim());
+    if (xs.length) parts.push(xs.map((x) => `- ${x.trim()}`).join("\n"));
+  };
+
+  push(d.intro?.subtitle);
+
+  const s = d.service2500;
+  if (s?.title) {
+    parts.push(`## ${s.title.trim()}`);
+    push(s.subtitle);
+    paras(s.lead);
+    if (s.scopeTitle) parts.push(`### ${s.scopeTitle.trim()}`);
+    paras(s.scopeText);
+    if (s.scopeNote?.trim()) push(`**${s.scopeNote.trim()}**`);
+    if (s.getTitle) parts.push(`### ${s.getTitle.trim()}`);
+    bullets(s.getList);
+    if (s.verifyTitle) parts.push(`### ${s.verifyTitle.trim()}`);
+    push(s.verifyText);
+    push(s.verifyPhotos);
+  }
+
+  const s2 = d.service3500;
+  if (s2?.title) {
+    parts.push(`## ${s2.title.trim()}`);
+    push(s2.subtitle);
+    paras(s2.lead);
+    if (s2.scopeTitle) parts.push(`### ${s2.scopeTitle.trim()}`);
+    paras(s2.scopeText);
+    if (s2.scopeNote?.trim()) push(`**${s2.scopeNote.trim()}**`);
+  }
+
+  const h = d.howItWorks;
+  if (h?.title) {
+    parts.push(`## ${h.title.trim()}`);
+    const steps: [string, string][] = [
+      [h.step1, h.step1Desc],
+      [h.step2, h.step2Desc],
+      [h.step3, h.step3Desc],
+      [h.step4, h.step4Desc],
+    ];
+    const lines = steps
+      .filter(([t]) => t && t.trim())
+      .map(([t, desc]) => `1. **${t.trim()}** — ${(desc ?? "").trim()}`.replace(/ — $/, ""));
+    if (lines.length) parts.push(lines.join("\n"));
+  }
+
+  const n = d.note;
+  if (n?.description?.trim()) {
+    if (n.title?.trim()) parts.push(`## ${n.title.trim()}`);
+    push(n.description);
+  }
+
+  return parts.join("\n\n");
+}
+
+function buildTranslations(): Translations {
+  const out: Translations = {};
+  for (const lang of SUPPORTED_LANGUAGES) {
+    const d = translations[lang].zmianaDmc;
+    const fc = translations[lang].services.featured_card;
+    const h1 = d?.intro?.title?.trim();
+    if (!h1) continue;
+    const t: Translation = {
+      title: fc?.title?.trim() || h1,
+      h1,
+      seoTitle: d.seo?.title?.trim() || h1,
+      seoDescription: d.seo?.description?.trim() || fc?.description?.trim() || "",
+      excerpt: fc?.description?.trim() || d.seo?.description?.trim() || "",
+      markdown: buildMarkdown(d),
+    };
+    out[lang] = t;
+  }
+  return out;
+}
+
+/** The featured DMC-change service, available in every authored language. */
+export const ZMIANA_DMC_SERVICE: ServiceEntry = {
+  slug: "zmiana-dmc",
+  featured: true,
+  sortOrder: 0,
+  relatedGuides: ["zmiana-dmc-jak-dziala"],
+  translations: buildTranslations(),
+};
+
+```
+
+
+## translations.ts — removed zmianaDmc blocks
+
+```ts
+// base shape
+  zmianaDmc: {
+    seo: { title: "", description: "", keywords: "" },
+    nav: { home: "", services: "", contact: "" },
+    intro: { title: "", subtitle: "" },
+    service2500: {
+      tag: "", title: "", subtitle: "",
+      lead: [""] as string[],
+      scopeTitle: "",
+      scopeText: ["", "", ""] as string[],
+      scopeNote: "",
+      getTitle: "",
+      getList: [""] as string[],
+      verifyTitle: "", verifyText: "", verifyPhotos: "",
+    },
+    service3500: {
+      tag: "", title: "", subtitle: "",
+      lead: ["", "", ""] as string[],
+      scopeTitle: "",
+      scopeText: ["", "", ""] as string[],
+      scopeNote: "",
+    },
+    howItWorks: { title: "", step1: "", step1Desc: "", step2: "", step2Desc: "", step3: "", step3Desc: "", step4: "", step4Desc: "" },
+    note: { title: "", description: "" },
+    contact: { title: "", subtitle: "", callLabel: "", writeLabel: "" },
+  },
+
+// locale 1
+  zmianaDmc: {
+    seo: {
+      title: "Zmiana DMC pojazdu - obniżenie do 2500 kg lub 3500 kg",
+      description: "Profesjonalna zmiana DMC pojazdów w Niemczech - obniżenie dopuszczalnej masy całkowitej do 3500 kg lub 2500 kg. Pełna obsługa, niemiecka dokumentacja, ważna w całej UE.",
+      keywords: "zmiana DMC do 2500 kg, obniżenie DMC do 2500 kg, DMC 2500 kg, zmiana dopuszczalnej masy całkowitej 2500 kg, obniżenie masy całkowitej pojazdu do 2,5 t, zmiana DMC busa do 2500 kg, obniżenie DMC samochodu do 2500 kg, jak obniżyć DMC do 2500 kg, zmiana DMC pojazdu ciężarowego na 2500 kg, DMC 2500 kg a prawo jazdy, czy można zmniejszyć DMC do 2500 kg, przerobienie auta na 2500 kg, zmiana DMC w Niemczech 2500 kg, obniżenie DMC przed rejestracją w Polsce, zmiana DMC samochodu z Niemiec 2500 kg, jak uniknąć DMC powyżej 3,5 t, DMC 2500 kg a koszty, zmiana DMC a podatek, czy można jeździć na kat B po zmianie DMC, obniżenie DMC a rejestracja w Polsce",
+    },
+    nav: { home: "Strona główna", services: "Usługi", contact: "Kontakt" },
+    intro: {
+      title: "Zmiana DMC (dopuszczalna masa całkowita) do 2500kg (2490kg) oraz 3500kg",
+      subtitle: "Legalnie - w Niemczech - z pełną procedurą techniczną! Prowadzimy Cię przez cały proces krok po kroku: od weryfikacji pojazdu, przez procedury wykonywane przez niemieckie placówki techniczne, przygotowujące kompletną dokumentację techniczną, w wyniku czego otrzymasz nową tabliczkę znamionową, oraz komplet nowych niemieckich Briefów cz. I i cz. II ze zmienionym DMC. Na ich podstawie pojazd może zostać następnie dopuszczony do ruchu w Polsce lub w każdym innym kraju UE.",
+    },
+    service2500: {
+      tag: "Dopuszczalna masa całkowita",
+      title: "Zmiana DMC w dół do 2500kg (2490kg)",
+      subtitle: "Legalnie - w Niemczech - nowe Briefy - nowa tabliczka znamionowa - pełna procedura techniczna!",
+      lead: ["dla transportu międzynarodowego lekkiego / pilnego"],
+      scopeTitle: "Na czym polega usługa",
+      scopeText: [
+        "Zmiana DMC do 2490kg w Niemczech to nie jest „papier i zmiana cyferek”!",
+        "Czynności realizowane są przez niemiecki Instytut Techniki Samochodowej, z pełną dokumentacją techniczną potwierdzającą przeprowadzone zmiany parametrów pojazdu.",
+        "W wyniku przeprowadzonej procedury otrzymasz nową tabliczkę znamionową oraz komplet nowych niemieckich Briefów potwierdzających nowe DMC pojazdu. Na ich podstawie pojazd może zostać następnie dopuszczony do ruchu w Polsce lub w każdym innym kraju UE.",
+      ],
+      scopeNote: "Nie każdy samochód kwalifikuje się do legalnej zmiany DMC!",
+      getTitle: "Co otrzymujesz",
+      getList: [
+        "komplet niemieckich Briefów (cz. I i cz. II) wraz z nową tabliczką znamionową - DMC 2490kg",
+      ],
+      verifyTitle: "Weryfikacja pojazdu",
+      verifyText: "Usługa dostępna wyłącznie dla pojazdów, które technicznie się do tego kwalifikują (każdy przypadek rozpatrywany indywidualnie)!",
+      verifyPhotos: "Przygotuj zdjęcia pojazdu: przód po skosie, tył po skosie, kabina kierowcy, licznik kilometrów, przedział bagażowy, tabliczka znamionowa.",
+    },
+    service3500: {
+      tag: "Dopuszczalna masa całkowita",
+      title: "Zmiana DMC w dół do 3500kg",
+      subtitle: "Legalnie - w Niemczech - nowe Briefy - nowa tabliczka znamionowa - pełna procedura techniczna.",
+      lead: [
+        "Usługa przeznaczona dla pojazdów zakupionych na terenie całej Unii Europejskiej, przed ich wprowadzeniem do kraju!",
+        "Prowadzimy Cię przez cały proces krok po kroku - od weryfikacji pojazdu, przez procedury wykonywane przez niemieckie placówki techniczne, aż do przygotowania kompletnej dokumentacji technicznej.",
+        "W wyniku przeprowadzonej procedury otrzymasz nową tabliczkę znamionową oraz komplet nowych niemieckich Briefów ze zmienionym DMC 3500kg.",
+      ],
+      scopeTitle: "Na czym polega usługa",
+      scopeText: [
+        "Obniżenie DMC np. z 5000kg do 3500kg (kat. N1, prawo jazdy kat. B) dla samochodów zakupionych na obszarze całej Unii Europejskiej i jeszcze niedopuszczonych do ruchu w Polsce!",
+        "Zmiana DMC do 3500kg polega na kompleksowym przygotowaniu pojazdu, a następnie przedstawieniu go do oceny przez niemiecki Instytut Techniki Samochodowej, który wykonuje indywidualną ekspertyzę techniczną oraz przygotowuje dokumentację potwierdzającą przeprowadzone zmiany parametrów pojazdu.",
+        "W wyniku przeprowadzonej procedury właściciel otrzyma komplet nowych niemieckich Briefów (DMC 3500kg) wraz z nową tabliczką znamionową.",
+      ],
+      scopeNote: "Nie każdy pojazd kwalifikuje się do legalnej zmiany DMC - każdy przypadek analizowany jest indywidualnie!",
+    },
+    howItWorks: {
+      title: "Jak wygląda współpraca?",
+      step1: "Kontakt", step1Desc: "Dzwonisz lub piszesz - omawiamy Twój pojazd icelobniżenia DMC.",
+      step2: "Weryfikacja", step2Desc: "Sprawdzamy, czy pojazd technicznie kwalifikuje się do zmianyDMC.",
+      step3: "Realizacja", step3Desc: "Przeprowadzamy cały proces wNiemczech - Ty nie musisz tam jechać.",
+      step4: "Odbiór", step4Desc: "Dostajesz pojazd z nową dokumentacją, gotowy do przerejestrowania.",
+    },
+    note: { title: "", description: "Oferta obniżenia DMC do 2500 kg jest szczególnie korzystna od 1lipca 2026r. - dla firm, które potrzebują elastyczności w transporcie międzynarodowym. Każdy przypadek jest indywidualnie weryfikowany pod kątem kwalifikacji technicznejpojazdu." },
+    contact: { title: "Porozmawiajmy o Twoim pojeździe", subtitle: "Bezpłatna konsultacja - odpowiemy na każde pytanie dotyczące zmiany DMC.", callLabel: "Zadzwoń", writeLabel: "Napisz" },
+  },
+
+// locale 2
+  zmianaDmc: {
+    seo: {
+      title: "GVW Change - Reduction to 2500 kg or 3500 kg",
+      description: "Professional GVW change for vehicles in Germany - reduce permissible gross weight to 3500 kg or 2500 kg. Full service, German documentation, valid throughout the EU.",
+      keywords: "GVW change to 2500 kg, reduce GVW to 2500 kg, GVW 2500 kg, reduce permissible gross weight to 2500 kg, reduce vehicle gross weight to 2.5 t, change van GVW to 2500 kg, reduce car GVW to 2500 kg, how to reduce GVW to 2500 kg, change truck GVW to 2500 kg, GVW 2500 kg and drivers license, can you reduce GVW to 2500 kg, convert car to 2500 kg, GVW change Germany 2500 kg, reduce GVW before Poland registration, change GVW car from Germany 2500 kg, how to avoid GVW over 3.5 t, GVW 2500 kg and costs, GVW change and tax, can you drive category B after GVW change, reduce GVW and registration in Poland",
+    },
+    nav: { home: "Home", services: "Services", contact: "Contact" },
+    intro: {
+      title: "GVW change (gross vehicle weight) to 2500kg (2490kg) and 3500kg",
+      subtitle: "Legally - in Germany - with a full technical procedure! We guide you through the entire process step by step: from vehicle verification, through procedures carried out by German technical facilities, preparing complete technical documentation, as a result of which you will receive a new type plate and a complete set of new German Briefs (Teil I and Teil II) with the changed GVW. On their basis the vehicle can then be admitted to road traffic in Poland or in any other EU country.",
+    },
+    service2500: {
+      tag: "Gross vehicle weight",
+      title: "GVW reduction to 2500kg (2490kg)",
+      subtitle: "Legally - in Germany - new Briefs - new type plate - full technical procedure!",
+      lead: ["for light / urgent international transport"],
+      scopeTitle: "What the service involves",
+      scopeText: [
+        "A GVW change to 2490kg in Germany is not “paperwork and tweaking numbers”!",
+        "The work is carried out by a German Institute of Automotive Technology, with full technical documentation confirming the changes made to the vehicle's parameters.",
+        "As a result of the procedure you will receive a new type plate and a complete set of new German Briefs confirming the vehicle's new GVW. On their basis the vehicle can then be admitted to road traffic in Poland or in any other EU country.",
+      ],
+      scopeNote: "Not every car qualifies for a legal GVW change!",
+      getTitle: "What you receive",
+      getList: [
+        "a complete set of German Briefs (Teil I and Teil II) together with a new type plate - GVW 2490kg",
+      ],
+      verifyTitle: "Vehicle verification",
+      verifyText: "The service is available exclusively for vehicles that technically qualify (each case is considered individually)!",
+      verifyPhotos: "Prepare photos of the vehicle: front three-quarter view, rear three-quarter view, driver's cab, odometer, cargo compartment, type plate.",
+    },
+    service3500: {
+      tag: "Gross vehicle weight",
+      title: "GVW reduction to 3500kg",
+      subtitle: "Legally - in Germany - new Briefs - new type plate - full technical procedure.",
+      lead: [
+        "Service intended for vehicles purchased anywhere in the European Union, before they are brought into the country!",
+        "We guide you through the entire process step by step - from vehicle verification, through procedures carried out by German technical facilities, to the preparation of complete technical documentation.",
+        "As a result of the procedure you will receive a new type plate and a complete set of new German Briefs with the changed GVW of 3500kg.",
+      ],
+      scopeTitle: "What the service involves",
+      scopeText: [
+        "Reduction of GVW e.g. from 5000kg to 3500kg (category N1, category B driving licence) for cars purchased anywhere in the European Union and not yet admitted to traffic in Poland!",
+        "A GVW change to 3500kg consists of comprehensively preparing the vehicle and then submitting it for assessment to a German Institute of Automotive Technology, which carries out an individual technical expert assessment and prepares documentation confirming the changes made to the vehicle's parameters.",
+        "As a result of the procedure the owner will receive a complete set of new German Briefs (GVW 3500kg) together with a new type plate.",
+      ],
+      scopeNote: "Not every vehicle qualifies for a legal GVW change - each case is analysed individually!",
+    },
+    howItWorks: {
+      title: "How does the cooperation work?",
+      step1: "Contact", step1Desc: "You call or write - we discuss your vehicle and the purpose of GVW reduction.",
+      step2: "Verification", step2Desc: "We check if the vehicle technically qualifies for GVW change.",
+      step3: "Implementation", step3Desc: "We carry out the entire process in Germany - you don't have to go there.",
+      step4: "Pickup", step4Desc: "You receive the vehicle with new documentation, ready for re-registration.",
+    },
+    note: { title: "", description: "The offer to reduce GVW to 2500 kg is particularly beneficial from July1, 2026 - for companies that need flexibility in international transport. Each case is individually verified for technical qualification of the vehicle." },
+    contact: { title: "Let's talk about your vehicle", subtitle: "Free consultation - we will answer any questions about GVW change.", callLabel: "Call", writeLabel: "Write" },
+  },
+
+// locale 3
+  zmianaDmc: {
+    seo: {
+      title: "Зміна ПМА транспортного засобу - зменшення до 2500 кг або 3500 кг",
+      description: "Професійна зміна ПМА транспортних засобів у Німеччині - зменшення дозволеної повної маси до 3500 кг або 2500 кг. Повний сервіс, німецька документація, дійсна по всій ЄС.",
+      keywords: "зміна ПМА до 2500 кг, зменшення ПМА до 2500 кг, ПМА 2500 кг",
+    },
+    nav: { home: "Головна", services: "Послуги", contact: "Контакти" },
+    intro: {
+      title: "Зміна ПМА (повна маса автомобіля) до 2500кг (2490кг) та 3500кг",
+      subtitle: "Легально - у Німеччині - з повною технічною процедурою! Ми проводимо вас через увесь процес крок за кроком: від перевірки транспортного засобу, через процедури, що виконуються німецькими технічними установами, які готують повну технічну документацію, у результаті чого ви отримаєте нову табличку з даними та комплект нових німецьких Briefів (Teil I і Teil II) зі зміненою ПМА. На їх підставі транспортний засіб може бути згодом допущений до руху в Польщі або в будь-якій іншій країні ЄС.",
+    },
+    service2500: {
+      tag: "Повна маса автомобіля",
+      title: "Зниження ПМА до 2500кг (2490кг)",
+      subtitle: "Легально - у Німеччині - нові Briefи - нова табличка з даними - повна технічна процедура!",
+      lead: ["для легких / термінових міжнародних перевезень"],
+      scopeTitle: "У чому полягає послуга",
+      scopeText: [
+        "Зміна ПМА до 2490кг у Німеччині — це не «папір та зміна цифр»!",
+        "Роботи виконує німецький Інститут автомобільної техніки, з повною технічною документацією, що підтверджує проведені зміни параметрів транспортного засобу.",
+        "У результаті проведеної процедури ви отримаєте нову табличку з даними та комплект нових німецьких Briefів, що підтверджують нову ПМА транспортного засобу. На їх підставі транспортний засіб може бути згодом допущений до руху в Польщі або в будь-якій іншій країні ЄС.",
+      ],
+      scopeNote: "Не кожен автомобіль кваліфікується для легальної зміни ПМА!",
+      getTitle: "Що ви отримуєте",
+      getList: [
+        "комплект німецьких Briefів (Teil I і Teil II) разом із новою табличкою з даними - ПМА 2490кг",
+      ],
+      verifyTitle: "Перевірка транспортного засобу",
+      verifyText: "Послуга доступна виключно для транспортних засобів, які технічно для цього кваліфікуються (кожен випадок розглядається індивідуально)!",
+      verifyPhotos: "Підготуйте фото транспортного засобу: перед навскіс, зад навскіс, кабіна водія, одометр, багажний відсік, табличка з даними.",
+    },
+    service3500: {
+      tag: "Повна маса автомобіля",
+      title: "Зниження ПМА до 3500кг",
+      subtitle: "Легально - у Німеччині - нові Briefи - нова табличка з даними - повна технічна процедура.",
+      lead: [
+        "Послуга призначена для транспортних засобів, придбаних на території всього Європейського Союзу, до їх ввезення в країну!",
+        "Ми проводимо вас через увесь процес крок за кроком - від перевірки транспортного засобу, через процедури, що виконуються німецькими технічними установами, аж до підготовки повної технічної документації.",
+        "У результаті проведеної процедури ви отримаєте нову табличку з даними та комплект нових німецьких Briefів зі зміненою ПМА 3500кг.",
+      ],
+      scopeTitle: "У чому полягає послуга",
+      scopeText: [
+        "Зниження ПМА, наприклад, з 5000кг до 3500кг (кат. N1, посвідчення кат. B) для автомобілів, придбаних на території всього Європейського Союзу і ще не допущених до руху в Польщі!",
+        "Зміна ПМА до 3500кг полягає в комплексній підготовці транспортного засобу, а потім поданні його на оцінку до німецького Інституту автомобільної техніки, який виконує індивідуальну технічну експертизу та готує документацію, що підтверджує проведені зміни параметрів транспортного засобу.",
+        "У результаті проведеної процедури власник отримає комплект нових німецьких Briefів (ПМА 3500кг) разом із новою табличкою з даними.",
+      ],
+      scopeNote: "Не кожен транспортний засіб кваліфікується для легальної зміни ПМА - кожен випадок аналізується індивідуально!",
+    },
+    howItWorks: {
+      title: "Як виглядає співпраця?",
+      step1: "Контакт", step1Desc: "Ви телефонуєте або пишете - ми обговорюємо ваш транспортний засіб і мету зменшення ПМА.",
+      step2: "Верифікація", step2Desc: "Ми перевіряємо, чи технічно транспортний засіб кваліфікується для зміни ПМА.",
+      step3: "Реалізація", step3Desc: "Ми проводимо весь процес в Німеччині - вам не потрібно туди їхати.",
+      step4: "Отримання", step4Desc: "Ви отримуєте транспортний засіб з новою документацією, готовий до перереєстрації.",
+    },
+    note: { title: "", description: "Пропозиція зменшення ПМА до 2500 кг особливо вигідна з 1 липня 2026 р. - для компаній, яким потрібна гнучкість у міжнародних перевезеннях. Кожен випадок індивідуально перевіряється на технічну кваліфікацію транспортного засобу." },
+    contact: { title: "Поговорімо про ваш транспортний засіб", subtitle: "Безкоштовна консультація - ми відповімо на будь-які питання щодо зміни ПМА.", callLabel: "Зателефонуйте", writeLabel: "Напишіть" },
+  },
+
+// locale 4
+  zmianaDmc: {
+    seo: {
+      title: "Изменение ПМ транспортного средства - снижение до 2500 кг или 3500 кг",
+      description: "Профессиональное изменение ПМ транспортных средств в Германии - снижение допустимой полной массы до 3500 кг или 2500 кг. Полный сервис, немецкая документация, действует по всей ЕС.",
+      keywords: "изменение ПМ до 2500 кг, снижение ПМ до 2500 кг, ПМ 2500 кг",
+    },
+    nav: { home: "Главная", services: "Услуги", contact: "Контакты" },
+    intro: {
+      title: "Изменение ПМ (полная масса автомобиля) до 2500кг (2490кг) и 3500кг",
+      subtitle: "Легально - в Германии - с полной технической процедурой! Мы проводим вас через весь процесс шаг за шагом: от проверки транспортного средства, через процедуры, выполняемые немецкими техническими учреждениями, которые готовят полную техническую документацию, в результате чего вы получите новую табличку с данными и комплект новых немецких Briefов (Teil I и Teil II) с изменённой ПМ. На их основании транспортное средство может быть затем допущено к движению в Польше или в любой другой стране ЕС.",
+    },
+    service2500: {
+      tag: "Полная масса автомобиля",
+      title: "Снижение ПМ до 2500кг (2490кг)",
+      subtitle: "Легально - в Германии - новые Briefы - новая табличка с данными - полная техническая процедура!",
+      lead: ["для лёгких / срочных международных перевозок"],
+      scopeTitle: "В чём заключается услуга",
+      scopeText: [
+        "Изменение ПМ до 2490кг в Германии — это не «бумага и смена цифр»!",
+        "Работы выполняет немецкий Институт автомобильной техники, с полной технической документацией, подтверждающей проведённые изменения параметров транспортного средства.",
+        "В результате проведённой процедуры вы получите новую табличку с данными и комплект новых немецких Briefов, подтверждающих новую ПМ транспортного средства. На их основании транспортное средство может быть затем допущено к движению в Польше или в любой другой стране ЕС.",
+      ],
+      scopeNote: "Не каждый автомобиль квалифицируется для легального изменения ПМ!",
+      getTitle: "Что вы получаете",
+      getList: [
+        "комплект немецких Briefов (Teil I и Teil II) вместе с новой табличкой с данными - ПМ 2490кг",
+      ],
+      verifyTitle: "Проверка транспортного средства",
+      verifyText: "Услуга доступна исключительно для транспортных средств, которые технически для этого квалифицируются (каждый случай рассматривается индивидуально)!",
+      verifyPhotos: "Подготовьте фото транспортного средства: перёд по диагонали, зад по диагонали, кабина водителя, одометр, багажный отсек, табличка с данными.",
+    },
+    service3500: {
+      tag: "Полная масса автомобиля",
+      title: "Снижение ПМ до 3500кг",
+      subtitle: "Легально - в Германии - новые Briefы - новая табличка с данными - полная техническая процедура.",
+      lead: [
+        "Услуга предназначена для транспортных средств, приобретённых на территории всего Европейского Союза, до их ввоза в страну!",
+        "Мы проводим вас через весь процесс шаг за шагом - от проверки транспортного средства, через процедуры, выполняемые немецкими техническими учреждениями, вплоть до подготовки полной технической документации.",
+        "В результате проведённой процедуры вы получите новую табличку с данными и комплект новых немецких Briefов с изменённой ПМ 3500кг.",
+      ],
+      scopeTitle: "В чём заключается услуга",
+      scopeText: [
+        "Снижение ПМ, например, с 5000кг до 3500кг (кат. N1, удостоверение кат. B) для автомобилей, приобретённых на территории всего Европейского Союза и ещё не допущенных к движению в Польше!",
+        "Изменение ПМ до 3500кг заключается в комплексной подготовке транспортного средства, а затем представлении его на оценку в немецкий Институт автомобильной техники, который выполняет индивидуальную техническую экспертизу и готовит документацию, подтверждающую проведённые изменения параметров транспортного средства.",
+        "В результате проведённой процедуры владелец получит комплект новых немецких Briefов (ПМ 3500кг) вместе с новой табличкой с данными.",
+      ],
+      scopeNote: "Не каждое транспортное средство квалифицируется для легального изменения ПМ - каждый случай анализируется индивидуально!",
+    },
+    howItWorks: {
+      title: "Как выглядит сотрудничество?",
+      step1: "Контакт", step1Desc: "Вы звоните или пишете - мы обсуждаем ваше транспортное средство и цель снижения ПМ.",
+      step2: "Верификация", step2Desc: "Мы проверяем, технически ли транспортное средство квалифицируется для изменения ПМ.",
+      step3: "Реализация", step3Desc: "Мы проводим весь процесс в Германии - вам не нужно туда ехать.",
+      step4: "Получение", step4Desc: "Вы получаете транспортное средство с новой документацией, готовое к перерегистрации.",
+    },
+    note: { title: "", description: "Предложение снижения ПМ до 2500 кг особенно выгодно с 1 июля 2026 г. - для компаний, которым нужна гибкость в международных перевозках. Каждый случай индивидуально проверяется на техническую квалификацию транспортного средства." },
+    contact: { title: "Поговорим о вашем транспортном средстве", subtitle: "Бесплатная консультация - мы ответим на любые вопросы об изменении ПМ.", callLabel: "Позвоните", writeLabel: "Напишите" },
+  },
+
+// locale 5
+  zmianaDmc: {
+    seo: {
+      title: "Změna celkové hmotnosti vozidla - snížení na 2500 kg nebo 3500 kg",
+      description: "Profesionální změna celkové hmotnosti vozidel v Německu - snížení povolené celkové hmotnosti na 3500 kg nebo 2500 kg. Kompletní servis, německá dokumentace, platná v celé EU.",
+      keywords: "změna celkové hmotnosti na 2500 kg, snížení celkové hmotnosti na 2500 kg, celková hmotnost 2500 kg",
+    },
+    nav: { home: "Domů", services: "Služby", contact: "Kontakt" },
+    intro: {
+      title: "Změna celkové hmotnosti vozidla na 2500kg (2490kg) a 3500kg",
+      subtitle: "Legálně - v Německu - s kompletní technickou procedurou! Provedeme vás celým procesem krok za krokem: od ověření vozidla, přes procedury prováděné německými technickými institucemi, které připravují kompletní technickou dokumentaci, v důsledku čehož obdržíte nový štítek a kompletní nové německé Briefy (Teil I a Teil II) se změněnou celkovou hmotností. Na jejich základě může být vozidlo následně připuštěno k provozu v Polsku nebo v jakékoli jiné zemi EU.",
+    },
+    service2500: {
+      tag: "Celková hmotnost vozidla",
+      title: "Snížení celkové hmotnosti na 2500kg (2490kg)",
+      subtitle: "Legálně - v Německu - nové Briefy - nový štítek - kompletní technická procedura!",
+      lead: ["pro lehkou / urgentní mezinárodní přepravu"],
+      scopeTitle: "Co služba obnáší",
+      scopeText: [
+        "Změna celkové hmotnosti na 2490kg v Německu není „papír a změna čísel“!",
+        "Práce provádí německý Institut automobilové techniky, s úplnou technickou dokumentací potvrzující provedené změny parametrů vozidla.",
+        "V důsledku provedené procedury obdržíte nový štítek a kompletní nové německé Briefy potvrzující novou celkovou hmotnost vozidla. Na jejich základě může být vozidlo následně připuštěno k provozu v Polsku nebo v jakékoli jiné zemi EU.",
+      ],
+      scopeNote: "Ne každé vozidlo se kvalifikuje pro legální změnu celkové hmotnosti!",
+      getTitle: "Co získáte",
+      getList: [
+        "kompletní německé Briefy (Teil I a Teil II) spolu s novým štítkem - celková hmotnost 2490kg",
+      ],
+      verifyTitle: "Ověření vozidla",
+      verifyText: "Služba je dostupná výhradně pro vozidla, která se k tomu technicky kvalifikují (každý případ je posuzován individuálně)!",
+      verifyPhotos: "Připravte fotografie vozidla: přední pohled šikmo, zadní pohled šikmo, kabina řidiče, tachometr, zavazadlový prostor, štítek.",
+    },
+    service3500: {
+      tag: "Celková hmotnost vozidla",
+      title: "Snížení celkové hmotnosti na 3500kg",
+      subtitle: "Legálně - v Německu - nové Briefy - nový štítek - kompletní technická procedura.",
+      lead: [
+        "Služba určená pro vozidla zakoupená na území celé Evropské unie, před jejich dovozem do země!",
+        "Provedeme vás celým procesem krok za krokem - od ověření vozidla, přes procedury prováděné německými technickými institucemi, až po přípravu kompletní technické dokumentace.",
+        "V důsledku provedené procedury obdržíte nový štítek a kompletní nové německé Briefy se změněnou celkovou hmotností 3500kg.",
+      ],
+      scopeTitle: "Co služba obnáší",
+      scopeText: [
+        "Snížení celkové hmotnosti např. z 5000kg na 3500kg (kat. N1, řidičský průkaz kat. B) pro automobily zakoupené na území celé Evropské unie a dosud nepřipuštěné k provozu v Polsku!",
+        "Změna celkové hmotnosti na 3500kg spočívá v komplexní přípravě vozidla a následně v jeho předložení k posouzení německému Institutu automobilové techniky, který provádí individuální technickou expertizu a připravuje dokumentaci potvrzující provedené změny parametrů vozidla.",
+        "V důsledku provedené procedury obdrží majitel kompletní nové německé Briefy (celková hmotnost 3500kg) spolu s novým štítkem.",
+      ],
+      scopeNote: "Ne každé vozidlo se kvalifikuje pro legální změnu celkové hmotnosti - každý případ je analyzován individuálně!",
+    },
+    howItWorks: {
+      title: "Jak probíhá spolupráce?",
+      step1: "Kontakt", step1Desc: "Voláte nebo píšete - probíráme vaše vozidlo a účel snížení celkové hmotnosti.",
+      step2: "Ověření", step2Desc: "Kontrolujeme, zda se vozidlo technicky kvalifikuje ke změně celkové hmotnosti.",
+      step3: "Realizace", step3Desc: "Provádíme celý proces v Německu - nemusíte tam jezdit.",
+      step4: "Převzetí", step4Desc: "Obdržíte vozidlo s novou dokumentací, připravené k přeregistraci.",
+    },
+    note: { title: "", description: "Nabídka snížení celkové hmotnosti na 2500 kg je zvláště výhodná od 1. července 2026 - pro firmy, které potřebují flexibilitu v mezinárodní přepravě. Každý případ je individuálně ověřován z hlediska technické kvalifikace vozidla." },
+    contact: { title: "Pojďme mluvit o vašem vozidle", subtitle: "Bezplatná konzultace - odpovíme na jakékoliv otázky ohledně změny celkové hmotnosti.", callLabel: "Zavolejte", writeLabel: "Napište" },
+  },
+
+// locale 6
+  zmianaDmc: {
+    seo: {
+      title: "Cambio de PMA del vehículo - reducción a 2500 kg o 3500 kg",
+      description: "Cambio profesional de PMA de vehículos en Alemania - reducción del peso máximo autorizado a 3500 kg o 2500 kg. Servicio completo, documentación alemana, válida en toda la UE.",
+      keywords: "cambio de PMA a 2500 kg, reducir PMA a 2500 kg, PMA 2500 kg",
+    },
+    nav: { home: "Inicio", services: "Servicios", contact: "Contacto" },
+    intro: {
+      title: "Cambio de PMA (peso máximo autorizado) a 2500kg (2490kg) y 3500kg",
+      subtitle: "Legalmente - en Alemania - con un procedimiento técnico completo! Te guiamos por todo el proceso paso a paso: desde la verificación del vehículo, pasando por los procedimientos realizados por instituciones técnicas alemanas, que preparan la documentación técnica completa, como resultado de lo cual recibirás una nueva placa de datos y un juego completo de nuevos Briefs alemanes (Teil I y Teil II) con la PMA modificada. Sobre su base, el vehículo puede después ser admitido a la circulación en Polonia o en cualquier otro país de la UE.",
+    },
+    service2500: {
+      tag: "Peso máximo autorizado",
+      title: "Reducción de PMA a 2500kg (2490kg)",
+      subtitle: "Legalmente - en Alemania - nuevos Briefs - nueva placa de datos - procedimiento técnico completo!",
+      lead: ["para transporte internacional ligero / urgente"],
+      scopeTitle: "En qué consiste el servicio",
+      scopeText: [
+        "El cambio de PMA a 2490kg en Alemania no es “papeleo y cambio de cifras”!",
+        "Los trabajos los realiza un Instituto de Tecnología Automotriz alemán, con documentación técnica completa que confirma los cambios efectuados en los parámetros del vehículo.",
+        "Como resultado del procedimiento recibirás una nueva placa de datos y un juego completo de nuevos Briefs alemanes que confirman la nueva PMA del vehículo. Sobre su base, el vehículo puede después ser admitido a la circulación en Polonia o en cualquier otro país de la UE.",
+      ],
+      scopeNote: "¡No todo automóvil se califica para un cambio legal de PMA!",
+      getTitle: "Qué recibes",
+      getList: [
+        "juego completo de Briefs alemanes (Teil I y Teil II) junto con una nueva placa de datos - PMA 2490kg",
+      ],
+      verifyTitle: "Verificación del vehículo",
+      verifyText: "¡El servicio está disponible exclusivamente para vehículos que técnicamente se califican para ello (cada caso se considera individualmente)!",
+      verifyPhotos: "Prepara fotos del vehículo: vista frontal en diagonal, vista trasera en diagonal, cabina del conductor, cuentakilómetros, compartimento de carga, placa de datos.",
+    },
+    service3500: {
+      tag: "Peso máximo autorizado",
+      title: "Reducción de PMA a 3500kg",
+      subtitle: "Legalmente - en Alemania - nuevos Briefs - nueva placa de datos - procedimiento técnico completo.",
+      lead: [
+        "¡Servicio destinado a vehículos comprados en todo el territorio de la Unión Europea, antes de su introducción en el país!",
+        "Te guiamos por todo el proceso paso a paso - desde la verificación del vehículo, pasando por los procedimientos realizados por instituciones técnicas alemanas, hasta la preparación de la documentación técnica completa.",
+        "Como resultado del procedimiento recibirás una nueva placa de datos y un juego completo de nuevos Briefs alemanes con la PMA modificada de 3500kg.",
+      ],
+      scopeTitle: "En qué consiste el servicio",
+      scopeText: [
+        "¡Reducción de PMA p. ej. de 5000kg a 3500kg (cat. N1, licencia cat. B) para coches comprados en todo el territorio de la Unión Europea y aún no admitidos a la circulación en Polonia!",
+        "El cambio de PMA a 3500kg consiste en la preparación integral del vehículo y, a continuación, en presentarlo para evaluación a un Instituto de Tecnología Automotriz alemán, que realiza un peritaje técnico individual y prepara la documentación que confirma los cambios efectuados en los parámetros del vehículo.",
+        "Como resultado del procedimiento el propietario recibirá un juego completo de nuevos Briefs alemanes (PMA 3500kg) junto con una nueva placa de datos.",
+      ],
+      scopeNote: "¡No todo vehículo se califica para un cambio legal de PMA - cada caso se analiza individualmente!",
+    },
+    howItWorks: {
+      title: "¿Cómo es la cooperación?",
+      step1: "Contacto", step1Desc: "Llamas o escribes - analizamos tu vehículo y el propósito de la reducción del PMA.",
+      step2: "Verificación", step2Desc: "Comprobamos si el vehículo se cualifica técnicamente para el cambio de PMA.",
+      step3: "Realización", step3Desc: "Llevamos a cabo todo el proceso en Alemania - no tienes que ir allí.",
+      step4: "Recogida", step4Desc: "Recibes el vehículo con nueva documentación, listo para re-registrar.",
+    },
+    note: { title: "", description: "La oferta de reducción del PMA a 2500 kg es especialmente ventajosa desde el 1 de julio de 2026 - para empresas que necesitan flexibilidad en el transporte internacional. Cada caso se verifica individualmente para la cualificación técnica del vehículo." },
+    contact: { title: "Hablemos de tu vehículo", subtitle: "Consulta gratuita - responderemos a cualquier pregunta sobre el cambio de PMA.", callLabel: "Llama", writeLabel: "Escribe" },
+  },
+
+// locale 7
+  zmianaDmc: {
+    seo: {
+      title: "Cambio PMA del veicolo - riduzione a 2500 kg o 3500 kg",
+      description: "Cambio professionale PMA veicoli in Germania - riduzione della massa massima autorizzata a 3500 kg o 2500 kg. Servizio completo, documentazione tedesca, valida in tutta l'UE.",
+      keywords: "cambio PMA a 2500 kg, ridurre PMA a 2500 kg, PMA 2500 kg",
+    },
+    nav: { home: "Home", services: "Servizi", contact: "Contatti" },
+    intro: {
+      title: "Cambio della PMA (massa massima autorizzata) a 2500kg (2490kg) e 3500kg",
+      subtitle: "Legalmente - in Germania - con una procedura tecnica completa! Ti accompagniamo nell'intero processo passo dopo passo: dalla verifica del veicolo, attraverso le procedure svolte dalle strutture tecniche tedesche, che preparano la documentazione tecnica completa, a seguito della quale riceverai una nuova targhetta e un set completo di nuovi Brief tedeschi (Teil I e Teil II) con la PMA modificata. Sulla loro base il veicolo può poi essere ammesso alla circolazione in Polonia o in qualsiasi altro paese UE.",
+    },
+    service2500: {
+      tag: "Massa massima autorizzata",
+      title: "Riduzione PMA a 2500kg (2490kg)",
+      subtitle: "Legalmente - in Germania - nuovi Brief - nuova targhetta - procedura tecnica completa!",
+      lead: ["per il trasporto internazionale leggero / urgente"],
+      scopeTitle: "In cosa consiste il servizio",
+      scopeText: [
+        "Il cambio PMA a 2490kg in Germania non è “scartoffie e modifica di cifre”!",
+        "Le operazioni sono svolte da un Istituto di Tecnologia Automobilistica tedesco, con documentazione tecnica completa che conferma le modifiche apportate ai parametri del veicolo.",
+        "A seguito della procedura riceverai una nuova targhetta e un set completo di nuovi Brief tedeschi che confermano la nuova PMA del veicolo. Sulla loro base il veicolo può poi essere ammesso alla circolazione in Polonia o in qualsiasi altro paese UE.",
+      ],
+      scopeNote: "Non ogni automobile si qualifica per un cambio legale della PMA!",
+      getTitle: "Cosa ricevi",
+      getList: [
+        "set completo di Brief tedeschi (Teil I e Teil II) insieme a una nuova targhetta - PMA 2490kg",
+      ],
+      verifyTitle: "Verifica del veicolo",
+      verifyText: "Il servizio è disponibile esclusivamente per i veicoli che si qualificano tecnicamente (ogni caso viene considerato individualmente)!",
+      verifyPhotos: "Prepara le foto del veicolo: vista anteriore di tre quarti, vista posteriore di tre quarti, cabina del conducente, contachilometri, vano di carico, targhetta.",
+    },
+    service3500: {
+      tag: "Massa massima autorizzata",
+      title: "Riduzione PMA a 3500kg",
+      subtitle: "Legalmente - in Germania - nuovi Brief - nuova targhetta - procedura tecnica completa.",
+      lead: [
+        "Servizio destinato ai veicoli acquistati in tutto il territorio dell'Unione Europea, prima della loro introduzione nel paese!",
+        "Ti accompagniamo nell'intero processo passo dopo passo - dalla verifica del veicolo, attraverso le procedure svolte dalle strutture tecniche tedesche, fino alla preparazione della documentazione tecnica completa.",
+        "A seguito della procedura riceverai una nuova targhetta e un set completo di nuovi Brief tedeschi con la PMA modificata di 3500kg.",
+      ],
+      scopeTitle: "In cosa consiste il servizio",
+      scopeText: [
+        "Riduzione della PMA ad es. da 5000kg a 3500kg (cat. N1, patente cat. B) per le auto acquistate in tutto il territorio dell'Unione Europea e non ancora ammesse alla circolazione in Polonia!",
+        "Il cambio PMA a 3500kg consiste nella preparazione completa del veicolo e nella sua successiva presentazione per la valutazione presso un Istituto di Tecnologia Automobilistica tedesco, che esegue una perizia tecnica individuale e prepara la documentazione che conferma le modifiche apportate ai parametri del veicolo.",
+        "A seguito della procedura il proprietario riceverà un set completo di nuovi Brief tedeschi (PMA 3500kg) insieme a una nuova targhetta.",
+      ],
+      scopeNote: "Non ogni veicolo si qualifica per un cambio legale della PMA - ogni caso viene analizzato individualmente!",
+    },
+    howItWorks: {
+      title: "Come funziona la cooperazione?",
+      step1: "Contatto", step1Desc: "Chiami o scrivi - discutiamo del tuo veicolo e dello scopo della riduzione del PMA.",
+      step2: "Verifica", step2Desc: "Verifichiamo se il veicolo si qualifica tecnicamente per il cambio PMA.",
+      step3: "Realizzazione", step3Desc: "Realizziamo l'intero processo in Germania - non devi andarci.",
+      step4: "Ritiro", step4Desc: "Ricevi il veicolo con nuova documentazione, pronto per la re-registrazione.",
+    },
+    note: { title: "", description: "L'offerta di riduzione del PMA a 2500 kg è particolarmente vantaggiosa dal 1° luglio 2026 - per aziende che necessitano di flessibilità nel trasporto internazionale. Ogni caso viene verificato individualmente per la qualifica tecnica del veicolo." },
+    contact: { title: "Parliamo del tuo veicolo", subtitle: "Consulenza gratuita - risponderemo a qualsiasi domanda sul cambio PMA.", callLabel: "Chiama", writeLabel: "Scrivi" },
+  },
+
+// locale 8
+  zmianaDmc: {
+    seo: {
+      title: "ÖTM változtatása járműveknél - csökkentés 2500 kg vagy 3500 kg-ra",
+      description: "Professzionális ÖTM változtatás járműveknek Németországban - megengedett össztömeg csökkentése 3500 kg-ra vagy 2500 kg-ra. Teljes körű szolgáltatás, német dokumentáció, az EU-ban érvényes.",
+      keywords: "ÖTM változtatás 2500 kg-ra, ÖTM csökkentés 2500 kg-ra, ÖTM 2500 kg",
+    },
+    nav: { home: "Kezdőlap", services: "Szolgáltatások", contact: "Kapcsolat" },
+    intro: {
+      title: "ÖTM (megengedett össztömeg) csökkentése 2500kg-ra (2490kg) és 3500kg-ra",
+      subtitle: "Legálisan - Németországban - teljes műszaki eljárással! Lépésről lépésre végigvezetjük a teljes folyamaton: a jármű ellenőrzésétől, a német technikai intézmények által végzett eljárásokon át, amelyek elkészítik a teljes műszaki dokumentációt, aminek eredményeként új adattáblát és komplett új német Briefeket (Teil I és Teil II) kap a megváltoztatott ÖTM-mel. Ezek alapján a jármű ezután forgalomba helyezhető Lengyelországban vagy bármely más EU-országban.",
+    },
+    service2500: {
+      tag: "Megengedett össztömeg",
+      title: "ÖTM csökkentése 2500kg-ra (2490kg)",
+      subtitle: "Legálisan - Németországban - új Briefek - új adattábla - teljes műszaki eljárás!",
+      lead: ["könnyű / sürgős nemzetközi szállításhoz"],
+      scopeTitle: "Miből áll a szolgáltatás",
+      scopeText: [
+        "Az ÖTM 2490kg-ra változtatása Németországban nem „papír és számváltoztatás”!",
+        "A munkát német Gépjárműtechnikai Intézet végzi, teljes műszaki dokumentációval, amely igazolja a jármű paramétereiben végrehajtott változtatásokat.",
+        "Az elvégzett eljárás eredményeként új adattáblát és komplett új német Briefeket kap, amelyek igazolják a jármű új ÖTM-ét. Ezek alapján a jármű ezután forgalomba helyezhető Lengyelországban vagy bármely más EU-országban.",
+      ],
+      scopeNote: "Nem minden autó jogosult az ÖTM legális megváltoztatására!",
+      getTitle: "Mit kap",
+      getList: [
+        "komplett német Briefek (Teil I és Teil II) az új adattáblával együtt - ÖTM 2490kg",
+      ],
+      verifyTitle: "A jármű ellenőrzése",
+      verifyText: "A szolgáltatás kizárólag azon járművek számára érhető el, amelyek erre műszakilag alkalmasak (minden esetet egyedileg bírálunk el)!",
+      verifyPhotos: "Készítse elő a jármű fényképeit: elöl ferdén, hátul ferdén, vezetőfülke, kilométeróra, csomagtér, adattábla.",
+    },
+    service3500: {
+      tag: "Megengedett össztömeg",
+      title: "ÖTM csökkentése 3500kg-ra",
+      subtitle: "Legálisan - Németországban - új Briefek - új adattábla - teljes műszaki eljárás.",
+      lead: [
+        "A szolgáltatás az Európai Unió egész területén vásárolt járművekre vonatkozik, az országba történő behozataluk előtt!",
+        "Lépésről lépésre végigvezetjük a teljes folyamaton - a jármű ellenőrzésétől, a német technikai intézmények által végzett eljárásokon át, a teljes műszaki dokumentáció elkészítéséig.",
+        "Az elvégzett eljárás eredményeként új adattáblát és komplett új német Briefeket kap a megváltoztatott 3500kg ÖTM-mel.",
+      ],
+      scopeTitle: "Miből áll a szolgáltatás",
+      scopeText: [
+        "Az ÖTM csökkentése pl. 5000kg-ról 3500kg-ra (N1 kat., B kat. jogosítvány) az Európai Unió egész területén vásárolt és Lengyelországban még forgalomba nem helyezett autókhoz!",
+        "Az ÖTM 3500kg-ra változtatása a jármű átfogó előkészítéséből, majd egy német Gépjárműtechnikai Intézethez értékelésre történő benyújtásából áll, amely egyedi műszaki szakvéleményt készít, és elkészíti a jármű paramétereiben végrehajtott változtatásokat igazoló dokumentációt.",
+        "Az elvégzett eljárás eredményeként a tulajdonos komplett új német Briefeket kap (ÖTM 3500kg) az új adattáblával együtt.",
+      ],
+      scopeNote: "Nem minden jármű jogosult az ÖTM legális megváltoztatására - minden esetet egyedileg elemzünk!",
+    },
+    howItWorks: {
+      title: "Hogyan működik az együttműködés?",
+      step1: "Kapcsolatfelvétel", step1Desc: "Hív vagy ír - megbeszéljük az Ön járművét és az ÖTM csökkentésének célját.",
+      step2: "Ellenőrzés", step2Desc: "Ellenőrizzük, hogy a jármű technikailag alkalmas-e az ÖTM változtatására.",
+      step3: "Végrehajtás", step3Desc: "A teljes folyamatot Németországban végezzük - Önnek nem kell odautaznia.",
+      step4: "Átvétel", step4Desc: "Megkapja a járművet az új dokumentációval, készen az átregisztrációra.",
+    },
+    note: { title: "", description: "Az ÖTM 2500 kg-ra csökkentésének ajánlata különösen előnyös 2026. július 1-jétől - a nemzetközi szállításban rugalmasságra váró cégeknek. Minden eset egyedileg kerül ellenőrzésre a jármű műszaki alkalmassága szempontjából." },
+    contact: { title: "Beszéljünk az Ön járművéről", subtitle: "Ingyenes konzultáció - válaszolunk bármilyen kérdésre az ÖTM változtatásával kapcsolatban.", callLabel: "Hívjon", writeLabel: "Írjon" },
+  },
+
+// locale 9
+  zmianaDmc: {
+    seo: {
+      title: "Modificare MTMA vehicul - reducere la 2500 kg sau 3500 kg",
+      description: "Modificare profesională MTMA a vehiculelor în Germania - reducerea masei totale maxime autorizate la 3500 kg sau 2500 kg. Serviciu complet, documentație germană, valabilă în întreaga UE.",
+      keywords: "modificare MTMA la 2500 kg, reducere MTMA la 2500 kg, MTMA 2500 kg",
+    },
+    nav: { home: "Acasă", services: "Servicii", contact: "Contact" },
+    intro: {
+      title: "Modificarea MTMA (masa totală maximă autorizată) la 2500kg (2490kg) și 3500kg",
+      subtitle: "Legal - în Germania - cu o procedură tehnică completă! Te ghidăm prin întregul proces pas cu pas: de la verificarea vehiculului, prin procedurile efectuate de instituțiile tehnice germane, care pregătesc documentația tehnică completă, în urma căreia vei primi o plăcuță de identificare nouă și un set complet de Briefuri germane noi (Teil I și Teil II) cu MTMA modificată. Pe baza lor, vehiculul poate fi apoi admis în circulație în Polonia sau în orice altă țară UE.",
+    },
+    service2500: {
+      tag: "Masa totală maximă autorizată",
+      title: "Reducerea MTMA la 2500kg (2490kg)",
+      subtitle: "Legal - în Germania - Briefuri noi - plăcuță de identificare nouă - procedură tehnică completă!",
+      lead: ["pentru transport internațional ușor / urgent"],
+      scopeTitle: "În ce constă serviciul",
+      scopeText: [
+        "Modificarea MTMA la 2490kg în Germania nu înseamnă „hârtii și schimbare de cifre”!",
+        "Lucrările sunt efectuate de un Institut de Tehnologie Auto german, cu documentație tehnică completă care confirmă modificările aduse parametrilor vehiculului.",
+        "În urma procedurii efectuate vei primi o plăcuță de identificare nouă și un set complet de Briefuri germane noi care confirmă noua MTMA a vehiculului. Pe baza lor, vehiculul poate fi apoi admis în circulație în Polonia sau în orice altă țară UE.",
+      ],
+      scopeNote: "Nu orice automobil se califică pentru o modificare legală a MTMA!",
+      getTitle: "Ce primești",
+      getList: [
+        "set complet de Briefuri germane (Teil I și Teil II) împreună cu o plăcuță de identificare nouă - MTMA 2490kg",
+      ],
+      verifyTitle: "Verificarea vehiculului",
+      verifyText: "Serviciul este disponibil exclusiv pentru vehiculele care se califică tehnic pentru aceasta (fiecare caz este analizat individual)!",
+      verifyPhotos: "Pregătește fotografii ale vehiculului: față din semiprofil, spate din semiprofil, cabina șoferului, kilometraj, compartiment de bagaje, plăcuța de identificare.",
+    },
+    service3500: {
+      tag: "Masa totală maximă autorizată",
+      title: "Reducerea MTMA la 3500kg",
+      subtitle: "Legal - în Germania - Briefuri noi - plăcuță de identificare nouă - procedură tehnică completă.",
+      lead: [
+        "Serviciu destinat vehiculelor achiziționate pe întreg teritoriul Uniunii Europene, înainte de introducerea lor în țară!",
+        "Te ghidăm prin întregul proces pas cu pas - de la verificarea vehiculului, prin procedurile efectuate de instituțiile tehnice germane, până la pregătirea documentației tehnice complete.",
+        "În urma procedurii efectuate vei primi o plăcuță de identificare nouă și un set complet de Briefuri germane noi cu MTMA modificată de 3500kg.",
+      ],
+      scopeTitle: "În ce constă serviciul",
+      scopeText: [
+        "Reducerea MTMA de ex. de la 5000kg la 3500kg (cat. N1, permis cat. B) pentru autoturismele achiziționate pe întreg teritoriul Uniunii Europene și încă neadmise în circulație în Polonia!",
+        "Modificarea MTMA la 3500kg constă în pregătirea completă a vehiculului și apoi prezentarea acestuia pentru evaluare la un Institut de Tehnologie Auto german, care efectuează o expertiză tehnică individuală și pregătește documentația care confirmă modificările aduse parametrilor vehiculului.",
+        "În urma procedurii efectuate proprietarul va primi un set complet de Briefuri germane noi (MTMA 3500kg) împreună cu o plăcuță de identificare nouă.",
+      ],
+      scopeNote: "Nu orice vehicul se califică pentru o modificare legală a MTMA - fiecare caz este analizat individual!",
+    },
+    howItWorks: {
+      title: "Cum decurge colaborarea?",
+      step1: "Contact", step1Desc: "Suni sau scrii - discutăm despre vehiculul tău și scopul reducerii MTMA.",
+      step2: "Verificare", step2Desc: "Verificăm dacă vehiculul se califică tehnic pentru modificarea MTMA.",
+      step3: "Realizare", step3Desc: "Efectuăm întregul proces în Germania - nu trebuie să mergi acolo.",
+      step4: "Primire", step4Desc: "Primești vehiculul cu documentația nouă, gata pentru reînmatriculare.",
+    },
+    note: { title: "", description: "Oferta de reducere a MTMA la 2500 kg este deosebit de avantajoasă de la 1 iulie 2026 - pentru companiile care au nevoie de flexibilitate în transportul internațional. Fiecare caz este verificat individual pentru calificarea tehnică a vehiculului." },
+    contact: { title: "Să vorbim despre vehiculul tău", subtitle: "Consultanță gratuită - vom răspunde la orice întrebare despre modificarea MTMA.", callLabel: "Sună", writeLabel: "Scrie" },
+  },
+
+// locale 10
+  zmianaDmc: {
+    seo: {
+      title: "Transporto priemonės DLM keitimas - mažinimas iki 2500 kg arba 3500 kg",
+      description: "Profesionalus transporto priemonių DLM keitimas Vokietijoje - didžiausios leidžiamosios masės sumažinimas iki 3500 kg arba 2500 kg. Pilnas servisas, vokiška dokumentacija, galiojanti visoje ES.",
+      keywords: "DLM keitimas iki 2500 kg, DLM mažinimas iki 2500 kg, DLM 2500 kg",
+    },
+    nav: { home: "Pagrindinis", services: "Paslaugos", contact: "Kontaktai" },
+    intro: {
+      title: "DLM (didžiausia leidžiamoji masė) keitimas iki 2500kg (2490kg) ir 3500kg",
+      subtitle: "Teisėtai - Vokietijoje - su visa technine procedūra! Vedame jus per visą procesą žingsnis po žingsnio: nuo transporto priemonės patikros, per vokiškų techninių įstaigų atliekamas procedūras, kurios parengia pilną techninę dokumentaciją, dėl ko gausite naują identifikacinę lentelę ir naujų vokiškų Briefų komplektą (Teil I ir Teil II) su pakeista DLM. Jų pagrindu transporto priemonė vėliau gali būti įleista į eismą Lenkijoje arba bet kurioje kitoje ES šalyje.",
+    },
+    service2500: {
+      tag: "Didžiausia leidžiamoji masė",
+      title: "DLM mažinimas iki 2500kg (2490kg)",
+      subtitle: "Teisėtai - Vokietijoje - nauji Briefai - nauja identifikacinė lentelė - visa techninė procedūra!",
+      lead: ["lengviems / skubiems tarptautiniams pervežimams"],
+      scopeTitle: "Ką apima paslauga",
+      scopeText: [
+        "DLM keitimas iki 2490kg Vokietijoje — tai ne „popierius ir skaičių keitimas“!",
+        "Darbus atlieka vokiškas Automobilių technologijos institutas, su pilna technine dokumentacija, patvirtinančia atliktus transporto priemonės parametrų pakeitimus.",
+        "Atliktos procedūros rezultatas — nauja identifikacinė lentelė ir naujų vokiškų Briefų komplektas, patvirtinantis naują transporto priemonės DLM. Jų pagrindu transporto priemonė vėliau gali būti įleista į eismą Lenkijoje arba bet kurioje kitoje ES šalyje.",
+      ],
+      scopeNote: "Ne kiekvienas automobilis kvalifikuojasi teisėtam DLM pakeitimui!",
+      getTitle: "Ką gaunate",
+      getList: [
+        "vokiškų Briefų komplektas (Teil I ir Teil II) kartu su nauja identifikacine lentele - DLM 2490kg",
+      ],
+      verifyTitle: "Transporto priemonės patikra",
+      verifyText: "Paslauga prieinama tik transporto priemonėms, kurios tam techniškai kvalifikuojasi (kiekvienas atvejis nagrinėjamas individualiai)!",
+      verifyPhotos: "Paruoškite transporto priemonės nuotraukas: priekis įstrižai, galas įstrižai, vairuotojo kabina, ridos skaitiklis, bagažo skyrius, identifikacinė lentelė.",
+    },
+    service3500: {
+      tag: "Didžiausia leidžiamoji masė",
+      title: "DLM mažinimas iki 3500kg",
+      subtitle: "Teisėtai - Vokietijoje - nauji Briefai - nauja identifikacinė lentelė - visa techninė procedūra.",
+      lead: [
+        "Paslauga skirta transporto priemonėms, įsigytoms visoje Europos Sąjungoje, prieš jų įvežimą į šalį!",
+        "Vedame jus per visą procesą žingsnis po žingsnio - nuo transporto priemonės patikros, per vokiškų techninių įstaigų atliekamas procedūras, iki pilnos techninės dokumentacijos parengimo.",
+        "Atliktos procedūros rezultatas — nauja identifikacinė lentelė ir naujų vokiškų Briefų komplektas su pakeistu 3500kg DLM.",
+      ],
+      scopeTitle: "Ką apima paslauga",
+      scopeText: [
+        "DLM mažinimas, pvz. nuo 5000kg iki 3500kg (N1 kat., B kat. pažymėjimas) automobiliams, įsigytiems visoje Europos Sąjungoje ir dar neįleistiems į eismą Lenkijoje!",
+        "DLM keitimas iki 3500kg apima kompleksišką transporto priemonės paruošimą, o po to jos pateikimą įvertinti vokiškam Automobilių technologijos institutui, kuris atlieka individualią techninę ekspertizę ir parengia dokumentaciją, patvirtinančią atliktus transporto priemonės parametrų pakeitimus.",
+        "Atliktos procedūros rezultatas — savininkas gaus naujų vokiškų Briefų komplektą (DLM 3500kg) kartu su nauja identifikacine lentele.",
+      ],
+      scopeNote: "Ne kiekviena transporto priemonė kvalifikuojasi teisėtam DLM pakeitimui - kiekvienas atvejis analizuojamas individualiai!",
+    },
+    howItWorks: {
+      title: "Kaip vyksta bendradarbiavimas?",
+      step1: "Kontaktas", step1Desc: "Skambinate ar ra\u0161ote - aptariame j\u016bs\u0173 transporto priemon\u0119 ir DLM ma\u017einimo tiksl\u0105.",
+      step2: "Patikra", step2Desc: "Patikriname, ar transporto priemon\u0117 techni\u0161kai kvalifikuojasi DLM pakeitimui.",
+      step3: "Vykdymas", step3Desc: "Atliekame vis\u0105 proces\u0105 Vokietijoje - jums nereikia ten va\u017eiuoti.",
+      step4: "Atsi\u0117mimas", step4Desc: "Gaunate transporto priemon\u0119 su nauja dokumentacija, paruo\u0161t\u0105 perregistravimui.",
+    },
+    note: { title: "", description: "Pasi\u016blymas suma\u017einti DLM iki 2500 kg yra ypa\u010d naudingas nuo 2026 m. liepos 1 d. - \u012fmon\u0117ms, kurioms reikia lankstumo tarptautiniame transporte. Kiekvienas atvejis yra individualiai tikrinamas d\u0117l transporto priemon\u0117s technin\u0117s kvalifikacijos." },
+    contact: { title: "Pakalb\u0117kime apie j\u016bs\u0173 transporto priemon\u0119", subtitle: "Nemokama konsultacija - atsakysime \u012f bet kokius klausimus apie DLM keitim\u0105.", callLabel: "Skambinti", writeLabel: "Ra\u0161yti" },
+  },
+
+```

@@ -23,9 +23,11 @@ Admin (Markdown editor)  ──save──▶  Express API  ──▶  Postgres
   [`src/lib/content-source.ts`](../src/lib/content-source.ts). A detail/listing
   page is generated **only for languages that have a translation** (pl is the
   authored base + fallback).
-- **Fallback / seed**: when `CONTENT_API` is unset or unreachable (local builds,
-  empty DB), the build falls back to the committed content in `src/content/*`.
-  So a build never breaks, and that content is also the seed (see below).
+- **No committed fallback**: services and guides are DB-only. When `CONTENT_API`
+  is unset or unreachable (local builds with no DB), the build simply produces no
+  service/guide pages — it never breaks. Run a local build against the API (the
+  `astro dev` proxy / `CONTENT_API`) to work with real content; the former
+  committed bodies are archived in [`archived-content.md`](archived-content.md).
 
 ## Data model
 
@@ -61,11 +63,9 @@ service_guides(service_id, guide_id, position)   -- curated, ordered related gui
    psql "$DATABASE_URL" -f migrations/001_dynamic_content.sql
    psql "$DATABASE_URL" -f migrations/002_translations.sql
    ```
-2. **Seed / migrate content** into the translation tables (idempotent; exports a
-   backup to `db_backups/` first):
-   ```bash
-   DB_HOST=… DB_NAME=… DB_USER=… DB_PASSWORD=… npm run seed
-   ```
+2. **Add content** — services and guides are DB-only; create them in the admin
+   (or restore a dump from the `backup` service). The previous committed seed
+   bodies are archived in [`archived-content.md`](archived-content.md).
 3. **Rebuild + redeploy** so the `builder` image exists and the API knows
    `BUILDER_URL`: `docker compose up -d --build`.
 
@@ -84,7 +84,7 @@ service_guides(service_id, guide_id, position)   -- curated, ordered related gui
 
 | Var | Where | Purpose |
 |-----|-------|---------|
-| `CONTENT_API` | builder | API base for build-time fetch (`http://api:3001/api`). Unset elsewhere → committed fallback. |
+| `CONTENT_API` | builder | API base for build-time fetch (`http://api:3001/api`). Unset elsewhere → no service/guide pages (DB-only). |
 | `BUILDER_URL` | api | Builder trigger endpoint (`http://builder:9000/rebuild`). |
 | `SERVE_DIR` | builder | Served volume path it rewrites (`/srv/dist`). |
 
@@ -94,10 +94,10 @@ admin work the same way they do behind Caddy in production.
 
 ## Verifying in your environment
 
-The static/fallback build is verified in CI (`npm run build`). The DB→API→admin
-→rebuild loop needs the running stack:
+The static build is verified in CI (`npm run build`). The DB→API→admin→rebuild
+loop needs the running stack:
 
-1. `docker compose up -d --build`, then run the migrations + seed.
+1. `docker compose up -d --build`, then run the migrations and add content in the admin.
 2. `GET /api/services` and `/api/guides` return rows with a `translations` array
    (and services with `featured` + `related_guides`).
 3. Admin: edit a service (toggle Featured, edit Markdown), Publish, confirm the
