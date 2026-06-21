@@ -1,15 +1,16 @@
 # ---- Stage 1: Build the frontend ----
-FROM node:20-alpine AS frontend-build
+FROM node:22-alpine AS frontend-build
 WORKDIR /app
 COPY package.json bun.lockb ./
 RUN npm install
 COPY astro.config.mjs tsconfig.json tailwind.config.ts postcss.config.js components.json ./
 COPY src/ src/
 COPY public/ public/
+COPY scripts/ scripts/
 RUN npm run build
 
 # ---- Stage 2: Production API server ----
-FROM node:20-alpine AS api
+FROM node:22-alpine AS api
 WORKDIR /app
 
 COPY server/package.json ./
