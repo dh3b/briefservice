@@ -3,8 +3,8 @@
  *
  * When `CONTENT_API` is set (the in-place rebuild builder runs with
  * `CONTENT_API=http://api:3001/api`), content is fetched from the live API and
- * the database is the source of truth. Otherwise — local builds, an
- * empty/unreachable DB — services and guides are empty: everything is DB-only,
+ * the database is the source of truth. Otherwise - local builds, an
+ * empty/unreachable DB - services and guides are empty: everything is DB-only,
  * including the featured `zmiana-dmc` service. The former committed mockup
  * bodies are archived in `docs/archived-content.md`.
  *

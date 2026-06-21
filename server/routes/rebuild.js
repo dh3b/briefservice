@@ -10,7 +10,7 @@ const COOLDOWN_MS = 10_000;
 
 let lastTrigger = 0;
 
-// POST /api/rebuild (admin) — kick off an in-place static rebuild.
+// POST /api/rebuild (admin) - kick off an in-place static rebuild.
 router.post("/", requireAdmin, asyncHandler(async (_req, res) => {
   const now = Date.now();
   if (now - lastTrigger < COOLDOWN_MS) {

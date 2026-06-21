@@ -9,6 +9,7 @@ lerna-debug.log*
 
 google_ads/
 google_search_engine/
+meta_ads/
 
 node_modules
 db_backups

@@ -35,7 +35,7 @@ export interface Translation {
   excerpt: string;
   /** Body content as Markdown (may contain `[guide:slug]` shortcodes). */
   markdown: string;
-  /** Optional Q&A — rendered visibly and emitted as FAQPage JSON-LD. */
+  /** Optional Q&A - rendered visibly and emitted as FAQPage JSON-LD. */
   faq?: Faq[];
   /** Guides only: closing CTA to a service. */
   cta?: GuideCta;
@@ -66,6 +66,6 @@ export interface GuideEntry {
 
 /** A translation resolved for a requested language (fallback applied). */
 export interface ResolvedTranslation extends Translation {
-  /** Language actually used — may differ from the request after fallback. */
+  /** Language actually used - may differ from the request after fallback. */
   resolvedLang: Language;
 }

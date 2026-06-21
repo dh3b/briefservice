@@ -122,13 +122,13 @@ const faqHeading = t.ui.faqHeading;
 
       {
         faq.length > 0 && (
-          <section class="mt-14">
+          <section class="mt-16">
             <h2 class="font-display text-2xl font-extrabold text-ink">{faqHeading}</h2>
-            <div class="mt-5 space-y-5">
+            <div class="mt-6 divide-y divide-border border-t border-border">
               {faq.map((f) => (
-                <div>
+                <div class="py-5">
                   <h3 class="font-semibold text-ink">{f.q}</h3>
-                  <p class="mt-1 leading-relaxed text-ink/75">{f.a}</p>
+                  <p class="mt-1.5 leading-relaxed text-ink/75">{f.a}</p>
                 </div>
               ))}
             </div>

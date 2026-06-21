@@ -55,7 +55,7 @@ export function slug(val) {
 /**
  * Validate the per-language rich `content` JSONB for services/guides.
  * Accepts a plain object keyed by language; rejects anything that serializes
- * beyond `maxBytes`. Deep field validation is intentionally light — the route
+ * beyond `maxBytes`. Deep field validation is intentionally light - the route
  * is admin-only.
  */
 export function contentJson(val, maxBytes = 200_000) {

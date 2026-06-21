@@ -19,7 +19,7 @@ function walk(dir) {
 }
 
 const files = walk(DIST);
-if (files.length === 0) errors.push("No HTML files found in dist/ — did the build run?");
+if (files.length === 0) errors.push("No HTML files found in dist/ - did the build run?");
 
 const byLang = {};
 for (const f of files) {
@@ -61,4 +61,4 @@ if (errors.length) {
   for (const e of errors) console.error("  - " + e);
   process.exit(1);
 }
-console.log(`[verify-build] OK — ${files.length} HTML files: non-empty titles + bodies, per-language titles unique.`);
+console.log(`[verify-build] OK - ${files.length} HTML files: non-empty titles + bodies, per-language titles unique.`);

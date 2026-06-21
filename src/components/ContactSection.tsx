@@ -14,7 +14,7 @@ const ContactSection = () => {
   const [shown, setShown] = useState(false);
   const cooldownUntilRef = useRef<number>(0);
 
-  // React-owned reveal (see ServicesSection) — survives hydration.
+  // React-owned reveal (see ServicesSection) - survives hydration.
   useEffect(() => {
     const id = requestAnimationFrame(() => setShown(true));
     return () => cancelAnimationFrame(id);
@@ -56,7 +56,7 @@ const ContactSection = () => {
     <section id="contact" className="section">
       <div className="container-editorial">
         <div className={`max-w-2xl ${rv}`}>
-          <p className="eyebrow">{t.contact.phone ? t.contact.title : "Contact"}</p>
+          <p className="eyebrow">{t.nav.contact}</p>
           <h2 className="mt-3 text-[clamp(2.2rem,4.5vw,3.5rem)] text-ink">{t.contact.title}</h2>
           <p className="mt-4 text-[15px] leading-relaxed text-muted-foreground">{t.contact.subtitle}</p>
         </div>

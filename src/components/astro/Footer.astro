@@ -2,6 +2,7 @@
 import { translations } from "@/i18n/translations";
 import type { Language } from "@/types";
 import { getServices, getGuides } from "@/lib/content-source";
+import BrandLogo from "@/components/astro/BrandLogo.astro";
 
 interface Props {
   lang: Language;
@@ -18,47 +19,48 @@ const hasServices = services.some((s) => s.translations[lang]);
 const hasGuides = guides.some((g) => g.translations[lang]);
 ---
 
-<footer class="panel-dark">
-  <div class="container-editorial py-16">
-    <div class="grid gap-10 md:grid-cols-[1.3fr_1fr_1fr]">
+<footer class="panel-dark relative overflow-hidden">
+  <!-- faint warm glow anchoring the dark panel -->
+  <div class="pointer-events-none absolute -left-24 -top-24 h-72 w-72 rounded-full bg-terracotta/10 blur-3xl"></div>
+
+  <div class="container-editorial relative py-16 md:py-20">
+    <div class="grid gap-x-10 gap-y-12 md:grid-cols-[1.5fr_1fr_1fr]">
+      <!-- Brand -->
       <div class="max-w-sm">
-        <div class="flex items-center gap-2.5">
-          <span class="grid h-9 w-9 place-items-center rounded-[11px] bg-terracotta text-paper">
-            <svg viewBox="0 0 24 24" class="h-[18px] w-[18px]" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M7 3.5h7l4 4V20a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V4.5a1 1 0 0 1 1-1Z" />
-              <path d="M13.5 3.5V8h4.5" />
-            </svg>
-          </span>
-          <span class="font-display text-lg font-extrabold tracking-tight">briefservice</span>
-        </div>
-        <p class="mt-4 text-sm leading-relaxed text-paper/55">{t.footer.description}</p>
+        <a href={`/${lang}`} class="flex h-9 items-center gap-2.5" aria-label="brief-service">
+          <BrandLogo class="h-9 w-auto text-paper" title={null} />
+          <span class="font-display text-lg font-extrabold tracking-tight">brief<span class="text-terracotta">service</span></span>
+        </a>
+        <p class="mt-6 text-sm leading-relaxed text-paper/55">{t.footer.description}</p>
       </div>
 
-      <div>
-        <p class="eyebrow text-paper/45">{t.ui.contactHeading}</p>
-        <ul class="mt-4 space-y-2.5 text-sm text-paper/70">
-          <li><a href="tel:+48696513109" class="hover:text-paper transition-colors">+48 696 513 109</a></li>
-          <li><a href="mailto:audicarforme@op.pl" class="hover:text-paper transition-colors">audicarforme@op.pl</a></li>
+      <!-- Contact -->
+      <nav aria-label={t.ui.contactHeading}>
+        <p class="flex h-9 items-center eyebrow text-paper/45">{t.ui.contactHeading}</p>
+        <ul class="mt-6 space-y-3 text-sm text-paper/70">
+          <li><a href="tel:+48696513109" class="transition-colors hover:text-terracotta">+48 696 513 109</a></li>
+          <li><a href="mailto:audicarforme@op.pl" class="transition-colors hover:text-terracotta">audicarforme@op.pl</a></li>
           <li class="text-paper/50">ul. Sosnowa 10/7, 68-100 Żagań</li>
         </ul>
-      </div>
+      </nav>
 
-      <div>
-        <p class="eyebrow text-paper/45">{t.ui.siteHeading}</p>
-        <ul class="mt-4 space-y-2.5 text-sm text-paper/70">
-          <li><a href={`/${lang}`} class="hover:text-paper transition-colors">{t.nav.home}</a></li>
-          {hasServices && <li><a href={`/${lang}/services`} class="hover:text-paper transition-colors">{t.servicesPage.title}</a></li>}
-          {hasGuides && <li><a href={`/${lang}/guides`} class="hover:text-paper transition-colors">{t.guidesPage.title}</a></li>}
+      <!-- Site -->
+      <nav aria-label={t.ui.siteHeading}>
+        <p class="flex h-9 items-center eyebrow text-paper/45">{t.ui.siteHeading}</p>
+        <ul class="mt-6 space-y-3 text-sm text-paper/70">
+          <li><a href={`/${lang}`} class="transition-colors hover:text-terracotta">{t.nav.home}</a></li>
+          {hasServices && <li><a href={`/${lang}/services`} class="transition-colors hover:text-terracotta">{t.servicesPage.title}</a></li>}
+          {hasGuides && <li><a href={`/${lang}/guides`} class="transition-colors hover:text-terracotta">{t.guidesPage.title}</a></li>}
           <li>
-            <a href={`/${lang}/privacy-policy`} class="hover:text-paper transition-colors">{t.footer.cookieNotice.linkText}</a>
+            <a href={`/${lang}/privacy-policy`} class="transition-colors hover:text-terracotta">{t.footer.cookieNotice.linkText}</a>
           </li>
         </ul>
-      </div>
+      </nav>
     </div>
 
-    <div class="mt-14 flex flex-col gap-3 border-t border-paper/12 pt-6 text-xs text-paper/45 sm:flex-row sm:items-center sm:justify-between">
+    <div class="mt-16 flex flex-col gap-3 border-t border-paper/12 pt-6 text-xs text-paper/45 sm:flex-row sm:items-center sm:justify-between">
       <p>© {year} BriefService. {t.footer.rights}</p>
-      <p>{t.ui.privateNotice}</p>
+      <p class="sm:pr-20">{t.ui.privateNotice}</p>
     </div>
   </div>
 </footer>

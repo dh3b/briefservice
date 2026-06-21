@@ -19,6 +19,7 @@
     --terracotta: 14 56% 49%;   /* warm clay accent */
     --terracotta-deep: 14 58% 41%;
     --clay-tint: 18 48% 92%;    /* faint terracotta wash */
+    --gold: 40 47% 51%;         /* brand gold (#BD9648) - used only in the logo crown */
 
     /* shadcn / component tokens mapped onto the palette */
     --background: var(--linen);
@@ -98,20 +99,31 @@
   }
 
   .btn-primary {
-    @apply inline-flex items-center justify-center gap-2 rounded-full bg-primary px-7 py-3.5 text-sm font-semibold text-primary-foreground transition-all;
+    @apply inline-flex items-center justify-center gap-2 rounded-full bg-primary px-7 py-3.5 text-sm font-semibold text-primary-foreground;
+    transition: transform 0.2s cubic-bezier(0.22, 1, 0.36, 1), background-color 0.2s ease, box-shadow 0.2s ease;
     box-shadow: 0 10px 24px -12px hsl(var(--terracotta) / 0.7);
   }
   .btn-primary:hover {
     background: hsl(var(--terracotta-deep));
-    transform: translateY(-1px);
+    transform: translateY(-2px);
+    box-shadow: 0 16px 30px -12px hsl(var(--terracotta) / 0.85);
+  }
+  .btn-primary:active {
+    transform: translateY(0) scale(0.985);
+    box-shadow: 0 6px 16px -12px hsl(var(--terracotta) / 0.7);
   }
 
   .btn-secondary {
-    @apply inline-flex items-center justify-center gap-2 rounded-full border border-foreground/85 bg-card px-7 py-3.5 text-sm font-semibold text-foreground transition-all;
+    @apply inline-flex items-center justify-center gap-2 rounded-full border border-foreground/85 bg-card px-7 py-3.5 text-sm font-semibold text-foreground;
+    transition: transform 0.2s cubic-bezier(0.22, 1, 0.36, 1), background-color 0.2s ease, color 0.2s ease;
   }
   .btn-secondary:hover {
     background: hsl(var(--ink));
     color: hsl(var(--paper));
+    transform: translateY(-2px);
+  }
+  .btn-secondary:active {
+    transform: translateY(0) scale(0.985);
   }
 
   .card-surface {
@@ -184,12 +196,16 @@
   }
   .text-terracotta { color: hsl(var(--terracotta)); }
 
-  /* Calm scroll reveal — opt in with data-reveal. Gated on `.js` so content
-     stays visible when JavaScript is unavailable (crawlers, no-JS). */
+  /* Calm scroll reveal - opt in with data-reveal. Gated on `.js` so content
+     stays visible when JavaScript is unavailable (crawlers, no-JS).
+     The curve (easeOutExpo-like) gives a deliberate, settled arrival rather
+     than a generic linear/ease-out slide. Stagger groups with --reveal-delay. */
   .js [data-reveal] {
     opacity: 0;
-    transform: translateY(18px);
-    transition: opacity 0.45s ease-out, transform 0.45s ease-out;
+    transform: translateY(22px);
+    transition:
+      opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1),
+      transform 0.8s cubic-bezier(0.22, 1, 0.36, 1);
     transition-delay: var(--reveal-delay, 0ms);
     will-change: opacity, transform;
   }
@@ -203,18 +219,33 @@
      global [data-reveal] observer doesn't double-handle island DOM. */
   .js .reveal-up {
     opacity: 0;
-    transform: translateY(18px);
-    transition: opacity 0.45s ease-out, transform 0.45s ease-out;
+    transform: translateY(22px);
+    transition:
+      opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1),
+      transform 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+    transition-delay: var(--reveal-delay, 0ms);
     will-change: opacity, transform;
   }
   .js .reveal-up.in {
     opacity: 1;
     transform: none;
   }
+
+  /* Hero cards: a one-time settle-in on load. Opacity-only so it never fights
+     the JS parallax (which owns `transform`). Honors reduced-motion below. */
+  .js .hero-card {
+    opacity: 0;
+    animation: hero-card-in 0.9s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+    animation-delay: var(--card-delay, 0ms);
+  }
+  @keyframes hero-card-in {
+    to { opacity: 1; }
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   [data-reveal], .reveal-up { opacity: 1 !important; transform: none !important; transition: none; }
-  [data-parallax] { transform: none !important; }
+  [data-parallax] { --py: 0px !important; }
+  .hero-card { opacity: 1 !important; animation: none !important; }
 }

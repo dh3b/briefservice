@@ -111,7 +111,7 @@ router.get("/", asyncHandler(async (_req, res) => {
   res.json(await listGuides());
 }));
 
-// GET /api/guides/:id — by id or slug
+// GET /api/guides/:id - by id or slug
 router.get("/:id", asyncHandler(async (req, res) => {
   const all = await listGuides();
   const found = all.find((g) => g.id === req.params.id || g.slug === req.params.id);

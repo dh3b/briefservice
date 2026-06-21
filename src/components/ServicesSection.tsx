@@ -4,7 +4,7 @@ import { ServiceRow, Service, CategoryRow, localizeService, localizeCategory } f
 import { fetchServices, fetchCategories } from "@/api";
 import ServiceCard from "./ServiceCard";
 import FeaturedServiceCard from "./FeaturedServiceCard";
-import { X } from "lucide-react";
+import { X, MessageCircle } from "lucide-react";
 import { getCategoryName } from "@/lib/localize";
 
 interface ServicesSectionProps {
@@ -68,7 +68,7 @@ const ServicesSection = ({ onChatAbout }: ServicesSectionProps) => {
     <section id="services" className="section bg-cream">
       <div className="container-editorial">
         <div className={`max-w-2xl ${rv}`}>
-          <p className="eyebrow">{language === "pl" ? "Usługi" : "Services"}</p>
+          <p className="eyebrow">{t.nav.services}</p>
           <h2 className="mt-3 text-[clamp(2.2rem,4.5vw,3.5rem)] text-ink">{t.services.title}</h2>
           <p className="mt-4 text-[15px] leading-relaxed text-muted-foreground">{t.services.subtitle}</p>
         </div>
@@ -117,6 +117,19 @@ const ServicesSection = ({ onChatAbout }: ServicesSectionProps) => {
                 </button>
               </div>
             </div>
+          </div>
+        ) : filtered.length === 0 ? (
+          <div className={`mt-12 flex flex-col items-center gap-5 rounded-2xl border border-dashed border-border bg-paper/50 px-6 py-16 text-center ${rv}`}>
+            <span className="grid h-12 w-12 place-items-center rounded-full bg-terracotta/12 text-terracotta">
+              <MessageCircle className="h-6 w-6" />
+            </span>
+            <div className="max-w-sm">
+              <h3 className="font-display text-xl font-extrabold text-ink">{t.ui.servicesEmptyTitle}</h3>
+              <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{t.ui.servicesEmptyBody}</p>
+            </div>
+            <a href="#contact" className="btn-primary">
+              {t.contact.title}
+            </a>
           </div>
         ) : (
           <div className={`mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3 ${rv}`}>

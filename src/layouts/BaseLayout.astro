@@ -148,7 +148,10 @@ const schemas = [organizationSchema(), ...pageSchemas];
               const speed = parseFloat(el.dataset.parallax || "0.04");
               const rect = el.getBoundingClientRect();
               const shift = (rect.top + rect.height / 2 - vh / 2) * -speed;
-              el.style.transform = `translate3d(0, ${shift.toFixed(1)}px, 0)`;
+              // Drive a CSS var the element composes into its own transform, so
+              // each card keeps its static rotation/centering (which it can't if
+              // we overwrite `transform` outright).
+              el.style.setProperty("--py", `${shift.toFixed(1)}px`);
             }
             ticking = false;
           };

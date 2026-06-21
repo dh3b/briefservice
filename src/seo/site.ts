@@ -3,7 +3,7 @@
  * primitives derived from it: canonical URLs, hreflang alternates, JSON-LD
  * builders, and the sitemap.
  *
- * Pure data + functions (no browser globals), so it can be imported anywhere —
+ * Pure data + functions (no browser globals), so it can be imported anywhere -
  * Astro layouts, the sitemap endpoint, and unit tests.
  */
 

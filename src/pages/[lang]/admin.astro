@@ -10,6 +10,6 @@ export function getStaticPaths() {
 const lang = Astro.params.lang as Language;
 ---
 
-<BaseLayout lang={lang} title="Admin — BriefService" description="BriefService administration panel." path="admin" noindex>
+<BaseLayout lang={lang} title="Admin - BriefService" description="BriefService administration panel." path="admin" noindex>
   <AdminIsland lang={lang} client:only="react" />
 </BaseLayout>

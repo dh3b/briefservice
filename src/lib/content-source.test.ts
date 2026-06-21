@@ -45,7 +45,7 @@ describe("language helpers", () => {
   });
 });
 
-describe("build source (no CONTENT_API — everything is DB-only)", () => {
+describe("build source (no CONTENT_API - everything is DB-only)", () => {
   it("returns no services without a database", async () => {
     expect(await getServices()).toEqual([]);
   });

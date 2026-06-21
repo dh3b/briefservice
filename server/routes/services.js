@@ -129,12 +129,12 @@ function serviceRow(body) {
   };
 }
 
-// GET /api/services — list with translations + related guides
+// GET /api/services - list with translations + related guides
 router.get("/", asyncHandler(async (_req, res) => {
   res.json(await listServices());
 }));
 
-// GET /api/services/:id — single by id or slug (admin)
+// GET /api/services/:id - single by id or slug (admin)
 router.get("/:id", asyncHandler(async (req, res) => {
   const all = await listServices();
   const found = all.find((s) => s.id === req.params.id || s.slug === req.params.id);

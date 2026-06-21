@@ -127,13 +127,13 @@ const relatedHeading = t.ui.relatedGuides;
 
       {
         faq.length > 0 && (
-          <section class="mt-14">
+          <section class="mt-16">
             <h2 class="font-display text-2xl font-extrabold text-ink">{faqHeading}</h2>
-            <div class="mt-5 space-y-5">
+            <div class="mt-6 divide-y divide-border border-t border-border">
               {faq.map((f) => (
-                <div>
+                <div class="py-5">
                   <h3 class="font-semibold text-ink">{f.q}</h3>
-                  <p class="mt-1 leading-relaxed text-ink/75">{f.a}</p>
+                  <p class="mt-1.5 leading-relaxed text-ink/75">{f.a}</p>
                 </div>
               ))}
             </div>
@@ -143,17 +143,19 @@ const relatedHeading = t.ui.relatedGuides;
 
       {
         related.length > 0 && (
-          <section class="mt-14">
-            <h2 class="font-display text-xl font-extrabold text-ink">{relatedHeading}</h2>
-            <ul class="mt-4 space-y-2">
+          <section class="mt-16">
+            <h2 class="font-display text-2xl font-extrabold text-ink">{relatedHeading}</h2>
+            <div class="mt-6 space-y-3">
               {related.map((g) => (
-                <li>
-                  <a href={g.href} class="text-terracotta underline underline-offset-2 hover:text-terracotta-deep">
-                    {g.title}
-                  </a>
-                </li>
+                <a
+                  href={g.href}
+                  class="group flex items-center justify-between gap-4 rounded-xl border border-border bg-paper px-5 py-4 transition-all duration-300 hover:-translate-y-0.5 hover:border-terracotta/40 hover:shadow-float"
+                >
+                  <span class="font-semibold text-ink transition-colors group-hover:text-terracotta">{g.title}</span>
+                  <svg class="h-4 w-4 shrink-0 text-terracotta transition-transform group-hover:translate-x-1" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14" /><path d="m12 5 7 7-7 7" /></svg>
+                </a>
               ))}
-            </ul>
+            </div>
           </section>
         )
       }

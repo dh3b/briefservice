@@ -1,5 +1,6 @@
 ---
 import { SUPPORTED_LANGUAGES, LANGUAGE_LABELS, LANGUAGE_FLAGS, type Language } from "@/types";
+import BrandLogo from "@/components/astro/BrandLogo.astro";
 
 interface Props {
   lang: Language;
@@ -19,15 +20,9 @@ const { lang, langSuffix = "", availableLangs = SUPPORTED_LANGUAGES, navLinks } 
 
 <header data-nav class="sticky top-0 z-50 transition-colors duration-300">
   <div class="container-editorial flex h-[72px] items-center justify-between gap-6">
-    <!-- Logo mark + wordmark -->
-    <a href={`/${lang}`} class="flex items-center gap-2.5 shrink-0" aria-label="BriefService">
-      <span class="grid h-9 w-9 place-items-center rounded-[11px] bg-ink text-paper">
-        <svg viewBox="0 0 24 24" class="h-[18px] w-[18px]" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M7 3.5h7l4 4V20a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V4.5a1 1 0 0 1 1-1Z" />
-          <path d="M13.5 3.5V8h4.5" />
-          <circle cx="12" cy="14.5" r="2.4" class="text-terracotta" stroke="hsl(var(--terracotta))" />
-        </svg>
-      </span>
+    <!-- Logo mark (real brand: crowned car) + wordmark -->
+    <a href={`/${lang}`} class="group flex items-center gap-2.5 shrink-0" aria-label="brief-service">
+      <BrandLogo class="h-[34px] w-auto text-ink transition-transform duration-300 ease-out group-hover:-translate-y-0.5" title={null} />
       <span class="font-display text-[1.15rem] font-extrabold tracking-tight text-ink">brief<span class="text-terracotta">service</span></span>
     </a>
 
@@ -48,10 +43,11 @@ const { lang, langSuffix = "", availableLangs = SUPPORTED_LANGUAGES, navLinks } 
         <button
           data-lang-toggle
           aria-haspopup="true"
-          class="flex items-center gap-2 rounded-full bg-ink px-3.5 py-2 text-sm font-medium text-paper transition-transform hover:-translate-y-px"
+          aria-label={LANGUAGE_LABELS[lang]}
+          class="flex items-center gap-2 rounded-full bg-ink px-3.5 py-2 text-paper transition-transform hover:-translate-y-px"
         >
-          <span>{LANGUAGE_FLAGS[lang]}</span>
-          <span class="uppercase tracking-wide text-xs font-semibold">{lang}</span>
+          <svg class="h-4 w-4 opacity-90" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9" /><path d="M3 12h18" /><path d="M12 3a14 14 0 0 1 0 18 14 14 0 0 1 0-18Z" /></svg>
+          <span class="text-xs font-semibold uppercase tracking-wide">{lang}</span>
           <svg class="h-3.5 w-3.5 opacity-70" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6" /></svg>
         </button>
         <div data-lang-menu class="hidden absolute right-0 top-full mt-2 w-52 overflow-hidden rounded-2xl border border-border bg-paper p-1.5 shadow-float">
@@ -109,7 +105,7 @@ const { lang, langSuffix = "", availableLangs = SUPPORTED_LANGUAGES, navLinks } 
     }
   });
 
-  // Faint backdrop once scrolled — sticky but blends at the top.
+  // Faint backdrop once scrolled - sticky but blends at the top.
   const onScroll = () => {
     if (!header) return;
     if (window.scrollY > 12) {
