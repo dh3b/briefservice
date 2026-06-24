@@ -37,9 +37,25 @@ services:
       CONTACT_EMAIL: ${CONTACT_EMAIL:-}
       API_SENDER_EMAIL: ${API_SENDER_EMAIL:-}
       LT_TRANSLATE_API_KEY: ${LT_TRANSLATE_API_KEY:-}
+      BUILDER_URL: ${BUILDER_URL:-http://builder:9000/rebuild}
     volumes:
       - uploads:/app/uploads
       - frontend:/app/dist:ro   # built frontend, shared with Caddy
+
+  # builder: rebuilds the static frontend in place when the admin clicks Publish
+  builder:
+    build:
+      context: .
+      dockerfile: builder/Dockerfile
+    restart: unless-stopped
+    depends_on:
+      - api
+    environment:
+      # Build-time data source: read services/guides from the live API.
+      CONTENT_API: http://api:3001/api
+      SERVE_DIR: /srv/dist
+    volumes:
+      - frontend:/srv/dist   # read-write: writes the served static files
 
   # caddy (also frontend obv)
   caddy:

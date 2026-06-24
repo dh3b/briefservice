@@ -109,13 +109,13 @@ const ChatPanel = () => {
                         <input value={titleInput} onChange={(e) => setTitleInput(e.target.value)}
                           className="flex-1 px-2 py-1 text-sm rounded bg-secondary text-foreground outline-none"
                           onKeyDown={(e) => e.key === "Enter" && handleSaveTitle(chat.id)} />
-                        <button onClick={() => handleSaveTitle(chat.id)} className="p-1 text-accent-foreground"><Check className="w-3.5 h-3.5" /></button>
+                        <button onClick={() => handleSaveTitle(chat.id)} className="p-1 text-terracotta"><Check className="w-3.5 h-3.5" /></button>
                         <button onClick={() => setEditingTitle(null)} className="p-1 text-muted-foreground"><X className="w-3.5 h-3.5" /></button>
                       </div>
                     ) : (
                       <p className="text-sm font-medium text-foreground truncate">{getChatDisplayTitle(chat)}</p>
                     )}
-                    {chat.service_ref && <p className="text-[11px] text-accent-foreground/70 truncate">📦 {chat.service_ref}</p>}
+                    {chat.service_ref && <p className="text-[11px] text-terracotta/70 truncate">📦 {chat.service_ref}</p>}
                     <p className="text-xs text-muted-foreground truncate">{chat.last_message || "..."}</p>
                   </div>
                   <div className="flex gap-1 flex-shrink-0">
@@ -133,7 +133,7 @@ const ChatPanel = () => {
 
       <div className="bg-card rounded-xl border border-border flex flex-col h-[500px]">
         {!selectedChat || !selectedChatObj ? (
-          <div className="flex-1 flex items-center justify-center text-muted-foreground text-sm">Select a chat</div>
+          <div className="flex-1 flex items-center justify-center text-muted-foreground text-sm">{t.adminUI.selectChat}</div>
         ) : (
           <>
             {/* Title bar */}
@@ -161,7 +161,7 @@ const ChatPanel = () => {
                 <button
                   onClick={handleTranslate}
                   disabled={translating}
-                  className="w-full flex items-center justify-center gap-2 py-2 text-xs font-bold text-accent-foreground hover:underline disabled:opacity-50 transition-opacity"
+                  className="w-full flex items-center justify-center gap-2 py-2 text-xs font-bold text-terracotta hover:underline disabled:opacity-50 transition-opacity"
                 >
                   <Languages className="w-3.5 h-3.5" />
                   {translating ? "..." : translated ? t.chat.showOriginal : t.chat.translateAll}
@@ -172,7 +172,7 @@ const ChatPanel = () => {
             <div className="border-t border-border p-3 flex gap-2">
               <input type="text" value={replyInput} onChange={(e) => setReplyInput(e.target.value.slice(0, MAX_MESSAGE_LEN))}
                 onKeyDown={(e) => e.key === "Enter" && handleReply()}
-                placeholder="Reply..." className="flex-1 px-4 py-2.5 rounded-xl bg-secondary text-foreground placeholder:text-muted-foreground text-sm outline-none focus:ring-2 focus:ring-ring" />
+                placeholder={t.adminUI.replyPlaceholder} className="flex-1 px-4 py-2.5 rounded-xl bg-secondary text-foreground placeholder:text-muted-foreground text-sm outline-none focus:ring-2 focus:ring-ring" />
               <button onClick={handleReply} className="w-10 h-10 rounded-xl bg-primary flex items-center justify-center text-primary-foreground">
                 <Send className="w-4 h-4" />
               </button>

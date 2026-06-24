@@ -9,14 +9,20 @@ lerna-debug.log*
 
 google_ads/
 google_search_engine/
+meta_ads/
 
 node_modules
 db_backups
 uploads
 dist
 dist-ssr
+.astro
 *.local
 .env
+
+# Raw DB dumps / backups (contain PII: chat emails, admin hashes)
+*_backup.sql
+briefservice_backup.sql
 
 # Editor directories and files
 .vscode/*

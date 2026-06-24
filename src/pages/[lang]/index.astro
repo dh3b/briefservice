@@ -1,0 +1,58 @@
+---
+import { translations } from "@/i18n/translations";
+import { SUPPORTED_LANGUAGES, type Language } from "@/types";
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import Navbar from "@/components/astro/Navbar.astro";
+import Hero from "@/components/astro/Hero.astro";
+import Footer from "@/components/astro/Footer.astro";
+import ServicesIsland from "@/islands/ServicesIsland";
+import ContactIsland from "@/islands/ContactIsland";
+import ChatIsland from "@/islands/ChatIsland";
+
+export function getStaticPaths() {
+  return SUPPORTED_LANGUAGES.map((lang) => ({ params: { lang } }));
+}
+
+const lang = Astro.params.lang as Language;
+const t = translations[lang];
+
+const navLinks = [
+  { label: t.nav.home, href: "#hero" },
+  { label: t.nav.services, href: "#services" },
+  { label: t.nav.contact, href: "#contact" },
+];
+
+const assurances = t.home.assurances;
+---
+
+<BaseLayout lang={lang} title={t.seo.title} description={t.seo.description} path="">
+  <Navbar lang={lang} navLinks={navLinks} />
+
+  <main id="hero">
+    <Hero lang={lang} />
+
+    <!-- Assurances / trust bar -->
+    <section class="border-y border-border bg-cream/50">
+      <div class="container-editorial grid gap-y-6 sm:grid-cols-2 sm:gap-x-10 lg:grid-cols-4 lg:gap-x-0 lg:gap-y-0 lg:divide-x lg:divide-border/70">
+        {
+          assurances.map((a, i) => (
+            <div
+              data-reveal
+              style={`--reveal-delay: ${i * 90}ms`}
+              class="flex items-start gap-4 py-4 sm:py-7 lg:px-7 lg:py-9 lg:first:pl-0 lg:last:pr-0"
+            >
+              <span class="font-mono text-base font-medium leading-none text-terracotta">{a.k}</span>
+              <span class="text-[15px] leading-snug text-ink/80">{a.v}</span>
+            </div>
+          ))
+        }
+      </div>
+    </section>
+
+    <ServicesIsland lang={lang} client:visible />
+    <ContactIsland lang={lang} client:visible />
+  </main>
+
+  <Footer lang={lang} />
+  <ChatIsland lang={lang} client:idle />
+</BaseLayout>

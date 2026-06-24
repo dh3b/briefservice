@@ -1,0 +1,34 @@
+---
+import { translations } from "@/i18n/translations";
+import { FALLBACK_LANGUAGE } from "@/config";
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import BrandLogo from "@/components/astro/BrandLogo.astro";
+
+const lang = FALLBACK_LANGUAGE;
+const t = translations[lang];
+---
+
+<BaseLayout lang={lang} title={`404 - ${t.notFound.title}`} description={t.notFound.title} path="" noindex>
+  <main class="relative flex min-h-[100dvh] flex-col items-center justify-center overflow-hidden px-6 py-20 text-center">
+    <!-- warm ambient glow -->
+    <div class="pointer-events-none absolute left-1/2 top-1/3 h-[28rem] w-[28rem] -translate-x-1/2 rounded-full bg-terracotta/10 blur-3xl"></div>
+
+    <a href={`/${lang}`} class="relative flex items-center gap-2.5" aria-label="brief-service">
+      <BrandLogo class="h-9 w-auto text-ink" title={null} />
+      <span class="font-display text-lg font-extrabold tracking-tight text-ink">brief<span class="text-terracotta">service</span></span>
+    </a>
+
+    <p class="eyebrow relative mt-12">{t.ui.notFoundEyebrow}</p>
+    <h1 class="relative mt-3 text-[clamp(5rem,20vw,12rem)] font-black leading-none text-ink">404</h1>
+    <p class="relative mt-1 font-serif text-[clamp(1.3rem,3vw,2rem)] italic text-terracotta">{t.notFound.title}</p>
+    <p class="relative mt-5 max-w-md text-[15px] leading-relaxed text-muted-foreground">{t.ui.notFoundHelp}</p>
+
+    <div class="relative mt-9 flex flex-wrap items-center justify-center gap-3">
+      <a href={`/${lang}`} class="btn-primary">
+        {t.notFound.goHome}
+        <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6" /></svg>
+      </a>
+      <a href="tel:+48696513109" class="btn-secondary">+48 696 513 109</a>
+    </div>
+  </main>
+</BaseLayout>

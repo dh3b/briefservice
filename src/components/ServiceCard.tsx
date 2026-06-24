@@ -1,6 +1,6 @@
 import { Service } from "@/types";
 import { useLanguage } from "@/i18n/LanguageContext";
-import { MessageCircle, Eye } from "lucide-react";
+import { MessageCircle, ArrowUpRight } from "lucide-react";
 
 interface ServiceCardProps {
   service: Service;
@@ -15,40 +15,36 @@ const ServiceCard = ({ service, categoryName, onChatAbout, onDetails }: ServiceC
   return (
     <div
       onClick={() => onDetails(service.id)}
-      className="group bg-card rounded-xl border border-border shadow-card hover:shadow-card-hover transition-all duration-300 overflow-hidden hover:-translate-y-1 cursor-pointer"
+      className="group flex cursor-pointer flex-col overflow-hidden rounded-2xl border border-border bg-paper transition-all duration-300 hover:-translate-y-1 hover:shadow-float"
     >
-      <div className="aspect-[16/10] overflow-hidden">
-        <img
-          src={service.image_url}
-          alt={service.title}
-          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-        />
-      </div>
-      <div className="p-6">
-        {categoryName && (
-          <span className="inline-block px-3 py-1 text-xs font-medium rounded-full bg-accent/20 text-accent-foreground mb-3">
-            {categoryName}
-          </span>
-        )}
-        <h3 className="font-display text-xl font-bold text-card-foreground mb-2">{service.title}</h3>
-        <p className="text-sm text-muted-foreground mb-4 line-clamp-2">{service.description}</p>
-        <div className="flex items-center justify-end gap-2">
-          <div className="flex gap-2">
-            <button
-              onClick={(e) => { e.stopPropagation(); onDetails(service.id); }}
-              className="inline-flex items-center gap-1.5 px-3 py-2 rounded-lg bg-secondary text-secondary-foreground text-xs font-medium hover:bg-muted transition-colors"
-            >
-              <Eye className="w-3.5 h-3.5" />
-              {t.services.details}
-            </button>
-            <button
-              onClick={(e) => { e.stopPropagation(); onChatAbout(service.id, service.title); }}
-              className="inline-flex items-center gap-1.5 px-3 py-2 rounded-lg bg-primary text-primary-foreground text-xs font-medium hover:bg-navy-light transition-colors"
-            >
-              <MessageCircle className="w-3.5 h-3.5" />
-              {t.services.chatAbout}
-            </button>
-          </div>
+      {service.image_url && (
+        <div className="aspect-[16/10] overflow-hidden">
+          <img
+            src={service.image_url}
+            alt={service.title}
+            className="h-full w-full object-cover transition-transform duration-[600ms] group-hover:scale-[1.04]"
+          />
+        </div>
+      )}
+      <div className="flex flex-1 flex-col p-6">
+        {categoryName && <p className="eyebrow mb-2">{categoryName}</p>}
+        <h3 className="font-display text-xl font-extrabold leading-snug text-ink transition-colors group-hover:text-terracotta">{service.title}</h3>
+        <p className="mt-2 line-clamp-3 text-sm leading-relaxed text-muted-foreground">{service.description}</p>
+        <div className="mt-auto flex items-center gap-3 pt-6">
+          <button
+            onClick={(e) => { e.stopPropagation(); onDetails(service.id); }}
+            className="inline-flex items-center gap-1 text-sm font-semibold text-ink transition-colors hover:text-terracotta"
+          >
+            {t.services.details}
+            <ArrowUpRight className="h-4 w-4" />
+          </button>
+          <button
+            onClick={(e) => { e.stopPropagation(); onChatAbout(service.id, service.title); }}
+            className="ml-auto inline-flex items-center gap-1.5 rounded-full bg-secondary px-3.5 py-1.5 text-xs font-medium text-ink transition-colors hover:bg-ink hover:text-paper"
+          >
+            <MessageCircle className="h-3.5 w-3.5" />
+            {t.services.chatAbout}
+          </button>
         </div>
       </div>
     </div>

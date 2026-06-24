@@ -1,0 +1,112 @@
+import { useState, useEffect } from "react";
+import { useLanguage } from "@/i18n/LanguageContext";
+import { LogIn, ArrowLeft, LogOut, MessageSquare, Package, BarChart3, BookOpen, UploadCloud } from "lucide-react";
+import { Admin } from "@/types";
+import * as api from "@/api";
+import ChatPanel from "@/components/admin/ChatPanel";
+import ServicesPanel from "@/components/admin/ServicesPanel";
+import StatsPanel from "@/components/admin/StatsPanel";
+import GuidesPanel from "@/components/admin/GuidesPanel";
+
+const AdminApp = () => {
+  const { t, language } = useLanguage();
+  const [admin, setAdmin] = useState<Admin | null>(null);
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [loginError, setLoginError] = useState("");
+  const [activeTab, setActiveTab] = useState<"chats" | "services" | "guides" | "stats">("chats");
+  const [publishing, setPublishing] = useState(false);
+  const [publishMsg, setPublishMsg] = useState("");
+
+  useEffect(() => { api.adminMe().then(setAdmin).catch(() => {}); }, []);
+
+  const handlePublish = async () => {
+    setPublishing(true);
+    setPublishMsg("");
+    try {
+      await api.triggerRebuild();
+      setPublishMsg(t.adminUI.publishOk);
+    } catch (err) {
+      setPublishMsg((err as Error).message || t.adminUI.publishFail);
+    } finally {
+      setPublishing(false);
+      setTimeout(() => setPublishMsg(""), 6000);
+    }
+  };
+
+  const handleLogin = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setLoginError("");
+    try { setAdmin(await api.adminLogin(username, password)); } catch (err) { setLoginError((err as Error).message || t.adminUI.loginFailed); }
+  };
+
+  if (!admin) {
+    return (
+      <div className="min-h-screen bg-background flex items-center justify-center px-6">
+        <div className="w-full max-w-sm">
+          <div className="text-center mb-8">
+            <a href={`/${language}`} className="font-display text-2xl font-bold text-foreground"><span className="text-terracotta">Brief</span>Service</a>
+            <h2 className="font-display text-2xl font-bold text-foreground mt-6">{t.admin.login}</h2>
+          </div>
+          <form onSubmit={handleLogin} className="space-y-4">
+            {loginError && <p className="text-sm text-destructive text-center">{loginError}</p>}
+            <input type="text" placeholder={t.admin.username} value={username} onChange={(e) => setUsername(e.target.value)}
+              className="w-full px-4 py-3 rounded-lg bg-card border border-border text-foreground placeholder:text-muted-foreground text-sm focus:ring-2 focus:ring-ring outline-none" />
+            <input type="password" placeholder={t.admin.password} value={password} onChange={(e) => setPassword(e.target.value)}
+              className="w-full px-4 py-3 rounded-lg bg-card border border-border text-foreground placeholder:text-muted-foreground text-sm focus:ring-2 focus:ring-ring outline-none" />
+            <button type="submit" className="w-full py-3.5 rounded-lg bg-primary text-primary-foreground font-semibold text-sm hover:bg-terracotta-deep transition-colors flex items-center justify-center gap-2">
+              <LogIn className="w-4 h-4" /> {t.admin.signIn}
+            </button>
+          </form>
+          <a href={`/${language}`} className="flex items-center justify-center gap-1 mt-6 text-sm text-muted-foreground hover:text-foreground transition-colors">
+            <ArrowLeft className="w-4 h-4" /> {t.nav.home}
+          </a>
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <div className="min-h-screen bg-background">
+      <header className="bg-card border-b border-border px-6 py-4 flex items-center justify-between">
+        <div className="flex items-center gap-4">
+          <a href={`/${language}`} className="font-display text-lg font-bold text-foreground"><span className="text-terracotta">Brief</span>Service</a>
+          <span className="text-muted-foreground text-sm">/ {t.admin.dashboard}</span>
+        </div>
+        <div className="flex items-center gap-4">
+          {publishMsg && <span className="text-xs text-muted-foreground hidden sm:inline">{publishMsg}</span>}
+          <button onClick={handlePublish} disabled={publishing}
+            className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-terracotta text-paper text-sm font-medium hover:bg-terracotta-deep transition-all disabled:opacity-50">
+            <UploadCloud className="w-4 h-4" /> {publishing ? t.adminUI.publishing : t.adminUI.publish}
+          </button>
+          <button onClick={async () => { await api.adminLogout(); setAdmin(null); }} className="flex items-center gap-1.5 text-sm text-muted-foreground hover:text-foreground transition-colors">
+            <LogOut className="w-4 h-4" /> {t.admin.logout}
+          </button>
+        </div>
+      </header>
+      <div className="container mx-auto px-6 py-8">
+        <div className="flex gap-2 mb-8">
+          <button onClick={() => setActiveTab("chats")}
+            className={`flex items-center gap-2 px-5 py-2.5 rounded-lg text-sm font-medium transition-all ${activeTab === "chats" ? "bg-primary text-primary-foreground" : "bg-secondary text-secondary-foreground hover:bg-muted"}`}>
+            <MessageSquare className="w-4 h-4" /> {t.admin.chats}
+          </button>
+          <button onClick={() => setActiveTab("services")}
+            className={`flex items-center gap-2 px-5 py-2.5 rounded-lg text-sm font-medium transition-all ${activeTab === "services" ? "bg-primary text-primary-foreground" : "bg-secondary text-secondary-foreground hover:bg-muted"}`}>
+            <Package className="w-4 h-4" /> {t.admin.servicesManage}
+          </button>
+          <button onClick={() => setActiveTab("guides")}
+            className={`flex items-center gap-2 px-5 py-2.5 rounded-lg text-sm font-medium transition-all ${activeTab === "guides" ? "bg-primary text-primary-foreground" : "bg-secondary text-secondary-foreground hover:bg-muted"}`}>
+            <BookOpen className="w-4 h-4" /> {t.adminUI.guides}
+          </button>
+          <button onClick={() => setActiveTab("stats")}
+            className={`flex items-center gap-2 px-5 py-2.5 rounded-lg text-sm font-medium transition-all ${activeTab === "stats" ? "bg-primary text-primary-foreground" : "bg-secondary text-secondary-foreground hover:bg-muted"}`}>
+            <BarChart3 className="w-4 h-4" /> {t.admin.statistics}
+          </button>
+        </div>
+        {activeTab === "chats" ? <ChatPanel /> : activeTab === "services" ? <ServicesPanel /> : activeTab === "guides" ? <GuidesPanel /> : <StatsPanel />}
+      </div>
+    </div>
+  );
+};
+
+export default AdminApp;

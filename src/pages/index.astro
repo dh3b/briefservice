@@ -1,0 +1,7 @@
+---
+// Bare "/" fallback. In production Caddy issues an Accept-Language redirect
+// before this is reached; this static redirect to the x-default language keeps
+// the root usable in `astro dev`/`preview` and any host without that rule.
+import { FALLBACK_LANGUAGE } from "@/config";
+return Astro.redirect(`/${FALLBACK_LANGUAGE}/`, 302);
+---

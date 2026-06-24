@@ -1,17 +1,65 @@
 {$SITE_DOMAINS} {
 	encode
 
-	handle /api/* {
-		reverse_proxy api:3001
-	}
+	# `route` preserves the written order of the directives below, so the API
+	# proxy and the bare-domain redirects are evaluated before the static
+	# file server / SPA fallback.
+	route {
+		handle /api/* {
+			reverse_proxy api:3001
+		}
 
-	handle /uploads/* {
-		reverse_proxy api:3001
-	}
+		handle /uploads/* {
+			reverse_proxy api:3001
+		}
 
-	handle {
-		root * /srv/dist
-		try_files {path} /index.html
-		file_server
+		# --- Bare "/" on the info.* subdomain → language landing page ---
+		@info_root_lang {
+			host info.brief-service.com
+			path /
+			header_regexp ilang Accept-Language ^(pl|en|uk|ru|cs|es|it|hu|ro|lt)
+		}
+		redir @info_root_lang /{http.regexp.ilang.1}/landing 302
+
+		@info_root {
+			host info.brief-service.com
+			path /
+		}
+		redir @info_root /en/landing 302
+
+		# --- Bare "/" on the main domain → best matching language home ---
+		# Server-side redirect (no JS) based on the visitor's Accept-Language,
+		# falling back to /en/ (the x-default) for unsupported languages.
+		@root_lang {
+			path /
+			header_regexp rlang Accept-Language ^(pl|en|uk|ru|cs|es|it|hu|ro|lt)
+		}
+		redir @root_lang /{http.regexp.rlang.1}/ 302
+
+		@root path /
+		redir @root /en/ 302
+
+		# --- Legacy Phase-3 paths → new English routes (permanent) ---
+		# /<lang>/uslugi(/x) → /<lang>/services(/x); poradnik → guides;
+		# the old /<lang>/zmiana-dmc page is now the featured service.
+		@usl_idx path_regexp uslidx ^/([a-z]{2})/uslugi/?$
+		redir @usl_idx /{http.regexp.uslidx.1}/services 301
+		@usl_slug path_regexp uslslug ^/([a-z]{2})/uslugi/(.+?)/?$
+		redir @usl_slug /{http.regexp.uslslug.1}/services/{http.regexp.uslslug.2} 301
+		@por_idx path_regexp poridx ^/([a-z]{2})/poradnik/?$
+		redir @por_idx /{http.regexp.poridx.1}/guides 301
+		@por_slug path_regexp porslug ^/([a-z]{2})/poradnik/(.+?)/?$
+		redir @por_slug /{http.regexp.porslug.1}/guides/{http.regexp.porslug.2} 301
+		@zmiana path_regexp zmiana ^/([a-z]{2})/zmiana-dmc/?$
+		redir @zmiana /{http.regexp.zmiana.1}/services/zmiana-dmc 301
+
+		# --- Static prerendered pages (Astro, directory format) ---
+		# /pl/zmiana-dmc -> dist/pl/zmiana-dmc/index.html (handles trailing
+		# slash too); unknown paths fall back to the prerendered 404 page.
+		handle {
+			root * /srv/dist
+			try_files {path} {path}index.html {path}/index.html /404.html
+			file_server
+		}
 	}
 }

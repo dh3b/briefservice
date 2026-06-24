@@ -1,154 +1,251 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@600;700;800&display=swap');
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
+/*
+  Warm editorial minimalism.
+  Linen canvas, white paper cards, near-black ink, terracotta accent, charcoal
+  panels. Fonts loaded in BaseLayout: Hanken Grotesk (sans/display),
+  Playfair Display (serif italic accents), JetBrains Mono (code/labels).
+*/
+
 @layer base {
   :root {
-    --background: 220 20% 97%;
-    --foreground: 222 47% 11%;
+    --linen: 35 30% 94%;        /* #F5F0EA page canvas */
+    --cream: 38 56% 97%;        /* #FDFAF6 alternate sections */
+    --paper: 0 0% 100%;         /* #FFFFFF cards */
+    --ink: 0 0% 6%;             /* #0F0F0F text */
+    --charcoal: 0 0% 10%;       /* #1A1A1A dark panels */
+    --terracotta: 14 56% 49%;   /* warm clay accent */
+    --terracotta-deep: 14 58% 41%;
+    --clay-tint: 18 48% 92%;    /* faint terracotta wash */
+    --gold: 40 47% 51%;         /* brand gold (#BD9648) - used only in the logo crown */
 
-    --card: 0 0% 100%;
-    --card-foreground: 222 47% 11%;
-
-    --popover: 0 0% 100%;
-    --popover-foreground: 222 47% 11%;
-
-    --primary: 222 60% 18%;
-    --primary-foreground: 45 100% 94%;
-
-    --secondary: 220 20% 93%;
-    --secondary-foreground: 222 47% 11%;
-
-    --muted: 220 16% 93%;
-    --muted-foreground: 220 10% 46%;
-
-    --accent: 42 87% 55%;
-    --accent-foreground: 222 60% 12%;
-
-    --destructive: 0 84% 60%;
+    /* shadcn / component tokens mapped onto the palette */
+    --background: var(--linen);
+    --foreground: var(--ink);
+    --card: var(--paper);
+    --card-foreground: var(--ink);
+    --popover: var(--paper);
+    --popover-foreground: var(--ink);
+    --primary: var(--terracotta);
+    --primary-foreground: 38 56% 97%;
+    --secondary: 35 22% 90%;
+    --secondary-foreground: 0 0% 10%;
+    --muted: 35 20% 91%;
+    --muted-foreground: 0 0% 42%;     /* #6B6B6B */
+    --accent: var(--terracotta);
+    --accent-foreground: 38 56% 97%;
+    --destructive: 0 70% 45%;
     --destructive-foreground: 0 0% 100%;
-
-    --border: 220 16% 88%;
-    --input: 220 16% 88%;
-    --ring: 222 60% 18%;
-
-    --radius: 0.625rem;
-
-    --sidebar-background: 222 60% 12%;
-    --sidebar-foreground: 220 20% 93%;
-    --sidebar-primary: 42 87% 55%;
-    --sidebar-primary-foreground: 222 60% 12%;
-    --sidebar-accent: 222 50% 22%;
-    --sidebar-accent-foreground: 220 20% 93%;
-    --sidebar-border: 222 40% 25%;
-    --sidebar-ring: 42 87% 55%;
-
-    /* Custom tokens */
-    --gold: 42 87% 55%;
-    --gold-light: 42 87% 70%;
-    --gold-dark: 42 87% 42%;
-    --navy: 222 60% 18%;
-    --navy-deep: 222 60% 12%;
-    --navy-light: 222 40% 30%;
-
-    --hero-gradient: linear-gradient(135deg, hsl(222 60% 12%) 0%, hsl(222 60% 22%) 50%, hsl(222 40% 30%) 100%);
-    --gold-gradient: linear-gradient(135deg, hsl(42 87% 50%) 0%, hsl(42 87% 62%) 100%);
-    --shadow-card: 0 4px 24px -4px hsl(222 60% 18% / 0.08);
-    --shadow-card-hover: 0 12px 32px -8px hsl(222 60% 18% / 0.15);
-    --shadow-chat: 0 8px 40px -8px hsl(222 60% 18% / 0.25);
+    --border: 34 16% 88%;             /* #E8E4DF */
+    --input: 34 16% 88%;
+    --ring: 14 56% 49%;
+    --radius: 0.875rem;
   }
 
-  .dark {
-    --background: 222 60% 6%;
-    --foreground: 220 20% 93%;
-    --card: 222 50% 10%;
-    --card-foreground: 220 20% 93%;
-    --popover: 222 50% 10%;
-    --popover-foreground: 220 20% 93%;
-    --primary: 42 87% 55%;
-    --primary-foreground: 222 60% 12%;
-    --secondary: 222 40% 16%;
-    --secondary-foreground: 220 20% 93%;
-    --muted: 222 30% 16%;
-    --muted-foreground: 220 10% 60%;
-    --accent: 42 87% 55%;
-    --accent-foreground: 222 60% 12%;
-    --destructive: 0 62% 30%;
-    --destructive-foreground: 0 0% 100%;
-    --border: 222 30% 18%;
-    --input: 222 30% 18%;
-    --ring: 42 87% 55%;
-  }
-}
-
-@layer base {
   * {
     @apply border-border;
   }
 
-  body {
-    @apply bg-background text-foreground font-sans antialiased;
-    font-family: 'Inter', system-ui, sans-serif;
+  html {
+    scroll-behavior: smooth;
   }
 
-  h1, h2, h3 {
-    font-family: 'Playfair Display', Georgia, serif;
+  body {
+    @apply bg-background text-foreground font-sans antialiased;
+    font-size: 16px;
+    line-height: 1.65;
+    font-feature-settings: "ss01", "cv01";
+    /* faint paper grain for warmth */
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.025'/%3E%3C/svg%3E");
   }
+
+  h1, h2, h3, h4 {
+    @apply font-display;
+    font-weight: 800;
+    letter-spacing: -0.022em;
+    line-height: 1.04;
+    text-wrap: balance;
+  }
+
+  ::selection {
+    background: hsl(var(--terracotta) / 0.22);
+  }
+}
+
+@layer components {
+  /* Editorial serif-italic accent woven into a heading */
+  .serif-em {
+    font-family: "Playfair Display", Georgia, serif;
+    font-style: italic;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+  }
+
+  /* Uppercase tracked-out label / eyebrow */
+  .eyebrow {
+    font-size: 0.6875rem;       /* 11px */
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: hsl(var(--muted-foreground));
+  }
+
+  /* Pill announcement / tag */
+  .pill {
+    @apply inline-flex items-center gap-2 rounded-full border border-border bg-card/70 px-3.5 py-1.5 text-sm;
+    backdrop-filter: blur(6px);
+  }
+
+  .btn-primary {
+    @apply inline-flex items-center justify-center gap-2 rounded-full bg-primary px-7 py-3.5 text-sm font-semibold text-primary-foreground;
+    transition: transform 0.2s cubic-bezier(0.22, 1, 0.36, 1), background-color 0.2s ease, box-shadow 0.2s ease;
+    box-shadow: 0 10px 24px -12px hsl(var(--terracotta) / 0.7);
+  }
+  .btn-primary:hover {
+    background: hsl(var(--terracotta-deep));
+    transform: translateY(-2px);
+    box-shadow: 0 16px 30px -12px hsl(var(--terracotta) / 0.85);
+  }
+  .btn-primary:active {
+    transform: translateY(0) scale(0.985);
+    box-shadow: 0 6px 16px -12px hsl(var(--terracotta) / 0.7);
+  }
+
+  .btn-secondary {
+    @apply inline-flex items-center justify-center gap-2 rounded-full border border-foreground/85 bg-card px-7 py-3.5 text-sm font-semibold text-foreground;
+    transition: transform 0.2s cubic-bezier(0.22, 1, 0.36, 1), background-color 0.2s ease, color 0.2s ease;
+  }
+  .btn-secondary:hover {
+    background: hsl(var(--ink));
+    color: hsl(var(--paper));
+    transform: translateY(-2px);
+  }
+  .btn-secondary:active {
+    transform: translateY(0) scale(0.985);
+  }
+
+  .card-surface {
+    @apply rounded-2xl border border-border bg-card;
+    box-shadow: 0 1px 2px hsl(var(--ink) / 0.03);
+  }
+
+  /* Big soft warm shadow for floating hero cards */
+  .shadow-float {
+    box-shadow: 0 2px 4px hsl(28 30% 20% / 0.06), 0 26px 50px -24px hsl(28 40% 18% / 0.45);
+  }
+
+  .panel-dark {
+    background: hsl(var(--charcoal));
+    color: hsl(38 30% 92%);
+  }
+
+  /* Rendered Markdown body for service/guide pages (typography plugin is not
+     enabled; this keeps the editorial look without it). */
+  .prose-editorial {
+    color: hsl(var(--ink) / 0.82);
+    line-height: 1.75;
+    font-size: 1rem;
+  }
+  .prose-editorial > * + * { margin-top: 1.1em; }
+  .prose-editorial h2 {
+    @apply font-display;
+    font-size: clamp(1.4rem, 2.6vw, 1.85rem);
+    font-weight: 800;
+    color: hsl(var(--ink));
+    margin-top: 1.9em;
+  }
+  .prose-editorial h3 {
+    @apply font-display;
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: hsl(var(--ink));
+    margin-top: 1.5em;
+  }
+  .prose-editorial p { color: hsl(var(--ink) / 0.8); }
+  .prose-editorial a {
+    color: hsl(var(--terracotta));
+    text-decoration: underline;
+    text-underline-offset: 2px;
+  }
+  .prose-editorial a:hover { color: hsl(var(--terracotta-deep)); }
+  .prose-editorial strong { font-weight: 700; color: hsl(var(--ink)); }
+  .prose-editorial ul { list-style: disc; padding-left: 1.25rem; }
+  .prose-editorial ol { list-style: decimal; padding-left: 1.25rem; }
+  .prose-editorial li { margin-top: 0.35em; color: hsl(var(--ink) / 0.8); }
+  .prose-editorial blockquote {
+    border-left: 2px solid hsl(var(--terracotta));
+    padding-left: 0.9rem;
+    font-weight: 600;
+    color: hsl(var(--ink));
+  }
+
+  /* section vertical rhythm */
+  .section {
+    padding-top: clamp(72px, 11vw, 140px);
+    padding-bottom: clamp(72px, 11vw, 140px);
+  }
+  .bg-cream { background-color: hsl(var(--cream)); }
 }
 
 @layer utilities {
-  .text-gradient-gold {
-    background: linear-gradient(135deg, hsl(42 87% 50%), hsl(42 87% 68%));
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
+  .container-editorial {
+    @apply mx-auto w-full px-6 md:px-10;
+    max-width: 1200px;
+  }
+  .text-terracotta { color: hsl(var(--terracotta)); }
+
+  /* Calm scroll reveal - opt in with data-reveal. Gated on `.js` so content
+     stays visible when JavaScript is unavailable (crawlers, no-JS).
+     The curve (easeOutExpo-like) gives a deliberate, settled arrival rather
+     than a generic linear/ease-out slide. Stagger groups with --reveal-delay. */
+  .js [data-reveal] {
+    opacity: 0;
+    transform: translateY(22px);
+    transition:
+      opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1),
+      transform 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+    transition-delay: var(--reveal-delay, 0ms);
+    will-change: opacity, transform;
+  }
+  .js [data-reveal].reveal-in {
+    opacity: 1;
+    transform: none;
   }
 
-  .bg-hero-gradient {
-    background: var(--hero-gradient);
+  /* Reveal for React islands: the `in` class is toggled by React state (not the
+     global script), so hydration never strips it. Uses its own class so the
+     global [data-reveal] observer doesn't double-handle island DOM. */
+  .js .reveal-up {
+    opacity: 0;
+    transform: translateY(22px);
+    transition:
+      opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1),
+      transform 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+    transition-delay: var(--reveal-delay, 0ms);
+    will-change: opacity, transform;
+  }
+  .js .reveal-up.in {
+    opacity: 1;
+    transform: none;
   }
 
-  .bg-gold-gradient {
-    background: var(--gold-gradient);
+  /* Hero cards: a one-time settle-in on load. Opacity-only so it never fights
+     the JS parallax (which owns `transform`). Honors reduced-motion below. */
+  .js .hero-card {
+    opacity: 0;
+    animation: hero-card-in 0.9s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+    animation-delay: var(--card-delay, 0ms);
   }
-
-  .shadow-card {
-    box-shadow: var(--shadow-card);
-  }
-
-  .shadow-card-hover {
-    box-shadow: var(--shadow-card-hover);
-  }
-
-  .shadow-chat {
-    box-shadow: var(--shadow-chat);
+  @keyframes hero-card-in {
+    to { opacity: 1; }
   }
 }
 
-@keyframes pulse-border {
-  0%, 100% {
-    box-shadow: 0 0 15px rgba(212, 169, 76, 0.3);
-  }
-  50% {
-    box-shadow: 0 0 25px rgba(212, 169, 76, 0.5);
-  }
-}
-
-.animate-pulse-border {
-  animation: pulse-border 2s ease-in-out infinite;
-}
-
-.animate-pulse-border .absolute {
-  animation: pulse-border-outer 2s ease-in-out infinite;
-}
-
-@keyframes pulse-border-outer {
-  0%, 100% {
-    border-color: #d4a94c;
-  }
-  50% {
-    border-color: #f0d78c;
-  }
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  [data-reveal], .reveal-up { opacity: 1 !important; transform: none !important; transition: none; }
+  [data-parallax] { --py: 0px !important; }
+  .hero-card { opacity: 1 !important; animation: none !important; }
 }

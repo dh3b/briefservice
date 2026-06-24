@@ -1,0 +1,66 @@
+---
+import { translations } from "@/i18n/translations";
+import type { Language } from "@/types";
+import { getServices, getGuides } from "@/lib/content-source";
+import BrandLogo from "@/components/astro/BrandLogo.astro";
+
+interface Props {
+  lang: Language;
+}
+
+const { lang } = Astro.props;
+const t = translations[lang];
+const year = new Date().getFullYear();
+
+// Collection links are shown only for languages that actually have content,
+// so footers never link to a page that wasn't generated.
+const [services, guides] = await Promise.all([getServices(), getGuides()]);
+const hasServices = services.some((s) => s.translations[lang]);
+const hasGuides = guides.some((g) => g.translations[lang]);
+---
+
+<footer class="panel-dark relative overflow-hidden">
+  <!-- faint warm glow anchoring the dark panel -->
+  <div class="pointer-events-none absolute -left-24 -top-24 h-72 w-72 rounded-full bg-terracotta/10 blur-3xl"></div>
+
+  <div class="container-editorial relative py-16 md:py-20">
+    <div class="grid gap-x-10 gap-y-12 md:grid-cols-[1.5fr_1fr_1fr]">
+      <!-- Brand -->
+      <div class="max-w-sm">
+        <a href={`/${lang}`} class="flex h-9 items-center gap-2.5" aria-label="brief-service">
+          <BrandLogo class="h-9 w-auto text-paper" title={null} />
+          <span class="font-display text-lg font-extrabold tracking-tight">brief<span class="text-terracotta">service</span></span>
+        </a>
+        <p class="mt-6 text-sm leading-relaxed text-paper/55">{t.footer.description}</p>
+      </div>
+
+      <!-- Contact -->
+      <nav aria-label={t.ui.contactHeading}>
+        <p class="flex h-9 items-center eyebrow text-paper/45">{t.ui.contactHeading}</p>
+        <ul class="mt-6 space-y-3 text-sm text-paper/70">
+          <li><a href="tel:+48696513109" class="transition-colors hover:text-terracotta">+48 696 513 109</a></li>
+          <li><a href="mailto:audicarforme@op.pl" class="transition-colors hover:text-terracotta">audicarforme@op.pl</a></li>
+          <li class="text-paper/50">ul. Sosnowa 10/7, 68-100 Żagań</li>
+        </ul>
+      </nav>
+
+      <!-- Site -->
+      <nav aria-label={t.ui.siteHeading}>
+        <p class="flex h-9 items-center eyebrow text-paper/45">{t.ui.siteHeading}</p>
+        <ul class="mt-6 space-y-3 text-sm text-paper/70">
+          <li><a href={`/${lang}`} class="transition-colors hover:text-terracotta">{t.nav.home}</a></li>
+          {hasServices && <li><a href={`/${lang}/services`} class="transition-colors hover:text-terracotta">{t.servicesPage.title}</a></li>}
+          {hasGuides && <li><a href={`/${lang}/guides`} class="transition-colors hover:text-terracotta">{t.guidesPage.title}</a></li>}
+          <li>
+            <a href={`/${lang}/privacy-policy`} class="transition-colors hover:text-terracotta">{t.footer.cookieNotice.linkText}</a>
+          </li>
+        </ul>
+      </nav>
+    </div>
+
+    <div class="mt-16 flex flex-col gap-3 border-t border-paper/12 pt-6 text-xs text-paper/45 sm:flex-row sm:items-center sm:justify-between">
+      <p>© {year} BriefService. {t.footer.rights}</p>
+      <p class="sm:pr-20">{t.ui.privateNotice}</p>
+    </div>
+  </div>
+</footer>

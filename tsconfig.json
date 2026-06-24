@@ -1,16 +1,19 @@
 {
-  "files": [],
-  "references": [{ "path": "./tsconfig.app.json" }, { "path": "./tsconfig.node.json" }],
+  "extends": "astro/tsconfigs/base",
   "compilerOptions": {
     "baseUrl": ".",
     "paths": {
       "@/*": ["./src/*"]
     },
-    "noImplicitAny": false,
-    "noUnusedParameters": false,
+    "jsx": "react-jsx",
+    "jsxImportSource": "react",
+    "strict": false,
     "skipLibCheck": true,
-    "allowJs": true,
-    "noUnusedLocals": false,
-    "strictNullChecks": false
-  }
+    // The reused React/TS code predates verbatimModuleSyntax (which Astro's
+    // base config enables); keep it off to match the original strictness.
+    "verbatimModuleSyntax": false,
+    "types": ["vitest/globals", "astro/client"]
+  },
+  "include": [".astro/types.d.ts", "src", "**/*.astro"],
+  "exclude": ["dist"]
 }

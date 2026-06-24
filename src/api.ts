@@ -1,4 +1,4 @@
-import { ServiceRow, Admin, Chat, Message, CategoryRow } from "./types";
+import { ServiceRow, Admin, Chat, Message, CategoryRow, GuideRow } from "./types";
 import { API_BASE } from "./config";
 
 async function request<T>(path: string, options?: RequestInit): Promise<T> {
@@ -39,6 +39,23 @@ export const updateCategory = (id: string, data: Record<string, unknown>) =>
 
 export const deleteCategory = (id: string) =>
   request<{ message: string }>(`/categories/${id}`, { method: "DELETE" });
+
+// Guides
+export const fetchGuides = () =>
+  request<GuideRow[]>("/guides");
+
+export const createGuide = (data: Record<string, unknown>) =>
+  request<GuideRow>("/guides", { method: "POST", body: JSON.stringify(data) });
+
+export const updateGuide = (id: string, data: Record<string, unknown>) =>
+  request<GuideRow>(`/guides/${id}`, { method: "PUT", body: JSON.stringify(data) });
+
+export const deleteGuide = (id: string) =>
+  request<{ message: string }>(`/guides/${id}`, { method: "DELETE" });
+
+// Publish: trigger an in-place static rebuild
+export const triggerRebuild = () =>
+  request<{ status: string }>("/rebuild", { method: "POST" });
 
 // Auth
 export const adminLogin = (username: string, password: string) =>

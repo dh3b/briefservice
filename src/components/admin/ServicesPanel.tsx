@@ -1,7 +1,7 @@
 import { useState, useEffect, useCallback } from "react";
 import { useLanguage } from "@/i18n/LanguageContext";
 import { Plus, Trash2, Pencil } from "lucide-react";
-import { ServiceRow, CategoryRow, localizeService, localizeCategory } from "@/types";
+import { ServiceRow, GuideRow, CategoryRow, localizeService, localizeCategory } from "@/types";
 import * as api from "@/api";
 import ServiceForm from "./ServiceForm";
 import CategoryForm from "./CategoryForm";
@@ -11,6 +11,7 @@ const ServicesPanel = () => {
   const { t, language } = useLanguage();
   const [services, setServices] = useState<ServiceRow[]>([]);
   const [categories, setCategories] = useState<CategoryRow[]>([]);
+  const [guides, setGuides] = useState<GuideRow[]>([]);
   const [serviceFormOpen, setServiceFormOpen] = useState(false);
   const [categoryFormOpen, setCategoryFormOpen] = useState(false);
   const [editingService, setEditingService] = useState<ServiceRow | null>(null);
@@ -18,9 +19,10 @@ const ServicesPanel = () => {
 
   const load = useCallback(async () => {
     try {
-      const [s, c] = await Promise.all([api.fetchServices(), api.fetchCategories()]);
+      const [s, c, g] = await Promise.all([api.fetchServices(), api.fetchCategories(), api.fetchGuides()]);
       setServices(s);
       setCategories(c);
+      setGuides(g);
     } catch {}
   }, []);
 
@@ -69,7 +71,7 @@ const ServicesPanel = () => {
         <div className="flex justify-between items-center mb-4">
           <h3 className="text-lg font-semibold text-foreground">{t.admin.servicesManage}</h3>
           <button onClick={() => { setEditingService(null); setServiceFormOpen(true); }}
-            className="flex items-center gap-2 px-4 py-2 rounded-lg bg-gold-gradient text-accent-foreground text-sm font-medium hover:shadow-md transition-all">
+            className="flex items-center gap-2 px-4 py-2 rounded-lg bg-terracotta text-paper text-sm font-medium hover:shadow-md transition-all">
             <Plus className="w-4 h-4" /> {t.admin.addService}
           </button>
         </div>
@@ -110,6 +112,7 @@ const ServicesPanel = () => {
         <ServiceForm
           service={editingService}
           categories={categories}
+          guides={guides}
           onClose={() => setServiceFormOpen(false)}
           onSaved={() => { setServiceFormOpen(false); load(); }}
         />

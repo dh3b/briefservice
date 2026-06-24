@@ -1,0 +1,171 @@
+---
+import "@/index.css";
+import {
+  canonicalUrl,
+  hreflangAlternates,
+  organizationSchema,
+  SUPPORTED_LANGUAGES,
+  type Language,
+} from "@/seo/site";
+
+interface Props {
+  lang: Language;
+  /** Document <title>. */
+  title: string;
+  /** Meta description. */
+  description: string;
+  /** Path after the language segment ("" for the language home page). */
+  path: string;
+  /** When true, emit noindex and skip hreflang alternates. */
+  noindex?: boolean;
+  /** Languages this page exists in (for hreflang). Defaults to all. */
+  hreflangLangs?: readonly Language[];
+  /** Optional JSON-LD object(s) to embed in addition to Organization. */
+  jsonLd?: Record<string, unknown> | Record<string, unknown>[];
+}
+
+const {
+  lang,
+  title,
+  description,
+  path,
+  noindex = false,
+  hreflangLangs = SUPPORTED_LANGUAGES,
+  jsonLd,
+} = Astro.props;
+
+const canonical = canonicalUrl(lang, path);
+const alternates = noindex ? [] : hreflangAlternates(path, hreflangLangs);
+const pageSchemas = jsonLd ? (Array.isArray(jsonLd) ? jsonLd : [jsonLd]) : [];
+const schemas = [organizationSchema(), ...pageSchemas];
+---
+
+<!doctype html>
+<html lang={lang}>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="author" content="Marek Jurecki" />
+    <meta name="theme-color" content="#F5F0EA" />
+
+    <!-- Flag JS early so scroll-reveal only hides content when JS can reveal it -->
+    <script is:inline>document.documentElement.classList.add("js");</script>
+
+    <!-- Fonts: Hanken Grotesk (sans/display), Playfair Display (serif italic), JetBrains Mono -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500&family=Playfair+Display:ital,wght@1,500;1,600;1,700&display=swap"
+    />
+
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    {noindex && <meta name="robots" content="noindex, nofollow" />}
+
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="BriefService" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:locale" content={lang} />
+
+    {
+      alternates.map((a) => (
+        <link rel="alternate" hreflang={a.hreflang} href={a.href} />
+      ))
+    }
+
+    <!-- Google tag (gtag.js) -->
+    <script is:inline async src="https://www.googletagmanager.com/gtag/js?id=AW-17997426374"></script>
+    <script is:inline>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'AW-17997426374');
+    </script>
+
+    <!-- Google Tag Manager -->
+    <script is:inline>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-PWVLKZFC');</script>
+    <!-- End Google Tag Manager -->
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+    <meta name="apple-mobile-web-app-title" content="BriefService" />
+    <link rel="manifest" href="/site.webmanifest" />
+
+    {schemas.map((schema) => <script type="application/ld+json" is:inline set:html={JSON.stringify(schema)} />)}
+  </head>
+
+  <body>
+    <!-- Google Tag Manager (noscript) -->
+    <noscript
+      ><iframe
+        src="https://www.googletagmanager.com/ns.html?id=GTM-PWVLKZFC"
+        height="0"
+        width="0"
+        style="display:none;visibility:hidden"></iframe></noscript
+    >
+    <!-- End Google Tag Manager (noscript) -->
+
+    <slot />
+
+    <script>
+      // Calm scroll motion: reveal-on-enter + gentle parallax for floating cards.
+      const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      const reveals = document.querySelectorAll<HTMLElement>("[data-reveal]");
+
+      if (reduce) {
+        reveals.forEach((el) => el.classList.add("reveal-in"));
+      } else {
+        const io = new IntersectionObserver(
+          (entries) => {
+            for (const e of entries) {
+              if (e.isIntersecting) {
+                e.target.classList.add("reveal-in");
+                io.unobserve(e.target);
+              }
+            }
+          },
+          { rootMargin: "0px 0px -8% 0px", threshold: 0.08 },
+        );
+        reveals.forEach((el) => io.observe(el));
+
+        const parallax = Array.from(document.querySelectorAll<HTMLElement>("[data-parallax]"));
+        if (parallax.length) {
+          let ticking = false;
+          const update = () => {
+            const vh = window.innerHeight;
+            for (const el of parallax) {
+              const speed = parseFloat(el.dataset.parallax || "0.04");
+              const rect = el.getBoundingClientRect();
+              const shift = (rect.top + rect.height / 2 - vh / 2) * -speed;
+              // Drive a CSS var the element composes into its own transform, so
+              // each card keeps its static rotation/centering (which it can't if
+              // we overwrite `transform` outright).
+              el.style.setProperty("--py", `${shift.toFixed(1)}px`);
+            }
+            ticking = false;
+          };
+          const onScroll = () => {
+            if (!ticking) {
+              ticking = true;
+              requestAnimationFrame(update);
+            }
+          };
+          window.addEventListener("scroll", onScroll, { passive: true });
+          window.addEventListener("resize", onScroll, { passive: true });
+          update();
+        }
+      }
+    </script>
+  </body>
+</html>

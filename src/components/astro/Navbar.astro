@@ -1,0 +1,119 @@
+---
+import { SUPPORTED_LANGUAGES, LANGUAGE_LABELS, LANGUAGE_FLAGS, type Language } from "@/types";
+import BrandLogo from "@/components/astro/BrandLogo.astro";
+
+interface Props {
+  lang: Language;
+  /** Suffix appended to the language-switch links, e.g. "" or "/services". */
+  langSuffix?: string;
+  /**
+   * Languages this page actually exists in. Switching to a language outside
+   * this set goes to that language's home instead of a 404. Defaults to all.
+   */
+  availableLangs?: readonly Language[];
+  /** In-page / cross-page navigation links shown in the bar. */
+  navLinks: { label: string; href: string }[];
+}
+
+const { lang, langSuffix = "", availableLangs = SUPPORTED_LANGUAGES, navLinks } = Astro.props;
+---
+
+<header data-nav class="sticky top-0 z-50 transition-colors duration-300">
+  <div class="container-editorial flex h-[72px] items-center justify-between gap-6">
+    <!-- Logo mark (real brand: crowned car) + wordmark -->
+    <a href={`/${lang}`} class="group flex items-center gap-2.5 shrink-0" aria-label="brief-service">
+      <BrandLogo class="h-[34px] w-auto text-ink transition-transform duration-300 ease-out group-hover:-translate-y-0.5" title={null} />
+      <span class="font-display text-[1.15rem] font-extrabold tracking-tight text-ink">brief<span class="text-terracotta">service</span></span>
+    </a>
+
+    <!-- Desktop nav -->
+    <nav class="hidden md:flex items-center gap-9">
+      {
+        navLinks.map((l) => (
+          <a href={l.href} class="text-sm font-medium text-ink/70 hover:text-ink transition-colors">
+            {l.label}
+          </a>
+        ))
+      }
+    </nav>
+
+    <div class="flex items-center gap-3">
+      <!-- Language: dark pill + dropdown -->
+      <div class="relative">
+        <button
+          data-lang-toggle
+          aria-haspopup="true"
+          aria-label={LANGUAGE_LABELS[lang]}
+          class="flex items-center gap-2 rounded-full bg-ink px-3.5 py-2 text-paper transition-transform hover:-translate-y-px"
+        >
+          <svg class="h-4 w-4 opacity-90" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9" /><path d="M3 12h18" /><path d="M12 3a14 14 0 0 1 0 18 14 14 0 0 1 0-18Z" /></svg>
+          <span class="text-xs font-semibold uppercase tracking-wide">{lang}</span>
+          <svg class="h-3.5 w-3.5 opacity-70" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6" /></svg>
+        </button>
+        <div data-lang-menu class="hidden absolute right-0 top-full mt-2 w-52 overflow-hidden rounded-2xl border border-border bg-paper p-1.5 shadow-float">
+          {
+            SUPPORTED_LANGUAGES.map((code) => (
+              <a
+                href={`/${code}${availableLangs.includes(code) ? langSuffix : ""}`}
+                class={`flex items-center gap-2.5 rounded-xl px-3 py-2 text-sm transition-colors ${lang === code ? "bg-secondary font-semibold text-ink" : "text-ink/70 hover:bg-secondary/70"}`}
+              >
+                <span>{LANGUAGE_FLAGS[code]}</span>
+                <span>{LANGUAGE_LABELS[code]}</span>
+              </a>
+            ))
+          }
+        </div>
+      </div>
+
+      <!-- Mobile toggle -->
+      <button data-mobile-toggle class="md:hidden grid h-9 w-9 place-items-center rounded-full border border-border text-ink" aria-label="Menu">
+        <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="4" x2="20" y1="7" y2="7" /><line x1="4" x2="20" y1="12" y2="12" /><line x1="4" x2="20" y1="17" y2="17" /></svg>
+      </button>
+    </div>
+  </div>
+
+  <!-- Mobile menu -->
+  <div data-mobile-menu class="hidden md:hidden container-editorial pb-4">
+    <div class="card-surface p-3 space-y-1">
+      {
+        navLinks.map((l) => (
+          <a href={l.href} class="block rounded-xl px-3 py-2.5 text-sm font-medium text-ink/80 hover:bg-secondary/70">
+            {l.label}
+          </a>
+        ))
+      }
+    </div>
+  </div>
+</header>
+
+<script>
+  const header = document.querySelector<HTMLElement>("[data-nav]");
+  const langToggle = document.querySelector<HTMLButtonElement>("[data-lang-toggle]");
+  const langMenu = document.querySelector<HTMLElement>("[data-lang-menu]");
+  const mobileToggle = document.querySelector<HTMLButtonElement>("[data-mobile-toggle]");
+  const mobileMenu = document.querySelector<HTMLElement>("[data-mobile-menu]");
+
+  langToggle?.addEventListener("click", (e) => {
+    e.stopPropagation();
+    langMenu?.classList.toggle("hidden");
+  });
+  mobileToggle?.addEventListener("click", () => mobileMenu?.classList.toggle("hidden"));
+  document.addEventListener("click", (e) => {
+    const t = e.target as Node;
+    if (langMenu && !langMenu.classList.contains("hidden") && !langToggle?.contains(t) && !langMenu.contains(t)) {
+      langMenu.classList.add("hidden");
+    }
+  });
+
+  // Faint backdrop once scrolled - sticky but blends at the top.
+  const onScroll = () => {
+    if (!header) return;
+    if (window.scrollY > 12) {
+      header.classList.add("bg-linen/80", "backdrop-blur-md", "border-b", "border-border/60");
+    } else {
+      header.classList.remove("bg-linen/80", "backdrop-blur-md", "border-b", "border-border/60");
+    }
+  };
+  window.addEventListener("scroll", onScroll, { passive: true });
+  onScroll();
+</script>

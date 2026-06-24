@@ -1,0 +1,168 @@
+---
+import { translations } from "@/i18n/translations";
+import { type Language } from "@/types";
+import { canonicalUrl, serviceSchema, faqSchema, breadcrumbSchema } from "@/seo/site";
+import {
+  getServices,
+  getGuides,
+  availableLangs,
+  resolveTranslation,
+  makeGuideLinkResolver,
+} from "@/lib/content-source";
+import { renderMarkdown } from "@/lib/markdown";
+import type { Faq } from "@/content/types";
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import Navbar from "@/components/astro/Navbar.astro";
+import Footer from "@/components/astro/Footer.astro";
+import Breadcrumbs from "@/components/astro/Breadcrumbs.astro";
+import ContactIsland from "@/islands/ContactIsland";
+import ChatIsland from "@/islands/ChatIsland";
+
+interface RelatedLink {
+  href: string;
+  title: string;
+}
+
+export async function getStaticPaths() {
+  const [services, guides] = await Promise.all([getServices(), getGuides()]);
+  const paths = [];
+  for (const svc of services) {
+    for (const lang of availableLangs(svc)) {
+      const tr = svc.translations[lang]!;
+      const bodyHtml = renderMarkdown(tr.markdown, {
+        resolveGuide: makeGuideLinkResolver(guides, lang),
+      });
+      const related: RelatedLink[] = svc.relatedGuides
+        .map((slug) => {
+          const g = guides.find((x) => x.slug === slug);
+          if (!g) return null;
+          const gt = resolveTranslation(g, lang);
+          if (!gt) return null;
+          return { href: `/${gt.resolvedLang}/guides/${g.slug}`, title: gt.title };
+        })
+        .filter((x): x is RelatedLink => Boolean(x));
+      paths.push({
+        params: { lang, slug: svc.slug },
+        props: {
+          slug: svc.slug,
+          title: tr.title,
+          h1: tr.h1 ?? tr.title,
+          seoTitle: tr.seoTitle ?? tr.title,
+          seoDescription: tr.seoDescription || tr.excerpt,
+          excerpt: tr.excerpt,
+          faq: tr.faq ?? [],
+          bodyHtml,
+          related,
+          langs: availableLangs(svc),
+        },
+      });
+    }
+  }
+  return paths;
+}
+
+const lang = Astro.params.lang as Language;
+const { slug, title, h1, seoTitle, seoDescription, excerpt, faq, bodyHtml, related, langs } =
+  Astro.props as {
+    slug: string;
+    title: string;
+    h1: string;
+    seoTitle: string;
+    seoDescription: string;
+    excerpt: string;
+    faq: Faq[];
+    bodyHtml: string;
+    related: RelatedLink[];
+    langs: Language[];
+  };
+
+const t = translations[lang];
+const svcLabel = t.servicesPage.title;
+const path = `services/${slug}`;
+const url = canonicalUrl(lang, path);
+
+const guides = await getGuides();
+const hasGuides = guides.some((g) => g.translations[lang]);
+const navLinks = [
+  { label: t.nav.home, href: `/${lang}` },
+  { label: svcLabel, href: `/${lang}/services` },
+  ...(hasGuides ? [{ label: t.guidesPage.title, href: `/${lang}/guides` }] : []),
+];
+
+const jsonLd = [
+  serviceSchema({ name: title, description: seoDescription, url }),
+  ...(faq.length ? [faqSchema(faq)] : []),
+  breadcrumbSchema([
+    { name: t.nav.home, url: canonicalUrl(lang, "") },
+    { name: svcLabel, url: canonicalUrl(lang, "services") },
+    { name: h1, url },
+  ]),
+];
+const faqHeading = t.ui.faqHeading;
+const relatedHeading = t.ui.relatedGuides;
+---
+
+<BaseLayout
+  lang={lang}
+  title={seoTitle}
+  description={seoDescription}
+  path={path}
+  hreflangLangs={langs}
+  jsonLd={jsonLd}
+>
+  <Navbar lang={lang} navLinks={navLinks} langSuffix={`/services/${slug}`} availableLangs={langs} />
+  <main class="pt-8 pb-4">
+    <Breadcrumbs
+      items={[
+        { name: t.nav.home, href: `/${lang}` },
+        { name: svcLabel, href: `/${lang}/services` },
+        { name: h1 },
+      ]}
+    />
+    <article class="container-editorial max-w-3xl py-8">
+      <h1 class="text-[clamp(2rem,4.5vw,3.25rem)] text-ink">{h1}</h1>
+      {excerpt && <p class="mt-5 text-lg leading-relaxed text-muted-foreground">{excerpt}</p>}
+
+      <div class="prose-editorial mt-10" set:html={bodyHtml} />
+
+      {
+        faq.length > 0 && (
+          <section class="mt-16">
+            <h2 class="font-display text-2xl font-extrabold text-ink">{faqHeading}</h2>
+            <div class="mt-6 divide-y divide-border border-t border-border">
+              {faq.map((f) => (
+                <div class="py-5">
+                  <h3 class="font-semibold text-ink">{f.q}</h3>
+                  <p class="mt-1.5 leading-relaxed text-ink/75">{f.a}</p>
+                </div>
+              ))}
+            </div>
+          </section>
+        )
+      }
+
+      {
+        related.length > 0 && (
+          <section class="mt-16">
+            <h2 class="font-display text-2xl font-extrabold text-ink">{relatedHeading}</h2>
+            <div class="mt-6 space-y-3">
+              {related.map((g) => (
+                <a
+                  href={g.href}
+                  class="group flex items-center justify-between gap-4 rounded-xl border border-border bg-paper px-5 py-4 transition-all duration-300 hover:-translate-y-0.5 hover:border-terracotta/40 hover:shadow-float"
+                >
+                  <span class="font-semibold text-ink transition-colors group-hover:text-terracotta">{g.title}</span>
+                  <svg class="h-4 w-4 shrink-0 text-terracotta transition-transform group-hover:translate-x-1" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14" /><path d="m12 5 7 7-7 7" /></svg>
+                </a>
+              ))}
+            </div>
+          </section>
+        )
+      }
+    </article>
+
+    <ContactIsland lang={lang} client:visible />
+  </main>
+  <Footer lang={lang} />
+  <ChatIsland lang={lang} client:idle />
+</BaseLayout>
