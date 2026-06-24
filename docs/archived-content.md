@@ -1,4 +1,4 @@
-# Archived seed content — services & guides
+# Archived seed content - services & guides
 
 These were the committed **Polish mockup bodies** that the static build used as
 a fallback when the database was unreachable. The live content now lives in
@@ -18,7 +18,7 @@ import { sectionsToMarkdown, type Section } from "./_build";
 /**
  * Dedicated, indexable service pages. Authored in Polish; `zmiana-dmc` (the
  * featured service) is assembled separately from `translations.ts` so it keeps
- * all 10 languages — see `./zmiana-dmc.ts`.
+ * all 10 languages - see `./zmiana-dmc.ts`.
  */
 
 interface ServiceSource {
@@ -33,7 +33,7 @@ interface ServiceSource {
   seoDescription: string;
   lead: string;
   sections: Section[];
-  /** "What you get" — folded into the Markdown body. */
+  /** "What you get" - folded into the Markdown body. */
   highlights: string[];
   faq: Faq[];
 }
@@ -47,10 +47,10 @@ const SOURCES: ServiceSource[] = [
     h1: "Legalizacja zmian konstrukcyjnych pojazdu w Niemczech",
     seoTitle: "Legalizacja zmian konstrukcyjnych pojazdu w Niemczech | BriefService",
     summary:
-      "Wpisanie zmian technicznych do dokumentów i wydanie nowego niemieckiego briefu — legalnie, z ekspertyzą.",
+      "Wpisanie zmian technicznych do dokumentów i wydanie nowego niemieckiego briefu - legalnie, z ekspertyzą.",
     seoDescription:
       "Legalizujemy modyfikacje konstrukcyjne pojazdu w Niemczech: zawieszenie, ogumienie, liczba miejsc, zabudowa. Pełna dokumentacja techniczna i nowy niemiecki brief (Teil I i II).",
-    lead: "Zmieniłeś coś w pojeździe, a zmiana nie jest ujęta w dokumentach? Pomożemy ją zalegalizować w Niemczech — z pełną ekspertyzą techniczną i nowym kompletem niemieckich Briefów (Zulassungsbescheinigung Teil I i Teil II), które są honorowane w całej Unii Europejskiej.",
+    lead: "Zmieniłeś coś w pojeździe, a zmiana nie jest ujęta w dokumentach? Pomożemy ją zalegalizować w Niemczech - z pełną ekspertyzą techniczną i nowym kompletem niemieckich Briefów (Zulassungsbescheinigung Teil I i Teil II), które są honorowane w całej Unii Europejskiej.",
     sections: [
       {
         heading: "Na czym polega usługa",
@@ -72,8 +72,8 @@ const SOURCES: ServiceSource[] = [
       {
         heading: "Jak przebiega procedura",
         body: [
-          "Zaczynamy od bezpłatnej weryfikacji — na podstawie zdjęć i opisu oceniamy, czy dana zmiana kwalifikuje się do legalizacji. Następnie przygotowujemy pojazd i przedstawiamy go do oceny w niemieckiej placówce technicznej.",
-          "Cały proces prowadzimy w Niemczech — nie musisz tam jechać. Po zakończeniu otrzymujesz komplet dokumentów gotowy do przerejestrowania pojazdu w Polsce lub innym kraju UE.",
+          "Zaczynamy od bezpłatnej weryfikacji - na podstawie zdjęć i opisu oceniamy, czy dana zmiana kwalifikuje się do legalizacji. Następnie przygotowujemy pojazd i przedstawiamy go do oceny w niemieckiej placówce technicznej.",
+          "Cały proces prowadzimy w Niemczech - nie musisz tam jechać. Po zakończeniu otrzymujesz komplet dokumentów gotowy do przerejestrowania pojazdu w Polsce lub innym kraju UE.",
         ],
       },
     ],
@@ -81,7 +81,7 @@ const SOURCES: ServiceSource[] = [
       "ekspertyza techniczna niemieckiej jednostki",
       "nowy komplet niemieckich Briefów (Teil I i II) z naniesionymi zmianami",
       "dokumentacja ważna w całej Unii Europejskiej",
-      "obsługa zdalna — bez wyjazdu do Niemiec",
+      "obsługa zdalna - bez wyjazdu do Niemiec",
     ],
     faq: [
       {
@@ -108,14 +108,14 @@ const SOURCES: ServiceSource[] = [
     summary:
       "Zmiana klasyfikacji pojazdu (np. ciężarowy na osobowy) z pełną procedurą techniczną i nowymi dokumentami.",
     seoDescription:
-      "Zmiana rodzaju / przeznaczenia pojazdu w Niemczech — np. z ciężarowego na osobowy lub specjalny. Ekspertyza, nowa tabliczka znamionowa i nowy niemiecki brief.",
-    lead: "Potrzebujesz zmienić rodzaj lub przeznaczenie pojazdu — na przykład z ciężarowego na osobowy albo specjalny? Przeprowadzamy tę procedurę w Niemczech, łącznie z ekspertyzą techniczną i wydaniem nowych niemieckich Briefów z poprawioną klasyfikacją.",
+      "Zmiana rodzaju / przeznaczenia pojazdu w Niemczech - np. z ciężarowego na osobowy lub specjalny. Ekspertyza, nowa tabliczka znamionowa i nowy niemiecki brief.",
+    lead: "Potrzebujesz zmienić rodzaj lub przeznaczenie pojazdu - na przykład z ciężarowego na osobowy albo specjalny? Przeprowadzamy tę procedurę w Niemczech, łącznie z ekspertyzą techniczną i wydaniem nowych niemieckich Briefów z poprawioną klasyfikacją.",
     sections: [
       {
         heading: "Na czym polega usługa",
         body: [
           "Rodzaj pojazdu (np. samochód ciężarowy, osobowy, specjalny) wynika z jego parametrów technicznych i jest zapisany w dokumentach. Jego zmiana wymaga oceny technicznej oraz aktualizacji wpisów w niemieckim brief'ie.",
-          "Realizujemy całą procedurę w niemieckiej jednostce technicznej: od weryfikacji, przez niezbędne czynności, po wydanie kompletu nowych Briefów (Teil I i II) i — gdy to konieczne — nowej tabliczki znamionowej.",
+          "Realizujemy całą procedurę w niemieckiej jednostce technicznej: od weryfikacji, przez niezbędne czynności, po wydanie kompletu nowych Briefów (Teil I i II) i - gdy to konieczne - nowej tabliczki znamionowej.",
         ],
       },
       {
@@ -143,7 +143,7 @@ const SOURCES: ServiceSource[] = [
     faq: [
       {
         q: "Czy zmiana rodzaju pojazdu wpływa na kategorię prawa jazdy?",
-        a: "Może wpływać — np. zmiana powiązana z obniżeniem DMC do 3500 kg pozwala prowadzić pojazd na prawo jazdy kat. B. Szczegóły zależą od konkretnego pojazdu; oceniamy je przy weryfikacji.",
+        a: "Może wpływać - np. zmiana powiązana z obniżeniem DMC do 3500 kg pozwala prowadzić pojazd na prawo jazdy kat. B. Szczegóły zależą od konkretnego pojazdu; oceniamy je przy weryfikacji.",
       },
       {
         q: "Czy każdy pojazd można przeklasyfikować?",
@@ -169,10 +169,10 @@ const SOURCES: ServiceSource[] = [
     h1: "Odzyskanie i duplikat niemieckiego briefu",
     seoTitle: "Odzyskanie i duplikat niemieckiego briefu (Teil I i II) | BriefService",
     summary:
-      "Wyrobienie duplikatu lub odtworzenie brakującej niemieckiej dokumentacji pojazdu — również w trudnych przypadkach.",
+      "Wyrobienie duplikatu lub odtworzenie brakującej niemieckiej dokumentacji pojazdu - również w trudnych przypadkach.",
     seoDescription:
-      "Zgubiony, zniszczony lub zatrzymany niemiecki brief? Pomagamy odzyskać dokumentację i wyrobić duplikat Zulassungsbescheinigung Teil I i Teil II — także w sprawach trudnych.",
-    lead: "Brak briefu zwykle blokuje rejestrację i sprzedaż pojazdu. Pomagamy odzyskać brakującą niemiecką dokumentację oraz wyrobić duplikat briefu (Zulassungsbescheinigung Teil I i Teil II) — specjalizujemy się w sprawach trudnych i nietypowych.",
+      "Zgubiony, zniszczony lub zatrzymany niemiecki brief? Pomagamy odzyskać dokumentację i wyrobić duplikat Zulassungsbescheinigung Teil I i Teil II - także w sprawach trudnych.",
+    lead: "Brak briefu zwykle blokuje rejestrację i sprzedaż pojazdu. Pomagamy odzyskać brakującą niemiecką dokumentację oraz wyrobić duplikat briefu (Zulassungsbescheinigung Teil I i Teil II) - specjalizujemy się w sprawach trudnych i nietypowych.",
     sections: [
       {
         heading: "Kiedy potrzebny jest duplikat",
@@ -215,7 +215,7 @@ const SOURCES: ServiceSource[] = [
       },
       {
         q: "Czy pomagacie przy wyrejestrowaniu auta bez briefu?",
-        a: "Tak. Jeśli brief zaginął, doradzimy najlepszą ścieżkę — od duplikatu po wyrejestrowanie auta w Niemczech bez briefu.",
+        a: "Tak. Jeśli brief zaginął, doradzimy najlepszą ścieżkę - od duplikatu po wyrejestrowanie auta w Niemczech bez briefu.",
       },
     ],
   },
@@ -294,15 +294,15 @@ const SOURCES: GuideSource[] = [
       {
         heading: "Duży brief (Zulassungsbescheinigung Teil II)",
         body: [
-          "Duży brief to dokument własności i „dowód pochodzenia” pojazdu. Nie wozi się go w aucie — przechowuje się go w bezpiecznym miejscu. To właśnie Teil II jest niezbędny do sprzedaży i przerejestrowania pojazdu.",
+          "Duży brief to dokument własności i „dowód pochodzenia” pojazdu. Nie wozi się go w aucie - przechowuje się go w bezpiecznym miejscu. To właśnie Teil II jest niezbędny do sprzedaży i przerejestrowania pojazdu.",
           "Starsze pojazdy mogą mieć dokumenty w poprzednim formacie (Fahrzeugbrief i Fahrzeugschein), ale ich rola jest analogiczna.",
         ],
       },
       {
         heading: "Dlaczego to ważne przy imporcie",
         body: [
-          "Przy sprowadzaniu auta z Niemiec to duży brief (Teil II) decyduje o możliwości rejestracji w Polsce. Jego brak jest najczęstszą przyczyną problemów — dlatego zawsze upewnij się, że sprzedający przekazuje komplet dokumentów.",
-          "Warto też wiedzieć, gdzie szukać numerów w dokumencie — zobacz: [guide:jak-czytac-niemiecki-brief].",
+          "Przy sprowadzaniu auta z Niemiec to duży brief (Teil II) decyduje o możliwości rejestracji w Polsce. Jego brak jest najczęstszą przyczyną problemów - dlatego zawsze upewnij się, że sprzedający przekazuje komplet dokumentów.",
+          "Warto też wiedzieć, gdzie szukać numerów w dokumencie - zobacz: [guide:jak-czytac-niemiecki-brief].",
         ],
       },
     ],
@@ -345,7 +345,7 @@ const SOURCES: GuideSource[] = [
       {
         heading: "Numer karty pojazdu / numer dokumentu",
         body: [
-          "Duży brief (Teil II) ma własny numer dokumentu — to on bywa nazywany „numerem karty pojazdu”. Jest istotny m.in. przy weryfikacji autentyczności i przy wyrabianiu duplikatu.",
+          "Duży brief (Teil II) ma własny numer dokumentu - to on bywa nazywany „numerem karty pojazdu”. Jest istotny m.in. przy weryfikacji autentyczności i przy wyrabianiu duplikatu.",
         ],
       },
       {
@@ -370,7 +370,7 @@ const SOURCES: GuideSource[] = [
       },
       {
         q: "Czy VIN w briefie musi zgadzać się z autem?",
-        a: "Tak. VIN na pojeździe musi być zgodny z dokumentami. Rozbieżności trzeba wyjaśnić przed rejestracją — w takich sprawach również pomagamy.",
+        a: "Tak. VIN na pojeździe musi być zgodny z dokumentami. Rozbieżności trzeba wyjaśnić przed rejestracją - w takich sprawach również pomagamy.",
       },
     ],
     cta: {
@@ -387,12 +387,12 @@ const SOURCES: GuideSource[] = [
     summary: "Co robić po utracie dużego briefu i jak krok po kroku wyrobić jego duplikat.",
     description:
       "Co zrobić, gdy zgubisz lub ktoś ukradnie niemiecki brief (Teil II). Jak wyrobić duplikat (Duplikat) i co jest do tego potrzebne. Praktyczny przewodnik krok po kroku.",
-    lead: "Utrata dużego briefu (Teil II) blokuje sprzedaż i rejestrację pojazdu, ale nie oznacza, że auto jest „bez dokumentów”. Dokument można odtworzyć — wyjaśniamy, jak działa duplikat (Duplikat) i od czego zacząć.",
+    lead: "Utrata dużego briefu (Teil II) blokuje sprzedaż i rejestrację pojazdu, ale nie oznacza, że auto jest „bez dokumentów”. Dokument można odtworzyć - wyjaśniamy, jak działa duplikat (Duplikat) i od czego zacząć.",
     sections: [
       {
         heading: "Co oznacza utrata dużego briefu",
         body: [
-          "Brief Teil II to dokument własności i pochodzenia. Jego brak uniemożliwia przerejestrowanie i legalną sprzedaż, dlatego sprawę warto załatwić jak najszybciej — zwłaszcza w przypadku kradzieży, gdzie liczy się też unieważnienie starego dokumentu.",
+          "Brief Teil II to dokument własności i pochodzenia. Jego brak uniemożliwia przerejestrowanie i legalną sprzedaż, dlatego sprawę warto załatwić jak najszybciej - zwłaszcza w przypadku kradzieży, gdzie liczy się też unieważnienie starego dokumentu.",
         ],
       },
       {
@@ -407,7 +407,7 @@ const SOURCES: GuideSource[] = [
           "numer VIN pojazdu,",
           "wszystkie posiadane dokumenty (mały brief, umowa, stary dowód),",
           "dane dotyczące ostatniej rejestracji w Niemczech (jeśli są),",
-          "w przypadku kradzieży — informację o zgłoszeniu.",
+          "w przypadku kradzieży - informację o zgłoszeniu.",
         ],
       },
     ],
@@ -421,14 +421,14 @@ const SOURCES: GuideSource[] = [
         a: "Zależy od historii pojazdu i konkretnego urzędu. Realny termin podajemy po sprawdzeniu sprawy na podstawie numeru VIN.",
       },
       {
-        q: "Auto ukradziono razem z briefem — co teraz?",
+        q: "Auto ukradziono razem z briefem - co teraz?",
         a: "Trzeba odtworzyć dokument i zadbać o unieważnienie starego. Doradzimy właściwą kolejność działań i przeprowadzimy procedurę.",
       },
     ],
     cta: {
       serviceSlug: "odzyskanie-briefu",
       label: "Wyrób duplikat briefu",
-      text: "Zgubiłeś brief? Podaj nam VIN — sprawdzimy, jak szybko odzyskać dokument.",
+      text: "Zgubiłeś brief? Podaj nam VIN - sprawdzimy, jak szybko odzyskać dokument.",
     },
   },
   {
@@ -439,7 +439,7 @@ const SOURCES: GuideSource[] = [
     summary: "Na czym polega legalna zmiana dopuszczalnej masy całkowitej i co po niej otrzymujesz.",
     description:
       "Jak działa legalna zmiana DMC pojazdu w Niemczech do 2500 kg lub 3500 kg: ekspertyza, nowa tabliczka znamionowa i nowe Briefy. Co daje obniżenie DMC i kto się kwalifikuje.",
-    lead: "Obniżenie DMC (dopuszczalnej masy całkowitej) bywa potrzebne np. po to, by prowadzić pojazd na prawo jazdy kat. B albo dopasować auto do potrzeb transportu. W Niemczech robi się to legalnie — z ekspertyzą techniczną, a nie „przez zmianę cyferek w dokumentach”.",
+    lead: "Obniżenie DMC (dopuszczalnej masy całkowitej) bywa potrzebne np. po to, by prowadzić pojazd na prawo jazdy kat. B albo dopasować auto do potrzeb transportu. W Niemczech robi się to legalnie - z ekspertyzą techniczną, a nie „przez zmianę cyferek w dokumentach”.",
     sections: [
       {
         heading: "Co oznacza zmiana DMC",
@@ -457,14 +457,14 @@ const SOURCES: GuideSource[] = [
       {
         heading: "Kto się kwalifikuje",
         body: [
-          "Nie każdy pojazd kwalifikuje się do legalnej zmiany DMC — decydują parametry techniczne. Dlatego każdy przypadek oceniamy indywidualnie na podstawie zdjęć i danych pojazdu.",
+          "Nie każdy pojazd kwalifikuje się do legalnej zmiany DMC - decydują parametry techniczne. Dlatego każdy przypadek oceniamy indywidualnie na podstawie zdjęć i danych pojazdu.",
         ],
       },
     ],
     faq: [
       {
         q: "Czy po obniżeniu DMC do 3500 kg poprowadzę auto na prawo jazdy kat. B?",
-        a: "Co do zasady tak — to jeden z głównych powodów obniżania DMC. Ostateczna ocena zależy od konkretnego pojazdu i jest częścią weryfikacji.",
+        a: "Co do zasady tak - to jeden z głównych powodów obniżania DMC. Ostateczna ocena zależy od konkretnego pojazdu i jest częścią weryfikacji.",
       },
       {
         q: "Czy to legalne?",
@@ -494,7 +494,7 @@ const SOURCES: GuideSource[] = [
       {
         heading: "Dlaczego brief bywa potrzebny",
         body: [
-          "Dokumenty pojazdu potwierdzają jego tożsamość i status rejestrowy. Przy części formalności urząd oczekuje dużego briefu (Teil II) — gdy go brakuje, najczęściej trzeba najpierw odtworzyć dokumentację.",
+          "Dokumenty pojazdu potwierdzają jego tożsamość i status rejestrowy. Przy części formalności urząd oczekuje dużego briefu (Teil II) - gdy go brakuje, najczęściej trzeba najpierw odtworzyć dokumentację.",
         ],
       },
       {
@@ -519,7 +519,7 @@ const SOURCES: GuideSource[] = [
       },
       {
         q: "Czy muszę być w Niemczech?",
-        a: "Zwykle nie — działamy w imieniu klienta. Zakres potrzebnych formalności ustalamy po weryfikacji sprawy.",
+        a: "Zwykle nie - działamy w imieniu klienta. Zakres potrzebnych formalności ustalamy po weryfikacji sprawy.",
       },
     ],
     cta: {
@@ -550,7 +550,7 @@ const SOURCES: GuideSource[] = [
       {
         heading: "Dlaczego wycena jest indywidualna",
         body: [
-          "Każdy pojazd ma inną historię, a część spraw wymaga dodatkowych czynności. Dlatego wycenę przygotowujemy po krótkiej weryfikacji — dzięki temu kwota jest realna, bez ukrytych kosztów.",
+          "Każdy pojazd ma inną historię, a część spraw wymaga dodatkowych czynności. Dlatego wycenę przygotowujemy po krótkiej weryfikacji - dzięki temu kwota jest realna, bez ukrytych kosztów.",
         ],
       },
       {
@@ -573,7 +573,7 @@ const SOURCES: GuideSource[] = [
     cta: {
       serviceSlug: "odzyskanie-briefu",
       label: "Poproś o wycenę",
-      text: "Chcesz poznać koszt dla swojego auta? Podaj VIN — przygotujemy wycenę.",
+      text: "Chcesz poznać koszt dla swojego auta? Podaj VIN - przygotujemy wycenę.",
     },
   },
 ];
@@ -601,13 +601,13 @@ export const GUIDES: GuideEntry[] = SOURCES.map(toEntry);
 
 ```
 
-## src/content/zmiana-dmc.ts (generator — zmiana-dmc is now DB-only)
+## src/content/zmiana-dmc.ts (generator - zmiana-dmc is now DB-only)
 
 ```ts
 /**
  * The DMC/GVW-change service. It used to be a hardcoded page; it is now a
  * regular (featured) service. Its content already exists in `translations.ts`
- * for all 10 languages, so we assemble its per-language Markdown from there —
+ * for all 10 languages, so we assemble its per-language Markdown from there -
  * keeping every locale that the old `/[lang]/zmiana-dmc` page served.
  */
 import { translations } from "@/i18n/translations";
@@ -667,7 +667,7 @@ function buildMarkdown(d: ZmianaDmc): string {
     ];
     const lines = steps
       .filter(([t]) => t && t.trim())
-      .map(([t, desc]) => `1. **${t.trim()}** — ${(desc ?? "").trim()}`.replace(/ — $/, ""));
+      .map(([t, desc]) => `1. **${t.trim()}** - ${(desc ?? "").trim()}`.replace(/ - $/, ""));
     if (lines.length) parts.push(lines.join("\n"));
   }
 
@@ -712,7 +712,7 @@ export const ZMIANA_DMC_SERVICE: ServiceEntry = {
 ```
 
 
-## translations.ts — removed zmianaDmc blocks
+## translations.ts - removed zmianaDmc blocks
 
 ```ts
 // base shape
@@ -881,7 +881,7 @@ export const ZMIANA_DMC_SERVICE: ServiceEntry = {
       lead: ["для легких / термінових міжнародних перевезень"],
       scopeTitle: "У чому полягає послуга",
       scopeText: [
-        "Зміна ПМА до 2490кг у Німеччині — це не «папір та зміна цифр»!",
+        "Зміна ПМА до 2490кг у Німеччині - це не «папір та зміна цифр»!",
         "Роботи виконує німецький Інститут автомобільної техніки, з повною технічною документацією, що підтверджує проведені зміни параметрів транспортного засобу.",
         "У результаті проведеної процедури ви отримаєте нову табличку з даними та комплект нових німецьких Briefів, що підтверджують нову ПМА транспортного засобу. На їх підставі транспортний засіб може бути згодом допущений до руху в Польщі або в будь-якій іншій країні ЄС.",
       ],
@@ -941,7 +941,7 @@ export const ZMIANA_DMC_SERVICE: ServiceEntry = {
       lead: ["для лёгких / срочных международных перевозок"],
       scopeTitle: "В чём заключается услуга",
       scopeText: [
-        "Изменение ПМ до 2490кг в Германии — это не «бумага и смена цифр»!",
+        "Изменение ПМ до 2490кг в Германии - это не «бумага и смена цифр»!",
         "Работы выполняет немецкий Институт автомобильной техники, с полной технической документацией, подтверждающей проведённые изменения параметров транспортного средства.",
         "В результате проведённой процедуры вы получите новую табличку с данными и комплект новых немецких Briefов, подтверждающих новую ПМ транспортного средства. На их основании транспортное средство может быть затем допущено к движению в Польше или в любой другой стране ЕС.",
       ],
@@ -1301,9 +1301,9 @@ export const ZMIANA_DMC_SERVICE: ServiceEntry = {
       lead: ["lengviems / skubiems tarptautiniams pervežimams"],
       scopeTitle: "Ką apima paslauga",
       scopeText: [
-        "DLM keitimas iki 2490kg Vokietijoje — tai ne „popierius ir skaičių keitimas“!",
+        "DLM keitimas iki 2490kg Vokietijoje - tai ne „popierius ir skaičių keitimas“!",
         "Darbus atlieka vokiškas Automobilių technologijos institutas, su pilna technine dokumentacija, patvirtinančia atliktus transporto priemonės parametrų pakeitimus.",
-        "Atliktos procedūros rezultatas — nauja identifikacinė lentelė ir naujų vokiškų Briefų komplektas, patvirtinantis naują transporto priemonės DLM. Jų pagrindu transporto priemonė vėliau gali būti įleista į eismą Lenkijoje arba bet kurioje kitoje ES šalyje.",
+        "Atliktos procedūros rezultatas - nauja identifikacinė lentelė ir naujų vokiškų Briefų komplektas, patvirtinantis naują transporto priemonės DLM. Jų pagrindu transporto priemonė vėliau gali būti įleista į eismą Lenkijoje arba bet kurioje kitoje ES šalyje.",
       ],
       scopeNote: "Ne kiekvienas automobilis kvalifikuojasi teisėtam DLM pakeitimui!",
       getTitle: "Ką gaunate",
@@ -1321,13 +1321,13 @@ export const ZMIANA_DMC_SERVICE: ServiceEntry = {
       lead: [
         "Paslauga skirta transporto priemonėms, įsigytoms visoje Europos Sąjungoje, prieš jų įvežimą į šalį!",
         "Vedame jus per visą procesą žingsnis po žingsnio - nuo transporto priemonės patikros, per vokiškų techninių įstaigų atliekamas procedūras, iki pilnos techninės dokumentacijos parengimo.",
-        "Atliktos procedūros rezultatas — nauja identifikacinė lentelė ir naujų vokiškų Briefų komplektas su pakeistu 3500kg DLM.",
+        "Atliktos procedūros rezultatas - nauja identifikacinė lentelė ir naujų vokiškų Briefų komplektas su pakeistu 3500kg DLM.",
       ],
       scopeTitle: "Ką apima paslauga",
       scopeText: [
         "DLM mažinimas, pvz. nuo 5000kg iki 3500kg (N1 kat., B kat. pažymėjimas) automobiliams, įsigytiems visoje Europos Sąjungoje ir dar neįleistiems į eismą Lenkijoje!",
         "DLM keitimas iki 3500kg apima kompleksišką transporto priemonės paruošimą, o po to jos pateikimą įvertinti vokiškam Automobilių technologijos institutui, kuris atlieka individualią techninę ekspertizę ir parengia dokumentaciją, patvirtinančią atliktus transporto priemonės parametrų pakeitimus.",
-        "Atliktos procedūros rezultatas — savininkas gaus naujų vokiškų Briefų komplektą (DLM 3500kg) kartu su nauja identifikacine lentele.",
+        "Atliktos procedūros rezultatas - savininkas gaus naujų vokiškų Briefų komplektą (DLM 3500kg) kartu su nauja identifikacine lentele.",
       ],
       scopeNote: "Ne kiekviena transporto priemonė kvalifikuojasi teisėtam DLM pakeitimui - kiekvienas atvejis analizuojamas individualiai!",
     },

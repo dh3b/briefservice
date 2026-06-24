@@ -3,7 +3,7 @@
 Service and guide pages are **content, not code**: they're edited in the admin,
 stored in Postgres as **multilingual Markdown**, and rendered into the polished
 Astro templates at build time. The homepage tiles, the listing pages, and the
-detail pages are all views of the **same** record — one source of truth.
+detail pages are all views of the **same** record - one source of truth.
 
 ## How it fits together
 
@@ -25,7 +25,7 @@ Admin (Markdown editor)  ──save──▶  Express API  ──▶  Postgres
   authored base + fallback).
 - **No committed fallback**: services and guides are DB-only. When `CONTENT_API`
   is unset or unreachable (local builds with no DB), the build simply produces no
-  service/guide pages — it never breaks. Run a local build against the API (the
+  service/guide pages - it never breaks. Run a local build against the API (the
   `astro dev` proxy / `CONTENT_API`) to work with real content; the former
   committed bodies are archived in [`archived-content.md`](archived-content.md).
 
@@ -63,7 +63,7 @@ service_guides(service_id, guide_id, position)   -- curated, ordered related gui
    psql "$DATABASE_URL" -f migrations/001_dynamic_content.sql
    psql "$DATABASE_URL" -f migrations/002_translations.sql
    ```
-2. **Add content** — services and guides are DB-only; create them in the admin
+2. **Add content** - services and guides are DB-only; create them in the admin
    (or restore a dump from the `backup` service). The previous committed seed
    bodies are archived in [`archived-content.md`](archived-content.md).
 3. **Rebuild + redeploy** so the `builder` image exists and the API knows
