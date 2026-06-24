@@ -20,6 +20,10 @@ dist-ssr
 *.local
 .env
 
+# Raw DB dumps / backups (contain PII: chat emails, admin hashes)
+*_backup.sql
+briefservice_backup.sql
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json
